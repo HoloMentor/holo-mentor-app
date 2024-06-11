@@ -34,6 +34,7 @@ export default {
                 },
                 dark: '#101010',
                 light: '#ffffff',
+                'light-gray': '#F1F3F4',
                 'dark-gray': '#7D7D7D',
                 'navy-blue': '#6153BD',
                 'dark-navy-blue': '#493d98',
