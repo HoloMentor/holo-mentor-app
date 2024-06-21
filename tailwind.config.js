@@ -3,19 +3,19 @@ export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         screens: {
-            '2xl': { max: '1535px' },
+            'max-2xl': { max: '1535px' },
             // => @media (max-width: 1535px) { ... }
 
-            xl: { max: '1279px' },
+            'max-xl': { max: '1279px' },
             // => @media (max-width: 1279px) { ... }
 
-            lg: { max: '1023px' },
+            'max-lg': { max: '1023px' },
             // => @media (max-width: 1023px) { ... }
 
-            md: { max: '767px' },
+            'max-md': { max: '767px' },
             // => @media (max-width: 767px) { ... }
 
-            sm: { max: '639px' }
+            'max-sm': { max: '639px' }
             // => @media (max-width: 639px) { ... }
         },
         extend: {
@@ -34,6 +34,8 @@ export default {
                 },
                 dark: '#101010',
                 light: '#ffffff',
+                orange: '#FF0E00',
+                'light-gray': '#F1F3F4',
                 'dark-gray': '#7D7D7D',
                 'navy-blue': '#6153BD',
                 'dark-navy-blue': '#493d98',

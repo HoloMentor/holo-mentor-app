@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 a {
     color: #6153bd;
     transition: all 0.3s ease;
