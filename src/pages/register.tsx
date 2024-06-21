@@ -44,19 +44,23 @@ export default function Login() {
                         validationSchema={validationSchema}
                         onSubmit={onSubmit}
                         className="flex flex-col w-full gap-6">
-                        <div className="flex flex-row w-full justify-between gap-5 sm:gap-2">
-                            <FormInput
-                                name="fname"
-                                placeholder="First Name"
-                                label="First Name"
-                                required
-                            />
-                            <FormInput
-                                name="lname"
-                                placeholder="Last Name"
-                                label="Last Name"
-                                required
-                            />
+                        <div className="flex flex-row w-full  gap-4 sm:gap-2">
+                            <div className="w-1/2">
+                                <FormInput
+                                    name="fname"
+                                    placeholder="First Name"
+                                    label="First Name"
+                                    required
+                                />
+                            </div>
+                            <div className="w-1/2">
+                                <FormInput
+                                    name="lname"
+                                    placeholder="Last Name"
+                                    label="Last Name"
+                                    required
+                                />
+                            </div>
                         </div>
                         <FormInput name="email" placeholder="Email" label="Email" required />
 
@@ -82,7 +86,7 @@ export default function Login() {
                     </Form>
 
                     <span className="font-medium text-dark-gray">
-                        Already have an accpunt?{' '}
+                        Already have an account?{' '}
                         <Link to="/" className="self-end font-medium mt-2">
                             Login
                         </Link>
