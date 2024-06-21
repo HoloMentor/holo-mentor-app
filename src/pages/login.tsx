@@ -18,6 +18,7 @@ export default function Login() {
     const onSubmit = (values: any) => {
         console.log(values);
     };
+
     return (
         <div className="grid grid-cols-2 min-h-screen items-center justify-center justify-items-center px-[10%] py-6 lg:flex lg:flex-col">
             <section className="flex justify-center w-full lg:hidden">
