@@ -18,7 +18,7 @@ function Home() {
                     />
                 </div>
                 <div className="max-w-[1280px] grid grid-cols-5 w-full justify-items-center mb-4 gap-4 px-2 mr-3">
-                    <div className="w-full col-span-3  bg-white  rounded-[10px] p-4 flex-col">
+                    <div className="w-full col-span-3 max-md:col-span-5 bg-white  rounded-[10px] p-4 flex-col">
                         <h1 className="relative items-center pl-4 text-3xl font-semibold text-teal-900 mb-7">
                             Announcements
                         </h1>
@@ -27,7 +27,7 @@ function Home() {
                             <Announcement />
                         </div>
                     </div>
-                    <div className='col-span-2 w-full bg-white rounded-[10px] p-2'>
+                    <div className='col-span-2 max-md:col-span-5 w-full bg-white rounded-[10px] p-2'>
                         <div className='flex p-4 pl-8 '>
                             <div>
                                 <h1 className="relative items-center mt-4 text-lg font-normal leading-tight text-zinc-400">
@@ -41,7 +41,7 @@ function Home() {
                         </div>
                         <div>
                             <Linegraph />
-                        </div>
+                        </div>``
                     </div>
                     
                 </div>
