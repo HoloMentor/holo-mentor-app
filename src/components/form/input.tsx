@@ -1,6 +1,5 @@
 import { ErrorMessage, useFormikContext } from 'formik';
-import Input, { InputProps } from '../components/input';
-import React from 'react';
+import Input, { InputProps } from '../input';
 
 interface FormInputProps extends InputProps {
     name: string;
