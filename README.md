@@ -18,7 +18,7 @@ Make sure you have the following prerequisites installed:
 -   Node.js version 18 or higher
 -   Docker
 
-# Naming Conventions
+# Branch Naming Conventions
 
 All branch descriptors should be in lowercase and separated by hyphens.
 
