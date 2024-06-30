@@ -1,10 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import Login from './pages/login';
 import Layout from './layout';
-import Home from './pages/home';
-import Subjects from './pages/subjects';
-import Profile from './pages/profile';
-import Notifications from './pages/notifications';
+import loadable from '@loadable/component';
+
+const Login = loadable(() => import('./pages/login'));
+const Home = loadable(() => import('./pages/home'));
+const Subjects = loadable(() => import('./pages/subjects'));
+const Profile = loadable(() => import('./pages/profile'));
+const Notifications = loadable(() => import('./pages/notifications'));
 
 function App() {
     let logged = true;
