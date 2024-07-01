@@ -121,10 +121,13 @@ https://heroicons.com/solid
 ### Components
 
 **Hyper UI**
+
 ```http
 https://www.hyperui.dev/
 ```
+
 **Next UI**
+
 ```http
 https://nextui.org/docs/components/avatar
 ```
@@ -132,6 +135,7 @@ https://nextui.org/docs/components/avatar
 ### CSS
 
 **Tailwind CSS**
+
 ```http
 https://tailwindcss.com/docs/installation
 ```

@@ -1,16 +1,6 @@
 import NavLink from './navlink';
 
-export interface NavOptionProps {
-    icon: () => React.ReactNode;
-    name: string;
-    to: string;
-}
-
-interface SideBarProps {
-    links: NavOptionProps[];
-}
-
-export default function SideBar({ links }: SideBarProps) {
+export default function SideBar({ links, pathname }: SideBarProps) {
     return (
         <div className="flex flex-col bg-white w-full max-w-64 min-h-screen max-md:max-w-14 ">
             <img src="/images/logo.svg" alt="Holo Mentor" className="w-full p-6 max-md:hidden" />
@@ -19,12 +9,12 @@ export default function SideBar({ links }: SideBarProps) {
             </div>
 
             <div className="flex flex-col mt-9">
-                {links.map((_: NavOptionProps, index: number) => {
+                {links.map(({ name, icon: Icon, to, ...props }: NavOptionProps, index: number) => {
                     return (
-                        <NavLink key={index} to={_.to}>
-                            <_.icon />
+                        <NavLink key={index} to={to} pathname={pathname} {...props}>
+                            <Icon />
 
-                            <span className="max-md:hidden">{_.name}</span>
+                            <span className="max-md:hidden">{name}</span>
                         </NavLink>
                     );
                 })}

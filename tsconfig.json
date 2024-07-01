@@ -23,7 +23,7 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src"],
+    "include": ["src", "./node_modules/react-router-dom"],
     "references": [
         {
             "path": "./tsconfig.node.json"
