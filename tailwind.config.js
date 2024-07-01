@@ -1,6 +1,12 @@
+const { nextui } = require('@nextui-org/react');
+
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    content: [
+        './index.html',
+        './src/**/*.{js,ts,jsx,tsx}',
+        './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
+    ],
     theme: {
         screens: {
             'max-2xl': { max: '1535px' },
@@ -32,6 +38,7 @@ export default {
                     800: '#104545',
                     900: '#0D3333'
                 },
+                'light-border': '#0000001A',
                 dark: '#101010',
                 light: '#ffffff',
                 orange: '#FF0E00',
@@ -44,5 +51,5 @@ export default {
             }
         }
     },
-    plugins: [require('@tailwindcss/forms')]
+    plugins: [require('@tailwindcss/forms'), nextui()]
 };
