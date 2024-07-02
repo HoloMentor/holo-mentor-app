@@ -35,7 +35,7 @@ export default function Layout() {
         <div className="flex gap-6 min-h-screen bg-light-gray max-md:gap-3">
             <SideBar links={routeLinks} pathname={location.pathname} />
 
-            <div className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-6 w-full pb-5">
                 <Navbar />
                 <Outlet />
             </div>
