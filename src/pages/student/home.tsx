@@ -19,6 +19,7 @@ function Home() {
             medal: '/images/student/bmedal.png'
         }
     ];
+
     return (
         <div className="flex flex-col bg-gray-100 w-full">
             <div className="flex flex-col items-center w-full">
