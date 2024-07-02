@@ -2,7 +2,7 @@ import Layout from '@/layout';
 import loadable from '@loadable/component';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-const Home = loadable(() => import('@/components/home'));
+const Home = loadable(() => import('@/pages/student/home'));
 const Profile = loadable(() => import('@/pages/student/profile'));
 const Notifications = loadable(() => import('@/pages/student/notifications'));
 
