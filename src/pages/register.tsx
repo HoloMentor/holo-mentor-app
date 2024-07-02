@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import Form from '../form';
+import Form from '@/components/form';
 import * as Yup from 'yup';
-import SubmitButton from '../form/button';
-import FormInput from '../form/input';
+import SubmitButton from '@/components/form/button';
+import FormInput from '@/components/form/input';
 
 const initialValues = {
     fname: '',
@@ -80,7 +80,9 @@ export default function Login() {
                             required
                         />
 
-                        <SubmitButton type="submit" className="py-4">
+                        <SubmitButton
+                            type="submit"
+                            className="py-4 w-full !max-w-full flex justify-center">
                             Sign Up
                         </SubmitButton>
                     </Form>
