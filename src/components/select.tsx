@@ -17,15 +17,17 @@ export interface RTWithoutValue extends Omit<RTWithoutOnChange, 'value'> {}
 export interface SelectProps extends Omit<RTWithoutValue, 'primaryColor'> {
     className?: string;
     label?: string;
-    value?: SelectValue;
+    value?: string;
     primaryColor?: string;
-    onChange?: (x: SelectValue) => void;
+    labelClassName?: string;
+    onChange?: (x: string) => void;
 }
 
 export default function Select({
     label,
     className,
     primaryColor = '',
+    labelClassName = '',
     value,
     onChange,
     options,
@@ -40,13 +42,13 @@ export default function Select({
         }
     }, [selectedValue, options, value]);
 
-    const handleOnChange = (e: SelectValue) => {
+    const handleOnChange = (e: RTSelectValueProps) => {
         setSelectedValue(e);
-        if (onChange) onChange(e);
+        if (onChange) onChange(e.value);
     };
 
     return (
-        <label className="flex flex-col gap-2">
+        <label className={`flex flex-col gap-2 ${labelClassName ? labelClassName : ''}`}>
             {label && <span className="text-dark-gray font-normal">{label}</span>}
 
             <RTSelect

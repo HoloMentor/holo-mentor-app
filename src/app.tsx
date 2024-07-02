@@ -6,7 +6,7 @@ const Login = loadable(() => import('@/pages/login'));
 const Register = loadable(() => import('@/pages/register'));
 
 function App() {
-    let logged = false;
+    let logged = true;
 
     return (
         <div className="w-full min-h-screen overflow-x-hidden">
