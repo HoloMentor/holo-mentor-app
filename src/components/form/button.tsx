@@ -1,7 +1,12 @@
 import { useFormikContext } from 'formik';
-import Button, { ButtonProps } from '../components/button';
+import Button, { ButtonProps } from '@/components/button';
 
-export default function SubmitButton({ children, onClick, ...props }: ButtonProps) {
+export default function SubmitButton({
+    children,
+    onClick,
+    type = 'submit',
+    ...props
+}: ButtonProps) {
     const { submitForm } = useFormikContext();
 
     const onSubmit = (e: any) => {
@@ -12,7 +17,7 @@ export default function SubmitButton({ children, onClick, ...props }: ButtonProp
     };
 
     return (
-        <Button onClick={onSubmit} {...props}>
+        <Button onClick={onSubmit} type={type} {...props}>
             {children}
         </Button>
     );

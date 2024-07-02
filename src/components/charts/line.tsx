@@ -1,7 +1,6 @@
-import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
-    Chart ,
+    Chart,
     CategoryScale,
     LinearScale,
     PointElement,
@@ -11,18 +10,9 @@ import {
     Legend
 } from 'chart.js';
 
-Chart.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-);
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export default function Linegraph() {
-
+export default function LineChart() {
     const options = {};
 
     const data = {
@@ -32,16 +22,16 @@ export default function Linegraph() {
                 label: 'Chemistry',
                 data: [65, 59, 80, 81, 56, 55],
                 borderColor: '#FFA439',
-                backgroundColor: '#FFA439',
+                backgroundColor: '#FFA439'
             },
             {
                 label: 'Physics',
-                data: [28, 40, 40, 60, 52, 70, ],
+                data: [28, 40, 40, 60, 52, 70],
                 borderColor: '#489F2D',
-                backgroundColor: '#489F2D',
-            },
-        ],
+                backgroundColor: '#489F2D'
+            }
+        ]
     };
 
-    return <Line options={options} data={data}/>;
+    return <Line className="!w-full !h-full" options={options} data={data} />;
 }

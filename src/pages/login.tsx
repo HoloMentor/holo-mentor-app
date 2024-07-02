@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import Form from '../form';
+import Form from '@/components/form';
 import * as Yup from 'yup';
-import SubmitButton from '../form/button';
-import FormInput from '../form/input';
+import SubmitButton from '@/components/form/button';
+import FormInput from '@/components/form/input';
 
 const initialValues = {
     email: '',
@@ -18,6 +18,7 @@ export default function Login() {
     const onSubmit = (values: any) => {
         console.log(values);
     };
+
     return (
         <div className="relative grid grid-cols-2 min-h-screen items-center justify-center justify-items-center px-[10%] py-6 max-lg:flex max-lg:flex-col bg-white">
             <div className="max-w-[800px] max-h-[800px] h-[80vw] w-[80vw] z-[-1] absolute top-[-120px] left-[-150px] bg-light-gray border rounded-full min-w-[400px] min-h-[400px]"></div>

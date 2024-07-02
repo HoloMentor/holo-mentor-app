@@ -1,6 +1,6 @@
 import React from 'react';
-import Linegraph from '../components/linegraph';
-import Announcement from '../components/announcment';
+import LineChart from '@/components/charts/line';
+import Announcement from '@/components/home/announcement';
 
 function Home() {
     return (
@@ -39,7 +39,7 @@ function Home() {
                             </div>
                         </div>
                         <div>
-                            <Linegraph />
+                            <LineChart />
                         </div>
                         <div>
                             <div className="mt-5 border-2 rounded-md">
@@ -55,54 +55,75 @@ function Home() {
                                         <li className="pb-2 ">
                                             <div className="flex items-center mb-4 space-x-4 max-md:mb-2">
                                                 <p>1.</p>
-                                                <div className='flex-shrink-0'>
-                                                    <img className='w-[45px] h-[45px] rounded-[100px] border-2' src="/images/avatar.png" alt="" />
+                                                <div className="flex-shrink-0">
+                                                    <img
+                                                        className="w-[45px] h-[45px] rounded-[100px] border-2"
+                                                        src="/images/avatar.png"
+                                                        alt=""
+                                                    />
                                                 </div>
-                                                <div className='flex-1'>
-                                                    <p className='text-2xl font-semibold text-black max-md:text-xl'>Saliya bandara</p>
+                                                <div className="flex-1">
+                                                    <p className="text-2xl font-semibold text-black max-md:text-xl">
+                                                        Saliya bandara
+                                                    </p>
                                                 </div>
-                                                <div className='inline-flex items-center place-self-center'>
+                                                <div className="inline-flex items-center place-self-center">
                                                     <img src="/images/gmedal.png" alt="" />
                                                 </div>
                                             </div>
                                             <div className="flex items-center mb-4 space-x-4">
                                                 <p>2.</p>
-                                                <div className='flex-shrink-0'>
-                                                    <img className='w-[45px] h-[45px] rounded-[100px] border-2' src="/images/avatar.png" alt="" />
+                                                <div className="flex-shrink-0">
+                                                    <img
+                                                        className="w-[45px] h-[45px] rounded-[100px] border-2"
+                                                        src="/images/avatar.png"
+                                                        alt=""
+                                                    />
                                                 </div>
-                                                <div className='flex-1'>
-                                                    <p className='text-2xl font-semibold text-black max-md:text-xl'>Saliya bandara</p>
+                                                <div className="flex-1">
+                                                    <p className="text-2xl font-semibold text-black max-md:text-xl">
+                                                        Saliya bandara
+                                                    </p>
                                                 </div>
-                                                <div className='inline-flex items-center place-self-center'>
+                                                <div className="inline-flex items-center place-self-center">
                                                     <img src="/images/smedal.png" alt="" />
                                                 </div>
                                             </div>
                                             <div className="flex items-center mb-4 space-x-4">
                                                 <p>3.</p>
-                                                <div className='flex-shrink-0'>
-                                                    <img className='w-[45px] h-[45px] rounded-[100px] border-2' src="/images/avatar.png" alt="" />
+                                                <div className="flex-shrink-0">
+                                                    <img
+                                                        className="w-[45px] h-[45px] rounded-[100px] border-2"
+                                                        src="/images/avatar.png"
+                                                        alt=""
+                                                    />
                                                 </div>
-                                                <div className='flex-1'>
-                                                    <p className='text-2xl font-semibold text-black max-md:text-xl'>Saliya bandara</p>
+                                                <div className="flex-1">
+                                                    <p className="text-2xl font-semibold text-black max-md:text-xl">
+                                                        Saliya bandara
+                                                    </p>
                                                 </div>
-                                                <div className='inline-flex items-center place-self-center'>
+                                                <div className="inline-flex items-center place-self-center">
                                                     <img src="/images/bmedal.png" alt="" />
                                                 </div>
                                             </div>
                                             <div className="flex items-center mb-4 space-x-4">
                                                 <p>4.</p>
-                                                <div className='flex-shrink-0'>
-                                                    <img className='w-[45px] h-[45px] rounded-[100px] border-2' src="/images/avatar.png" alt="" />
+                                                <div className="flex-shrink-0">
+                                                    <img
+                                                        className="w-[45px] h-[45px] rounded-[100px] border-2"
+                                                        src="/images/avatar.png"
+                                                        alt=""
+                                                    />
                                                 </div>
-                                                <div className='flex-1'>
-                                                    <p className='text-2xl font-semibold text-black max-md:text-xl'>Saliya bandara</p>
+                                                <div className="flex-1">
+                                                    <p className="text-2xl font-semibold text-black max-md:text-xl">
+                                                        Saliya bandara
+                                                    </p>
                                                 </div>
-                                                <div className='inline-flex items-center place-self-center'>
-                                                    
-                                                </div>
+                                                <div className="inline-flex items-center place-self-center"></div>
                                             </div>
                                         </li>
-                                       
                                     </ul>
                                 </div>
                             </div>
