@@ -3,7 +3,7 @@ import Announcement from '@/components/home/announcement';
 
 function Home() {
     return (
-        <div className="flex flex-col bg-gray-100 w-full">
+        <div className="flex flex-col w-full bg-gray-100">
             <div className="flex flex-col items-center w-full">
                 <img
                     src="/images/home-banner.png"
@@ -13,7 +13,7 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 max-xl:grid-cols-1">
-                <section className="w-full bg-white rounded-[10px] p-4 h-fit">
+                <section className="w-full bg-white rounded-[10px] p-4 h-fit "> 
                     <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
                         Announcements
                     </h1>
@@ -30,7 +30,7 @@ function Home() {
                             <p className="relative items-center mt-4 text-base font-normal leading-tight text-zinc-400">
                                 Statistics
                             </p>
-                            <h1 className="text-dark-green text-2xl font-bold leading-7">
+                            <h1 className="text-2xl font-bold leading-7 text-dark-green">
                                 Student Performance
                             </h1>
                         </div>
@@ -49,7 +49,7 @@ function Home() {
                                 <h1 className="justify-center ml-2 text-center text-teal-900 text-[28px] font-semibold mb-2">
                                     Best Improvements
                                 </h1>
-                                <ul className="items-center justify-center p-2 mx-8 ml-2 list-inside ">
+                                <ul className="items-center justify-center p-2 mx-8 ml-2 list-inside">
                                     <li className="pb-2 ">
                                         <div className="flex items-center mb-4 space-x-4 max-md:mb-2">
                                             <p>1.</p>
@@ -71,7 +71,7 @@ function Home() {
                                         </div>
                                         <div className="flex items-center mb-4 space-x-4">
                                             <p>2.</p>
-                                            <div className="flex-shrink-0">
+                                            <div className="flex-shrink-0 ">
                                                 <img
                                                     className="w-[45px] h-[45px] rounded-[100px] border-2"
                                                     src="/images/avatar.png"
