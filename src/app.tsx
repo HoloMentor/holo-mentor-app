@@ -1,7 +1,7 @@
 import loadable from '@loadable/component';
 import { Route, Routes } from 'react-router-dom';
 import StudentRoutes from './routes/student';
-// import TeacherRoutes from './routes/teacher';
+import TeacherRoutes from './routes/teacher';
 
 const Login = loadable(() => import('@/pages/login'));
 const Register = loadable(() => import('@/pages/register'));
@@ -12,11 +12,7 @@ function App() {
     return (
         <div className="w-full min-h-screen overflow-x-hidden">
             {logged ? (
-                role === 'teacher' ? (
-                    <TeacherRoutes />
-                ) : (
-                    <StudentRoutes/>
-                )
+                <TeacherRoutes />
             ) : (
                 // <TeacherRoutes />
                 <Routes>
