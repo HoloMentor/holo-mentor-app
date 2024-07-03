@@ -54,7 +54,9 @@ export default function Login() {
                             </Link>
                         </div>
 
-                        <SubmitButton type="submit" className="py-4">
+                        <SubmitButton
+                            type="submit"
+                            className="py-4 w-full !max-w-full flex justify-center">
                             Sign In
                         </SubmitButton>
                     </Form>
