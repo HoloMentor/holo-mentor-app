@@ -1,4 +1,4 @@
-import Heading from '@/components/heading';
+import Heading from '@/components/headings/main';
 // import { Link } from 'react-router-dom';
 
 export default function Profile() {
@@ -12,6 +12,7 @@ export default function Profile() {
     return (
         <div className="flex flex-col gap-3">
             <Heading>Profile</Heading>
+
             <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
                 <section className="w-full h-fit col-span-1">
                     <div className="bg-white px-4 py-6 mb-4 rounded-lg relative">

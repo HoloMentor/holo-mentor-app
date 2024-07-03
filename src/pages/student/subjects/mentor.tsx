@@ -9,7 +9,7 @@ export default function Mentor() {
         <div className="flex flex-col gap-3">
             <Heading>HoloMentor</Heading>
 
-            <Content className="flex flex-col gap-6">
+            <Content>
                 <SubHeading>Study Plans</SubHeading>
 
                 {true ? (
@@ -35,7 +35,7 @@ export default function Mentor() {
                 )}
             </Content>
 
-            <Content className="flex flex-col gap-6">
+            <Content>
                 <SubHeading>Study Plans</SubHeading>
 
                 <Accordion variant="splitted" selectionMode="multiple">
