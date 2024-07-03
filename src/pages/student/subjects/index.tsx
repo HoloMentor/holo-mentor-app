@@ -1,5 +1,5 @@
 import Content from '@/components/content';
-import Heading from '@/components/heading';
+import Heading from '@/components/headings/main';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 
