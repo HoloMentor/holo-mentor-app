@@ -25,6 +25,9 @@ export default {
             // => @media (max-width: 639px) { ... }
         },
         extend: {
+            fontFamily: {
+                "sans": ["Poppins", "sans-serif"],
+            },
             colors: {
                 primary: {
                     50: '#E6F2F2',
@@ -48,6 +51,10 @@ export default {
                 'dark-navy-blue': '#493d98',
                 'dark-green': '#194545',
                 'light-green': '#2D8F8F'
+                
+            },
+            boxShadow: {
+                'custom': '1px 4px 8.7px 0px rgba(0, 0, 0, 0.29)',
             }
         }
     },
