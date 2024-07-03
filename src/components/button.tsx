@@ -19,7 +19,7 @@ export default function Button({
     ...props
 }: ButtonProps) {
     const _className = React.useMemo(() => {
-        let cl = `outline-none cursor-pointer select-none inline-flex items-center gap-2 border-0 text-white py-2 px-4 transition-all duration-200 rounded max-w-max uppercase font-semibold text-sm`;
+        let cl = `outline-none cursor-pointer select-none inline-flex items-center gap-2 border-0 text-white py-2 px-4 transition-all duration-200 rounded max-w-max font-semibold text-sm`;
 
         switch (color) {
             case 'light-green':

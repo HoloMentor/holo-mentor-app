@@ -1,3 +1,4 @@
+import Content from '@/components/content';
 import Heading from '@/components/heading';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ export default function Subjects() {
         <div className="flex flex-col gap-3">
             <Heading>Subjects</Heading>
 
-            <div className="bg-white px-4 py-8 rounded-ss-md rounded-es-md">
+            <Content>
                 <Accordion variant="splitted" selectionMode="multiple">
                     {Array.from({ length: 3 }).map((_, i) => {
                         return (
@@ -48,7 +49,7 @@ export default function Subjects() {
                         );
                     })}
                 </Accordion>
-            </div>
+            </Content>
         </div>
     );
 }

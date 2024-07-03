@@ -1,4 +1,6 @@
-import Heading from '@/components/heading';
+import Content from '@/components/content';
+import Heading from '@/components/headings/main';
+import SubHeading from '@/components/headings/sub';
 import SubTopic from '@/components/subjects/subject/sub-topic';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 
@@ -7,7 +9,9 @@ export default function Subject() {
         <div className="flex flex-col gap-3">
             <Heading>Subject</Heading>
 
-            <div className="bg-white px-4 py-8 rounded-ss-md rounded-es-md">
+            <Content>
+                <SubHeading>Topics</SubHeading>
+
                 <Accordion variant="splitted" selectionMode="multiple">
                     {Array.from({ length: 3 }).map((_, i) => {
                         return (
@@ -26,7 +30,7 @@ export default function Subject() {
                         );
                     })}
                 </Accordion>
-            </div>
+            </Content>
         </div>
     );
 }
