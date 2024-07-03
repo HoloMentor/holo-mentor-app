@@ -1,4 +1,5 @@
 import InfoCard from '@/components/cards/info';
+import DoughnuChart from '@/components/charts/donut';
 
 function Home() {
     /* sample */
@@ -29,7 +30,7 @@ function Home() {
                     className="flex flex-auto w-full h-full"
                 />
             </div>
-            <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-2 h-full w-full">
+            <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-4 h-full w-full">
                 <InfoCard number={560} label="Students">
                     <svg
                         width="51"
@@ -121,8 +122,8 @@ function Home() {
                 </InfoCard>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 max-xl:grid-cols-1">
-                <section className="w-full bg-white rounded-lg p-4 h-fit col-span-2">
+            <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
+                <section className="w-full bg-white rounded-lg p-4 h-fit col-span-3">
                     <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
                         Notification
                     </h1>
@@ -161,7 +162,7 @@ function Home() {
                     </div>
                 </section>
 
-                <section className="w-full bg-white rounded-s-lg p-2 h-full ">
+                <section className="w-full bg-white rounded-s-lg p-2 h-full col-span-2 max-xl:col-span-3">
                     <section className="w-full bg-white rounded-s-lg p-2 h-fit">
                         <div className="mt-5 flex flex-col gap-8">
                             <h1 className="text-3xl font-bold leading-7 text-dark-green">
@@ -193,6 +194,12 @@ function Home() {
                                         );
                                     })}
                                 </div>
+                            </div>
+                            <h1 className="text-3xl font-bold leading-7 text-dark-green ">
+                                Students
+                            </h1>
+                            <div className="felx w-full items-center justify-center">
+                                <DoughnuChart />
                             </div>
                         </div>
                     </section>

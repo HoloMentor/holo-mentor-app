@@ -9,7 +9,7 @@ const Notifications = loadable(() => import('@/pages/teacher/notifications'));
 export default function StudentRoutes() {
     return (
         <Routes>
-            <Route path="teacher" element={<Layout />}>
+            <Route path="" element={<Layout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="classes" element={<Outlet />}>
                     <Route path=":classId" element={<Outlet />}></Route>
