@@ -9,7 +9,7 @@ interface InfoCardProps {
 
 const InfoCard: React.FC<InfoCardProps> = ({ svgCode, number, label, children }) => {
     return (
-        <section className="bg-white rounded-lg flex flex-row gap-8  w-full h-28 items-center  justify-center shadow-md sm:w-full">
+        <section className="bg-white rounded-lg flex flex-row gap-8  w-full h-28 items-center  justify-center shadow-md sm:w-full cursor-pointer">
             {svgCode ? <div dangerouslySetInnerHTML={{ __html: svgCode }} /> : children}
             <div className="flex flex-col items-center">
                 <span className="text-3xl font-semibold">{number}</span>
