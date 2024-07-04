@@ -47,7 +47,8 @@ export default {
                 'navy-blue': '#6153BD',
                 'dark-navy-blue': '#493d98',
                 'dark-green': '#194545',
-                'light-green': '#2D8F8F'
+                'light-green': '#2D8F8F',
+                'gray':'#E8E8E8'
             }
         }
     },

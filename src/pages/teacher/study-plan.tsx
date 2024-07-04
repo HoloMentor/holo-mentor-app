@@ -1,36 +1,70 @@
 import React from 'react';
+import { useState } from 'react';
+import StudyPlanCard from '@/components/cards/study-plan-card';
 
 export default function StudyPlan() {
+    const [toggleState, setToggleState] = useState<number>(1);
+
+    const tiers = [
+        {
+            id: 1,
+            content: [
+                <StudyPlanCard planName="Plan for Tier 1" autherName="Author 1" />,
+                <StudyPlanCard planName="Plan for Tier 1B" autherName="Author 1" />
+            ]
+        },
+        {
+            id: 2,
+            content: [<StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,<StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />]
+        },
+        {
+            id: 3,
+            content: [<StudyPlanCard planName="Plan for Tier 3" autherName="Author 1" />]
+        },
+        {
+            id: 4,
+            content: [<StudyPlanCard planName="Plan for Tier 4" autherName="Author 1" />]
+        },
+        {
+            id: 5,
+            content: [<StudyPlanCard planName="Plan for Tier 5" autherName="Author 1" />]
+        }
+    ];
+
+    const buttonClasses = (tier: number): string =>
+        `p-4 rounded-t-lg shadow-lg ${
+            toggleState === tier ? 'bg-white' : 'bg-gray-200'
+        } font-semibold text-2xl`;
+
     return (
         <section className="h-screen mb-20">
             <div className="flex p-4 mr-4 bg-white rounded-md shadow-md">
                 <p className="ml-3 text-3xl font-bold text-dark-green">Study Plan</p>
             </div>
             <section className="flex flex-col h-full mt-4">
-                <div className="grid grid-cols-5 gap-1 mr-4 rounded-md shadow-md">
-                    <button className="p-4 bg-white shadow-lg">Tier 1</button>
-                    <button className="p-4 shadow-lg">Tier 2</button>
-                    <button className="p-4 shadow-lg">Tier 3</button>
-                    <button className="p-4 shadow-lg">Tier 4</button>
-                    <button className="p-4 shadow-lg">Tier 5</button>
+                <div className="grid grid-cols-5 gap-2 mr-4 rounded-md shadow-md">
+                    {tiers.map((tier) => (
+                        <button
+                            key={tier.id}
+                            className={buttonClasses(tier.id)}
+                            onClick={() => setToggleState(tier.id)}>
+                            Tier {tier.id}
+                        </button>
+                    ))}
                 </div>
-                <div className="flex-1 mr-4 bg-white">
-                    <div id="tier1" className="p-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis cupiditate
-                        inventore maxime harum officiis aut eligendi tenetur quas odit totam dolor
-                        rem unde magni, nulla iure ducimus debitis quis assumenda.
-                    </div>
-                    <div id="tier1" className="p-4">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, inventore?
-                        Dolorum voluptatem beatae debitis eius numquam nihil esse odit quisquam sed
-                        incidunt fugit, inventore cupiditate dignissimos aperiam porro cum commodi.
-                    </div>
-                    <div id="tier1" className="p-4">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, aliquam.
-                        Dolorem, voluptatem doloremque vitae sit quas praesentium quos asperiores
-                        in. Natus minus tempora at explicabo autem repellat obcaecati, totam esse?
-                    </div>
-                </div>
+                {tiers.map((tier) =>
+                        toggleState === tier.id && (
+                            <div className="grid h-full grid-cols-2 mr-4 bg-white">
+                                <div key={tier.id} className="flex p-4">
+                                    {tier.content[0]}
+                                    {tier.content[2]}
+                                </div>
+                                <div key={tier.id} className="flex p-4">
+                                    {tier.content[1]}
+                                </div>
+                            </div>
+                        )
+                )}
             </section>
         </section>
     );
