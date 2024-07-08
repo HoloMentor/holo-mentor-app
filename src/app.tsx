@@ -1,27 +1,20 @@
-import loadable from '@loadable/component';
-import { Route, Routes } from 'react-router-dom';
-// import StudentRoutes from './routes/student';
+import config from './config';
+import DefaultRoutes from './routes';
+import StudentRoutes from './routes/student';
 import TeacherRoutes from './routes/teacher';
 
-const Login = loadable(() => import('@/pages/login'));
-const Register = loadable(() => import('@/pages/register'));
-
 function App() {
-    let logged = true;
+    const role = config.role;
 
-    return (
-        <div className="w-full min-h-screen overflow-x-hidden">
-            {logged ? (
-                // <StudentRoutes />
-                <TeacherRoutes />
-            ) : (
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/signup" element={<Register />} />
-                </Routes>
-            )}
-        </div>
-    );
+    switch (role) {
+        case 'STUDENT':
+            return <StudentRoutes />;
+        case 'TEACHER':
+            return <TeacherRoutes />;
+
+        default:
+            return <DefaultRoutes />;
+    }
 }
 
 export default App;

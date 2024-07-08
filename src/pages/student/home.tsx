@@ -21,7 +21,7 @@ function Home() {
     ];
 
     return (
-        <div className="flex flex-col bg-gray-100 w-full">
+        <div className="flex flex-col w-full bg-gray-100">
             <div className="flex flex-col items-center w-full">
                 <img
                     src="/images/banner.png"
@@ -31,7 +31,7 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-3 gap-4 max-xl:grid-cols-1">
-                <section className="w-full bg-white rounded-lg p-4 h-fit col-span-2">
+                <section className="w-full col-span-2 p-4 bg-white rounded-lg h-fit">
                     <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
                         Announcements
                     </h1>
@@ -45,7 +45,7 @@ function Home() {
                                     <img
                                         src="/images/User.svg"
                                         alt="User"
-                                        className="size-11 rounded-full"
+                                        className="rounded-full size-11"
                                     />
                                     <div className="flex flex-col gap-4">
                                         <div className="flex flex-col justify-start">
@@ -70,13 +70,13 @@ function Home() {
                     </div>
                 </section>
 
-                <section className="w-full bg-white rounded-s-lg p-2 h-fit">
-                    <div className="mt-5 flex flex-col gap-8">
+                <section className="w-full p-2 bg-white rounded-s-lg h-fit">
+                    <div className="flex flex-col gap-8 mt-5">
                         <h1 className="text-3xl font-bold leading-7 text-dark-green">
                             Top Performance
                         </h1>
-                        <div className="flex flex-col gap-4 rounded-md border border-light-border p-4">
-                            <h1 className="justify-center ml-2 text-dark-green text-2xl font-semibold mb-2">
+                        <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
+                            <h1 className="justify-center mb-2 ml-2 text-2xl font-semibold text-dark-green">
                                 Best Contributor
                             </h1>
                             <div className="flex flex-col gap-5">
@@ -88,7 +88,7 @@ function Home() {
                                             <div className="flex items-center gap-3">
                                                 <p className="font-semibold">{i + 1}</p>
                                                 <img
-                                                    className="size-11 rounded-full border-2"
+                                                    className="border-2 rounded-full size-11"
                                                     src={_.avatar}
                                                     alt="Avatar"
                                                 />
@@ -108,7 +108,7 @@ function Home() {
                             <p className="relative items-center mt-4 text-base font-normal leading-tight text-zinc-400">
                                 Statistics
                             </p>
-                            <h1 className="text-dark-green text-2xl font-bold leading-7">
+                            <h1 className="text-2xl font-bold leading-7 text-dark-green">
                                 Student Performance
                             </h1>
                         </div>

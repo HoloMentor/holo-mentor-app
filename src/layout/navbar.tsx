@@ -1,9 +1,9 @@
 export default function Navbar() {
     return (
-        <div className="flex gap-8 items-center justify-end w-full bg-white h-16 rounded-es-lg py-2 px-5">
+        <div className="flex items-center justify-end w-full h-16 gap-8 px-5 py-2 bg-white rounded-es-lg">
             <div className="relative">
                 <div className="block bg-white size-3 rounded-full absolute top-[-2px] right-0 p-[2px]">
-                    <div className="block bg-orange w-full h-full rounded-full"></div>
+                    <div className="block w-full h-full rounded-full bg-orange"></div>
                 </div>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@ export default function Navbar() {
                 </svg>
             </div>
 
-            <div className="flex gap-4 items-center cursor-pointer">
+            <div className="flex items-center gap-4 cursor-pointer">
                 <span className="font-medium">Senura Edmons</span>
                 <img
                     src="https://docs.material-tailwind.com/img/face-2.jpg"

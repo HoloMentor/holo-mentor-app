@@ -22,7 +22,7 @@ function Home() {
     ];
 
     return (
-        <div className="flex flex-col bg-gray-100 w-full">
+        <div className="flex flex-col w-full bg-gray-100">
             <div className="flex flex-col items-center w-full">
                 <img
                     src="/images/banner.png"
@@ -30,7 +30,7 @@ function Home() {
                     className="flex flex-auto w-full h-full"
                 />
             </div>
-            <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-4 h-full w-full">
+<div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-4 h-full w-full">
                 <InfoCard number={560} label="Students">
                     <svg
                         width="51"
@@ -122,7 +122,7 @@ function Home() {
                 </InfoCard>
             </div>
 
-            <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
+ <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
                 <section className="w-full bg-white rounded-lg p-4 h-fit col-span-3">
                     <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
                         Notification
@@ -137,7 +137,7 @@ function Home() {
                                     <img
                                         src="/images/User.svg"
                                         alt="User"
-                                        className="size-11 rounded-full"
+                                        className="rounded-full size-11"
                                     />
                                     <div className="flex flex-col gap-4">
                                         <div className="flex flex-col justify-start">
@@ -168,8 +168,8 @@ function Home() {
                             <h1 className="text-3xl font-bold leading-7 text-dark-green">
                                 Top Performance
                             </h1>
-                            <div className="flex flex-col gap-4 rounded-md border border-light-border p-4">
-                                <h1 className="justify-center ml-2 text-dark-green text-2xl font-semibold mb-2">
+                            <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
+                                <h1 className="justify-center mb-2 ml-2 text-2xl font-semibold text-dark-green">
                                     Best Contributor
                                 </h1>
                                 <div className="flex flex-col gap-5">
@@ -181,7 +181,7 @@ function Home() {
                                                 <div className="flex items-center gap-3">
                                                     <p className="font-semibold">{i + 1}</p>
                                                     <img
-                                                        className="size-11 rounded-full border-2"
+                                                        className="border-2 rounded-full size-11"
                                                         src={_.avatar}
                                                         alt="Avatar"
                                                     />
