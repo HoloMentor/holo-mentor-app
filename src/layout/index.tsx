@@ -1,17 +1,18 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import Navbar from './navbar';
 import SideBar from './sidebar';
-import links from './links/student';
+import links from './links';
 import React from 'react';
+import config from '@/config';
 
 export default function Layout() {
-    const role = 'STUDENT';
+    const role = config.role;
     const location = useLocation();
     const params = useParams();
 
     /* filter sidebar content according to role and path */
     const routeLinks = React.useMemo(() => {
-        const roleLinks = links[role.toLowerCase()];
+        const roleLinks = (links as any)[role.toLowerCase()];
         const segment = location.pathname.slice(1).split('/')?.[0];
 
         if (segment) {
@@ -19,7 +20,7 @@ export default function Layout() {
 
             if (regex.test(location.pathname)) {
                 if (segment in roleLinks) {
-                    return roleLinks[segment].map((_) => {
+                    return roleLinks[segment].map((_: NavOptionProps) => {
                         for (const param in params) {
                             _.to = _.to.replace(`:${param}`, params[param]);
                         }
