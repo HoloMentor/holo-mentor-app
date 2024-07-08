@@ -26,6 +26,7 @@
     "dependencies": {
         "@loadable/component": "^5.16.4",
         "@nextui-org/react": "^2.4.2",
+        "@nextui-org/table": "^2.0.36",
         "@reduxjs/toolkit": "^2.2.5",
         "@tailwindcss/forms": "^0.5.7",
         "@types/loadable__component": "^5.13.9",
