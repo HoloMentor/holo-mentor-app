@@ -1,70 +1,32 @@
-import React from 'react';
-import RTSelect from 'react-tailwindcss-select';
-import { SelectValue } from 'react-tailwindcss-select/dist/components/type';
+import { Autocomplete, AutocompleteItem, AutocompleteProps } from '@nextui-org/react';
 
-export interface RTSelectValueProps {
-    value: string;
-    label: string;
-    disabled?: boolean;
-    isSelected?: boolean;
+export type SelectValue = string | number | null;
+
+interface OmitChildren extends Omit<AutocompleteProps, 'children'> {}
+
+export interface SelectProps extends Omit<OmitChildren, 'onSelectionChange'> {
+    onSelectionChange?: (key: SelectValue) => void;
 }
 
-export type RTSelectProps = React.ComponentProps<typeof RTSelect>;
-
-export interface RTWithoutOnChange extends Omit<RTSelectProps, 'onChange'> {}
-export interface RTWithoutValue extends Omit<RTWithoutOnChange, 'value'> {}
-
-export interface SelectProps extends Omit<RTWithoutValue, 'primaryColor'> {
-    className?: string;
-    label?: string;
-    value?: string;
-    primaryColor?: string;
-    labelClassName?: string;
-    onChange?: (x: string) => void;
-}
-
-export default function Select({
-    label,
-    className,
-    primaryColor = '',
-    labelClassName = '',
-    value,
-    onChange,
-    options,
-    ...props
-}: SelectProps) {
-    const [selectedValue, setSelectedValue] = React.useState(null);
-
-    React.useEffect(() => {
-        if (value !== selectedValue?.value) {
-            const exist = options.find((_: any) => _.value == value);
-            if (exist) setSelectedValue(exist);
-        }
-    }, [selectedValue, options, value]);
-
-    const handleOnChange = (e: RTSelectValueProps) => {
-        setSelectedValue(e);
-        if (onChange) onChange(e.value);
+export default function Select({ onSelectionChange, ...props }: SelectProps) {
+    const onChange = (e: string) => {
+        if (onSelectionChange) onSelectionChange(e);
     };
-
     return (
-        <label className={`flex flex-col gap-2 ${labelClassName ? labelClassName : ''}`}>
-            {label && <span className="text-dark-gray font-normal">{label}</span>}
-
-            <RTSelect
-                classNames={{
-                    menuButton: ({ isDisabled }: any) =>
-                        `flex text-md border border-[#0000001A] rounded-md focus:ring-2 ${
-                            isDisabled ? 'bg-gray-200' : 'bg-white focus:ring-pink'
-                        }`,
-                    menu: 'absolute z-[3] w-full bg-white shadow-md border border-[#0000001A] rounded py-1 mt-1.5 text-sm text-black'
-                }}
-                primaryColor={primaryColor}
-                onChange={handleOnChange}
-                value={selectedValue}
-                options={options}
-                {...props}
-            />
-        </label>
+        <Autocomplete
+            labelPlacement="outside"
+            clearIcon={false}
+            className="bg-white"
+            onSelectionChange={onChange}
+            inputProps={{
+                classNames: {
+                    inputWrapper:
+                        'shadow-none border-2 border-[#0000001A] focus:outline-none focus:!border-dark-green focus:!ring-dark-green rounded-md bg-transparent',
+                    input: 'focus:outline-none border-transparent focus:border-transparent focus:ring-0'
+                }
+            }}
+            {...props}>
+            {(item: any) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
+        </Autocomplete>
     );
 }

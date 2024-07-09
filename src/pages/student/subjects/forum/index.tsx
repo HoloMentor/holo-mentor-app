@@ -2,32 +2,73 @@ import Button from '@/components/button';
 import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select from '@/components/select';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const filterOptions = [
+    {
+        value: 'top',
+        label: 'Top'
+    }
+];
 
 export default function Forum() {
+    const location = useLocation();
+    const [filterValue, setFilterValue] = useState<string | null>('top');
+
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
 
             <section className="flex justify-between items-center gap-5 pr-5">
                 <div className="w-full max-w-36">
-                    <Select options={[]} />
+                    <Select
+                        defaultItems={filterOptions}
+                        selectedKey={filterValue}
+                        onSelectionChange={setFilterValue}
+                    />
                 </div>
                 <div className="flex items-center gap-2">
                     <Input placeholder="Search" />
-                    <Button className="flex items-center gap-2">
-                        <span>Add New</span>{' '}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="size-6">
-                            <path
-                                fillRule="evenodd"
-                                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </Button>
+
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button
+                                className="flex items-center gap-2"
+                                endContent={
+                                    <span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                            className="size-6">
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </span>
+                                }>
+                                Add New
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu>
+                            <DropdownItem
+                                className="text-center text-black"
+                                key="new"
+                                href={`${location.pathname}/mcq`}>
+                                MCQ
+                            </DropdownItem>
+                            <DropdownItem
+                                className="text-center text-black"
+                                key="copy"
+                                href={`${location.pathname}/essay`}>
+                                Essay
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </div>
             </section>
 
