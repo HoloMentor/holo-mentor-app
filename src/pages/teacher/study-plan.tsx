@@ -15,7 +15,10 @@ export default function StudyPlan() {
         },
         {
             id: 2,
-            content: [<StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,<StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />]
+            content: [
+                <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,
+                <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />
+            ]
         },
         {
             id: 3,
@@ -52,15 +55,22 @@ export default function StudyPlan() {
                         </button>
                     ))}
                 </div>
-                {tiers.map((tier) =>
+                <div className="flex px-8 pt-8 pb-5 mr-4 bg-white place-content-between">
+                    <h1 className='pl-4 text-xl font-semibold text-dark-green'>Current Study Plan</h1>
+                    <button className='p-2 px-4 text-white rounded-md bg-dark-green'>Create new Plan</button>
+                </div>
+                {tiers.map(
+                    (tier) =>
                         toggleState === tier.id && (
-                            <div className="grid h-full grid-cols-2 mr-4 bg-white">
-                                <div key={tier.id} className="flex p-4">
+                            <div className="grid h-full grid-cols-2 mr-4 overflow-auto bg-white rounded-md min-h-96">
+                                <div key={tier.id} className="p-4 space-y-5">
                                     {tier.content[0]}
-                                    {tier.content[2]}
-                                </div>
-                                <div key={tier.id} className="flex p-4">
                                     {tier.content[1]}
+                                </div>
+                                <div key={tier.id} className="p-4 space-y-5 ">
+                                    {tier.content[1]}
+                                    {tier.content[0]}
+                                    
                                 </div>
                             </div>
                         )
