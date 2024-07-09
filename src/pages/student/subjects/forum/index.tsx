@@ -1,7 +1,7 @@
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
 import Input from '@/components/input';
-import Select from '@/components/select';
+import Select, { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -15,7 +15,7 @@ const filterOptions = [
 
 export default function Forum() {
     const location = useLocation();
-    const [filterValue, setFilterValue] = useState<string | null>('top');
+    const [filterValue, setFilterValue] = useState<SelectValue>('top');
 
     return (
         <div className="flex flex-col gap-3">
@@ -23,11 +23,7 @@ export default function Forum() {
 
             <section className="flex justify-between items-center gap-5 pr-5">
                 <div className="w-full max-w-36">
-                    <Select
-                        defaultItems={filterOptions}
-                        selectedKey={filterValue}
-                        onSelectionChange={setFilterValue}
-                    />
+                    <Select options={filterOptions} value={filterValue} onChange={setFilterValue} />
                 </div>
                 <div className="flex items-center gap-2">
                     <Input placeholder="Search" />

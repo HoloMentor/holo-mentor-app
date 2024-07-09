@@ -21,7 +21,7 @@ export default function Navbar() {
             <div className="flex items-center gap-4 cursor-pointer">
                 <span className="font-medium">Senura Edmons</span>
                 <img
-                    src="https://docs.material-tailwind.com/img/face-2.jpg"
+                    src="https://picsum.photos/400"
                     alt="avatar"
                     className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
                 />

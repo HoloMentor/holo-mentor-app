@@ -6,7 +6,7 @@ export interface InputProps extends NextInputProps {}
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ className, labelPlacement = 'outside', variant = 'bordered', ...props }, ref) => {
         const _className = React.useMemo(() => {
-            let cl = `block w-full focus:outline-none focus:!border-dark-green focus:!ring-dark-green text-md file:cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500`;
+            let cl = `block w-full text-md file:cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500`;
 
             if (className) cl += ' ' + className;
 
@@ -20,8 +20,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 labelPlacement={labelPlacement}
                 variant={variant}
                 classNames={{
-                    inputWrapper:
-                        'shadow-none border-2 border-[#0000001A] focus:outline-none focus:!border-dark-green focus:!ring-dark-green rounded-md',
+                    inputWrapper: [
+                        'shadow-none border-2 border-[#0000001A] rounded-md',
+                        'data-[focus=true]:!border-dark-green'
+                    ],
                     input: 'focus:outline-none border-transparent focus:border-transparent focus:ring-0'
                 }}
                 {...props}

@@ -1,8 +1,8 @@
-import Select from '@/components/select';
+import Select, { SelectValue } from '@/components/select';
 import React from 'react';
 
 export default function SubTopic() {
-    const [filterState, setFilterState] = React.useState('all');
+    const [filterState, setFilterState] = React.useState<SelectValue>('all');
 
     const filterOptions = [
         {

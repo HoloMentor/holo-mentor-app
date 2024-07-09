@@ -1,32 +1,57 @@
-import { Autocomplete, AutocompleteItem, AutocompleteProps } from '@nextui-org/react';
+import {
+    Select as NextSelect,
+    SelectItem,
+    SelectProps as NextSelectProps,
+    Selection
+} from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 
 export type SelectValue = string | number | null;
 
-interface OmitChildren extends Omit<AutocompleteProps, 'children'> {}
+interface OmitChildren extends Omit<NextSelectProps, 'children'> {}
+interface OmitOnChange extends Omit<OmitChildren, 'onChange'> {}
 
-export interface SelectProps extends Omit<OmitChildren, 'onSelectionChange'> {
-    onSelectionChange?: (key: SelectValue) => void;
+export interface SelectOption {
+    value: string;
+    label: string;
 }
 
-export default function Select({ onSelectionChange, ...props }: SelectProps) {
-    const onChange = (e: string) => {
-        if (onSelectionChange) onSelectionChange(e);
+export interface SelectProps extends Omit<OmitOnChange, 'value'> {
+    options: SelectOption[];
+    onChange?: (key: SelectValue) => void;
+    value: SelectValue;
+}
+
+export default function Select({ options, value, onChange, ...props }: SelectProps) {
+    const [selectedValue, setSelectedValue] = useState(new Set([]));
+
+    useEffect(() => {
+        if (new Set([value]) !== selectedValue) {
+            const exist = options.find((_: any) => _.value == value);
+
+            if (exist) setSelectedValue(new Set([exist.value]));
+        }
+    }, [selectedValue, options, value]);
+
+    const handleOnChange = (e: Selection) => {
+        const [selected] = e;
+        setSelectedValue(new Set([selected]));
+        if (onChange) onChange(selected);
     };
+
     return (
-        <Autocomplete
+        <NextSelect
             labelPlacement="outside"
-            clearIcon={false}
-            className="bg-white"
-            onSelectionChange={onChange}
-            inputProps={{
-                classNames: {
-                    inputWrapper:
-                        'shadow-none border-2 border-[#0000001A] focus:outline-none focus:!border-dark-green focus:!ring-dark-green rounded-md bg-transparent',
-                    input: 'focus:outline-none border-transparent focus:border-transparent focus:ring-0'
-                }
+            className="bg-white rounded-md"
+            selectedKeys={selectedValue}
+            classNames={{
+                trigger: 'bg-transparent rounded-md'
             }}
+            onSelectionChange={handleOnChange}
             {...props}>
-            {(item: any) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
-        </Autocomplete>
+            {options.map((item) => (
+                <SelectItem key={item.value}>{item.label}</SelectItem>
+            ))}
+        </NextSelect>
     );
 }

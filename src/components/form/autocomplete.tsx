@@ -1,22 +1,26 @@
 import { ErrorMessage, useField, useFormikContext } from 'formik';
-import Select, { SelectProps, SelectValue } from '../select';
+import AutoComplete, { AutoCompleteProps, AutoCompleteValue } from '../autocomplete';
 
-interface FormSelectProps extends SelectProps {
+interface FormAutoCompleteProps extends AutoCompleteProps {
     name: string;
 }
 
-export default function FormSelect({ name, onSelectionChange, ...props }: FormSelectProps) {
+export default function FormAutoComplete({
+    name,
+    onSelectionChange,
+    ...props
+}: FormAutoCompleteProps) {
     const [field] = useField(name);
     const { setFieldValue } = useFormikContext();
 
-    const onChange = (value: SelectValue) => {
+    const onChange = (value: AutoCompleteValue) => {
         setFieldValue(name, value);
         if (onSelectionChange) onSelectionChange(value);
     };
 
     return (
         <div className="flex flex-col gap-1">
-            <Select onSelectionChange={onChange} {...props} value={field.value} />
+            <AutoComplete onSelectionChange={onChange} {...props} value={field.value} />
             <ErrorMessage className="text-xs text-red-500" name={name} component="p" />
         </div>
     );
