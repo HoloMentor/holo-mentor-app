@@ -17,6 +17,7 @@ export default function StudyPlan() {
             id: 2,
             content: [
                 <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,
+                <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,
                 <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />
             ]
         },
@@ -51,26 +52,34 @@ export default function StudyPlan() {
                             key={tier.id}
                             className={buttonClasses(tier.id)}
                             onClick={() => setToggleState(tier.id)}>
-                            Tier {tier.id}
+                            <span className="hidden max-sm:inline">{tier.id}</span>
+                            <span className=" max-sm:hidden">Tier {tier.id}</span>
                         </button>
                     ))}
                 </div>
                 <div className="flex px-8 pt-8 pb-5 mr-4 bg-white place-content-between">
-                    <h1 className='pl-4 text-xl font-semibold text-dark-green'>Current Study Plan</h1>
-                    <button className='p-2 px-4 text-white rounded-md bg-dark-green'>Create new Plan</button>
+                    <h1 className="pl-4 text-xl font-semibold text-dark-green">
+                        Current Study Plan
+                    </h1>
+                    <button className="p-2 px-4 text-white rounded-md bg-dark-green">
+                        Create new Plan
+                    </button>
                 </div>
                 {tiers.map(
                     (tier) =>
                         toggleState === tier.id && (
-                            <div className="grid h-full grid-cols-2 mr-4 overflow-auto bg-white rounded-md min-h-96">
+                            <div className="grid h-full grid-cols-2 mr-4 overflow-auto bg-white rounded-md min-h-96 max-sm:grid-cols-1">
                                 <div key={tier.id} className="p-4 space-y-5">
-                                    {tier.content[0]}
-                                    {tier.content[1]}
+                                    {tier.content.map(
+                                        (contentItem, index) =>
+                                            index % 2 == 0 && <div>{contentItem}</div>
+                                    )}
                                 </div>
                                 <div key={tier.id} className="p-4 space-y-5 ">
-                                    {tier.content[1]}
-                                    {tier.content[0]}
-                                    
+                                    {tier.content.map(
+                                        (contentItem, index) =>
+                                            index % 2 == 1 && <div>{contentItem}</div>
+                                    )}
                                 </div>
                             </div>
                         )
