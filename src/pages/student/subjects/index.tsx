@@ -1,4 +1,5 @@
-import Heading from '@/components/heading';
+import Content from '@/components/content';
+import Heading from '@/components/headings/main';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +8,7 @@ export default function Subjects() {
         <div className="flex flex-col gap-3">
             <Heading>Subjects</Heading>
 
-            <div className="bg-white px-4 py-8 rounded-ss-md rounded-es-md">
+            <Content>
                 <Accordion variant="splitted" selectionMode="multiple">
                     {Array.from({ length: 3 }).map((_, i) => {
                         return (
@@ -23,12 +24,17 @@ export default function Subjects() {
                                 {Array.from({ length: 6 }).map((_, j) => {
                                     return (
                                         <Link
+                                            title={'Subject Name'}
                                             key={`subject-${j}`}
                                             to={`/subjects/${j}`}
                                             className="text-black">
                                             <div className="w-full relative rounded-md p-5 border border-light-border">
-                                                <span className="font-semibold truncate">
-                                                    Subject {j}
+                                                <span className="font-semibold truncate block max-w-52">
+                                                    Lorem, ipsum dolor sit amet consectetur
+                                                    adipisicing elit. Tempora sint vero expedita
+                                                    consequatur optio numquam quaerat, ipsum ipsam
+                                                    labore quibusdam magnam repudiandae debitis sunt
+                                                    saepe neque itaque harum provident eaque.
                                                 </span>
                                                 <img
                                                     src="/images/subjects/book.svg"
@@ -43,7 +49,7 @@ export default function Subjects() {
                         );
                     })}
                 </Accordion>
-            </div>
+            </Content>
         </div>
     );
 }

@@ -1,11 +1,17 @@
-import { ErrorMessage, useFormikContext } from 'formik';
+import { ErrorMessage, useField, useFormikContext } from 'formik';
 import Input, { InputProps } from '../input';
+
+interface ClassNamesProps {
+    mainWrapper?: string;
+}
 
 interface FormInputProps extends InputProps {
     name: string;
+    classNames?: ClassNamesProps;
 }
 
-export default function FormInput({ name, onChange, ...props }: FormInputProps) {
+export default function FormInput({ name, onChange, classNames, ...props }: FormInputProps) {
+    const [field] = useField(name);
     const { setFieldValue } = useFormikContext();
 
     const handleChange = (e: any) => {
@@ -14,8 +20,11 @@ export default function FormInput({ name, onChange, ...props }: FormInputProps) 
     };
 
     return (
-        <div className="flex flex-col gap-1">
-            <Input name={name} onChange={handleChange} {...props} />
+        <div
+            className={`flex flex-col gap-1 ${
+                classNames?.mainWrapper ? classNames.mainWrapper : ''
+            }`}>
+            <Input name={name} onChange={handleChange} {...props} {...field} />
             <ErrorMessage className="text-xs text-red-500" name={name} component="p" />
         </div>
     );

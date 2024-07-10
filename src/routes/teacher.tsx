@@ -3,16 +3,16 @@ import loadable from '@loadable/component';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 const Home = loadable(() => import('@/pages/teacher/home'));
-const Classes = loadable(() => import('@/pages/teacher/classes'))
+const Classes = loadable(() => import('@/pages/teacher/classes'));
 const Profile = loadable(() => import('@/pages/teacher/profile'));
 const Notifications = loadable(() => import('@/pages/teacher/notifications'));
 const StudyPlan = loadable(() => import('@/pages/teacher/study-plan'))
 
-export default function StudentRoutes() {
+export default function TeacherRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route path="/" element={<Home />} />
+                <Route path="" element={<Home />} />
                 <Route path="classes" element={<Classes />}>
                 
                     <Route path=":classId" element={<Outlet />}></Route>

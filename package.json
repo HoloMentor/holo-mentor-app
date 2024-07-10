@@ -24,8 +24,12 @@
         }
     },
     "dependencies": {
+        "@blocknote/core": "^0.14.5",
+        "@blocknote/mantine": "^0.14.6",
+        "@blocknote/react": "^0.14.6",
         "@loadable/component": "^5.16.4",
         "@nextui-org/react": "^2.4.2",
+        "@nextui-org/table": "^2.0.36",
         "@reduxjs/toolkit": "^2.2.5",
         "@tailwindcss/forms": "^0.5.7",
         "@types/loadable__component": "^5.13.9",
@@ -42,6 +46,7 @@
         "yup": "^1.4.0"
     },
     "devDependencies": {
+        "@types/node": "^20.14.9",
         "@types/react": "^18.2.66",
         "@types/react-dom": "^18.2.22",
         "@typescript-eslint/eslint-plugin": "^7.2.0",

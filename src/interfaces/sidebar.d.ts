@@ -6,10 +6,8 @@ interface NavOptionProps {
 }
 
 interface RoleSideBarProps {
-    [x: symbol | string]: {
-        general: NavOptionProps[];
-        [y: symbol | string]: NavOptionProps[];
-    };
+    general: NavOptionProps[];
+    [y: symbol | string]: NavOptionProps[];
 }
 
 interface SideBarProps {
