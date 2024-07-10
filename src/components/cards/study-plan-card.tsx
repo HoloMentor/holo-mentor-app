@@ -1,33 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '../button';
 
 interface StudyPlanProps {
     planName: string;
     autherName: string;
 }
 
+
+
 const StudyPlanCard: React.FC<StudyPlanProps> = ({ planName, autherName }) => {
     return (
-        <div className="w-full h-auto max-w-md p-4 py-8 ml-4 bg-white shadow-2xl rounded-xl drop-shadow-sm">
-            <div className="pl-2 text-2xl font-bold">{planName}</div>
-            <div className="pb-6 pl-2 text-xl font-semibold">{autherName}</div>
-            <button className="p-2 px-10 mb-4 text-white rounded-md bg-dark-green">View</button>
+        <div className="w-full h-auto max-w-md p-4 py-8 ml-4 bg-white shadow-custom rounded-xl drop-shadow-sm">
+            <div className="pl-2 text-2xl font-semibold">{planName}</div>
+            <div className="pb-6 pl-2 text-xl font-medium">{autherName}</div>
+            <Button className='rounded-md'>View</Button>
 
-            <svg
-                className='absolute bottom-0 right-0'
-                width="119"
-                height="91"
-                viewBox="0 0 119 91"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M87.7718 2.3799C88.216 1.66661 88.8616 1.10099 89.6271 0.754533C90.3927 0.408074 91.2437 0.296322 92.0728 0.433399L113.926 4.0799C115.037 4.26523 116.03 4.88413 116.685 5.80059C117.34 6.71704 117.604 7.85608 117.42 8.9674L113.782 30.8294C113.643 31.6581 113.262 32.4271 112.686 33.0391C112.11 33.6512 111.366 34.0788 110.547 34.268C109.728 34.4573 108.872 34.3995 108.086 34.1022C107.3 33.8048 106.62 33.2812 106.132 32.5974L100.233 24.3524L69.8538 43.7664C68.5583 44.5954 67.0068 44.9281 65.4853 44.7031C63.9638 44.4782 62.575 43.7108 61.5748 42.5424L44.6343 22.7374L12.9548 39.0149C11.4511 39.7881 9.70191 39.9324 8.09191 39.4159C6.48191 38.8994 5.14302 37.7645 4.36979 36.2609C3.59655 34.7572 3.4523 33.008 3.96877 31.398C4.48525 29.788 5.62014 28.4491 7.12378 27.6759L43.2913 9.0864C44.5682 8.43042 46.0291 8.2246 47.4375 8.50227C48.8459 8.77995 50.1194 9.52486 51.0518 10.6164L67.6608 30.0389L92.8208 13.9569L87.9163 7.0974C87.4287 6.41337 87.1547 5.60019 87.129 4.76055C87.1033 3.92091 87.327 3.09249 87.7718 2.3799ZM32.1308 44.1149L7.46378 58.2249C6.48932 58.7815 5.67905 59.5855 5.11489 60.5557C4.55072 61.5258 4.25264 62.6276 4.25079 63.7499V112.625C4.25079 116.144 7.10679 119 10.6258 119H32.1308V44.1149ZM42.7558 119H73.9338V61.0979L59.9173 68.1019L45.9093 43.5879C45.2019 42.3412 44.0934 41.3706 42.7643 40.8339L42.7558 119ZM108.376 119H84.5588V55.7854L105.528 45.2964C106.5 44.8112 107.58 44.5824 108.665 44.6317C109.75 44.681 110.805 45.0068 111.729 45.5782C112.653 46.1496 113.415 46.9475 113.944 47.8964C114.473 48.8453 114.751 49.9136 114.751 50.9999V112.625C114.751 114.316 114.079 115.937 112.884 117.133C111.688 118.328 110.067 119 108.376 119Z"
-                    fill="#B4B4B4"
-                    fill-opacity="0.2"
-                />
-            </svg>
+            <img
+                className="absolute bottom-0 right-2"
+                src="/images/subjects/plan.svg"
+                alt="Study Plan"
+            />
         </div>
     );
 };
