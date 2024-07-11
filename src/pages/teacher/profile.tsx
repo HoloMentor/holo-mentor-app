@@ -1,6 +1,5 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
-import Subject from '../student/subjects/subject';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Profile() {
@@ -35,21 +34,24 @@ export default function Profile() {
         }
     ];
 
+    //handle academic staff members popup
     const tableColumns: TableColumn[] = [
         { name: 'Class', value: { render: renderClass } },
         { name: 'Students', value: 'students' }
     ];
 
-    const [popupVisible, setPopupVisible] = useState(false);
-    const popupRef = useRef<HTMLDivElement>(null);
+    const [activePopupKey, setActivePopupKey] = useState<string | null>(null);
+    const popupRefs = useRef(new Map<string, HTMLDivElement>());
 
-    const handleSvgClick = () => {
-        setPopupVisible((prev) => !prev);
+    const handleSvgClick = (key: string) => {
+        setActivePopupKey((prevKey) => (prevKey === key ? null : key));
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-        if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
-            setPopupVisible(false);
+        for (const [key, ref] of popupRefs.current.entries()) {
+            if (ref && !ref.contains(event.target as Node)) {
+                setActivePopupKey(null);
+            }
         }
     };
 
@@ -59,6 +61,13 @@ export default function Profile() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    const items = [
+        { key: '1', name: 'Saliya Bandara' },
+        { key: '2', name: 'Tony Reichert' },
+        { key: '3', name: 'Zoey Lang' },
+        { key: '4', name: 'Jane Fisher' }
+    ];
 
     return (
         <div className="flex flex-col gap-3">
@@ -114,7 +123,7 @@ export default function Profile() {
                         </h1>
 
                         <ul className="mt-4">
-                            <li className="flex gap-4 mb-1 text-sm items-center">
+                            <li className="flex gap-4 mb-4 text-sm items-center">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +145,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex gap-4 mb-1 text-sm items-center">
+                            <li className="flex gap-4 mb-4 text-sm items-center">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +167,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex gap-4 mb-1 text-sm items-center">
+                            <li className="flex gap-4 mb-4 text-sm items-center">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -204,48 +213,52 @@ export default function Profile() {
                         <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
 
                         <ul className="mt-4">
-                            <li className="flex gap-4 mb-1 text-sm items-center justify-between">
-                                <div className="flex flex-row justify-center items-center gap-2">
-                                    <img
-                                        src="/images/student/avatar-hd.jpg"
-                                        alt="Avatar"
-                                        className="rounded-full w-10 h-10 mb-2"
-                                    />
-                                    <div className="text-md font-semibold">Saliya Bandara</div>
-                                </div>
-                                <div
-                                    className="text-lg text-neutral-500 cursor-pointer"
-                                    onClick={handleSvgClick}>
-                                    <svg
-                                        width="30"
-                                        height="30"
-                                        viewBox="0 0 30 30"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="30" height="30" rx="15" fill="white" />
-                                        <path
-                                            d="M15 11C14.4696 11 13.9609 10.7893 13.5858 10.4142C13.2107 10.0391 13 9.53043 13 9C13 8.46957 13.2107 7.96086 13.5858 7.58579C13.9609 7.21071 14.4696 7 15 7C15.5304 7 16.0391 7.21071 16.4142 7.58579C16.7893 7.96086 17 8.46957 17 9C17 9.53043 16.7893 10.0391 16.4142 10.4142C16.0391 10.7893 15.5304 11 15 11ZM15 17C14.4696 17 13.9609 16.7893 13.5858 16.4142C13.2107 16.0391 13 15.5304 13 15C13 14.4696 13.2107 13.9609 13.5858 13.5858C13.9609 13.2107 14.4696 13 15 13C15.5304 13 16.0391 13.2107 16.4142 13.5858C16.7893 13.9609 17 14.4696 17 15C17 15.5304 16.7893 16.0391 16.4142 16.4142C16.0391 16.7893 15.5304 17 15 17ZM15 23C14.4696 23 13.9609 22.7893 13.5858 22.4142C13.2107 22.0391 13 21.5304 13 21C13 20.4696 13.2107 19.9609 13.5858 19.5858C13.9609 19.2107 14.4696 19 15 19C15.5304 19 16.0391 19.2107 16.4142 19.5858C16.7893 19.9609 17 20.4696 17 21C17 21.5304 16.7893 22.0391 16.4142 22.4142C16.0391 22.7893 15.5304 23 15 23Z"
-                                            fill="#1D1D1D"
+                            {items.map((item) => (
+                                <li
+                                    key={item.key}
+                                    className="flex gap-4 mb-1 text-sm items-center justify-between">
+                                    <div className="flex flex-row justify-center items-center gap-2">
+                                        <img
+                                            src="/images/student/avatar-hd.jpg"
+                                            alt="Avatar"
+                                            className="rounded-full w-10 h-10 mb-2"
                                         />
-                                    </svg>
-                                </div>
-                                {popupVisible && (
+                                        <div className="text-md font-semibold">{item.name}</div>
+                                    </div>
                                     <div
-                                        ref={popupRef}
-                                        className="absolute right-0 w-36 h-10 bg-white border rounded-lg shadow-lg flex justify-center items-center hover:bg-gray-100">
-                                        <div className="">
+                                        className="text-lg text-neutral-500 cursor-pointer"
+                                        onClick={() => handleSvgClick(item.key)}>
+                                        <svg
+                                            width="30"
+                                            height="30"
+                                            viewBox="0 0 30 30"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="30" height="30" rx="15" fill="white" />
+                                            <path
+                                                d="M15 11C14.4696 11 13.9609 10.7893 13.5858 10.4142C13.2107 10.0391 13 9.53043 13 9C13 8.46957 13.2107 7.96086 13.5858 7.58579C13.9609 7.21071 14.4696 7 15 7C15.5304 7 16.0391 7.21071 16.4142 7.58579C16.7893 7.96086 17 8.46957 17 9C17 9.53043 16.7893 10.0391 16.4142 10.4142C16.0391 10.7893 15.5304 11 15 11ZM15 17C14.4696 17 13.9609 16.7893 13.5858 16.4142C13.2107 16.0391 13 15.5304 13 15C13 14.4696 13.2107 13.9609 13.5858 13.5858C13.9609 13.2107 14.4696 13 15 13C15.5304 13 16.0391 13.2107 16.4142 13.5858C16.7893 13.9609 17 14.4696 17 15C17 15.5304 16.7893 16.0391 16.4142 16.4142C16.0391 16.7893 15.5304 17 15 17ZM15 23C14.4696 23 13.9609 22.7893 13.5858 22.4142C13.2107 22.0391 13 21.5304 13 21C13 20.4696 13.2107 19.9609 13.5858 19.5858C13.9609 19.2107 14.4696 19 15 19C15.5304 19 16.0391 19.2107 16.4142 19.5858C16.7893 19.9609 17 20.4696 17 21C17 21.5304 16.7893 22.0391 16.4142 22.4142C16.0391 22.7893 15.5304 23 15 23Z"
+                                                fill="#1D1D1D"
+                                            />
+                                        </svg>
+                                    </div>
+                                    {activePopupKey === item.key && (
+                                        <div
+                                            ref={(ref) =>
+                                                ref && popupRefs.current.set(item.key, ref)
+                                            }
+                                            className="absolute right-0 w-36 h-10 bg-white border rounded-lg shadow-lg flex justify-center items-center">
                                             <button
                                                 onClick={() => {
-                                                    setPopupVisible(false);
+                                                    setActivePopupKey(null);
                                                     console.log('Remove clicked');
                                                 }}
-                                                className="block w-full text-center h-full text-gray-700 ">
+                                                className="block w-full h-full text-gray-700 hover:bg-gray-100 flex items-center justify-center">
                                                 Remove
                                             </button>
                                         </div>
-                                    </div>
-                                )}
-                            </li>
+                                    )}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </section>
@@ -253,12 +266,12 @@ export default function Profile() {
                 <section className="w-full col-span-2 max-lg:pr-4">
                     <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                         <h1 className="text-xl font-semibold text-dark-green">My Classess</h1>
-                        <div className="m-8 font-medium">Biology</div>
-                        <div className="flex mt-7 mb-4 mx-6 justify-start">
+                        <div className="ml-4 mt-5 font-medium">Biology</div>
+                        <div className="flex mt-7 mb-4 mx-6 justify-start flex-wrap">
                             {Biology.map((tution) => (
                                 <div
                                     key={tution.id}
-                                    className="flex w-24 mr-8 justify-center items-center rotate-45
+                                    className="flex w-24 mr-8 mb-10 justify-center items-center rotate-45
                              rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
                                     <div className="-rotate-45 flex flex flex-col justify-center items-center">
                                         <span className="text-lg">{tution.type} </span>
@@ -267,12 +280,12 @@ export default function Profile() {
                                 </div>
                             ))}
                         </div>
-                        <div className="m-8 font-medium">Chemistry</div>
+                        <div className="ml-4 mt-5 font-medium">Chemistry</div>
                         <div className="flex mt-7 mb-4 mx-6 justify-start">
                             {Chemistry.map((tution) => (
                                 <div
                                     key={tution.id}
-                                    className="flex w-24 mr-8 justify-center items-center rotate-45
+                                    className="flex w-24 mr-8 mb-10 justify-center items-center rotate-45
                              rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
                                     <div className="-rotate-45 flex flex flex-col justify-center items-center">
                                         <span className="text-lg">{tution.type} </span>

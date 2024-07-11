@@ -28,6 +28,7 @@ export default function Editor({ editor = useCreateBlockNote(), onChange, ...pro
     const handleOnChange = () => {
         if (onChange) onChange(editor.document);
     };
+
     return (
         <div className="border border-[#0000001A] rounded-md h-full">
             <BlockNoteView

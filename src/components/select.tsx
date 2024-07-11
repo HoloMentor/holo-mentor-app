@@ -1,70 +1,57 @@
-import React from 'react';
-import RTSelect from 'react-tailwindcss-select';
-import { SelectValue } from 'react-tailwindcss-select/dist/components/type';
+import {
+    Select as NextSelect,
+    SelectItem,
+    SelectProps as NextSelectProps,
+    Selection
+} from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 
-export interface RTSelectValueProps {
+export type SelectValue = string | number | null;
+
+interface OmitChildren extends Omit<NextSelectProps, 'children'> {}
+interface OmitOnChange extends Omit<OmitChildren, 'onChange'> {}
+
+export interface SelectOption {
     value: string;
     label: string;
-    disabled?: boolean;
-    isSelected?: boolean;
 }
 
-export type RTSelectProps = React.ComponentProps<typeof RTSelect>;
-
-export interface RTWithoutOnChange extends Omit<RTSelectProps, 'onChange'> {}
-export interface RTWithoutValue extends Omit<RTWithoutOnChange, 'value'> {}
-
-export interface SelectProps extends Omit<RTWithoutValue, 'primaryColor'> {
-    className?: string;
-    label?: string;
-    value?: string;
-    primaryColor?: string;
-    labelClassName?: string;
-    onChange?: (x: string) => void;
+export interface SelectProps extends Omit<OmitOnChange, 'value'> {
+    options: SelectOption[];
+    onChange?: (key: SelectValue) => void;
+    value: SelectValue;
 }
 
-export default function Select({
-    label,
-    className,
-    primaryColor = '',
-    labelClassName = '',
-    value,
-    onChange,
-    options,
-    ...props
-}: SelectProps) {
-    const [selectedValue, setSelectedValue] = React.useState(null);
+export default function Select({ options, value, onChange, ...props }: SelectProps) {
+    const [selectedValue, setSelectedValue] = useState(new Set([]));
 
-    React.useEffect(() => {
-        if (value !== selectedValue?.value) {
+    useEffect(() => {
+        if (new Set([value]) !== selectedValue) {
             const exist = options.find((_: any) => _.value == value);
-            if (exist) setSelectedValue(exist);
+
+            if (exist) setSelectedValue(new Set([exist.value]));
         }
     }, [selectedValue, options, value]);
 
-    const handleOnChange = (e: RTSelectValueProps) => {
-        setSelectedValue(e);
-        if (onChange) onChange(e.value);
+    const handleOnChange = (e: Selection) => {
+        const [selected] = e;
+        setSelectedValue(new Set([selected]));
+        if (onChange) onChange(selected);
     };
 
     return (
-        <label className={`flex flex-col gap-2 ${labelClassName ? labelClassName : ''}`}>
-            {label && <span className="text-dark-gray font-normal">{label}</span>}
-
-            <RTSelect
-                classNames={{
-                    menuButton: ({ isDisabled }: any) =>
-                        `flex text-md border border-[#0000001A] rounded-md focus:ring-2 ${
-                            isDisabled ? 'bg-gray-200' : 'bg-white focus:ring-pink'
-                        }`,
-                    menu: 'absolute z-[3] w-full bg-white shadow-md border border-[#0000001A] rounded py-1 mt-1.5 text-sm text-black'
-                }}
-                primaryColor={primaryColor}
-                onChange={handleOnChange}
-                value={selectedValue}
-                options={options}
-                {...props}
-            />
-        </label>
+        <NextSelect
+            labelPlacement="outside"
+            className="bg-white rounded-md"
+            selectedKeys={selectedValue}
+            classNames={{
+                trigger: 'bg-transparent rounded-md'
+            }}
+            onSelectionChange={handleOnChange}
+            {...props}>
+            {options.map((item) => (
+                <SelectItem key={item.value}>{item.label}</SelectItem>
+            ))}
+        </NextSelect>
     );
 }
