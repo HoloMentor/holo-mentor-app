@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-
-interface Task {
-    id: number;
-    description: string;
-}
+import { useState } from 'react';
 
 const Tasks = [
     {
         id: 1,
-        description: 'Do 50 Mcqs on Compiler Theory'
+        description: 'Do 50 Mcqs on Compiler Theory Complete 2021 , 2022 , 2023 AL Physics Past Paper Part II Question 03 and upload.Physics Past Paper Part II Question 03 and upload'
     },
     {
         id: 2,
@@ -50,7 +45,12 @@ export default function StudyPlanIndividual() {
                         <p className="ml-4 text-2xl font-medium">Task {task.id}</p>
                         <img src="/images/teacher/PencilAlt.png" className="w-6 h-6 ml-8 "></img>
                     </div>
-                    {visibleTasks[task.id] && <p className="pl-4 m-4 ml-8">{task.description}</p>}
+
+                    {visibleTasks[task.id] && (
+                        <div className="flex justify-center pb-2 m-2 border-2 rounded-md">
+                            <p className="pl-4 m-4 ml-8">{task.description}</p>
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
