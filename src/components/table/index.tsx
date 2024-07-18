@@ -21,9 +21,9 @@ export default function Table({
     };
 
     return (
-        <div className="rounded-lg border border-border">
-            <div className="overflow-x-auto rounded-t-lg overflow-y-hidden">
-                <table className="min-w-full bg-white text-sm">
+        <div className="border rounded-lg border-border">
+            <div className="overflow-x-auto overflow-y-hidden rounded-t-lg">
+                <table className="min-w-full text-sm bg-white">
                     <thead className="bg-[#F9FAFB]">
                         <tr>
                             {columns.map((_, i) => {
@@ -31,7 +31,7 @@ export default function Table({
                                     <th
                                         align={getAlignment(columns.length, i)}
                                         key={_?.key || `${name}-head-${i}`}
-                                        className="whitespace-nowrap px-4 py-4 font-semibold">
+                                        className="px-4 py-4 font-semibold whitespace-nowrap">
                                         {_.name}
                                     </th>
                                 );
@@ -53,7 +53,7 @@ export default function Table({
                                                 <td
                                                     key={`${name}-cell-${i}-${j}`}
                                                     align={getAlignment(columns.length, j)}
-                                                    className="whitespace-nowrap px-4 py-2 font-normal text-gray-900"
+                                                    className="px-4 py-2 font-normal text-gray-900 whitespace-nowrap border-b-1"
                                                     {...props}>
                                                     {typeof value === 'string' ? (
                                                         _data[value]
