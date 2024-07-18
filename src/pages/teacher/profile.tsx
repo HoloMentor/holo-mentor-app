@@ -48,6 +48,7 @@ export default function Profile() {
     };
 
     const handleClickOutside = (event: MouseEvent) => {
+        console.log(event);
         for (const [key, ref] of popupRefs.current.entries()) {
             if (ref && !ref.contains(event.target as Node)) {
                 setActivePopupKey(null);
