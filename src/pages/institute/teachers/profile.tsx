@@ -194,12 +194,11 @@ export default function teacherProfile() {
                             <h1 className="mb-1 text-xl font-semibold text-dark-green">
                                 Classes
                             </h1>
-                            <Dropdown>
-                                <DropdownTrigger>
-                                    <Button
-                                        className="flex items-center gap-2"
-                                        endContent={
-                                            <span>
+                            
+                            <Button
+                                className="flex items-center gap-2"
+                                endContent={
+                                    <span>
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
@@ -214,23 +213,7 @@ export default function teacherProfile() {
                                             </span>
                                         }>
                                         Add New Class
-                                    </Button>
-                                </DropdownTrigger>
-                                <DropdownMenu>
-                                    <DropdownItem
-                                        className="text-center text-black"
-                                        key="new"
-                                        href={`${location.pathname}/addone`}>
-                                        Add One Student
-                                    </DropdownItem>
-                                    <DropdownItem
-                                        className="text-center text-black"
-                                        key="copy"
-                                        href={`${location.pathname}/addmany`}>
-                                        Add Using CSV File
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
+                            </Button>
                         </div>
                         <Table data={tableData} columns={tableColumns} />
                     </div>

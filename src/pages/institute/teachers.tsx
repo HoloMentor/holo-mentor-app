@@ -22,7 +22,7 @@ function Teachers() {
 
     const tableData = [
         {
-            classes: 'Theory - 2023',
+            classes: '10',
             subject: 'Chemistry',
             teacher:{
                         pnglink : 'https://picsum.photos/400',
@@ -31,7 +31,7 @@ function Teachers() {
             type : 'A/L',
         },
         {
-            classes: 'Theory - 2023',
+            classes: '10',
             subject: 'Physics',
             teacher:{
                 pnglink : 'https://picsum.photos/400',
@@ -40,7 +40,7 @@ function Teachers() {
             type : 'A/L',
         },
         {
-            classes: 'Theory - 2023',
+            classes: '10',
             subject: 'Maths',
             teacher:{
                 pnglink : 'https://picsum.photos/400',
@@ -49,7 +49,7 @@ function Teachers() {
             type : 'O/L',
         },
         {
-            classes: 'Theory - 2023',
+            classes: '10',
             subject: 'Science',
             teacher:{
                 pnglink : 'https://picsum.photos/400',

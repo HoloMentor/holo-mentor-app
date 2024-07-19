@@ -7,7 +7,8 @@ const Teachers = loadable(() => import('@/pages/institute/teachers'));
 const Profile = loadable(() => import('@/pages/institute/profile'));
 const Notification = loadable(()  => import('@/pages/institute/notifications'));
 const TeacherProfile = loadable(() => import('@/pages/institute/teachers/profile'));
-const Class = loadable(() => import('@/pages/institute/teachers/class/class'));
+const Class = loadable(() => import('@/pages/institute/class/class-progress'));
+const Students = loadable(() => import('@/pages/institute/class/class-students'));
 
 export default function InstituteRoutes() {
     return (
@@ -18,11 +19,12 @@ export default function InstituteRoutes() {
                     <Route path="" element={<Teachers />} />
                     <Route path=":teacherId" element={<TeacherProfile />} />
                 </Route>
+                <Route path="class" element={<Outlet />}>
+                    <Route path=":classId/progress" element={<Class/>} />
+                    <Route path=":classId/students" element={<Students/>} />
+                </Route>
                 <Route path="profile" element={<Profile />} />
                 <Route path="notifications" element={<Notification />} />
-            </Route>
-            <Route path="class" element={<Outlet />}>
-                <Route path=":classId" element={<Class />} />
             </Route>
         </Routes>
     );
