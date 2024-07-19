@@ -1,7 +1,6 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Button from '@/components/button';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 
 export default function teacherProfile() {
  
