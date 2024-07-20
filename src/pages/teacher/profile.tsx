@@ -1,6 +1,5 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
-import { useState, useRef, useEffect } from 'react';
 
 export default function Profile() {
     const Biology = [
@@ -39,29 +38,6 @@ export default function Profile() {
         { name: 'Class', value: { render: renderClass } },
         { name: 'Students', value: 'students' }
     ];
-
-    const [activePopupKey, setActivePopupKey] = useState<string | null>(null);
-    const popupRefs = useRef(new Map<string, HTMLDivElement>());
-
-    const handleSvgClick = (key: string) => {
-        setActivePopupKey((prevKey) => (prevKey === key ? null : key));
-    };
-
-    const handleClickOutside = (event: MouseEvent) => {
-        console.log(event);
-        for (const [key, ref] of popupRefs.current.entries()) {
-            if (ref && !ref.contains(event.target as Node)) {
-                setActivePopupKey(null);
-            }
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     const items = [
         { key: '1', name: 'Saliya Bandara' },
@@ -217,8 +193,8 @@ export default function Profile() {
                             {items.map((item) => (
                                 <li
                                     key={item.key}
-                                    className="flex gap-4 mb-1 text-sm items-center justify-between">
-                                    <div className="flex flex-row justify-center items-center gap-2">
+                                    className="flex gap-5 mb-1 text-sm items-center justify-between">
+                                    <div className="flex flex-row justify-center items-center gap-4">
                                         <img
                                             src="/images/student/avatar-hd.jpg"
                                             alt="Avatar"
@@ -226,38 +202,21 @@ export default function Profile() {
                                         />
                                         <div className="text-md font-semibold">{item.name}</div>
                                     </div>
-                                    <div
-                                        className="text-lg text-neutral-500 cursor-pointer"
-                                        onClick={() => handleSvgClick(item.key)}>
+                                    <div className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
                                         <svg
-                                            width="30"
-                                            height="30"
-                                            viewBox="0 0 30 30"
+                                            xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="white" />
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="red"
+                                            className="size-5">
                                             <path
-                                                d="M15 11C14.4696 11 13.9609 10.7893 13.5858 10.4142C13.2107 10.0391 13 9.53043 13 9C13 8.46957 13.2107 7.96086 13.5858 7.58579C13.9609 7.21071 14.4696 7 15 7C15.5304 7 16.0391 7.21071 16.4142 7.58579C16.7893 7.96086 17 8.46957 17 9C17 9.53043 16.7893 10.0391 16.4142 10.4142C16.0391 10.7893 15.5304 11 15 11ZM15 17C14.4696 17 13.9609 16.7893 13.5858 16.4142C13.2107 16.0391 13 15.5304 13 15C13 14.4696 13.2107 13.9609 13.5858 13.5858C13.9609 13.2107 14.4696 13 15 13C15.5304 13 16.0391 13.2107 16.4142 13.5858C16.7893 13.9609 17 14.4696 17 15C17 15.5304 16.7893 16.0391 16.4142 16.4142C16.0391 16.7893 15.5304 17 15 17ZM15 23C14.4696 23 13.9609 22.7893 13.5858 22.4142C13.2107 22.0391 13 21.5304 13 21C13 20.4696 13.2107 19.9609 13.5858 19.5858C13.9609 19.2107 14.4696 19 15 19C15.5304 19 16.0391 19.2107 16.4142 19.5858C16.7893 19.9609 17 20.4696 17 21C17 21.5304 16.7893 22.0391 16.4142 22.4142C16.0391 22.7893 15.5304 23 15 23Z"
-                                                fill="#1D1D1D"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                                             />
                                         </svg>
                                     </div>
-                                    {activePopupKey === item.key && (
-                                        <div
-                                            ref={(ref) =>
-                                                ref && popupRefs.current.set(item.key, ref)
-                                            }
-                                            className="absolute right-0 w-36 h-10 bg-white border rounded-lg shadow-lg flex justify-center items-center">
-                                            <button
-                                                onClick={() => {
-                                                    setActivePopupKey(null);
-                                                    console.log('Remove clicked');
-                                                }}
-                                                className="block w-full h-full text-gray-700 hover:bg-gray-100 flex items-center justify-center">
-                                                Remove
-                                            </button>
-                                        </div>
-                                    )}
                                 </li>
                             ))}
                         </ul>
