@@ -11,11 +11,10 @@ export default function Materials() {
             <Heading>Sasip 2023</Heading>
 
             <Content>
-                <div className='flex justify-between'>
-                <SubHeading>Topics</SubHeading>
-                <Button>Add Materials</Button>
+                <div className="flex justify-between">
+                    <SubHeading>Topics</SubHeading>
+                    <Button>Add Materials</Button>
                 </div>
-                
 
                 <Accordion variant="splitted" selectionMode="multiple">
                     {Array.from({ length: 3 }).map((_, i) => {

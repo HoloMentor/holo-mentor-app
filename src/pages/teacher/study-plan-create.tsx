@@ -28,7 +28,9 @@ export default function studyPlanCreate() {
             /> */}
                 </div>
             </section>
-            <div className='flex items-center justify-center gap-4 p-4 mb-4 ml-6 mr-4 transition-all duration-300 border-2 cursor-pointer rounded-3xl hover:shadow-md hover:bg-gray-100 active:bg-gray-200 active:shadow-inner'>                <svg
+            <div className="flex items-center justify-center gap-4 p-4 mb-4 ml-6 mr-4 transition-all duration-300 border-2 cursor-pointer rounded-3xl hover:shadow-md hover:bg-gray-100 active:bg-gray-200 active:shadow-inner">
+                {' '}
+                <svg
                     width="40"
                     height="40"
                     viewBox="0 0 40 40"
@@ -42,12 +44,13 @@ export default function studyPlanCreate() {
                         stroke-linejoin="round"
                     />
                 </svg>
-
-                <p className='text-slate-400'>Add New Task</p>
+                <p className="text-slate-400">Add New Task</p>
             </div>
-            <div className='flex justify-center gap-4 align-middle'>
-              <Button className='bg-white border-2 rounded-md text-dark-green border-dark-green'>Cancel</Button>
-              <Button className='text-white rounded-md'>Create</Button>
+            <div className="flex justify-center gap-4 align-middle">
+                <Button className="bg-white border-2 rounded-md text-dark-green border-dark-green">
+                    Cancel
+                </Button>
+                <Button className="text-white rounded-md">Create</Button>
             </div>
         </div>
     );
