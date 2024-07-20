@@ -3,7 +3,7 @@ import NavLink from './navlink';
 
 export default function SideBar({ links, pathname }: SideBarProps) {
     return (
-        <div className="flex flex-col bg-white w-full max-w-64 min-h-screen max-md:max-w-14 ">
+        <div className="flex flex-col gap-5 bg-white w-full max-w-64 h-screen max-md:max-w-14 overflow-visible sticky top-0 left-0">
             <Link to="/">
                 <img
                     src="/images/logo.svg"
@@ -22,16 +22,32 @@ export default function SideBar({ links, pathname }: SideBarProps) {
                 </Link>
             </div>
 
-            <div className="flex flex-col mt-9">
-                {links.map(({ name, icon: Icon, to, ...props }: NavOptionProps, index: number) => {
-                    return (
-                        <NavLink key={index} to={to} pathname={pathname} {...props}>
-                            <Icon />
+            <div className="flex flex-col mt-5">
+                {links
+                    .filter((_) => !_.bottom)
+                    .map(({ name, icon: Icon, ...props }: NavOptionProps, index: number) => {
+                        return (
+                            <NavLink key={index} pathname={pathname} {...props}>
+                                <Icon />
 
-                            <span className="max-md:hidden">{name}</span>
-                        </NavLink>
-                    );
-                })}
+                                <span className="max-md:hidden">{name}</span>
+                            </NavLink>
+                        );
+                    })}
+            </div>
+
+            <div className="flex flex-col justify-end h-full sticky bottom-0">
+                {links
+                    .filter((_) => _.bottom)
+                    .map(({ name, icon: Icon, ...props }: NavOptionProps, index: number) => {
+                        return (
+                            <NavLink key={index} pathname={pathname} {...props}>
+                                <Icon />
+
+                                <span className="max-md:hidden">{name}</span>
+                            </NavLink>
+                        );
+                    })}
             </div>
         </div>
     );

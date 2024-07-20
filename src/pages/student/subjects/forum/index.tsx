@@ -22,7 +22,7 @@ export default function Forum() {
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
 
-            <section className="flex justify-between items-center gap-5 pr-5">
+            <section className="flex items-center justify-between gap-5 pr-5">
                 <div className="w-full max-w-36">
                     <Select options={filterOptions} value={filterValue} onChange={setFilterValue} />
                 </div>
@@ -91,15 +91,15 @@ export default function Forum() {
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">
                                     <div>
-                                        <div className="flex justify-end items-center gap-2 w-36">
+                                        <div className="flex items-center justify-end gap-2 w-36">
                                             <img
-                                                className="size-7 rounded-full"
+                                                className="rounded-full size-7"
                                                 src="/images/student/avatar.png"
                                                 alt="Avatar"
                                             />
                                             <span className="truncate">Albert Flores</span>
                                         </div>
-                                        <span className="block font-medium text-dark-gray text-right w-full">
+                                        <span className="block w-full font-medium text-right text-dark-gray">
                                             2 days ago
                                         </span>
                                     </div>
