@@ -26,7 +26,7 @@ export default function Forum() {
                     <Select options={filterOptions} value={filterValue} onChange={setFilterValue} />
                 </div>
                 <div className="flex items-center gap-2">
-                    <Input placeholder="Search" />
+                    <Input className="bg-white border-none rounded-md " placeholder="Search" />
 
                     <Dropdown>
                         <DropdownTrigger>
@@ -61,7 +61,7 @@ export default function Forum() {
                                 className="text-center text-black"
                                 key="copy"
                                 href={`${location.pathname}/essay`}>
-                                Essay
+                                Normal Question
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
@@ -139,7 +139,7 @@ export default function Forum() {
                                             />
                                             <span className="truncate">Albert Flores</span>
                                         </div>
-                                        <span className="block font-medium text-dark-gray text-right w-full">
+                                        <span className="block font-regular text-sm text-dark-gray text-right w-full">
                                             2 days ago
                                         </span>
                                     </div>

@@ -16,7 +16,7 @@ export default function Profile() {
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
             <div className="flex flex-col gap-1">
-                <span className="text-dark-green font-semibold">{data.class.name}</span>
+                <span className="font-semibold text-dark-green">{data.class.name}</span>
                 <span>{data.class.institute}</span>
             </div>
         );
@@ -50,8 +50,8 @@ export default function Profile() {
         <div className="flex flex-col gap-3">
             <Heading>Profile</Heading>
             <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
-                <section className="w-full h-fit col-span-1">
-                    <div className="bg-white px-4 py-6 mb-4 rounded-lg relative">
+                <section className="w-full col-span-1 h-fit">
+                    <div className="relative px-4 py-6 mb-4 bg-white rounded-lg">
                         <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -72,13 +72,13 @@ export default function Profile() {
                             <img
                                 src="/images/student/avatar-hd.jpg"
                                 alt="Avatar"
-                                className="rounded-full w-24 h-24 mb-4"
+                                className="w-24 h-24 mb-4 rounded-full"
                             />
                             <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
                             <span className="text-sm text-neutral-500">Student</span>
                         </div>
                     </div>
-                    <div className="bg-white px-4 py-4 mb-4 rounded-lg relative">
+                    <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
                         <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +170,7 @@ export default function Profile() {
                         </ul>
                     </div>
 
-                    <div className="bg-white px-4 py-4 mb-4 rounded-lg relative">
+                    <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
                         <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -255,8 +255,8 @@ export default function Profile() {
                             ))}
                         </div>
                     </div>
-                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
-                        <h1 className="text-xl font-semibold text-dark-green mb-4">
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
+                        <h1 className="mb-4 text-xl font-semibold text-dark-green">
                             Educational Institute
                         </h1>
 
@@ -283,8 +283,8 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
-                        <h1 className="text-xl font-semibold text-dark-green mb-4">Students</h1>
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
+                        <h1 className="mb-4 text-xl font-semibold text-dark-green">Students</h1>
 
                         <Table data={tableData} columns={tableColumns} />
                     </div>
