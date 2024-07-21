@@ -10,6 +10,8 @@ const Subjects = loadable(() => import('@/pages/student/subjects'));
 const Subject = loadable(() => import('@/pages/student/subjects/subject'));
 const SubjectMentor = loadable(() => import('@/pages/student/subjects/mentor'));
 const SubjectQuiz = loadable(() => import('@/pages/student/subjects/quiz'));
+const QuizInfo = loadable(() => import('@/pages/student/subjects/quiz/results'));
+const QuizQuestion = loadable(() => import('@/pages/student/subjects/quiz/question'));
 const SubjectForums = loadable(() => import('@/pages/student/subjects/forum'));
 const SubjectForum = loadable(() => import('@/pages/student/subjects/forum/question'));
 const SubjectForumMCQ = loadable(() => import('@/pages/student/subjects/forum/mcq'));
@@ -30,6 +32,8 @@ export default function StudentRoutes() {
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
                         <Route path="forum/:forumId" element={<SubjectForum />} />
                         <Route path="quiz" element={<SubjectQuiz />} />
+                        <Route path="quiz/:quizId" element={<QuizInfo />} />
+                        <Route path="quiz/attempt/:quizId" element={<QuizQuestion />} />
                     </Route>
                 </Route>
                 <Route path="profile" element={<Profile />} />
