@@ -55,7 +55,7 @@ export default function Classes() {
                             <img src="/images/institute.png" className="self-center m-4 mt-8" />
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <div className="p-2 mt-10 border-t-1">
+                                    <div className="p-2 mt-10 transition-all duration-200 ease-in-out cursor-pointer border-t-1 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:shadow-sm hover:scale-95 hover:px-6 hover:rounded-md ">
                                         <p className="flex text-2xl font-semibold">{institute.name}</p>
                                         <p className="flex text-xl">{institute.town}</p>
                                     </div>
