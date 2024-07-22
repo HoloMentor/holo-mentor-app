@@ -17,7 +17,8 @@ export default function TeacherRoutes() {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route path="" element={<Home />} />
-                <Route path="classes" element={<Classes />}>
+                <Route path="classes" element={<Outlet />}>
+                    <Route path='' element={<Classes/>}></Route>
                     <Route path=":classId" element={<Outlet />}></Route>
                     //add routes inside classId
                 </Route>
@@ -27,9 +28,9 @@ export default function TeacherRoutes() {
                     <Route path="view" element={<StudyPlanView />}></Route>
                 </Route>
                 <Route path="profile" element={<Profile />} />
-                <Route path="materials" element={<ClassMaterials />}></Route>
                 <Route path="notifications" element={<Notifications />} />
                 <Route path="quize" element={<Quizes />}></Route>
+                <Route path=":institute/:year/*" element={<ClassMaterials />}></Route>
             </Route>
         </Routes>
     );
