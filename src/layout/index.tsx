@@ -22,7 +22,7 @@ export default function Layout() {
                 if (segment in roleLinks) {
                     return roleLinks[segment].map((_: NavOptionProps) => {
                         for (const param in params) {
-                            _.to = _.to.replace(`:${param}`, params[param]);
+                            if ('to' in _) _.to = _.to.replace(`:${param}`, params[param]);
                         }
 
                         return _;
@@ -30,6 +30,7 @@ export default function Layout() {
                 }
             }
         }
+
         return roleLinks.general;
     }, [role, location.pathname]);
     return (

@@ -42,6 +42,7 @@ export default {
                     800: '#104545',
                     900: '#0D3333'
                 },
+                'second-white': '#F1F3F4',
                 'light-border': '#0000001A',
                 dark: '#101010',
                 light: '#ffffff',

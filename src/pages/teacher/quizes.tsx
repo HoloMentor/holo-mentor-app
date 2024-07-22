@@ -1,26 +1,23 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
-import {Chip} from "@nextui-org/react";
+import { Chip } from '@nextui-org/react';
 
 const renderClass = ({ data }: CustomTableCellData) => {
     return (
-        <div className='p-1'>
-            <span >{data.class.image}</span>
-            <span className='ml-4'>{data.class.name}</span>
+        <div className="p-1">
+            <span>{data.class.image}</span>
+            <span className="ml-4">{data.class.name}</span>
         </div>
     );
 };
 
-const renderStatus = ({data}:CustomTableCellData) =>{
-    return(
-        data.status === 'Reviewed' ? (
-            <Chip color='success'>Reviewed</Chip>
-        ) : (
-            <Chip color='warning'>Pending</Chip>
-        )
-    )
-}
-
+const renderStatus = ({ data }: CustomTableCellData) => {
+    return data.status === 'Reviewed' ? (
+        <Chip color="success">Reviewed</Chip>
+    ) : (
+        <Chip color="warning">Pending</Chip>
+    );
+};
 
 export default function Quizes() {
     const tableData = [
@@ -35,7 +32,7 @@ export default function Quizes() {
                 ),
                 name: 'Senura Nawamina Kalubovila'
             },
-            
+
             tier: 'tier 1',
             gender: 'male',
             status: 'Reviewed'
@@ -51,7 +48,7 @@ export default function Quizes() {
                 ),
                 name: 'Senura Nawamina Kalubovila'
             },
-            
+
             tier: 'tier 1',
             gender: 'male',
             status: 'Pending'
@@ -59,10 +56,10 @@ export default function Quizes() {
     ];
 
     const tableColumns: TableColumn[] = [
-        { name:'Name', value: { render: renderClass }},
+        { name: 'Name', value: { render: renderClass } },
         { name: 'Tier', value: 'tier' },
         { name: 'Gender', value: 'gender' },
-        { name: 'Status', value: {render:renderStatus} }
+        { name: 'Status', value: { render: renderStatus } }
     ];
     return (
         <>
