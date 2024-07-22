@@ -4,8 +4,8 @@ import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 
 function classProgress() {
-  return (
-      <div className="flex flex-col gap-3">
+    return (
+        <div className="flex flex-col gap-3">
             <Heading>Class Progress</Heading>
             <Content>
                 <Accordion variant="splitted" selectionMode="multiple">
@@ -14,9 +14,10 @@ function classProgress() {
                             <AccordionItem
                                 key={`teacher-${i}`}
                                 aria-label={`Accordion ${i}`}
-                                title={<span className="text-2xl font-semibold">Topic {i + 1}</span>}
-                                className="!shadow-none border border-light-border rounded-lg p-4"
-                                >
+                                title={
+                                    <span className="text-2xl font-semibold">Topic {i + 1}</span>
+                                }
+                                className="!shadow-none border border-light-border rounded-lg p-4">
                                 {Array.from({ length: 4 }).map((_, j) => {
                                     return (
                                         <Link
@@ -26,7 +27,7 @@ function classProgress() {
                                             className="text-black">
                                             <div className="w-full relative rounded-md p-5 border border-light-border mb-3">
                                                 <span>
-                                                   Sub Topic  {i + 1 }.{j}
+                                                    Sub Topic {i + 1}.{j}
                                                 </span>
                                             </div>
                                         </Link>
@@ -37,7 +38,7 @@ function classProgress() {
                     })}
                 </Accordion>
             </Content>
-      </div>
+        </div>
     );
 }
 

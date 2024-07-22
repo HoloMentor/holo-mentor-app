@@ -2,12 +2,13 @@ import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 
 export default function Profile() {
-
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
             <div className="flex flex-col gap-1">
-                <span className="text-dark-green font-semibold text-left ml-20">{data.class.name}</span>
-                <span className='text-left ml-20'>{data.class.institute}</span>
+                <span className="text-dark-green font-semibold text-left ml-20">
+                    {data.class.name}
+                </span>
+                <span className="text-left ml-20">{data.class.institute}</span>
             </div>
         );
     };
@@ -27,7 +28,7 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher:'Senaka Batagoda'
+            teacher: 'Senaka Batagoda'
         },
         {
             class: {
@@ -35,7 +36,7 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher:'Senaka Batagoda'
+            teacher: 'Senaka Batagoda'
         },
         {
             class: {
@@ -43,7 +44,7 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher:'Senaka Batagoda'
+            teacher: 'Senaka Batagoda'
         },
         {
             class: {
@@ -51,12 +52,12 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher:'Senaka Batagoda'
+            teacher: 'Senaka Batagoda'
         }
     ];
 
     const tableColumns: TableColumn[] = [
-        { name: 'Teacher', value: {render:renderTeacher}},
+        { name: 'Teacher', value: { render: renderTeacher } },
         { name: 'Class', value: { render: renderClass } },
         { name: 'Students', value: 'students' }
     ];
