@@ -2,6 +2,7 @@ import Heading from '@/components/headings/main';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { useDispatch } from 'react-redux';
+import LineChart from './chart';
 // import { Link } from 'react-router-dom';
 
 export default function Profile() {
@@ -25,7 +26,7 @@ export default function Profile() {
                             onClick={() =>
                                 dispatch(
                                     modelActions.show({
-                                        name: modelNames.PROFILE_INFORMATION
+                                        name: modelNames.PROFILE_USER_INFO
                                     })
                                 )
                             }
@@ -60,7 +61,7 @@ export default function Profile() {
                             onClick={() =>
                                 dispatch(
                                     modelActions.show({
-                                        name: modelNames.PROFILE_USER
+                                        name: modelNames.PROFILE_PERSONAL_INFO
                                     })
                                 )
                             }
@@ -196,6 +197,14 @@ export default function Profile() {
                                 <div className="font-medium">Sasip Institue</div>
                                 <div className="text-xs">Nugegoda</div>
                             </div>
+                        </div>
+                    </div>
+                    <div className="chartContainer bg-white px-6 py-4 mb-4 rounded-lg relative">
+                        <h1 className="text-xl font-semibold text-dark-green mb-4">
+                            My Performance
+                        </h1>
+                        <div className="w-4/5 mx-auto mt-12 mb-4">
+                            <LineChart />
                         </div>
                     </div>
                 </section>
