@@ -1,9 +1,20 @@
-interface NavOptionProps {
+interface NavItemProps {
     icon: () => React.ReactNode;
-    name: string;
-    to: LinkProps;
+    bottom?: boolean;
     end?: boolean;
+    name: string;
 }
+
+interface NavLinkProps extends NavItemProps {
+    to: LinkProps;
+}
+
+interface NavButtonProps extends NavItemProps {
+    icon: () => React.ReactNode;
+    onClick: () => void;
+}
+
+type NavOptionProps = NavLinkProps | NavButtonProps;
 
 interface RoleSideBarProps {
     general: NavOptionProps[];
