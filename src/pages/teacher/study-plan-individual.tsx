@@ -43,13 +43,13 @@ export default function StudyPlanIndividual() {
 
             <div className="bg-white rounded-md">
                 {Tasks.map((task) => (
-                    <div className="m-4 rounded-md border-1 shadow-custom">
+                    <div className="m-4 rounded-3xl border-1 shadow-custom">
                         <div className="flex items-center gap-4 p-4 pl-8 m-4 ">
                             <img
                                 src="/images/teacher/ArrowFaceDown.png"
                                 className="w-4.5 h-3 al cursor-pointer"
                                 onClick={() => toggleTaskVisibility(task.id)}></img>
-                            <p className="ml-4 text-2xl font-medium">Task {task.id}</p>
+                            <p className="ml-4 text-xl font-medium">Task {task.id}</p>
                             <img
                                 src="/images/teacher/PencilAlt.png"
                                 className="w-6 h-6 ml-8 "></img>
