@@ -11,6 +11,11 @@ const CreatePlan = loadable(() => import('@/pages/teacher/study-plan-create'));
 const StudyPlanView = loadable(() => import('@/pages/teacher/study-plan-individual'));
 const ClassMaterials = loadable(() => import('@/pages/teacher/classes/materials'));
 const Quizes = loadable(() => import('@/pages/teacher/quizes'));
+const SubjectForum = loadable(() => import('@/pages/teacher/classes/forum/index'));
+const SubjectForumMCQ = loadable(() => import('@/pages/teacher/classes/forum/mcq'));
+const SubjectForumEssay = loadable(() => import('@/pages/teacher/classes/forum/essay'));
+const QuizInfo = loadable(() => import('@/pages/teacher/classes/quiz/results'));
+const QuizQuestion = loadable(() => import('@/pages/teacher/classes/quiz/questions'));
 
 export default function TeacherRoutes() {
     return (
@@ -18,10 +23,15 @@ export default function TeacherRoutes() {
             <Route path="/" element={<Layout />}>
                 <Route path="" element={<Home />} />
                 <Route path="classes" element={<Outlet />}>
-                    <Route path='' element={<Classes/>}></Route>
+                    <Route path="" element={<Classes />}></Route>
                     <Route path=":classId" element={<Outlet />}></Route>
                     //add routes inside classId
+                    <Route path="forum" element={<SubjectForum />} />
+                    <Route path="forum/mcq" element={<SubjectForumMCQ />} />
+                    <Route path="forum/essay" element={<SubjectForumEssay />} />
                 </Route>
+                <Route path="quiz/:quizId" element={<QuizInfo />} />
+                <Route path="quiz/attempt/:quizId" element={<QuizQuestion />} />
                 <Route path="studyplan" element={<Outlet />}>
                     <Route path="" element={<StudyPlan />}></Route>
                     <Route path="create" element={<CreatePlan />}></Route>
