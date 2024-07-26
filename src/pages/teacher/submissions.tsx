@@ -4,7 +4,7 @@ import Heading from '@/components/headings/main';
 import Content from '@/components/content';
 import SubHeading from '@/components/headings/sub';
 import { Accordion, AccordionItem } from '@nextui-org/react';
-import {Button as CustomButton} from "@nextui-org/react";
+import { Button as CustomButton } from '@nextui-org/react';
 
 export default function submissions() {
     return (
@@ -47,23 +47,32 @@ export default function submissions() {
                                             II Question 03 and upload.{' '}
                                         </span>
                                     </p>
-                                    <div className='flex gap-2'>
-                                        {Array.from({length:2}).map((_,j) => {
-                                          return (
-                                            <a
-                                                className="flex flex-col items-center gap-4 m-4 text-dark-gray">
-                                                <img
-                                                    src="/images/subjects/doc.svg"
-                                                    alt="PDF Material"
-                                                    className="size-20"
-                                                />
-                                                <span className="block">Answer.pdf</span>
-                                                <CustomButton color="default" variant="bordered">Download</CustomButton>
-                                            </a>
-                                        );
+                                    <div className="flex items-center justify-center w-full gap-2 p-4 border-2 border-dashed">
+                                        {Array.from({ length: 2 }).map((_, j) => {
+                                            return (
+                                                <a className="flex flex-col items-center gap-4 m-4 text-dark-gray">
+                                                    <img
+                                                        src="/images/subjects/doc.svg"
+                                                        alt="PDF Material"
+                                                        className="size-20"
+                                                    />
+                                                    <span className="block">Answer.pdf</span>
+                                                    <CustomButton
+                                                        color="default"
+                                                        variant="bordered">
+                                                        Download
+                                                    </CustomButton>
+                                                </a>
+                                            );
                                         })}
                                     </div>
-                                    <Button>Mark as Complete</Button>
+                                    <textarea
+                                        className="w-full mt-2 text-black rounded-md resize-none h-28 bg-slate-200 placeholder-top-left"
+                                        placeholder="Give a feedback"
+                                    />
+                                    <div className="flex justify-end w-full mt-2">
+                                        <Button>Add feedback</Button>
+                                    </div>
                                 </div>
                             </AccordionItem>
                         );
