@@ -4,10 +4,15 @@ import SideBar from './sidebar';
 import links from './links';
 import React from 'react';
 import config from '@/config';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
 
 export default function Layout() {
-    const role = config.role;
+    const { user } = useSelector((state: IRootState) => state.user);
+    const role =
+        config.role || user.userRole === 'SUPER_ADMIN' ? 'SUPER_ADMIN' : user.instituteRole;
     const location = useLocation();
+
     const params = useParams();
 
     /* filter sidebar content according to role and path */

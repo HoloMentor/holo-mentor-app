@@ -4,8 +4,7 @@ import LoginForm from './signin';
 
 export default function Login() {
     const [loginData, setLoginData] = useState({
-        email: '',
-        password: ''
+        email: ''
     });
 
     const [tab, setTab] = useState(0);

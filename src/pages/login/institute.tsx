@@ -1,27 +1,35 @@
 import Form from '@/components/form';
 import FormAutoComplete from '@/components/form/autocomplete';
 import SubmitButton from '@/components/form/button';
+import FormInput from '@/components/form/input';
 import useErrorHandler from '@/hooks/error-handler';
+import { userActions } from '@/redux/reducers/user.reducer';
 import authServices from '@/redux/services/auth.service';
+import { setCookie } from 'cookies-next';
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const initialValues = {
-    institute: ''
+    institute: '',
+    password: ''
 };
 
 const validationSchema = Yup.object().shape({
-    institute: Yup.number().integer().required('Institute is required')
+    institute: Yup.number().integer().required('Institute is required'),
+    password: Yup.string().required('Password is required')
 });
 
 interface Props {
     data: {
         email?: string;
-        password?: string;
     };
 }
 
 export default function InstituteForm({ data }: Props) {
+    const dispatch = useDispatch();
+
     const {
         data: userInstitutes,
         error: userInstituteError,
@@ -30,8 +38,14 @@ export default function InstituteForm({ data }: Props) {
     } = authServices.useUserInstitutesQuery({
         email: data?.email
     });
-    // error handling
+
+    // mutations
+    const [signIn, { isLoading: isSigning, isError: isSignInError, error: signInError }] =
+        authServices.useSignInMutation();
+
+    // error handler
     useErrorHandler(isUserInstitutesError, userInstituteError);
+    useErrorHandler(isSignInError, signInError);
 
     const institutes = useMemo(() => {
         let template = [];
@@ -48,8 +62,30 @@ export default function InstituteForm({ data }: Props) {
         return template;
     }, [userInstitutes]);
 
-    const onSubmit = (values: any) => {
-        console.log(values);
+    const onSubmit = async (values: any) => {
+        const result = await signIn({
+            email: data.email,
+            password: values.password,
+            userInstituteID: values.institute
+        });
+
+        if (result.data.status === 200) {
+            dispatch(
+                userActions.set({
+                    userId: result.data.data.user_id,
+                    instituteId: result.data.data.institute_id,
+                    userInstituteId: result.data.data.user_institute_id,
+                    email: result.data.data.email,
+                    firstName: result.data.data.first_name,
+                    lastName: result.data.data.last_name,
+                    userRole: result.data.data.user_role,
+                    instituteRole: result.data.data.institute_role
+                })
+            );
+
+            /* set access token in a cookie */
+            setCookie('token', result.data.data.access_token);
+        }
     };
 
     return (
@@ -76,8 +112,25 @@ export default function InstituteForm({ data }: Props) {
                     defaultItems={institutes}
                 />
 
-                <SubmitButton type="submit" className="py-4 w-full !max-w-full flex justify-center">
-                    Select
+                <div className="flex flex-col">
+                    <FormInput
+                        name="password"
+                        type="password"
+                        label="Password"
+                        placeholder="password"
+                        required
+                    />
+
+                    <Link to="/forgot-password" className="self-end font-medium mt-2">
+                        Forgot Password?
+                    </Link>
+                </div>
+
+                <SubmitButton
+                    isLoading={isSigning}
+                    type="submit"
+                    className="py-4 w-full !max-w-full flex justify-center">
+                    Sign In
                 </SubmitButton>
             </Form>
         </div>
