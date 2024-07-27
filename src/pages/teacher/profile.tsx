@@ -83,7 +83,7 @@ export default function Profile() {
 
                         <div className="">
                             <img
-                                src="/images/student/avatar-hd.jpg"
+                                src="https://picsum.photos/400"
                                 alt="Avatar"
                                 className="w-24 h-24 mb-4 rounded-full"
                             />
