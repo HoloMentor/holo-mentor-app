@@ -3,7 +3,17 @@ import InstituteForm from './institute';
 import LoginForm from './signin';
 
 export default function Login() {
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
+    });
+
     const [tab, setTab] = useState(0);
+
+    const onLogin = (values: FormValues) => {
+        setLoginData(values);
+        setTab(1);
+    };
 
     return (
         <div className="relative grid grid-cols-2 min-h-screen items-center justify-center justify-items-center px-[10%] py-6 max-lg:flex max-lg:flex-col">
@@ -19,7 +29,7 @@ export default function Login() {
             <section className="flex flex-col items-center gap-9 justify-center w-full">
                 <img src="/images/logo.svg" alt="Logo" className="w-full max-w-80" />
 
-                {tab === 0 ? <LoginForm onSuccess={setTab} /> : <InstituteForm />}
+                {tab === 0 ? <LoginForm onSubmit={onLogin} /> : <InstituteForm data={loginData} />}
             </section>
         </div>
     );

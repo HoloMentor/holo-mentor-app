@@ -1,6 +1,9 @@
 import Form from '@/components/form';
 import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
+import useErrorHandler from '@/hooks/error-handler';
+import authServices from '@/redux/services/auth.service';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -15,15 +18,16 @@ const validationSchema = Yup.object().shape({
 });
 
 interface Props {
-    onSuccess: (x: number) => void;
+    onSubmit: (values: FormValues) => void;
 }
 
-export default function LoginForm({ onSuccess }: Props) {
-    const onSubmit = (values: any) => {
-        console.log(values);
+export default function LoginForm({ onSubmit }: Props) {
+    // mutations
+    const [signIn, { isLoading: isSigning, isError: isSignInError, error: signInError }] =
+        authServices.useSignInMutation();
 
-        onSuccess(1);
-    };
+    // error handler
+    useErrorHandler(isSignInError, signInError);
 
     return (
         <div className="flex flex-col gap-9 items-center w-full max-w-[400px]">
