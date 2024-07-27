@@ -1,7 +1,12 @@
 import Heading from '@/components/headings/main';
+import { modelNames } from '@/models';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { useDispatch } from 'react-redux';
 import Table from '@/components/table';
 
 export default function Profile() {
+    const dispatch = useDispatch();
+
     const Biology = [
         { id: 1, type: 'Theory', year: 2021 },
         { id: 2, type: 'Theory', year: 2022 },
@@ -52,7 +57,15 @@ export default function Profile() {
             <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
                 <section className="w-full col-span-1 h-fit">
                     <div className="relative px-4 py-6 mb-4 bg-white rounded-lg">
-                        <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
+                        <div
+                            onClick={() =>
+                                dispatch(
+                                    modelActions.show({
+                                        name: modelNames.PROFILE_USER_INFO
+                                    })
+                                )
+                            }
+                            className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -79,7 +92,15 @@ export default function Profile() {
                         </div>
                     </div>
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-                        <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
+                        <div
+                            onClick={() =>
+                                dispatch(
+                                    modelActions.show({
+                                        name: modelNames.PROFILE_PERSONAL_INFO
+                                    })
+                                )
+                            }
+                            className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -171,7 +192,15 @@ export default function Profile() {
                     </div>
 
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-                        <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
+                        <div
+                            onClick={() =>
+                                dispatch(
+                                    modelActions.show({
+                                        name: modelNames.ADD_ACADEMIC_STAFF
+                                    })
+                                )
+                            }
+                            className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
