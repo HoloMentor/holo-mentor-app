@@ -1,16 +1,14 @@
+import useRoleHandler from '@/hooks/role-handler';
+import { IRootState } from '@/redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
+import links from './links';
 import Navbar from './navbar';
 import SideBar from './sidebar';
-import links from './links';
-import React from 'react';
-import config from '@/config';
-import { useSelector } from 'react-redux';
-import { IRootState } from '@/redux';
 
 export default function Layout() {
-    const { user } = useSelector((state: IRootState) => state.user);
-    const role =
-        config.role || user.userRole === 'SUPER_ADMIN' ? 'SUPER_ADMIN' : user.instituteRole;
+    const role = useRoleHandler();
     const location = useLocation();
 
     const params = useParams();

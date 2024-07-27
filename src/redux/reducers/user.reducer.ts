@@ -45,15 +45,24 @@ const initState: userStateProps = {
 
 export const authorizeUser = createAsyncThunk('auth/me', async (_, { dispatch }) => {
     const token = getCookie('token');
-    console.log(token);
+
     if (!token) return null;
     const data: any = jwtDecode(token);
 
-    const response = await axios.get(`${config.api_url}auth/me`, {
+    const response = await axios.get(`${config.api_url}auth/me/${data.sub}`, {
         withCredentials: true
     });
 
-    return response.data.data;
+    return {
+        userId: response.data?.data?.user_id,
+        instituteId: response.data?.data?.institute_id,
+        userInstituteId: response.data?.data?.user_institute_id,
+        email: response.data?.data?.email,
+        firstName: response.data?.data?.first_name,
+        lastName: response.data?.data?.last_name,
+        userRole: response.data?.data?.user_role,
+        instituteRole: response.data?.data?.institute_role
+    };
 });
 
 const userSlice = createSlice({

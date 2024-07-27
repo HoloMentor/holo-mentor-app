@@ -1,19 +1,17 @@
-import config from '@/config';
-import DefaultRoutes from '@/routes';
-import StudentRoutes from '@/routes/student';
-import TeacherRoutes from '@/routes/teacher';
-import InstituteRoutes from '@/routes/institute';
-import SuperAdminRoutes from '@/routes/super-admin';
-import { useDispatch, useSelector } from 'react-redux';
-import { IAppDispatch, IRootState } from '@/redux';
-import { useEffect } from 'react';
+import { IAppDispatch } from '@/redux';
 import { authorizeUser } from '@/redux/reducers/user.reducer';
+import DefaultRoutes from '@/routes';
+import InstituteRoutes from '@/routes/institute';
+import StudentRoutes from '@/routes/student';
+import SuperAdminRoutes from '@/routes/super-admin';
+import TeacherRoutes from '@/routes/teacher';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import useRoleHandler from './hooks/role-handler';
 
 function App() {
     const dispatch = useDispatch<IAppDispatch>();
-    const { user } = useSelector((state: IRootState) => state.user);
-    const role =
-        config.role || user.userRole === 'SUPER_ADMIN' ? 'SUPER_ADMIN' : user.instituteRole;
+    const role = useRoleHandler();
 
     useEffect(() => {
         dispatch(authorizeUser());
