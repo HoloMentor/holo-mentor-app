@@ -42,7 +42,7 @@ export default function submissions() {
                                 }}>
                                 <div className="flex flex-col items-center justify-center gap-5 min-h-52">
                                     <p className="flex flex-col items-center gap-1">
-                                        <span className="text-xl">
+                                        <span className="text-medium">
                                             Complete 2021 , 2022 , 2023 AL Physics Past Paper Part
                                             II Question 03 and upload.{' '}
                                         </span>

@@ -12,6 +12,7 @@ const StudyPlanView = loadable(() => import('@/pages/teacher/study-plan-individu
 const ClassMaterials = loadable(() => import('@/pages/teacher/classes/materials'));
 const StudentList = loadable(() => import('@/pages/teacher/quizes'));
 const Submissions = loadable(() => import('@/pages/teacher/submissions'));
+const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'))
 
 export default function TeacherRoutes() {
     return (
@@ -32,6 +33,7 @@ export default function TeacherRoutes() {
                     <Route path="" element={<StudentList />}></Route>
                     <Route path="details"></Route>
                     <Route path="submissions" element={<Submissions />}></Route>
+                    <Route path="profile" element={<StudentProfile />}></Route>
                 </Route>
 
                 <Route path="profile" element={<Profile />} />
