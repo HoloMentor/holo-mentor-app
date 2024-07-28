@@ -198,8 +198,8 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="chartContainer bg-white px-6 py-4 mb-4 rounded-lg relative">
-                        <h1 className="text-xl font-semibold text-dark-green mb-4">
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg chartContainer">
+                        <h1 className="mb-4 text-xl font-semibold text-dark-green">
                             My Performance
                         </h1>
                         <div className="w-4/5 mx-auto mt-12 mb-4">
