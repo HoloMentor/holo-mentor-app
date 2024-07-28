@@ -2,11 +2,15 @@ import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 
 export default function Profile() {
-    const subjects = [
-        { id: 1, name: 'Biology' },
-        { id: 2, name: 'Chemistry' },
-        { id: 3, name: 'Physics' },
-        { id: 5, name: 'Maths' }
+    const Biology = [
+        { id: 1, type: 'Theory', year: 2021 },
+        { id: 2, type: 'Theory', year: 2022 },
+        { id: 3, type: 'Theory', year: 2023 },
+        { id: 5, type: 'Revision', year: 2024 }
+    ];
+    const Chemistry = [
+        { id: 1, type: 'Theory', year: 2023 },
+        { id: 2, type: 'Revision', year: 2024 }
     ];
 
     const renderClass = ({ data }: CustomTableCellData) => {
@@ -29,9 +33,17 @@ export default function Profile() {
         }
     ];
 
+    //handle academic staff members popup
     const tableColumns: TableColumn[] = [
         { name: 'Class', value: { render: renderClass } },
         { name: 'Students', value: 'students' }
+    ];
+
+    const items = [
+        { key: '1', name: 'Saliya Bandara' },
+        { key: '2', name: 'Tony Reichert' },
+        { key: '3', name: 'Zoey Lang' },
+        { key: '4', name: 'Jane Fisher' }
     ];
 
     return (
@@ -88,7 +100,7 @@ export default function Profile() {
                         </h1>
 
                         <ul className="mt-4">
-                            <li className="flex items-center gap-4 mb-1 text-sm">
+                            <li className="flex gap-4 mb-4 text-sm items-center">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +122,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
+                            <li className="flex gap-4 mb-4 text-sm items-center">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +144,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
+                            <li className="flex gap-4 mb-4 text-sm items-center">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -178,41 +190,67 @@ export default function Profile() {
                         <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
 
                         <ul className="mt-4">
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
-                                    01
-                                </div>
-                                <span>
-                                    <a href="mailto:saliya@gmail.com" className="text-black">
-                                        saliya@gmail.com
-                                    </a>
-                                </span>
-                            </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 ">02</div>
-                                <span>
-                                    <a href="tel:+94771234567" className="text-black">
-                                        077 123 4567
-                                    </a>
-                                </span>
-                            </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 ">03</div>
-                                <span>Sri Lanka</span>
-                            </li>
+                            {items.map((item) => (
+                                <li
+                                    key={item.key}
+                                    className="flex gap-5 mb-1 text-sm items-center justify-between">
+                                    <div className="flex flex-row justify-center items-center gap-4">
+                                        <img
+                                            src="/images/student/avatar-hd.jpg"
+                                            alt="Avatar"
+                                            className="rounded-full w-10 h-10 mb-2"
+                                        />
+                                        <div className="text-md font-semibold">{item.name}</div>
+                                    </div>
+                                    <div className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="red"
+                                            className="size-5">
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                            />
+                                        </svg>
+                                    </div>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </section>
 
                 <section className="w-full col-span-2 max-lg:pr-4">
-                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
-                        <h1 className="text-xl font-semibold text-dark-green">My Subjects</h1>
-                        <div className="flex mx-6 mb-4 mt-7">
-                            {subjects.map((subject) => (
+                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
+                        <h1 className="text-xl font-semibold text-dark-green">My Classess</h1>
+                        <div className="ml-4 mt-5 font-medium">Biology</div>
+                        <div className="flex mt-7 mb-4 mx-6 justify-start flex-wrap">
+                            {Biology.map((tution) => (
                                 <div
-                                    key={subject.id}
-                                    className="flex items-center justify-center w-24 p-4 mr-8 rotate-45 border rounded-3xl aspect-square border-dark-green shadow-custom bg-slate-50">
-                                    <span className="-rotate-45">{subject.name}</span>
+                                    key={tution.id}
+                                    className="flex w-24 mr-8 mb-10 justify-center items-center rotate-45
+                             rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
+                                    <div className="-rotate-45 flex flex flex-col justify-center items-center">
+                                        <span className="text-lg">{tution.type} </span>
+                                        <span className="text-xs">{tution.year}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="ml-4 mt-5 font-medium">Chemistry</div>
+                        <div className="flex mt-7 mb-4 mx-6 justify-start">
+                            {Chemistry.map((tution) => (
+                                <div
+                                    key={tution.id}
+                                    className="flex w-24 mr-8 mb-10 justify-center items-center rotate-45
+                             rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
+                                    <div className="-rotate-45 flex flex flex-col justify-center items-center">
+                                        <span className="text-lg">{tution.type} </span>
+                                        <span className="text-xs">{tution.year}</span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
