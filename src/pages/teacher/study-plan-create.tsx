@@ -1,31 +1,62 @@
 import Button from '@/components/button';
+import FormEditor from '@/components/form/editor';
+import Form from '@/components/form';
+import { FormikValues } from 'formik';
+import * as Yup from 'yup';
+
+const initialValues = {
+    topic: '',
+    subTopic: '',
+    question: ''
+};
+
+const validationSchema = Yup.object().shape({
+    topic: Yup.string().required('Topic is required'),
+    subTopic: Yup.string().required('Sub topic is required'),
+    question: Yup.mixed().required('Question is required')
+});
 
 export default function studyPlanCreate() {
+    const onSubmit = (v: FormikValues) => {
+        console.log(v);
+    };
     return (
         <div className="p-4 bg-white rounded-md shadow-custom">
-            <h1 className="pb-8 text-3xl font-semibold text-dark-green">
+            <h1 className="pb-8 text-2xl font-semibold text-dark-green">
                 Create New Study Plan-Tier1
             </h1>
             <div className="pb-8 ml-6">
-                <p className="pb-1 text-xl font-medium">Name of Study Plan</p>
+                <p className="pb-1 font-medium text-medium">Name of Study Plan</p>
                 <input
                     className="w-3/4 pr-4 rounded-md placeholder:italic placeholder:pl-4 placeholder:text-slate-400"
                     placeholder="Ex: Rapid MCQ Plan"></input>
             </div>
             <div className="pb-8 ml-6">
-                <p className="pb-1 text-xl font-medium">Description</p>
+                <p className="pb-1 font-medium text-medium">Description</p>
                 <input
                     className="w-3/4 pr-4 rounded-md placeholder:italic placeholder:text-slate-400 placeholder:pl-4"
                     placeholder="Description"></input>
             </div>
             <section className="p-4 mb-8 ml-6 border-2 rounded-md">
-                <h1 className="pb-4 text-2xl font-medium">Task 01</h1>
+                <h1 className="pb-4 text-xl font-medium">Task 01</h1>
                 <div className="flex flex-col">
                     <p>Task Description</p>
                     <input className="w-3/4 pr-4 rounded-md placeholder:italic placeholder:text-slate-400"></input>
-                    {/* <FormEditor
-            name='Tier1'
-            /> */}
+                    <Form
+                    validationSchema={validationSchema}
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    className="flex flex-col gap-4 pt-4">
+                    
+
+                    <FormEditor
+                        className=" min-h-72"
+                        classNames={{
+                            mainWrapper: 'col-span-2'
+                        }}
+                        name="question"
+                    />
+                </Form>
                 </div>
             </section>
             <div className="flex items-center justify-center gap-4 p-4 mb-4 ml-6 mr-4 transition-all duration-300 border-2 cursor-pointer rounded-3xl hover:shadow-md hover:bg-gray-100 active:bg-gray-200 active:shadow-inner">
