@@ -1,17 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InstituteForm from './institute';
 import LoginForm from './signin';
+import authServices from '@/redux/services/auth.service';
+import useErrorHandler from '@/hooks/error-handler';
 
 export default function Login() {
+    const [tab, setTab] = useState(0);
     const [loginData, setLoginData] = useState({
         email: ''
     });
 
-    const [tab, setTab] = useState(0);
+    const {
+        data: userInstitutes,
+        error: userInstituteError,
+        isError: isUserInstitutesError,
+        isLoading: isUserInstitutesLoading
+    } = authServices.useUserInstitutesQuery(
+        {
+            email: loginData?.email
+        },
+        {
+            skip: !loginData?.email
+        }
+    );
+
+    // error handling
+    useErrorHandler(isUserInstitutesError, userInstituteError);
+
+    useEffect(() => {
+        if (userInstitutes?.data?.institutes) {
+            setTab(1);
+        }
+    }, [userInstitutes]);
 
     const onLogin = (values: FormValues) => {
         setLoginData(values);
-        setTab(1);
     };
 
     return (
@@ -28,7 +51,15 @@ export default function Login() {
             <section className="flex flex-col items-center gap-9 justify-center w-full">
                 <img src="/images/logo.svg" alt="Logo" className="w-full max-w-80" />
 
-                {tab === 0 ? <LoginForm onSubmit={onLogin} /> : <InstituteForm data={loginData} />}
+                {tab === 0 ? (
+                    <LoginForm onSubmit={onLogin} />
+                ) : (
+                    <InstituteForm
+                        data={loginData}
+                        loading={isUserInstitutesLoading}
+                        userInstitutes={userInstitutes?.data?.institutes}
+                    />
+                )}
             </section>
         </div>
     );

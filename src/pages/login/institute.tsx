@@ -25,33 +25,26 @@ interface Props {
     data: {
         email?: string;
     };
+    userInstitutes: any[];
+    loading: boolean;
 }
 
-export default function InstituteForm({ data }: Props) {
+export default function InstituteForm({ data, userInstitutes = [], loading }: Props) {
     const dispatch = useDispatch();
-
-    const {
-        data: userInstitutes,
-        error: userInstituteError,
-        isError: isUserInstitutesError,
-        isLoading: isUserInstitutesLoading
-    } = authServices.useUserInstitutesQuery({
-        email: data?.email
-    });
 
     // mutations
     const [signIn, { isLoading: isSigning, isError: isSignInError, error: signInError }] =
         authServices.useSignInMutation();
 
     // error handler
-    useErrorHandler(isUserInstitutesError, userInstituteError);
+
     useErrorHandler(isSignInError, signInError);
 
     const institutes = useMemo(() => {
-        let template = [];
+        let template: any[] = [];
 
-        if (userInstitutes?.data?.institutes) {
-            template = userInstitutes.data.institutes.map((_: { id: number; name: string }) => {
+        if (userInstitutes) {
+            template = userInstitutes.map((_: { id: number; name: string }) => {
                 return {
                     value: _.id,
                     label: _.name
@@ -105,7 +98,7 @@ export default function InstituteForm({ data }: Props) {
                 onSubmit={onSubmit}
                 className="flex flex-col w-full gap-6">
                 <FormAutoComplete
-                    isLoading={isUserInstitutesLoading}
+                    isLoading={loading}
                     name="institute"
                     label="Educational Institute"
                     placeholder="Select Institute"

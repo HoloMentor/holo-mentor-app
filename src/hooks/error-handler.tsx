@@ -10,7 +10,7 @@ const useErrorHandler = (isError: boolean, error?: any) => {
             dispatch(
                 notifyActions.open({
                     type: 'error',
-                    message: error?.message
+                    message: error?.data?.message || 'Something went wrong. Please try again later'
                 })
             );
         }

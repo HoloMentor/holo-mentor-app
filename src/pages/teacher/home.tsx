@@ -1,5 +1,5 @@
 import InfoCard from '@/components/cards/info';
-import DoughnuChart from '@/components/charts/donut';
+import DoughnuChart from '@/components/charts/doughnut';
 
 function Home() {
     /* sample */

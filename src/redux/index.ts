@@ -4,11 +4,13 @@ import modelReducer from './reducers/model.reducer';
 
 import authServices from './services/auth.service';
 import userServices from './services/user.service';
+import notifyReducer from './reducers/notify.reducer';
 
 const store = configureStore({
     reducer: combineReducers({
         user: userReducer,
         model: modelReducer,
+        notify: notifyReducer,
         [authServices.reducerPath]: authServices.reducer,
         [userServices.reducerPath]: userServices.reducer
     }),

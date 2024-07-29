@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import Pagination from './pagination';
 
 export default function Table({
@@ -19,6 +20,13 @@ export default function Table({
                 return 'center';
         }
     };
+
+    const getCellValue = useCallback(
+        (data: any = {}, value: string) => {
+            return value.split('.').reduce((acc, key) => acc && acc[key], data) || '-';
+        },
+        [data]
+    );
 
     return (
         <div className="border rounded-lg border-border">
@@ -56,7 +64,7 @@ export default function Table({
                                                     className="px-4 py-2 font-normal text-gray-900 whitespace-nowrap border-b-1"
                                                     {...props}>
                                                     {typeof value === 'string' ? (
-                                                        _data[value]
+                                                        getCellValue(_data, value)
                                                     ) : (
                                                         <value.render
                                                             rowIndex={i}

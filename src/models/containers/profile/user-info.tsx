@@ -5,7 +5,11 @@ import Select, { SelectValue } from '@/components/select';
 import { FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
+
+interface ModelContainerProps {
+    onClose: () => void;
+}
 
 const initialValues = {
     firstName: '',
@@ -30,20 +34,74 @@ const roleOptions = [
 
 export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
     const [roleValue, setRoleValue] = useState<SelectValue>('student');
+    const [profileImage, setProfileImage] = useState<string>('https://picsum.photos/400');
+
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (event.target) {
+                    setProfileImage(event.target.result as string);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
+
     const onSubmit = (v: FormikValues) => {
         console.log(v);
     };
+
     return (
         <div>
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
                 Personal Information
             </ModalHeader>
+
             <ModalBody>
                 <Form
                     validationSchema={validationSchema}
                     initialValues={initialValues}
                     onSubmit={onSubmit}
                     className="flex flex-col gap-4">
+                    <div className="flex justify-center mt-4">
+                        <div className="relative">
+                            <img
+                                src={profileImage}
+                                alt="Profile"
+                                className="w-28 h-28 rounded-full object-cover"
+                            />
+                            <label
+                                htmlFor="file-input"
+                                className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full cursor-pointer">
+                                <svg
+                                    width="39"
+                                    height="35"
+                                    viewBox="0 0 39 35"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M19.5 24.667C22.4685 24.667 24.875 22.2605 24.875 19.292C24.875 16.3235 22.4685 13.917 19.5 13.917C16.5315 13.917 14.125 16.3235 14.125 19.292C14.125 22.2605 16.5315 24.667 19.5 24.667Z"
+                                        stroke="white"
+                                        strokeWidth="2"
+                                    />
+                                    <path
+                                        d="M1.58325 19.9439C1.58325 14.4525 1.58325 11.7076 2.92521 9.73679C3.50779 8.87976 4.25435 8.14659 5.12179 7.57962C6.41179 6.73217 8.02788 6.42938 10.5022 6.32188C11.6829 6.32188 12.6988 5.44396 12.9299 4.30625C13.1065 3.47289 13.5654 2.72607 14.2291 2.192C14.8928 1.65793 15.7205 1.36937 16.5723 1.37508H22.4275C24.1977 1.37508 25.7224 2.60238 26.07 4.30625C26.3011 5.44396 27.317 6.32188 28.4977 6.32188C30.9702 6.42938 32.5862 6.73396 33.878 7.57962C34.747 8.14937 35.4941 8.88217 36.0746 9.73679C37.4166 11.7076 37.4166 14.4525 37.4166 19.9439C37.4166 25.4336 37.4166 28.1784 36.0746 30.151C35.491 31.0072 34.7447 31.7402 33.878 32.3082C31.8696 33.6251 29.0728 33.6251 23.481 33.6251H15.5188C9.92704 33.6251 7.13025 33.6251 5.12179 32.3082C4.25559 31.7396 3.50982 31.006 2.927 30.1492C2.53867 29.5689 2.25208 28.9267 2.07954 28.2501M32.0416 13.9168H30.2499"
+                                        stroke="white"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                    />
+                                </svg>
+                            </label>
+                            <input
+                                id="file-input"
+                                type="file"
+                                accept="image/png, image/jpeg"
+                                className="hidden"
+                                onChange={handleImageChange}
+                            />
+                        </div>
+                    </div>
                     <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
                         <FormInput label="First Name *" placeholder="First Name" name="firstName" />
                         <FormInput label="Last Name *" placeholder="Last Name" name="lastName" />
