@@ -2,7 +2,6 @@ import Heading from '@/components/headings/main';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { useDispatch } from 'react-redux';
-import Table from '@/components/table';
 
 export default function Profile() {
     const dispatch = useDispatch();
@@ -16,39 +15,6 @@ export default function Profile() {
     const Chemistry = [
         { id: 1, type: 'Theory', year: 2023 },
         { id: 2, type: 'Revision', year: 2024 }
-    ];
-
-    const renderClass = ({ data }: CustomTableCellData) => {
-        return (
-            <div className="flex flex-col gap-1">
-                <span className="font-semibold text-dark-green">{data.class.name}</span>
-                <span>{data.class.institute}</span>
-            </div>
-        );
-    };
-
-    /* this is a sample data */
-    const tableData = [
-        {
-            class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
-            },
-            students: '210'
-        }
-    ];
-
-    //handle academic staff members popup
-    const tableColumns: TableColumn[] = [
-        { name: 'Class', value: { render: renderClass } },
-        { name: 'Students', value: 'students' }
-    ];
-
-    const items = [
-        { key: '1', name: 'Saliya Bandara' },
-        { key: '2', name: 'Tony Reichert' },
-        { key: '3', name: 'Zoey Lang' },
-        { key: '4', name: 'Jane Fisher' }
     ];
 
     return (

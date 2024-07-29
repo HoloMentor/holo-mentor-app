@@ -4,7 +4,8 @@ import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import ForumQuestionVote from '@/components/forum/vote';
 
 const filterOptions = [
     {
@@ -70,56 +71,15 @@ export default function Forum() {
 
             <section className="flex flex-col gap-5 pr-5">
                 {Array.from({ length: 5 }).map((_, i) => {
+                    // TODO: this should be the id of the forum content
+                    const id = i;
+
                     return (
                         <div key={i} className="flex gap-3 bg-white rounded-md p-6">
-                            <div className="flex gap-2 items-center min-h-36">
-                                <span className="font-semibold text-dark-gray">20</span>
-                                <div className="flex flex-col gap-4">
-                                    <button className="rounded-full p-1 transition-all duration-300 hover:bg-slate-100 active:bg-slate-200">
-                                        <svg
-                                            width="29"
-                                            height="30"
-                                            viewBox="0 0 29 30"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g id="Iconly/Light/Arrow - Left 2">
-                                                <g id="Arrow - Left 2">
-                                                    <path
-                                                        id="Stroke 1"
-                                                        d="M6.04427 19.1178L14.5026 10.6595L22.9609 19.1178"
-                                                        stroke="#6A6A6A"
-                                                        strokeWidth="3"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </button>
-                                    <button className="rounded-full p-1 transition-all duration-300 hover:bg-slate-100 active:bg-slate-200">
-                                        <svg
-                                            width="29"
-                                            height="30"
-                                            viewBox="0 0 29 30"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g id="Iconly/Light/Arrow - Left 3">
-                                                <g id="Arrow - Left 2">
-                                                    <path
-                                                        id="Stroke 1"
-                                                        d="M22.9557 10.6595L14.4974 19.1179L6.03906 10.6595"
-                                                        stroke="#6A6A6A"
-                                                        strokeWidth="3"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-6">
+                            <ForumQuestionVote id={id} />
+                            <Link
+                                to={`${location.pathname}/${id}`}
+                                className="flex flex-col gap-6 text-black hover:text-black">
                                 <h3 className="font-semibold text-lg">Subject title</h3>
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -127,24 +87,26 @@ export default function Forum() {
                                     ullam molestias. Modi, dolor fugit. Facere tempora praesentium
                                     dignissimos veritatis, suscipit repudiandae numquam?
                                 </p>
-                            </div>
+                            </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">
                                     <div>
-                                        <div className="flex justify-end items-center gap-2 w-36">
+                                        <div className="flex items-center justify-end gap-2 w-36">
                                             <img
-                                                className="size-7 rounded-full"
+                                                className="rounded-full size-7"
                                                 src="/images/student/avatar.png"
                                                 alt="Avatar"
                                             />
                                             <span className="truncate">Albert Flores</span>
                                         </div>
-                                        <span className="block font-regular text-sm text-dark-gray text-right w-full">
+                                        <span className="block w-full font-medium text-right text-dark-gray">
                                             2 days ago
                                         </span>
                                     </div>
 
-                                    <div className="flex gap-2 justify-end items-center text-dark-gray">
+                                    <Link
+                                        to={`${location.pathname}/${id}`}
+                                        className="flex gap-2 justify-end items-center text-dark-gray">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
@@ -157,7 +119,7 @@ export default function Forum() {
                                             />
                                         </svg>
                                         <span className="font-medium">2</span>
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
