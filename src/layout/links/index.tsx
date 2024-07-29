@@ -1,11 +1,11 @@
 import instituteSideBar from './institute';
 import studentSideBar from './student';
 import teacherSideBar from './teacher';
-import staff from './staff';
+import staffSideBar from './staff';
 
 export default {
     student: studentSideBar,
     teacher: teacherSideBar,
     institute: instituteSideBar,
-    staff: staff
+    staff: staffSideBar
 };

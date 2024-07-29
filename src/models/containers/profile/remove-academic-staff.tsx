@@ -1,23 +1,6 @@
-import Button from '@/components/button';
-import Form from '@/components/form';
-import FormInput from '@/components/form/input';
-import { FormikValues } from 'formik';
-import * as Yup from 'yup';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 
-const initialValues = {
-    email: ''
-};
-
-const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required')
-});
-
 export default function AddAcademicStaff({}: ModelContainerProps) {
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
-    };
-
     return (
         <div>
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl"></ModalHeader>
@@ -44,7 +27,7 @@ export default function AddAcademicStaff({}: ModelContainerProps) {
             </ModalBody>
             <ModalFooter>
                 <button className="bg-white py-2  px-4 rounded hover:bg-light-gray cursor-pointer select-none inline-flex items-center gap-2 border-0 py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm">
-                    cancel
+                    Cancel
                 </button>
                 <button className="bg-orange outline-none cursor-pointer select-none hover:bg-red-500 inline-flex items-center gap-2 border-0 text-white py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm">
                     Delete

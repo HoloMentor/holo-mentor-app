@@ -190,66 +190,6 @@ export default function Profile() {
                             </li>
                         </ul>
                     </div>
-
-                    <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-                        <div
-                            onClick={() =>
-                                dispatch(
-                                    modelActions.show({
-                                        name: modelNames.ADD_ACADEMIC_STAFF
-                                    })
-                                )
-                            }
-                            className="absolute right-4 top-4 cursor-pointer z-[+1]">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                className="size-5">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                                />
-                            </svg>
-                        </div>
-
-                        <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
-
-                        <ul className="mt-4">
-                            {items.map((item) => (
-                                <li
-                                    key={item.key}
-                                    className="flex gap-5 mb-1 text-sm items-center justify-between">
-                                    <div className="flex flex-row justify-center items-center gap-4">
-                                        <img
-                                            src="/images/student/avatar-hd.jpg"
-                                            alt="Avatar"
-                                            className="rounded-full w-10 h-10 mb-2"
-                                        />
-                                        <div className="text-md font-semibold">{item.name}</div>
-                                    </div>
-                                    <div className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="red"
-                                            className="size-5">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                            />
-                                        </svg>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
                 </section>
 
                 <section className="w-full col-span-2 max-lg:pr-4">
@@ -311,11 +251,6 @@ export default function Profile() {
                                 <div className="text-xs">Nugegoda</div>
                             </div>
                         </div>
-                    </div>
-                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
-                        <h1 className="mb-4 text-xl font-semibold text-dark-green">Students</h1>
-
-                        <Table data={tableData} columns={tableColumns} />
                     </div>
                 </section>
             </div>

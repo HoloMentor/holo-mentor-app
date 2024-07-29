@@ -4,7 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 
 const Home = loadable(() => import('@/pages/teacher/home'));
 const Classes = loadable(() => import('@/pages/teacher/classes/index'));
-const Profile = loadable(() => import('@/pages/teacher/profile'));
+const Profile = loadable(() => import('@/pages/staff/profile'));
 const Notifications = loadable(() => import('@/pages/teacher/notifications'));
 const StudyPlan = loadable(() => import('@/pages/teacher/study-plan'));
 const CreatePlan = loadable(() => import('@/pages/teacher/study-plan-create'));
