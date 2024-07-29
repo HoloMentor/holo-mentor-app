@@ -3,6 +3,7 @@ import ProfileInformation from './containers/profile/information';
 import ProfileUserInfo from './containers/profile/user-info';
 import ProfilePersonalInfo from './containers/profile/personal-info';
 import AddStaff from './containers/profile/add-academic-staff';
+import RemoveStaff from './containers/profile/remove-academic-staff';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -19,6 +20,9 @@ export const modelContainers: ModelContainers = {
     },
     ADD_ACADEMIC_STAFF: {
         model : AddStaff
+    },
+    REMOVE_ACADEMIX_STAFF :{
+        model : RemoveStaff
     }
 };
 
@@ -27,5 +31,6 @@ export const modelNames = {
     PROFILE_INFORMATION: 'PROFILE_INFORMATION',
     PROFILE_USER_INFO: 'PROFILE_USER_INFO',
     PROFILE_PERSONAL_INFO: 'PROFILE_PERSONAL_INFO',
-    ADD_ACADEMIC_STAFF: 'ADD_ACADEMIC_STAFF'
+    ADD_ACADEMIC_STAFF: 'ADD_ACADEMIC_STAFF',
+    REMOVE_ACADEMIX_STAFF : 'REMOVE_ACADEMIX_STAFF'
 };

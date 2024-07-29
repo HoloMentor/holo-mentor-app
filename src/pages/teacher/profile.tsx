@@ -231,7 +231,15 @@ export default function Profile() {
                                         />
                                         <div className="text-md font-semibold">{item.name}</div>
                                     </div>
-                                    <div className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
+                                    <div
+                                        onClick={() =>
+                                            dispatch(
+                                                modelActions.show({
+                                                    name: modelNames.REMOVE_ACADEMIX_STAFF
+                                                })
+                                            )
+                                        }
+                                        className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
