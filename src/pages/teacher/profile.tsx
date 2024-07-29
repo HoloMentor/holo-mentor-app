@@ -100,7 +100,7 @@ export default function Profile() {
                         </h1>
 
                         <ul className="mt-4">
-                            <li className="flex gap-4 mb-4 text-sm items-center">
+                            <li className="flex items-center gap-4 mb-4 text-sm">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex gap-4 mb-4 text-sm items-center">
+                            <li className="flex items-center gap-4 mb-4 text-sm">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex gap-4 mb-4 text-sm items-center">
+                            <li className="flex items-center gap-4 mb-4 text-sm">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -193,16 +193,16 @@ export default function Profile() {
                             {items.map((item) => (
                                 <li
                                     key={item.key}
-                                    className="flex gap-5 mb-1 text-sm items-center justify-between">
-                                    <div className="flex flex-row justify-center items-center gap-4">
+                                    className="flex items-center justify-between gap-5 mb-1 text-sm">
+                                    <div className="flex flex-row items-center justify-center gap-4">
                                         <img
                                             src="/images/student/avatar-hd.jpg"
                                             alt="Avatar"
-                                            className="rounded-full w-10 h-10 mb-2"
+                                            className="w-10 h-10 mb-2 rounded-full"
                                         />
-                                        <div className="text-md font-semibold">{item.name}</div>
+                                        <div className="font-semibold text-md">{item.name}</div>
                                     </div>
-                                    <div className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
+                                    <div className="w-5 h-5 text-lg cursor-pointer text-neutral-500">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
@@ -224,30 +224,28 @@ export default function Profile() {
                 </section>
 
                 <section className="w-full col-span-2 max-lg:pr-4">
-                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
                         <h1 className="text-xl font-semibold text-dark-green">My Classess</h1>
-                        <div className="ml-4 mt-5 font-medium">Biology</div>
-                        <div className="flex mt-7 mb-4 mx-6 justify-start flex-wrap">
+                        <div className="mt-5 ml-4 font-medium">Biology</div>
+                        <div className="flex flex-wrap justify-start mx-6 mb-4 mt-7">
                             {Biology.map((tution) => (
                                 <div
                                     key={tution.id}
-                                    className="flex w-24 mr-8 mb-10 justify-center items-center rotate-45
-                             rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
-                                    <div className="-rotate-45 flex flex flex-col justify-center items-center">
+                                    className="flex items-center justify-center w-24 p-4 mb-10 mr-8 rotate-45 border rounded-3xl aspect-square border-dark-green shadow-custom bg-slate-50">
+                                    <div className="flex flex-col items-center justify-center -rotate-45">
                                         <span className="text-lg">{tution.type} </span>
                                         <span className="text-xs">{tution.year}</span>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <div className="ml-4 mt-5 font-medium">Chemistry</div>
-                        <div className="flex mt-7 mb-4 mx-6 justify-start">
+                        <div className="mt-5 ml-4 font-medium">Chemistry</div>
+                        <div className="flex justify-start mx-6 mb-4 mt-7">
                             {Chemistry.map((tution) => (
                                 <div
                                     key={tution.id}
-                                    className="flex w-24 mr-8 mb-10 justify-center items-center rotate-45
-                             rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
-                                    <div className="-rotate-45 flex flex flex-col justify-center items-center">
+                                    className="flex items-center justify-center w-24 p-4 mb-10 mr-8 rotate-45 border rounded-3xl aspect-square border-dark-green shadow-custom bg-slate-50">
+                                    <div className="flex flex-col items-center justify-center -rotate-45">
                                         <span className="text-lg">{tution.type} </span>
                                         <span className="text-xs">{tution.year}</span>
                                     </div>

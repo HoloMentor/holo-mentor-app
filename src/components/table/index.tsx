@@ -5,7 +5,8 @@ export default function Table({
     columns = [],
     data = [],
     pagination = { enable: false, page: 0, limit: 10, pages: 1 },
-    name = 'table'
+    name = 'table',
+    onRowClick,
 }: TableProps) {
     const getAlignment = (length: number, i: number) => {
         switch (i) {
@@ -45,7 +46,9 @@ export default function Table({
                         ) : (
                             data.map((_data, i) => {
                                 return (
-                                    <tr key={`${name}-row-${i}`}>
+                                    <tr key={`${name}-row-${i}`}
+                                    onClick={onRowClick ? () => onRowClick(_data, i) : undefined}
+                                    className={onRowClick ? 'cursor-pointer' : ''}>
                                         {columns?.map((_, j) => {
                                             const { value, props } = _;
 

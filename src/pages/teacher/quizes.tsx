@@ -1,8 +1,12 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import { Chip } from '@nextui-org/react';
+import { useNavigate } from 'react-router-dom';
 
 const renderClass = ({ data }: CustomTableCellData) => {
+
+   
+
     return (
         <div className="p-1">
             <span>{data.class.image}</span>
@@ -20,6 +24,9 @@ const renderStatus = ({ data }: CustomTableCellData) => {
 };
 
 export default function Quizes() {
+
+    const navigate = useNavigate();
+
     const tableData = [
         {
             class: {
@@ -61,6 +68,10 @@ export default function Quizes() {
         { name: 'Gender', value: 'gender' },
         { name: 'Status', value: { render: renderStatus } }
     ];
+
+    const handleRowClick =(rowData: any) => {
+        navigate('/student/profile');
+    }
     return (
         <>
             <Heading>Students</Heading>
@@ -71,7 +82,7 @@ export default function Quizes() {
                     placeholder="Search"></input>
             </div>
             <section className="mt-2">
-                <Table data={tableData} columns={tableColumns} />
+                <Table data={tableData} columns={tableColumns} onRowClick={handleRowClick}/>
             </section>
         </>
     );

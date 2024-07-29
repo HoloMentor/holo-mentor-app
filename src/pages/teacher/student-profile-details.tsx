@@ -1,17 +1,47 @@
 import Heading from '@/components/headings/main';
 import LineChart from './chart-teacher-view.tsx';
+import Table from '@/components/table';
+import { useNavigate } from 'react-router-dom';
 
 export default function studentProfileDetails() {
+
     
+    const navigate = useNavigate()
+
+    const renderClass = ({ data }: CustomTableCellData) => {
+     
+        
+         
+        return (
+            <div className="flex flex-col gap-1">
+                <span className="font-semibold text-dark-green">{data.class.name}</span>
+                <span>{data.class.date}</span>
+            </div>
+        );
+    };
+    const tableData = [
+        {
+            class: {
+                name: 'Quize 1',
+                date: '2024-07-28'
+            },
+            results: '8/10'
+        }
+    ];
+
+    const tableColumns: TableColumn[] = [
+        { name: 'Quize', value: { render: renderClass } },
+        { name: 'Results', value: 'results' }
+    ];
 
     return (
         <div>
             <Heading>Students</Heading>
             <div className="flex gap-2 px-8 mt-4 bg-white rounded-md">
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50">
+                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50" >
                     Details
                 </p>
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50">
+                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50" onClick={() => navigate(`/student/submissions`)}>
                     Submissions
                 </p>
             </div>
@@ -19,8 +49,6 @@ export default function studentProfileDetails() {
                 <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
                     <section className="w-full col-span-1 h-fit">
                         <div className="relative px-4 py-6 mb-4 bg-white rounded-lg">
-                            
-
                             <div className="">
                                 <img
                                     src="/images/student/avatar-hd.jpg"
@@ -32,8 +60,6 @@ export default function studentProfileDetails() {
                             </div>
                         </div>
                         <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-                            
-
                             <h1 className="text-xl font-semibold text-dark-green">
                                 Personal Information
                             </h1>
@@ -112,7 +138,14 @@ export default function studentProfileDetails() {
 
                     <section className="w-full col-span-2 max-lg:pr-4">
                         <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
-                            <p>Quiz marks</p>
+                            <h1 className="mb-4 text-xl font-semibold text-dark-green">
+                                Quiz Marks
+                                <>
+                                    <section className="mt-2">
+                                        <Table data={tableData} columns={tableColumns} />
+                                    </section>
+                                </>
+                            </h1>
                         </div>
                         <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
                             <h1 className="mb-4 text-xl font-semibold text-dark-green">
@@ -143,13 +176,13 @@ export default function studentProfileDetails() {
                             </div>
                         </div>
                         <div className="relative px-6 py-4 mb-4 bg-white rounded-lg chartContainer">
-                        <h1 className="mb-4 text-xl font-semibold text-dark-green">
-                            Student Performance
-                        </h1>
-                        <div className="w-4/5 mx-auto mt-12 mb-4">
-                            <LineChart />
+                            <h1 className="mb-4 text-xl font-semibold text-dark-green">
+                                Student Performance
+                            </h1>
+                            <div className="w-4/5 mx-auto mt-12 mb-4">
+                                <LineChart />
+                            </div>
                         </div>
-                    </div>
                     </section>
                 </div>
             </div>
