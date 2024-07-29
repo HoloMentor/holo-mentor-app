@@ -14,7 +14,8 @@ function App() {
             return <TeacherRoutes />;
         case 'INSTITUTE':
             return <InstituteRoutes />;
-
+        case 'STAFF':
+            return <TeacherRoutes />;
         default:
             return <DefaultRoutes />;
     }
