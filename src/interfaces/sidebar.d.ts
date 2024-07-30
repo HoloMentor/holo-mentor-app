@@ -1,5 +1,6 @@
 interface NavItemProps {
-    icon: () => React.ReactNode;
+    render?: () => React.ReactNode;
+    icon?: () => React.ReactNode;
     bottom?: boolean;
     end?: boolean;
     name: string;
@@ -10,8 +11,7 @@ interface NavLinkProps extends NavItemProps {
 }
 
 interface NavButtonProps extends NavItemProps {
-    icon: () => React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 type NavOptionProps = NavLinkProps | NavButtonProps;

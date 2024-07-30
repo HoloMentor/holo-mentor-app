@@ -93,7 +93,7 @@ export default function StudyPlan() {
                         onClick={() =>
                             dispatch(
                                 modelActions.show({
-                                    name: modelNames.ADD_STUDYPLAN
+                                    name: modelNames.ADD_STUDY_PLAN
                                 })
                             )
                         }>

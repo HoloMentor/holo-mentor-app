@@ -6,6 +6,7 @@ import AddStaff from './containers/profile/add-academic-staff';
 import RemoveStaff from './containers/profile/remove-academic-staff';
 import AddMCQ from './containers/add-mcq';
 import AddStudyPlan from './containers/add-study-plan';
+import AddInstitute from './containers/institutes/add';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -21,17 +22,20 @@ export const modelContainers: ModelContainers = {
         model: ProfilePersonalInfo
     },
     ADD_ACADEMIC_STAFF: {
-        model : AddStaff
+        model: AddStaff
     },
-    REMOVE_ACADEMIX_STAFF :{
-        model : RemoveStaff
+    ADD_INSTITUTE: {
+        model: AddInstitute,
+        props: { size: '2xl' }
     },
-    ADD_MCQ:{
-        model : AddMCQ,
-       
+    REMOVE_ACADEMIC_STAFF: {
+        model: RemoveStaff
     },
-    ADD_STUDYPLAN:{
-        model : AddStudyPlan
+    ADD_MCQ: {
+        model: AddMCQ
+    },
+    ADD_STUDY_PLAN: {
+        model: AddStudyPlan
     }
 };
 
@@ -41,8 +45,8 @@ export const modelNames = {
     PROFILE_USER_INFO: 'PROFILE_USER_INFO',
     PROFILE_PERSONAL_INFO: 'PROFILE_PERSONAL_INFO',
     ADD_ACADEMIC_STAFF: 'ADD_ACADEMIC_STAFF',
-    REMOVE_ACADEMIX_STAFF : 'REMOVE_ACADEMIX_STAFF',
+    ADD_INSTITUTE: 'ADD_INSTITUTE',
+    REMOVE_ACADEMIC_STAFF: 'REMOVE_ACADEMIC_STAFF',
     ADD_MCQ: 'ADD_MCQ',
-    ADD_STUDYPLAN: 'ADD_STUDYPLAN'
-
+    ADD_STUDY_PLAN: 'ADD_STUDY_PLAN'
 };

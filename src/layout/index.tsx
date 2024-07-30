@@ -1,13 +1,16 @@
+import useRoleHandler from '@/hooks/role-handler';
+import { IRootState } from '@/redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
+import links from './links';
 import Navbar from './navbar';
 import SideBar from './sidebar';
-import links from './links';
-import React from 'react';
-import config from '@/config';
 
 export default function Layout() {
-    const role = config.role;
+    const role = useRoleHandler();
     const location = useLocation();
+
     const params = useParams();
 
     /* filter sidebar content according to role and path */

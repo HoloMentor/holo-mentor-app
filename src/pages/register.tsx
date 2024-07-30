@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
         .required('Confirm Password is required')
 });
 
-export default function Login() {
+export default function Register() {
     const onSubmit = (values: any) => {
         console.log(values);
     };
@@ -62,7 +62,12 @@ export default function Login() {
                                 />
                             </div>
                         </div>
-                        <FormInput name="email" placeholder="Email" label="Email" required />
+                        <FormInput
+                            name="email"
+                            placeholder="example@example.com"
+                            label="Email"
+                            required
+                        />
 
                         <FormInput
                             name="password"

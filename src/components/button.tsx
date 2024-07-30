@@ -15,6 +15,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             type = 'button',
             color = 'dark-green',
             className,
+            variant = 'solid',
             ...props
         },
         ref
@@ -22,23 +23,31 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const _className = React.useMemo(() => {
             let cl = `outline-none cursor-pointer select-none inline-flex items-center gap-2 border-0 text-white py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm`;
 
-            switch (color) {
-                case 'light-green':
-                    cl += ' ' + 'bg-light-green';
-                    break;
+            if (variant == 'solid') {
+                switch (color) {
+                    case 'light-green':
+                        cl += ' ' + 'bg-light-green';
+                        break;
 
-                default:
-                    cl += ' ' + 'bg-dark-green';
-                    break;
+                    default:
+                        cl += ' ' + 'bg-dark-green';
+                        break;
+                }
             }
             if (rounded) cl += ' ' + 'rounded-[50px]';
             if (className) cl += ' ' + className;
 
             return cl;
-        }, [className]);
+        }, [variant, color, className]);
 
         return (
-            <NextButton ref={ref} disabled={disabled} className={_className} type={type} {...props}>
+            <NextButton
+                ref={ref}
+                disabled={disabled}
+                className={_className}
+                type={type}
+                variant={variant}
+                {...props}>
                 {children}
             </NextButton>
         );
