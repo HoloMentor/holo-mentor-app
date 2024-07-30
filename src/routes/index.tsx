@@ -10,7 +10,7 @@ export default function DefaultRoutes() {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
     );
 }
