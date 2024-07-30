@@ -27,31 +27,31 @@ export default function TeacherRoutes() {
                 <Route path="" element={<Home />} />
                 <Route path="classes" element={<Outlet />}>
                     <Route path="" element={<Classes />}></Route>
-                    <Route path=":classId" element={<Outlet />}></Route>
-                    //add routes inside classId
-                </Route>
-                <Route path="forum" element={<SubjectForums />} />
-                <Route path="forum/mcq" element={<SubjectForumMCQ />} />
-                <Route path="forum/essay" element={<SubjectForumEssay />} />
-                <Route path="forum/:forumId" element={<SubjectForum />} />
-                <Route path="quiz/" element={<Quizes />} />
-                <Route path="quiz/:quizId" element={<QuizInfo />} />
-                <Route path="studyplan" element={<Outlet />}>
-                    <Route path="" element={<StudyPlan />}></Route>
-                    <Route path="create" element={<CreatePlan />}></Route>
-                    <Route path="view" element={<StudyPlanView />}></Route>
-                </Route>
-                <Route path="student" element={<Outlet />}>
-                    <Route path="" element={<StudentList />}></Route>
-                    <Route path="details"></Route>
-                    <Route path="submissions" element={<Submissions />}></Route>
-                    <Route path="profile" element={<StudentProfile />}></Route>
+                    <Route path=":classId" element={<Outlet />}>
+                        <Route path="" element={<ClassMaterials />} />
+                        <Route path="forum" element={<SubjectForums />} />
+                        <Route path="forum/mcq" element={<SubjectForumMCQ />} />
+                        <Route path="forum/essay" element={<SubjectForumEssay />} />
+                        <Route path="forum/:forumId" element={<SubjectForum />} />
+                        <Route path="quiz/" element={<Quizes />} />
+                        <Route path="quiz/:quizId" element={<QuizInfo />} />
+                        <Route path="studyplan" element={<Outlet />}>
+                            <Route path="" element={<StudyPlan />}></Route>
+                            <Route path="create" element={<CreatePlan />}></Route>
+                            <Route path="view" element={<StudyPlanView />}></Route>
+                        </Route>
+                        <Route path="student" element={<Outlet />}>
+                            <Route path="" element={<StudentList />}></Route>
+                            <Route path="details"></Route>
+                            <Route path="submissions" element={<Submissions />}></Route>
+                            <Route path="profile" element={<StudentProfile />}></Route>
+                        </Route>
+                    </Route>
                 </Route>
 
                 <Route path="profile" element={<Profile />} />
                 <Route path="notifications" element={<Notifications />} />
-
-                <Route path=":institute/:year/*" element={<ClassMaterials />}></Route>
+                {/* <Route path=":institute/:year/*" element={<ClassMaterials />}></Route> */}
             </Route>
         </Routes>
     );
