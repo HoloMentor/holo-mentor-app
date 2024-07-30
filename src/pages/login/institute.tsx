@@ -11,11 +11,6 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
-const initialValues = {
-    institute: '',
-    password: ''
-};
-
 const validationSchema = Yup.object().shape({
     institute: Yup.number().integer().required('Institute is required'),
     password: Yup.string().required('Password is required')
@@ -50,6 +45,19 @@ export default function InstituteForm({ data, userInstitutes = [], loading }: Pr
                     label: _.name
                 };
             });
+        }
+
+        return template;
+    }, [userInstitutes]);
+
+    const initialValues = useMemo(() => {
+        let template = {
+            institute: '',
+            password: ''
+        };
+
+        if (userInstitutes?.[0]) {
+            template.institute = userInstitutes[0].id.toString();
         }
 
         return template;
@@ -93,6 +101,7 @@ export default function InstituteForm({ data, userInstitutes = [], loading }: Pr
             </p>
 
             <Form
+                enableReinitialize
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
