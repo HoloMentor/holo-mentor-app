@@ -1,7 +1,13 @@
 import Heading from '@/components/headings/main';
+import { modelNames } from '@/models';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { useDispatch } from 'react-redux';
+import LineChart from './chart';
 // import { Link } from 'react-router-dom';
 
 export default function Profile() {
+    const dispatch = useDispatch();
+
     const subjects = [
         { id: 1, name: 'Biology' },
         { id: 2, name: 'Chemistry' },
@@ -14,9 +20,17 @@ export default function Profile() {
             <Heading>Profile</Heading>
 
             <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
-                <section className="w-full h-fit col-span-1">
-                    <div className="bg-white px-4 py-6 mb-4 rounded-lg relative">
-                        <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
+                <section className="w-full col-span-1 h-fit">
+                    <div className="relative px-4 py-6 mb-4 bg-white rounded-lg">
+                        <div
+                            onClick={() =>
+                                dispatch(
+                                    modelActions.show({
+                                        name: modelNames.PROFILE_USER_INFO
+                                    })
+                                )
+                            }
+                            className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -36,14 +50,22 @@ export default function Profile() {
                             <img
                                 src="/images/student/avatar-hd.jpg"
                                 alt="Avatar"
-                                className="rounded-full w-24 h-24 mb-4"
+                                className="w-24 h-24 mb-4 rounded-full"
                             />
                             <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
                             <span className="text-sm text-neutral-500">Student</span>
                         </div>
                     </div>
-                    <div className="bg-white px-4 py-4 mb-4 rounded-lg relative">
-                        <div className="absolute right-4 top-4 cursor-pointer z-[+1]">
+                    <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
+                        <div
+                            onClick={() =>
+                                dispatch(
+                                    modelActions.show({
+                                        name: modelNames.PROFILE_PERSONAL_INFO
+                                    })
+                                )
+                            }
+                            className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -64,7 +86,7 @@ export default function Profile() {
                         </h1>
 
                         <ul className="mt-4">
-                            <li className="flex gap-4 mb-1 text-sm items-center">
+                            <li className="flex items-center gap-4 mb-1 text-sm">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +108,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex gap-4 mb-1 text-sm items-center">
+                            <li className="flex items-center gap-4 mb-1 text-sm">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +130,7 @@ export default function Profile() {
                                     </a>
                                 </span>
                             </li>
-                            <li className="flex gap-4 mb-1 text-sm items-center">
+                            <li className="flex items-center gap-4 mb-1 text-sm">
                                 <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -136,21 +158,20 @@ export default function Profile() {
                 </section>
 
                 <section className="w-full col-span-2 max-lg:pr-4">
-                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
                         <h1 className="text-xl font-semibold text-dark-green">My Subjects</h1>
-                        <div className="flex mt-7 mb-4 mx-6">
+                        <div className="flex mx-6 mb-4 mt-7">
                             {subjects.map((subject) => (
                                 <div
                                     key={subject.id}
-                                    className="flex w-24 mr-8 justify-center items-center rotate-45
-                             rounded-3xl aspect-square  border border-dark-green shadow-custom bg-slate-50 p-4">
+                                    className="flex items-center justify-center w-24 p-4 mr-8 rotate-45 border rounded-3xl aspect-square border-dark-green shadow-custom bg-slate-50">
                                     <span className="-rotate-45">{subject.name}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
-                        <h1 className="text-xl font-semibold text-dark-green mb-4">
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
+                        <h1 className="mb-4 text-xl font-semibold text-dark-green">
                             Educational Institute
                         </h1>
 
@@ -175,6 +196,14 @@ export default function Profile() {
                                 <div className="font-medium">Sasip Institue</div>
                                 <div className="text-xs">Nugegoda</div>
                             </div>
+                        </div>
+                    </div>
+                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg chartContainer">
+                        <h1 className="mb-4 text-xl font-semibold text-dark-green">
+                            My Performance
+                        </h1>
+                        <div className="w-4/5 mx-auto mt-12 mb-4">
+                            <LineChart />
                         </div>
                     </div>
                 </section>

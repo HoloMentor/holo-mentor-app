@@ -10,7 +10,10 @@ const Subjects = loadable(() => import('@/pages/student/subjects'));
 const Subject = loadable(() => import('@/pages/student/subjects/subject'));
 const SubjectMentor = loadable(() => import('@/pages/student/subjects/mentor'));
 const SubjectQuiz = loadable(() => import('@/pages/student/subjects/quiz'));
-const SubjectForum = loadable(() => import('@/pages/student/subjects/forum/index'));
+const QuizInfo = loadable(() => import('@/pages/student/subjects/quiz/results'));
+const QuizQuestion = loadable(() => import('@/pages/student/subjects/quiz/question'));
+const SubjectForums = loadable(() => import('@/pages/student/subjects/forum'));
+const SubjectForum = loadable(() => import('@/pages/student/subjects/forum/question'));
 const SubjectForumMCQ = loadable(() => import('@/pages/student/subjects/forum/mcq'));
 const SubjectForumEssay = loadable(() => import('@/pages/student/subjects/forum/essay'));
 
@@ -24,10 +27,13 @@ export default function StudentRoutes() {
                     <Route path=":subjectId" element={<Outlet />}>
                         <Route path="" element={<Subject />} />
                         <Route path="mentor" element={<SubjectMentor />} />
-                        <Route path="forum" element={<SubjectForum />} />
+                        <Route path="forum" element={<SubjectForums />} />
                         <Route path="forum/mcq" element={<SubjectForumMCQ />} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
+                        <Route path="forum/:forumId" element={<SubjectForum />} />
                         <Route path="quiz" element={<SubjectQuiz />} />
+                        <Route path="quiz/:quizId" element={<QuizInfo />} />
+                        <Route path="quiz/attempt/:quizId" element={<QuizQuestion />} />
                     </Route>
                 </Route>
                 <Route path="profile" element={<Profile />} />

@@ -1,22 +1,25 @@
 import { ReactNode } from 'react';
-import { NavLink as ReactNavLink, NavLinkProps } from 'react-router-dom';
+import { NavLink as ReactNavLink, NavLinkProps, To } from 'react-router-dom';
 
-interface Props extends Omit<NavLinkProps, 'children'> {
+interface Props extends Omit<NavLinkProps, 'children' | 'to'> {
     children: ReactNode;
+    to?: To;
     pathname?: string;
+    bottom?: boolean;
 }
 
-export default function NavLink({ children, pathname, ...props }: Props) {
-    return (
+export default function NavLink({ children, pathname, bottom, ...props }: Props) {
+    let className =
+        'flex gap-3 !text-black font-medium transition-all duration-75 hover:!text-dark-green group';
+
+    return props.to ? (
         <ReactNavLink
             className={({ isActive }) => {
-                let className =
-                    'flex gap-3 !text-black font-medium transition-all duration-75 hover:!text-dark-green group';
-
                 if (isActive) className += ' bg-[#00684A1C] is-active';
 
                 return className;
             }}
+            to={props.to}
             {...props}>
             <svg
                 width="20"
@@ -49,5 +52,11 @@ export default function NavLink({ children, pathname, ...props }: Props) {
                 {children}
             </div>
         </ReactNavLink>
+    ) : (
+        <button className={className}>
+            <div className="flex gap-3 transition-all duration-1000 py-4 pl-6 pr-4 group-[.is-active]:pl-0 max-md:pl-0 max-md:pr-0 max-md:justify-center w-full">
+                {children}
+            </div>
+        </button>
     );
 }
