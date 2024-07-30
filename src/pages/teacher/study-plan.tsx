@@ -1,10 +1,13 @@
-import React from 'react';
 import { useState } from 'react';
 import StudyPlanCard from '@/components/cards/study-plan-card';
 import { Button, Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react';
+import { useDispatch } from 'react-redux';
+import { modelNames } from '@/models';
+import { modelActions } from '@/redux/reducers/model.reducer';
 
 export default function StudyPlan() {
     const [toggleState, setToggleState] = useState<number>(1);
+    const dispatch = useDispatch();
 
     const tiers = [
         {
@@ -85,7 +88,17 @@ export default function StudyPlan() {
                     <h1 className="pl-4 text-xl font-semibold text-dark-green">
                         Current Study Plan
                     </h1>
-                    <Button className="text-white bg-dark-green">Create New Plan</Button>
+                    <Button
+                        className="text-white bg-dark-green"
+                        onClick={() =>
+                            dispatch(
+                                modelActions.show({
+                                    name: modelNames.ADD_STUDYPLAN
+                                })
+                            )
+                        }>
+                        Create New Plan
+                    </Button>
                 </div>
                 {tiers.map(
                     (tier) =>

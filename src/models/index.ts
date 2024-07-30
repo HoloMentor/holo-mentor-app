@@ -5,6 +5,7 @@ import ProfilePersonalInfo from './containers/profile/personal-info';
 import AddStaff from './containers/profile/add-academic-staff';
 import RemoveStaff from './containers/profile/remove-academic-staff';
 import AddMCQ from './containers/add-mcq';
+import AddStudyPlan from './containers/add-study-plan';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -28,6 +29,9 @@ export const modelContainers: ModelContainers = {
     ADD_MCQ:{
         model : AddMCQ,
        
+    },
+    ADD_STUDYPLAN:{
+        model : AddStudyPlan
     }
 };
 
@@ -38,6 +42,7 @@ export const modelNames = {
     PROFILE_PERSONAL_INFO: 'PROFILE_PERSONAL_INFO',
     ADD_ACADEMIC_STAFF: 'ADD_ACADEMIC_STAFF',
     REMOVE_ACADEMIX_STAFF : 'REMOVE_ACADEMIX_STAFF',
-    ADD_MCQ: 'ADD_MCQ'
+    ADD_MCQ: 'ADD_MCQ',
+    ADD_STUDYPLAN: 'ADD_STUDYPLAN'
 
 };

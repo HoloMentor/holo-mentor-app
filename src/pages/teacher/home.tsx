@@ -130,7 +130,7 @@ function Home() {
 
             <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
                 <section className="w-full col-span-3 p-4 bg-white rounded-lg h-fit">
-                    <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
+                    <h1 className="pl-4 text-2xl font-semibold text-dark-green mb-7">
                         Notification
                     </h1>
 
@@ -154,7 +154,7 @@ function Home() {
                                                 Issued By
                                             </p>
                                         </div>
-                                        <p className="">
+                                        <p className="text-medium">
                                             Lorem ipsum dolor, sit amet consectetur adipisicing
                                             elit. Praesentium aliquam dolore velit! Quae laborum a
                                             numquam? Dolor esse sint deleniti quisquam culpa
@@ -171,11 +171,11 @@ function Home() {
                 <section className="w-full h-full col-span-2 p-2 bg-white rounded-s-lg max-xl:col-span-3">
                     <section className="w-full p-2 bg-white rounded-s-lg h-fit">
                         <div className="flex flex-col gap-8 mt-5">
-                            <h1 className="text-3xl font-bold leading-7 text-dark-green">
+                            <h1 className="text-2xl font-bold leading-7 text-dark-green">
                                 Top Performance
                             </h1>
                             <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
-                                <h1 className="justify-center mb-2 ml-2 text-2xl font-semibold text-dark-green">
+                                <h1 className="justify-center mb-2 ml-2 text-xl font-semibold text-dark-green">
                                     Best Contributor
                                 </h1>
                                 <div className="flex flex-col gap-5">
@@ -191,7 +191,7 @@ function Home() {
                                                         src={_.avatar}
                                                         alt="Avatar"
                                                     />
-                                                    <p className="text-xl font-semibold text-black">
+                                                    <p className="font-semibold text-black text-medium">
                                                         {_.name}
                                                     </p>
                                                 </div>
@@ -201,7 +201,7 @@ function Home() {
                                     })}
                                 </div>
                             </div>
-                            <h1 className="text-3xl font-bold leading-7 text-dark-green ">
+                            <h1 className="text-2xl font-bold leading-7 text-dark-green ">
                                 Students
                             </h1>
                             <div className="items-center justify-center w-full felx">
