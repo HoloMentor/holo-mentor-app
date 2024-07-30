@@ -92,6 +92,8 @@ const userSlice = createSlice({
             };
 
             deleteCookie('token');
+
+            window.location.assign('/');
         }
     },
     extraReducers: (builder) => {
