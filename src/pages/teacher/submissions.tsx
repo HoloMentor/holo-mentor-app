@@ -1,4 +1,3 @@
-
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
 import Content from '@/components/content';
@@ -8,14 +7,15 @@ import { Button as CustomButton } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
 
 export default function submissions() {
-
     const navigate = useNavigate();
 
     return (
         <div>
             <Heading>Students</Heading>
             <div className="flex gap-2 px-8 mt-4 bg-white rounded-md">
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50" onClick={() => navigate(`/student/profile`)}>
+                <p
+                    className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50"
+                    onClick={() => navigate(`/student/profile`)}>
                     Details
                 </p>
                 <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50">
