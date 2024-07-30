@@ -1,14 +1,17 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Button from '@/components/button';
-
+import {Link} from "react-router-dom";
+ 
 export default function teacherProfile() {
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
-            <div className="flex flex-col gap-1">
-                <span className="font-semibold text-dark-green">{data.class.name}</span>
-                <span>{data.class.institute}</span>
-            </div>
+            <Link to={`/class/${data.id}/progress`}>
+                <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-dark-green">{data.class.name}</span>
+                    <span>{data.class.institute}</span>
+                </div>
+            </Link>
         );
     };
 
@@ -29,6 +32,7 @@ export default function teacherProfile() {
 
     const tableData = [
         {
+            id : 1,
             class: {
                 name: 'Biology',
                 institute: 'Sasip Institute - 2023'
@@ -36,6 +40,7 @@ export default function teacherProfile() {
             students: '210'
         },
         {
+            id : 2,
             class: {
                 name: 'Biology',
                 institute: 'Sasip Institute - 2023'
@@ -43,6 +48,7 @@ export default function teacherProfile() {
             students: '210'
         },
         {
+            id : 3,
             class: {
                 name: 'Biology',
                 institute: 'Sasip Institute - 2023'
@@ -149,34 +155,7 @@ export default function teacherProfile() {
                         </ul>
                     </div>
 
-                    <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-                        <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
-
-                        <ul className="mt-4">
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
-                                    01
-                                </div>
-                                <span>
-                                    <a href="mailto:saliya@gmail.com" className="text-black">
-                                        saliya@gmail.com
-                                    </a>
-                                </span>
-                            </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 ">02</div>
-                                <span>
-                                    <a href="tel:+94771234567" className="text-black">
-                                        077 123 4567
-                                    </a>
-                                </span>
-                            </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 ">03</div>
-                                <span>Sri Lanka</span>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </section>
 
                 <section className="w-full col-span-2 max-lg:pr-4">
