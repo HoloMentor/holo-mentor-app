@@ -28,8 +28,8 @@ export default function Subjects() {
                                             key={`subject-${j}`}
                                             to={`/subjects/${j}`}
                                             className="text-black">
-                                            <div className="w-full relative rounded-md p-5 border border-light-border">
-                                                <span className="font-semibold truncate block max-w-52">
+                                            <div className="relative w-full p-5 border rounded-md border-light-border">
+                                                <span className="block font-semibold truncate max-w-52">
                                                     Lorem, ipsum dolor sit amet consectetur
                                                     adipisicing elit. Tempora sint vero expedita
                                                     consequatur optio numquam quaerat, ipsum ipsam
@@ -39,7 +39,7 @@ export default function Subjects() {
                                                 <img
                                                     src="/images/subjects/book.svg"
                                                     alt="Book"
-                                                    className="absolute right-0 bottom-0 opacity-50"
+                                                    className="absolute bottom-0 right-0 opacity-50"
                                                 />
                                             </div>
                                         </Link>

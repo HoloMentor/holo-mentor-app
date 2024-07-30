@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
 import Content from '@/components/content';
