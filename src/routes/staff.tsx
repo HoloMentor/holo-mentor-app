@@ -10,7 +10,7 @@ const StudyPlan = loadable(() => import('@/pages/teacher/study-plan'));
 const CreatePlan = loadable(() => import('@/pages/teacher/study-plan-create'));
 const StudyPlanView = loadable(() => import('@/pages/teacher/study-plan-individual'));
 const ClassMaterials = loadable(() => import('@/pages/teacher/classes/materials'));
-const StudentList = loadable(() => import('@/pages/teacher/quizes'));
+const StudentList = loadable(() => import('@/pages/teacher/home'));
 const Submissions = loadable(() => import('@/pages/teacher/submissions'));
 const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'));
 const SubjectForums = loadable(() => import('@/pages/staff/classes/forum/'));

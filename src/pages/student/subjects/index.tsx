@@ -35,7 +35,7 @@ export default function Subjects() {
                                                 <img
                                                     src="/images/subjects/book.svg"
                                                     alt="Book"
-                                                    className="absolute right-0 bottom-0 opacity-50"
+                                                    className="absolute bottom-0 right-0 opacity-50"
                                                 />
                                             </div>
                                         </Link>
