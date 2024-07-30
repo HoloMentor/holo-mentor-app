@@ -26,7 +26,8 @@ export const modelContainers: ModelContainers = {
         model : RemoveStaff
     },
     ADD_MCQ:{
-        model : AddMCQ
+        model : AddMCQ,
+       
     }
 };
 

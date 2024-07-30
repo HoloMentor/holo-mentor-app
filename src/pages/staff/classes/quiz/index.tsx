@@ -19,10 +19,10 @@ export default function SubjectQuiz() {
                     <div className="flex gap-2">
                         <Input placeholder="Search" />
                     </div>
-                    <Button
+                    {/* <Button
                         onClick={() =>
                             dispatch(
-                                modelActions.show({
+                                modelActions.show({ 
                                     name: modelNames.ADD_MCQ
                                 })
                             )
@@ -44,7 +44,7 @@ export default function SubjectQuiz() {
                             </span>
                         }>
                         Add New
-                    </Button>
+                    </Button> */}
                 </div>
             </section>
 

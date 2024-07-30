@@ -2,9 +2,9 @@ import Layout from '@/layout';
 import loadable from '@loadable/component';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-const Home = loadable(() => import('@/pages/teacher/home'));
+const Home = loadable(() => import('@/pages/staff/home'));
 const Classes = loadable(() => import('@/pages/teacher/classes/index'));
-const Profile = loadable(() => import('@/pages/teacher/profile'));
+const Profile = loadable(() => import('@/pages/staff/profile'));
 const Notifications = loadable(() => import('@/pages/teacher/notifications'));
 const StudyPlan = loadable(() => import('@/pages/teacher/study-plan'));
 const CreatePlan = loadable(() => import('@/pages/teacher/study-plan-create'));
@@ -13,10 +13,10 @@ const ClassMaterials = loadable(() => import('@/pages/teacher/classes/materials'
 const StudentList = loadable(() => import('@/pages/teacher/quizes'));
 const Submissions = loadable(() => import('@/pages/teacher/submissions'));
 const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'));
-const SubjectForums = loadable(() => import('@/pages/teacher/classes/forum/'));
-const SubjectForumMCQ = loadable(() => import('@/pages/teacher/classes/forum/mcq'));
+const SubjectForums = loadable(() => import('@/pages/staff/classes/forum/'));
+const SubjectForumMCQ = loadable(() => import('@/pages/staff/classes/forum/mcq'));
 const SubjectForumEssay = loadable(() => import('@/pages/teacher/classes/forum/essay'));
-const SubjectForum = loadable(() => import('@/pages/student/subjects/forum/question'));
+const SubjectForum = loadable(() => import('@/pages/staff/classes/forum/question'));
 const Quizes = loadable(() => import('@/pages/staff/classes/quiz'));
 const QuizInfo = loadable(() => import('@/pages/staff/classes/quiz/questions'));
 
