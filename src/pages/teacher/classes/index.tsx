@@ -29,10 +29,10 @@ export default function Classes() {
                             <img src="/images/institute.png" className="self-center m-4 mt-8" />
                             <Link title={'Class-Name'} key={`classes-${i}`} to={`/classes/${i}`}>
                                 <div className="p-2 mt-10 transition-all duration-200 ease-in-out cursor-pointer border-t-1 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:shadow-sm hover:scale-90 hover:px-4 hover:rounded-md ">
-                                    <p className="flex text-xl font-semibold text-dark-green">
+                                    <p className="flex text-xl font-semibold text-black">
                                         {institute.name}
                                     </p>
-                                    <p className="flex text-medium text-dark-green">
+                                    <p className="flex text-black text-medium">
                                         {institute.subject}
                                     </p>
                                 </div>
