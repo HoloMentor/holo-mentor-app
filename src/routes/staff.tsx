@@ -9,7 +9,7 @@ const Notifications = loadable(() => import('@/pages/staff/notifications'));
 const StudyPlan = loadable(() => import('@/pages/staff/study-plan'));
 const CreatePlan = loadable(() => import('@/pages/staff/study-plan-create'));
 const StudyPlanView = loadable(() => import('@/pages/staff/study-plan-individual'));
-const ClassMaterials = loadable(() => import('@/pages/staff/classes/materials'));
+const ClassMaterials = loadable(() => import('@/pages/staff/classes/material'));
 const StudentList = loadable(() => import('@/pages/staff/student-list'));
 const Submissions = loadable(() => import('@/pages/staff/submissions'));
 const StudentProfile = loadable(() => import('@/pages/staff/student-profile-details'));
