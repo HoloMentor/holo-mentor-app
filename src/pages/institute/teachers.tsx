@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Teachers() {
-    const [filterValue, setFilterValue] = useState<SelectValue>('top');
+    const [filterValue, setFilterValue] = useState<SelectValue>('all');
 
     const renderTeacher = ({ data }: CustomTableCellData) => {
         return (
@@ -75,8 +75,8 @@ function Teachers() {
 
     const filterOptions = [
         {
-            value: 'Type',
-            label: 'Type'
+            value: 'all',
+            label: 'All'
         }
     ];
 
@@ -92,7 +92,7 @@ function Teachers() {
                             value={filterValue}
                             onChange={setFilterValue}
                         />
-                        <Input className="max-w-36" placeholder="Search" />
+                        <Input className="max-w-96 w-full" placeholder="Search" />
                     </div>
                     <Table data={tableData} columns={tableColumns} />
                 </div>
