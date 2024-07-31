@@ -239,7 +239,7 @@ export default function Profile() {
                                                 })
                                             )
                                         }
-                                        className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
+                                        className="w-5 h-5 text-lg cursor-pointer text-neutral-500">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
