@@ -235,7 +235,7 @@ export default function Profile() {
                                         onClick={() =>
                                             dispatch(
                                                 modelActions.show({
-                                                    name: modelNames.REMOVE_ACADEMIX_STAFF
+                                                    name: modelNames.REMOVE_ACADEMIC_STAFF
                                                 })
                                             )
                                         }

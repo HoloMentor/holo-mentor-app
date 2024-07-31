@@ -25,29 +25,43 @@ export default function SideBar({ links, pathname }: SideBarProps) {
             <div className="flex flex-col mt-5">
                 {links
                     .filter((_) => !_.bottom)
-                    .map(({ name, icon: Icon, ...props }: NavOptionProps, index: number) => {
-                        return (
-                            <NavLink key={index} pathname={pathname} {...props}>
-                                <Icon />
+                    .map(
+                        (
+                            { name, render: Render, icon: Icon, ...props }: NavOptionProps,
+                            index: number
+                        ) => {
+                            return Render ? (
+                                <Render key={`top-${index}`} />
+                            ) : (
+                                <NavLink key={`top-${index}`} pathname={pathname} {...props}>
+                                    <Icon />
 
-                                <span className="max-md:hidden">{name}</span>
-                            </NavLink>
-                        );
-                    })}
+                                    <span className="max-md:hidden">{name}</span>
+                                </NavLink>
+                            );
+                        }
+                    )}
             </div>
 
             <div className="flex flex-col justify-end h-full sticky bottom-0">
                 {links
                     .filter((_) => _.bottom)
-                    .map(({ name, icon: Icon, ...props }: NavOptionProps, index: number) => {
-                        return (
-                            <NavLink key={index} pathname={pathname} {...props}>
-                                <Icon />
+                    .map(
+                        (
+                            { name, render: Render, icon: Icon, ...props }: NavOptionProps,
+                            index: number
+                        ) => {
+                            return Render ? (
+                                <Render key={`bottom-${index}`} />
+                            ) : (
+                                <NavLink key={`bottom-${index}`} pathname={pathname} {...props}>
+                                    <Icon />
 
-                                <span className="max-md:hidden">{name}</span>
-                            </NavLink>
-                        );
-                    })}
+                                    <span className="max-md:hidden">{name}</span>
+                                </NavLink>
+                            );
+                        }
+                    )}
             </div>
         </div>
     );

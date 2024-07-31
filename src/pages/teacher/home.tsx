@@ -1,13 +1,10 @@
 import InfoCard from '@/components/cards/info';
-import DoughnuChart from '@/components/charts/donut';
+import DoughnuChart from '@/components/charts/doughnut';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate();
 
-
-    const navigate = useNavigate()
-
-    
     /* sample */
     const bestContributors = [
         {

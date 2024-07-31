@@ -140,7 +140,6 @@ export default function Quizes() {
             gender: 'male',
             status: 'Reviewed'
         }
-        
     ];
 
     const tableColumns: TableColumn[] = [
@@ -151,7 +150,7 @@ export default function Quizes() {
     ];
 
     const handleRowClick = (rowData: any) => {
-        const currentpath = location.pathname
+        const currentpath = location.pathname;
         navigate(`${currentpath}/profile`);
     };
     return (

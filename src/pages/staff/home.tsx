@@ -1,5 +1,5 @@
 import InfoCard from '@/components/cards/info';
-import DoughnuChart from '@/components/charts/donut';
+import DoughNutChart from '@/components/charts/doughnut';
 
 function Home() {
     /* sample */
@@ -199,7 +199,7 @@ function Home() {
                                 Students
                             </h1>
                             <div className="felx w-full items-center justify-center">
-                                <DoughnuChart />
+                                <DoughNutChart />
                             </div>
                         </div>
                     </section>

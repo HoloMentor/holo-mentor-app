@@ -43,20 +43,18 @@ export default function studyPlanCreate() {
                     <p>Task Description</p>
                     <input className="w-3/4 pr-4 rounded-md placeholder:italic placeholder:text-slate-400"></input>
                     <Form
-                    validationSchema={validationSchema}
-                    initialValues={initialValues}
-                    onSubmit={onSubmit}
-                    className="flex flex-col gap-4 pt-4">
-                    
-
-                    <FormEditor
-                        className=" min-h-72"
-                        classNames={{
-                            mainWrapper: 'col-span-2'
-                        }}
-                        name="question"
-                    />
-                </Form>
+                        validationSchema={validationSchema}
+                        initialValues={initialValues}
+                        onSubmit={onSubmit}
+                        className="flex flex-col gap-4 pt-4">
+                        <FormEditor
+                            className=" min-h-72"
+                            classNames={{
+                                mainWrapper: 'col-span-2'
+                            }}
+                            name="question"
+                        />
+                    </Form>
                 </div>
             </section>
             <div className="flex items-center justify-center gap-4 p-4 mb-4 ml-6 mr-4 transition-all duration-300 border-2 cursor-pointer rounded-3xl hover:shadow-md hover:bg-gray-100 active:bg-gray-200 active:shadow-inner">

@@ -20,6 +20,7 @@ export default function AutoComplete({
     const onChange = (e: string) => {
         if (onSelectionChange) onSelectionChange(e);
     };
+
     return (
         <NextAutoComplete
             labelPlacement="outside"
