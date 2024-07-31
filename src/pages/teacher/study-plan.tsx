@@ -14,7 +14,7 @@ export default function StudyPlan() {
             id: 1,
             content: [
                 <StudyPlanCard planName="Plan for Tier 1" autherName="Amith Pussella" />,
-                <StudyPlanCard planName="Plan for Tier 1B" autherName="Samitha Rathnayake" />
+                <StudyPlanCard planName="Plan for Tier 1B" autherName="Amith Pussella" />
             ],
             tierDescription: 'Tier 01: Marks 80 - 100'
         },

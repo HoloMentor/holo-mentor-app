@@ -11,7 +11,7 @@ export default function StudyPlan() {
             id: 1,
             content: [
                 <StudyPlanCard planName="Plan for Tier 1" autherName="Amith Pussella" />,
-                <StudyPlanCard planName="Plan for Tier 1B" autherName="Samitha Rathnayake" />
+                <StudyPlanCard planName="Plan for Tier 1B" autherName="Amith Pussella" />
             ],
             tierDescription: 'Tier 01: Marks 80 - 100'
         },
@@ -85,7 +85,6 @@ export default function StudyPlan() {
                     <h1 className="pl-4 text-xl font-semibold text-dark-green">
                         Current Study Plan
                     </h1>
-                    <Button className="text-white bg-dark-green">Create New Plan</Button>
                 </div>
                 {tiers.map(
                     (tier) =>
