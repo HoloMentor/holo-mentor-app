@@ -24,7 +24,7 @@ function classStudent() {
             subject: 'Chemistry',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Marco Panting'
             },
             type: 'A/L'
         },
@@ -33,7 +33,7 @@ function classStudent() {
             subject: 'Physics',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Jaquenette Trout'
             },
             type: 'A/L'
         },
@@ -42,7 +42,7 @@ function classStudent() {
             subject: 'Maths',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Catriona Blissett'
             },
             type: 'O/L'
         },
@@ -51,7 +51,7 @@ function classStudent() {
             subject: 'Science',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Sandy Emeny'
             },
             type: 'O/L'
         }

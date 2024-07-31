@@ -37,53 +37,6 @@ export default function Quizes() {
             class: {
                 image: (
                     <img
-                        src="https://picsum.photos/400"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Senura Nawamina Kalubovila'
-            },
-
-            tier: 'tier 1',
-            gender: 'male',
-            status: 'Reviewed'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/400"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Senura Nawamina Kalubovila'
-            },
-
-            tier: 'tier 1',
-            gender: 'male',
-            status: 'Pending'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/401"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Senura Nawamina Kalubovila'
-            },
-            tier: 'Tier 1',
-            gender: 'male',
-            status: 'Pending'
-        },
-        {
-            class: {
-                image: (
-                    <img
                         src="https://picsum.photos/402"
                         alt="avatar"
                         className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"

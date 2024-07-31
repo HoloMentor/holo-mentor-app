@@ -42,10 +42,10 @@ export default function Quizes() {
                         className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
                     />
                 ),
-                name: 'Senura Nawamina Kalubovila'
+                name: 'Giselle Biaggi'
             },
 
-            tier: 'tier 1',
+            tier: 'Tier 1',
             gender: 'male',
             status: 'Reviewed'
         },
@@ -58,10 +58,10 @@ export default function Quizes() {
                         className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
                     />
                 ),
-                name: 'Senura Nawamina Kalubovila'
+                name: 'Lenee Mapham'
             },
 
-            tier: 'tier 1',
+            tier: 'Tier 1',
             gender: 'male',
             status: 'Pending'
         },
@@ -74,7 +74,7 @@ export default function Quizes() {
                         className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
                     />
                 ),
-                name: 'Senura Nawamina Kalubovila'
+                name: 'Tull Dullard'
             },
             tier: 'Tier 1',
             gender: 'male',

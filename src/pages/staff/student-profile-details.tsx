@@ -19,7 +19,7 @@ export default function studentProfileDetails() {
     const tableData = [
         {
             class: {
-                name: 'Quize 1',
+                name: 'Quiz 1',
                 date: '2024-07-28'
             },
             results: '8/10'
@@ -27,7 +27,7 @@ export default function studentProfileDetails() {
     ];
 
     const tableColumns: TableColumn[] = [
-        { name: 'Quize', value: { render: renderClass } },
+        { name: 'Quiz', value: { render: renderClass } },
         { name: 'Results', value: 'results' }
     ];
 

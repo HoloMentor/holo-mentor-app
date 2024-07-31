@@ -31,23 +31,23 @@ export default function teacherProfile() {
         {
             class: {
                 name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                institute: 'Devify Institute - 2023'
             },
             students: '210'
         },
         {
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Maths',
+                institute: 'Skiba Institute - 2023'
             },
-            students: '210'
+            students: '200'
         },
         {
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Physics',
+                institute: 'Roodel Institute - 2023'
             },
-            students: '210'
+            students: '430'
         }
     ];
 

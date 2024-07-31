@@ -13,7 +13,7 @@ export default function Institutes() {
     /* this is a sample data */
     const tableData = [
         {
-            name: 'Sasip',
+            name: 'Roodel',
             image: 'https://picsum.photos/400',
             city: 'Colombo',
             classes: 400,

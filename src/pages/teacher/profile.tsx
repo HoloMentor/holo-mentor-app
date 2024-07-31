@@ -31,8 +31,8 @@ export default function Profile() {
     const tableData = [
         {
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Physics',
+                institute: 'Roodel Institute - 2023'
             },
             students: '210'
         }

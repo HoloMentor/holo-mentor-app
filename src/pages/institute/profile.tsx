@@ -28,31 +28,7 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher: 'Senaka Batagoda'
-        },
-        {
-            class: {
-                name: 'Biology',
-                institute: 'Theory - 2023'
-            },
-            students: '210',
-            teacher: 'Senaka Batagoda'
-        },
-        {
-            class: {
-                name: 'Biology',
-                institute: 'Theory - 2023'
-            },
-            students: '210',
-            teacher: 'Senaka Batagoda'
-        },
-        {
-            class: {
-                name: 'Biology',
-                institute: 'Theory - 2023'
-            },
-            students: '210',
-            teacher: 'Senaka Batagoda'
+            teacher: 'John Baken'
         }
     ];
 
