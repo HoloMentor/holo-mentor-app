@@ -1,7 +1,7 @@
+import '@blocknote/mantine/style.css';
 import '@blocknote/core/fonts/inter.css';
 import { useCreateBlockNote } from '@blocknote/react';
 import { BlockNoteView } from '@blocknote/mantine';
-import '@blocknote/mantine/style.css';
 import {
     Block,
     BlockNoteEditor,
@@ -24,7 +24,12 @@ export interface EditorProps extends Omit<EditorOnChangeProps, 'editor'> {
     editor?: BlockNoteEditorProps;
 }
 
-export default function Editor({ editor = useCreateBlockNote(), onChange, ...props }: EditorProps) {
+export default function Editor({
+    editor = useCreateBlockNote(),
+    onChange,
+    className,
+    ...props
+}: EditorProps) {
     const handleOnChange = () => {
         if (onChange) onChange(editor.document);
     };
@@ -35,6 +40,7 @@ export default function Editor({ editor = useCreateBlockNote(), onChange, ...pro
                 data-color-scheme="light"
                 editor={editor}
                 onChange={handleOnChange}
+                className={className}
                 {...props}
             />
         </div>

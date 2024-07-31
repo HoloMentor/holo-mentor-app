@@ -1,11 +1,22 @@
-import config from './config';
-import DefaultRoutes from './routes';
-import StudentRoutes from './routes/student';
-import TeacherRoutes from './routes/teacher';
-import InstituteRoutes from './routes/institute';
+import { IAppDispatch } from '@/redux';
+import { authorizeUser } from '@/redux/reducers/user.reducer';
+import DefaultRoutes from '@/routes';
+import InstituteRoutes from '@/routes/institute';
+import StudentRoutes from '@/routes/student';
+import SuperAdminRoutes from '@/routes/super-admin';
+import TeacherRoutes from '@/routes/teacher';
+import StaffRoutes from '@/routes/staff';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import useRoleHandler from './hooks/role-handler';
 
 function App() {
-    const role = config.role;
+    const dispatch = useDispatch<IAppDispatch>();
+    const role = useRoleHandler();
+
+    useEffect(() => {
+        dispatch(authorizeUser());
+    }, []);
 
     switch (role) {
         case 'STUDENT':
@@ -14,7 +25,10 @@ function App() {
             return <TeacherRoutes />;
         case 'INSTITUTE':
             return <InstituteRoutes />;
-
+        case 'SUPER_ADMIN':
+            return <SuperAdminRoutes />;
+        case 'STAFF':
+            return <StaffRoutes />;
         default:
             return <DefaultRoutes />;
     }

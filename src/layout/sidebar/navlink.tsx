@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 import { NavLink as ReactNavLink, NavLinkProps, To } from 'react-router-dom';
 
-interface Props extends Omit<NavLinkProps, 'children' | 'to'> {
+interface Props extends Omit<NavLinkProps, 'children' | 'to' | 'onClick'> {
     children: ReactNode;
     to?: To;
     pathname?: string;
     bottom?: boolean;
+    onClick?: () => void;
 }
 
 export default function NavLink({ children, pathname, bottom, ...props }: Props) {
@@ -53,7 +54,7 @@ export default function NavLink({ children, pathname, bottom, ...props }: Props)
             </div>
         </ReactNavLink>
     ) : (
-        <button className={className}>
+        <button className={className} onClick={props.onClick}>
             <div className="flex gap-3 transition-all duration-1000 py-4 pl-6 pr-4 group-[.is-active]:pl-0 max-md:pl-0 max-md:pr-0 max-md:justify-center w-full">
                 {children}
             </div>

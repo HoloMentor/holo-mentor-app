@@ -1,8 +1,10 @@
+import Button from '@/components/button';
 import ForumQuestionReply from '@/components/forum/reply';
+import ForumQuestionReplyForm from '@/components/forum/reply-form';
 import ForumQuestionVote from '@/components/forum/vote';
 import Heading from '@/components/headings/main';
 import {
-    Button,
+    Button as NextUIButton,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -10,9 +12,12 @@ import {
     DropdownTrigger,
     User
 } from '@nextui-org/react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function ForumPage() {
+    const [onReplyAll, setOnReplyAll] = useState(null);
+    const [onReplyQuestion, setOnReplyQuestion] = useState(null);
     const params = useParams();
 
     return (
@@ -35,7 +40,7 @@ export default function ForumPage() {
 
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button isIconOnly className="rounded-full !size-7 !min-w-7">
+                                <NextUIButton isIconOnly className="rounded-full !size-7 !min-w-7">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
@@ -47,7 +52,7 @@ export default function ForumPage() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </Button>
+                                </NextUIButton>
                             </DropdownTrigger>
                             <DropdownMenu>
                                 <DropdownSection showDivider>
@@ -132,8 +137,24 @@ export default function ForumPage() {
                     </div>
 
                     <div className="flex flex-col gap-3 border border-light-gray rounded-md">
-                        <ForumQuestionReply />
+                        <ForumQuestionReply
+                            onReply={(id: number | string) => setOnReplyQuestion(id)}
+                        />
                         <ForumQuestionReply reply />
+                        {onReplyQuestion && (
+                            <ForumQuestionReplyForm
+                                reply
+                                onCancel={() => setOnReplyQuestion(null)}
+                            />
+                        )}
+
+                        {onReplyAll && (
+                            <ForumQuestionReplyForm onCancel={() => setOnReplyAll(null)} />
+                        )}
+                    </div>
+
+                    <div className="flex justify-end">
+                        <Button onClick={() => setOnReplyAll(1)}>Leave an Answer</Button>
                     </div>
                 </div>
             </div>

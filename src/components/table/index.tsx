@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import Pagination from './pagination';
 
 export default function Table({
@@ -5,7 +6,8 @@ export default function Table({
     columns = [],
     data = [],
     pagination = { enable: false, page: 0, limit: 10, pages: 1 },
-    name = 'table'
+    name = 'table',
+    onRowClick
 }: TableProps) {
     const getAlignment = (length: number, i: number) => {
         switch (i) {
@@ -19,6 +21,13 @@ export default function Table({
                 return 'center';
         }
     };
+
+    const getCellValue = useCallback(
+        (data: any = {}, value: string) => {
+            return value.split('.').reduce((acc, key) => acc && acc[key], data) || '-';
+        },
+        [data]
+    );
 
     return (
         <div className="border rounded-lg border-border">
@@ -45,7 +54,12 @@ export default function Table({
                         ) : (
                             data.map((_data, i) => {
                                 return (
-                                    <tr key={`${name}-row-${i}`}>
+                                    <tr
+                                        key={`${name}-row-${i}`}
+                                        onClick={
+                                            onRowClick ? () => onRowClick(_data, i) : undefined
+                                        }
+                                        className={onRowClick ? 'cursor-pointer' : ''}>
                                         {columns?.map((_, j) => {
                                             const { value, props } = _;
 
@@ -56,7 +70,7 @@ export default function Table({
                                                     className="px-4 py-2 font-normal text-gray-900 whitespace-nowrap border-b-1"
                                                     {...props}>
                                                     {typeof value === 'string' ? (
-                                                        _data[value]
+                                                        getCellValue(_data, value)
                                                     ) : (
                                                         <value.render
                                                             rowIndex={i}

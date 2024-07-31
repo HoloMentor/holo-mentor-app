@@ -21,7 +21,7 @@ export default function Subjects() {
                                     content:
                                         'grid gap-4 grid-cols-4 max-2xl:grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1'
                                 }}>
-                                {Array.from({ length: 6 }).map((_, j) => {
+                                {Array.from({ length: 5 }).map((_, j) => {
                                     return (
                                         <Link
                                             title={'Subject Name'}
@@ -30,16 +30,12 @@ export default function Subjects() {
                                             className="text-black">
                                             <div className="w-full relative rounded-md p-5 border border-light-border">
                                                 <span className="font-semibold truncate block max-w-52">
-                                                    Lorem, ipsum dolor sit amet consectetur
-                                                    adipisicing elit. Tempora sint vero expedita
-                                                    consequatur optio numquam quaerat, ipsum ipsam
-                                                    labore quibusdam magnam repudiandae debitis sunt
-                                                    saepe neque itaque harum provident eaque.
+                                                    Physics
                                                 </span>
                                                 <img
                                                     src="/images/subjects/book.svg"
                                                     alt="Book"
-                                                    className="absolute right-0 bottom-0 opacity-50"
+                                                    className="absolute bottom-0 right-0 opacity-50"
                                                 />
                                             </div>
                                         </Link>
