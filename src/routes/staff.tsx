@@ -53,5 +53,5 @@ export default function TeacherRoutes() {
                 <Route path="notifications" element={<Notifications />} />
             </Route>
         </Routes>
-    );
+        );
 }

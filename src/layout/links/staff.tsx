@@ -116,7 +116,7 @@ const teacherSideBar: RoleSideBarProps = {
             )
         },
         {
-            to: '/classes/:classId/stdyplan',
+            to: '/classes/:classId/studyplan',
             end: true,
             name: 'Study Plan',
             icon: () => (
