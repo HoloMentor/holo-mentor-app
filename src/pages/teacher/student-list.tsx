@@ -111,7 +111,7 @@ export default function Quizes() {
             <Heading>Students</Heading>
 
             <div className="flex justify-end mr-4 ">
-                <Input placeholder="Search" className="max-w-72" />
+                <Input placeholder="Search" className="max-w-72 bg-white" />
             </div>
             <section className="mt-2">
                 <Table data={tableData} columns={tableColumns} onRowClick={handleRowClick} />

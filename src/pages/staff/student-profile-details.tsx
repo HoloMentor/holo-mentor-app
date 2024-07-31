@@ -54,7 +54,7 @@ export default function studentProfileDetails() {
                                     alt="Avatar"
                                     className="w-24 h-24 mb-4 rounded-full"
                                 />
-                                <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
+                                <h1 className="text-2xl font-semibold">Jhon Blake</h1>
                                 <span className="text-sm text-neutral-500">Student</span>
                             </div>
                         </div>
