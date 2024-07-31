@@ -51,7 +51,6 @@ export default function TeacherRoutes() {
 
                 <Route path="profile" element={<Profile />} />
                 <Route path="notifications" element={<Notifications />} />
-                {/* <Route path=":institute/:year/*" element={<ClassMaterials />}></Route> */}
             </Route>
         </Routes>
     );
