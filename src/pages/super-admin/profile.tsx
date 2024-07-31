@@ -32,9 +32,23 @@ export default function Profile() {
         {
             class: {
                 name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                institute: 'Devify Institute - 2023'
             },
             students: '210'
+        },
+        {
+            class: {
+                name: 'Maths',
+                institute: 'Skiba Institute - 2023'
+            },
+            students: '200'
+        },
+        {
+            class: {
+                name: 'Physics',
+                institute: 'Roodel Institute - 2023'
+            },
+            students: '430'
         }
     ];
 

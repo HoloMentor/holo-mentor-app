@@ -6,7 +6,7 @@ function Home() {
     /* this is a sample data */
     const eduTableData = [
         {
-            name: 'Sasip',
+            name: 'Roodel',
             image: 'https://picsum.photos/400',
             city: 'Colombo',
             classes: 400,
@@ -16,11 +16,11 @@ function Home() {
     ];
     const clsTableData = [
         {
-            name: 'Biology',
+            name: 'Physics',
             teacher: {
                 name: 'Saliya Bandara'
             },
-            institute: { name: 'Sasip - Nugegoda' },
+            institute: { name: 'Roodel - Colombo' },
             students: '210'
         }
     ];

@@ -31,8 +31,8 @@ export default function Profile() {
     const tableData = [
         {
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Physics',
+                institute: 'Roodel Institute - 2023'
             },
             students: '210'
         }
@@ -239,7 +239,7 @@ export default function Profile() {
                                                 })
                                             )
                                         }
-                                        className="text-lg text-neutral-500 cursor-pointer w-5 h-5">
+                                        className="w-5 h-5 text-lg cursor-pointer text-neutral-500">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"

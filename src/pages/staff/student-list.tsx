@@ -37,6 +37,53 @@ export default function Quizes() {
             class: {
                 image: (
                     <img
+                        src="https://picsum.photos/400"
+                        alt="avatar"
+                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
+                    />
+                ),
+                name: 'Giselle Biaggi'
+            },
+
+            tier: 'Tier 1',
+            gender: 'male',
+            status: 'Reviewed'
+        },
+        {
+            class: {
+                image: (
+                    <img
+                        src="https://picsum.photos/400"
+                        alt="avatar"
+                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
+                    />
+                ),
+                name: 'Lenee Mapham'
+            },
+
+            tier: 'Tier 1',
+            gender: 'male',
+            status: 'Pending'
+        },
+        {
+            class: {
+                image: (
+                    <img
+                        src="https://picsum.photos/401"
+                        alt="avatar"
+                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
+                    />
+                ),
+                name: 'Tull Dullard'
+            },
+            tier: 'Tier 1',
+            gender: 'male',
+            status: 'Pending'
+        },
+        {
+            class: {
+                image: (
+                    <img
                         src="https://picsum.photos/402"
                         alt="avatar"
                         className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"

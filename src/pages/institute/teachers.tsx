@@ -30,7 +30,7 @@ function Teachers() {
             subject: 'Chemistry',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Donall Samart'
             },
             type: 'A/L'
         },
@@ -40,7 +40,7 @@ function Teachers() {
             subject: 'Physics',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Reuven Presdie'
             },
             type: 'A/L'
         },
@@ -50,7 +50,7 @@ function Teachers() {
             subject: 'Maths',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Irwin Havvock'
             },
             type: 'O/L'
         },
@@ -60,7 +60,7 @@ function Teachers() {
             subject: 'Science',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Bear Kestin'
             },
             type: 'O/L'
         }
