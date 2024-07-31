@@ -1,24 +1,26 @@
-
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
 import Content from '@/components/content';
 import SubHeading from '@/components/headings/sub';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Button as CustomButton } from '@nextui-org/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function submissions() {
-
     const navigate = useNavigate();
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     return (
         <div>
             <Heading>Students</Heading>
             <div className="flex gap-2 px-8 mt-4 bg-white rounded-md">
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50" onClick={() => navigate(`/student/profile`)}>
+                <p
+                    className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50"
+                    onClick={() => navigate(currentPath.replace('/submissions', '/profile'))}>
                     Details
                 </p>
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50">
+                <p className="p-4 mx-1 border-b-3 border-[#489F2D] font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50">
                     Submissions
                 </p>
             </div>
