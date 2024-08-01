@@ -1,7 +1,14 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
+import useRoleHandler from '@/hooks/role-handler';
+import { IRootState } from '@/redux';
+import { snakeCaseToTitleCase } from '@/utils';
+import { useSelector } from 'react-redux';
 
 export default function Profile() {
+    const { user } = useSelector((state: IRootState) => state.user);
+    const role = useRoleHandler();
+
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
             <div className="flex flex-col gap-1">
@@ -84,8 +91,12 @@ export default function Profile() {
                                 alt="Avatar"
                                 className="rounded-full w-24 h-24 mb-4"
                             />
-                            <h1 className="text-2xl font-semibold">Sasip Institute</h1>
-                            <span className="text-sm text-neutral-500">Educational Institute</span>
+                            <h1 className="text-2xl font-semibold">
+                                {user.firstName} {user.lastName}
+                            </h1>
+                            <span className="text-sm text-neutral-500 capitalize">
+                                {snakeCaseToTitleCase(role)}
+                            </span>
                         </div>
                     </div>
                     <div className="bg-white px-4 py-4 mb-4 rounded-lg relative">

@@ -1,9 +1,14 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Button from '@/components/button';
-import {Link} from "react-router-dom";
- 
+import { Link } from 'react-router-dom';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
+import { useDispatch } from 'react-redux';
+
 export default function teacherProfile() {
+    const dispatch = useDispatch();
+
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
             <Link to={`/class/${data.id}/progress`}>
@@ -32,7 +37,7 @@ export default function teacherProfile() {
 
     const tableData = [
         {
-            id : 1,
+            id: 1,
             class: {
                 name: 'Biology',
                 institute: 'Devify Institute - 2023'
@@ -40,7 +45,7 @@ export default function teacherProfile() {
             students: '210'
         },
         {
-            id : 2,
+            id: 2,
             class: {
                 name: 'Maths',
                 institute: 'Skiba Institute - 2023'
@@ -48,7 +53,7 @@ export default function teacherProfile() {
             students: '200'
         },
         {
-            id : 3,
+            id: 3,
             class: {
                 name: 'Physics',
                 institute: 'Roodel Institute - 2023'
@@ -162,7 +167,6 @@ export default function teacherProfile() {
                         </ul>
                     </div>
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-
                         <h1 className="text-xl font-semibold text-dark-green">Supporting Staff</h1>
 
                         <ul className="mt-4">
@@ -182,7 +186,6 @@ export default function teacherProfile() {
                             ))}
                         </ul>
                     </div>
-                    
                 </section>
 
                 <section className="w-full col-span-2 max-lg:pr-4">
@@ -191,6 +194,13 @@ export default function teacherProfile() {
                             <h1 className="mb-1 text-xl font-semibold text-dark-green">Classes</h1>
 
                             <Button
+                                onClick={() =>
+                                    dispatch(
+                                        modelActions.show({
+                                            name: modelNames.ADD_CLASS
+                                        })
+                                    )
+                                }
                                 className="flex items-center gap-2"
                                 endContent={
                                     <span>

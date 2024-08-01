@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import NavLink from './navlink';
+import { snakeCaseToTitleCase } from '@/utils';
+import useRoleHandler from '@/hooks/role-handler';
 
 export default function SideBar({ links, pathname }: SideBarProps) {
+    const role = useRoleHandler();
+
     return (
         <div className="flex flex-col gap-5 bg-white w-full max-w-64 h-screen max-md:max-w-14 overflow-visible sticky top-0 left-0">
             <Link to="/">
@@ -11,6 +15,8 @@ export default function SideBar({ links, pathname }: SideBarProps) {
                     className="w-full p-6 max-md:hidden"
                 />
             </Link>
+
+            <span className="font-bold px-6">{snakeCaseToTitleCase(role)}</span>
 
             <div className="hidden mt-4 w-full justify-center max-md:flex p-3">
                 <Link to="/">

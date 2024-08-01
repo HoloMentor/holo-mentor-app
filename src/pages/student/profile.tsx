@@ -1,12 +1,16 @@
 import Heading from '@/components/headings/main';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LineChart from './chart';
-// import { Link } from 'react-router-dom';
+import { IRootState } from '@/redux';
+import useRoleHandler from '@/hooks/role-handler';
+import { snakeCaseToTitleCase } from '@/utils';
 
 export default function Profile() {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+    const role = useRoleHandler();
 
     const subjects = [
         { id: 1, name: 'Biology' },
@@ -52,8 +56,12 @@ export default function Profile() {
                                 alt="Avatar"
                                 className="w-24 h-24 mb-4 rounded-full"
                             />
-                            <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
-                            <span className="text-sm text-neutral-500">Student</span>
+                            <h1 className="text-2xl font-semibold">
+                                {user.firstName} {user.lastName}
+                            </h1>
+                            <span className="text-sm text-neutral-500 capitalize">
+                                {snakeCaseToTitleCase(role)}
+                            </span>
                         </div>
                     </div>
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">

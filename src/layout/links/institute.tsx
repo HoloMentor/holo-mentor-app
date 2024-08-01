@@ -122,6 +122,7 @@ const instituteSideBar: RoleSideBarProps = {
         {
             to: '/',
             end: true,
+            bottom: true,
             name: 'Home',
             icon: () => (
                 <svg
