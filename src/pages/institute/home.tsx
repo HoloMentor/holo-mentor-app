@@ -9,22 +9,20 @@ Chart.defaults.plugins.legend.title.display = true;
 
 const data = {
     labels: [
-        'Sasip-Theory 2023',
-        'Sasip-Theory 2024',
-        'Sasip-Revision 2024',
-        'Syzygy-Revision 2024'
+        'Theory 2023',
+        'Theory 2024',
+        'Revision 2024',
     ],
     datasets: [
         {
-            data: [400, 300, 250, 500],
+            data: [400, 300, 250],
             backgroundColor: [
                 'rgb(25, 69, 69)',
                 'rgb(0, 164, 124)',
                 'rgb(45, 143, 143)',
-                'rgb(96, 148, 144)'
             ],
             borderWidth: 2,
-            radius: '70%'
+            radius: '60%'
         }
     ]
 };
@@ -174,7 +172,9 @@ function Home() {
 
                 <section className="w-full bg-white rounded-s-lg p-2 h-full col-span-2 max-xl:col-span-3">
                     <h1 className="ml-5 text-lg font-semibold text-black">Students For Teacher </h1>
-                    <Doughnut data={data} />
+                    <div className="!w-full !h-full flex justify-center">
+                        <Doughnut data={data} />
+                    </div>
                 </section>
             </div>
         </div>
