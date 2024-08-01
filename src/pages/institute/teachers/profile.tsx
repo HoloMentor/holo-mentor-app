@@ -2,8 +2,6 @@ import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Button from '@/components/button';
 import {Link} from "react-router-dom";
-import { modelActions } from '@/redux/reducers/model.reducer';
-import { modelNames } from '@/models';
  
 export default function teacherProfile() {
     const renderClass = ({ data }: CustomTableCellData) => {
@@ -165,7 +163,7 @@ export default function teacherProfile() {
                     </div>
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
 
-                        <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
+                        <h1 className="text-xl font-semibold text-dark-green">Supporting Staff</h1>
 
                         <ul className="mt-4">
                             {items.map((item) => (
