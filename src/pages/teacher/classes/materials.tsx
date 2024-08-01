@@ -32,7 +32,7 @@ export default function Materials() {
                                 title={
                                     <div className="flex items-center gap-4">
                                         <span className="text-2xl font-semibold">Measurement</span>
-                                        <div className='relative'>
+                                        <div className="relative">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"

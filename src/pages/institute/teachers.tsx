@@ -25,7 +25,7 @@ function Teachers() {
 
     const tableData = [
         {
-            id : 1,
+            id: 1,
             classes: '10',
             subject: 'Chemistry',
             teacher: {
@@ -35,7 +35,7 @@ function Teachers() {
             type: 'A/L'
         },
         {
-            id : 2,
+            id: 2,
             classes: '10',
             subject: 'Physics',
             teacher: {
@@ -45,7 +45,7 @@ function Teachers() {
             type: 'A/L'
         },
         {
-            id : 3,
+            id: 3,
             classes: '10',
             subject: 'Maths',
             teacher: {
@@ -55,7 +55,7 @@ function Teachers() {
             type: 'O/L'
         },
         {
-            id : 4,
+            id: 4,
             classes: '10',
             subject: 'Science',
             teacher: {
