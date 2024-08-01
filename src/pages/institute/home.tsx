@@ -9,9 +9,9 @@ Chart.defaults.plugins.legend.title.display = true;
 
 const data = {
     labels: [
-        'Theory 2023',
-        'Theory 2024',
-        'Revision 2024',
+        'Donall Samart',
+        'Irwin Havvock',
+        'Bear Kestin',
     ],
     datasets: [
         {
