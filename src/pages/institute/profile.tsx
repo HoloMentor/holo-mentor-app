@@ -28,7 +28,25 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher: 'John Baken'
+            teacher: 'John Seed'
+        },
+
+        {
+            class: {
+                name: 'Chemistry',
+                institute: 'Theory - 2023'
+            },
+            students: '210',
+            teacher: 'Joshep Seed'
+        },
+
+        {
+            class: {
+                name: 'Physics',
+                institute: 'Theory - 2023'
+            },
+            students: '210',
+            teacher: 'Jacob Seed'
         }
     ];
 
@@ -165,7 +183,7 @@ export default function Profile() {
 
                 <section className="w-full col-span-2 max-lg:pr-4">
                     <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
-                        <h1 className="text-xl font-semibold text-dark-green mb-4">Students</h1>
+                        <h1 className="text-xl font-semibold text-dark-green mb-4">Classes</h1>
                         <Table data={tableData} columns={tableColumns} />
                     </div>
                 </section>

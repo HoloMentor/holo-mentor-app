@@ -58,7 +58,7 @@ function classStudent() {
     ];
 
     const tableColumns: TableColumn[] = [
-        { name: 'Teacher', value: { render: renderTeacher } },
+        { name: 'Name', value: { render: renderTeacher } },
         { name: 'Subject', value: 'subject' },
         { name: 'No of Classes', value: 'classes' },
         { name: 'Type', value: 'type' }
@@ -66,7 +66,7 @@ function classStudent() {
 
     return (
         <div className="flex flex-col gap-3">
-            <Heading>Teachers</Heading>
+            <Heading>Students</Heading>
             <section className="w-full col-span-2 max-lg:pr-4">
                 <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                     <div className="flex items-center justify-between gap-5 mb-4">
