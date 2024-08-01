@@ -2,6 +2,8 @@ import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Button from '@/components/button';
 import {Link} from "react-router-dom";
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
  
 export default function teacherProfile() {
     const renderClass = ({ data }: CustomTableCellData) => {
@@ -61,6 +63,13 @@ export default function teacherProfile() {
         { name: 'Class', value: { render: renderClass } },
         { name: 'Students', value: 'students' },
         { name: '', value: { render: renderEdit } }
+    ];
+
+    const items = [
+        { key: '1', name: 'William Harpy' },
+        { key: '2', name: 'Tony Reichert' },
+        { key: '3', name: 'Zoey Lang' },
+        { key: '4', name: 'Jane Fisher' }
     ];
 
     return (
@@ -154,7 +163,27 @@ export default function teacherProfile() {
                             </li>
                         </ul>
                     </div>
+                    <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
 
+                        <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
+
+                        <ul className="mt-4">
+                            {items.map((item) => (
+                                <li
+                                    key={item.key}
+                                    className="flex items-center justify-between gap-5 mb-1 text-sm">
+                                    <div className="flex flex-row items-center justify-center gap-4">
+                                        <img
+                                            src="/images/student/avatar-hd.jpg"
+                                            alt="Avatar"
+                                            className="w-10 h-10 mb-2 rounded-full"
+                                        />
+                                        <div className="font-semibold text-md">{item.name}</div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                     
                 </section>
 
