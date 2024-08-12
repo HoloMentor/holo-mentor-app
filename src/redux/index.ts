@@ -5,6 +5,7 @@ import modelReducer from './reducers/model.reducer';
 import authServices from './services/auth.service';
 import userServices from './services/user.service';
 import notifyReducer from './reducers/notify.reducer';
+import instituteServices from './services/institute.service';
 
 const store = configureStore({
     reducer: combineReducers({
@@ -12,10 +13,14 @@ const store = configureStore({
         model: modelReducer,
         notify: notifyReducer,
         [authServices.reducerPath]: authServices.reducer,
-        [userServices.reducerPath]: userServices.reducer
+        [userServices.reducerPath]: userServices.reducer,
+        [instituteServices.reducerPath]: instituteServices.reducer
     }),
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authServices.middleware).concat(userServices.middleware)
+        getDefaultMiddleware()
+            .concat(authServices.middleware)
+            .concat(userServices.middleware)
+            .concat(instituteServices.middleware)
 });
 
 export default store;
