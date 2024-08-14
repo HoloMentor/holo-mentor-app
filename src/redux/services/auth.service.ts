@@ -1,11 +1,18 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@/redux/services/base';
+import { noAuthBaseQuery } from '@/redux/services/base';
 
 const authServices = createApi({
     reducerPath: 'auth-service',
-    baseQuery: baseQuery,
-    tagTypes: ['AuthSignIn', 'AuthSignUp', 'AuthUserInstitutes'],
+    baseQuery: noAuthBaseQuery,
+    tagTypes: ['AuthSignIn', 'AuthSignUp', 'AuthUserInstitutes', 'AuthUser'],
     endpoints: (builder) => ({
+        me: builder.mutation({
+            query: ({ id }) => ({
+                method: 'GET',
+                url: `/auth/me/${id}`
+            }),
+            invalidatesTags: ['AuthUser']
+        }),
         signIn: builder.mutation({
             query: (props) => ({
                 method: 'POST',

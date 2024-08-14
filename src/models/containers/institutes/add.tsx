@@ -2,9 +2,12 @@ import Form from '@/components/form';
 import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
 import useErrorHandler from '@/hooks/error-handler';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
 import instituteServices from '@/redux/services/institute.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 const initialValues = {
@@ -30,6 +33,8 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function AddInstitute({}: ModelContainerProps) {
+    const dispatch = useDispatch();
+
     const [
         createInstitute,
         { isLoading: isCreating, isError: isInstituteCreateError, error: instituteCreateError }
@@ -38,7 +43,17 @@ export default function AddInstitute({}: ModelContainerProps) {
 
     const onSubmit = async (values: FormikValues) => {
         const result = await createInstitute(values);
-        console.log(result);
+
+        if (result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            dispatch(modelActions.hide());
+        }
     };
 
     return (
