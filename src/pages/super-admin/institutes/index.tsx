@@ -8,7 +8,7 @@ import { modelActions } from '@/redux/reducers/model.reducer';
 import instituteServices from '@/redux/services/institute.service';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { renderInstituteName } from './columns';
+import { renderInstituteName, renderMoreActions } from './columns';
 
 export default function Institutes() {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function Institutes() {
         isLoading: allInstitutesLoading
     } = instituteServices.useAllQuery({
         search: searchParams.get('search') || '',
-        page: searchParams.get('page') || 0
+        page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
     });
     useErrorHandler(isAllInstitutesError, allInstitutesError);
 
@@ -33,7 +33,8 @@ export default function Institutes() {
         { name: 'City', value: 'city' },
         { name: 'Classes', value: 'id' },
         { name: 'No. of Students', value: 'id' },
-        { name: 'No. of Teachers', value: 'id' }
+        { name: 'No. of Teachers', value: 'id' },
+        { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
     return (

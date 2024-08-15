@@ -10,6 +10,8 @@ import AddInstitute from './containers/institutes/add';
 import AddClass from './containers/classes/add';
 import AddStudent from './containers/students/add-student';
 import AddStudents from './containers/students/add-students';
+import DeleteInstitute from './containers/institutes/delete';
+import EditInstitute from './containers/institutes/edit';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -32,6 +34,10 @@ export const modelContainers: ModelContainers = {
         model: AddInstitute,
         props: { size: '2xl' }
     },
+    EDIT_INSTITUTE: {
+        model: EditInstitute,
+        props: { size: '2xl' }
+    },
     REMOVE_ACADEMIC_STAFF: {
         model: RemoveStaff
     },
@@ -52,6 +58,9 @@ export const modelContainers: ModelContainers = {
     ADD_STUDENTS: {
         model: AddStudents,
         props: { size: 'xl' }
+    },
+    DELETE_INSTITUTE: {
+        model: DeleteInstitute
     }
 };
 
@@ -67,5 +76,7 @@ export const modelNames = {
     ADD_STUDY_PLAN: 'ADD_STUDY_PLAN',
     ADD_CLASS: 'ADD_CLASS',
     ADD_STUDENT: 'ADD_STUDENT',
-    ADD_STUDENTS: 'ADD_STUDENTS'
+    ADD_STUDENTS: 'ADD_STUDENTS',
+    DELETE_INSTITUTE: 'DELETE_INSTITUTE',
+    EDIT_INSTITUTE: 'EDIT_INSTITUTE'
 };

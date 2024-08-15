@@ -14,6 +14,28 @@ const instituteServices = createApi({
             }),
             invalidatesTags: ['Institutes']
         }),
+        delete: builder.mutation({
+            query: ({ id }) => ({
+                method: 'DELETE',
+                url: `/institutes/delete/${id}`
+            }),
+            invalidatesTags: ['Institutes']
+        }),
+        update: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/institutes/update/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['Institutes']
+        }),
+        get: builder.query({
+            query: ({ id }) => ({
+                method: 'GET',
+                url: `/institutes/${id}`
+            }),
+            providesTags: ['Institute']
+        }),
         all: builder.query({
             query: (params) => ({
                 method: 'GET',
