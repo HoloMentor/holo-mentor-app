@@ -1,21 +1,21 @@
 import InfoCard from '@/components/cards/info';
-import DoughnuChart from '@/components/charts/donut';
+import DoughNutChart from '@/components/charts/doughnut';
 
 function Home() {
     /* sample */
     const bestContributors = [
         {
-            name: 'Saliya Bandara',
+            name: 'Jill Volage',
             avatar: '/images/student/avatar.png',
             medal: '/images/student/gmedal.png'
         },
         {
-            name: 'Saliya Bandara',
+            name: 'Jhon Volage',
             avatar: '/images/student/avatar.png',
             medal: '/images/student/smedal.png'
         },
         {
-            name: 'Saliya Bandara',
+            name: 'Jane Break',
             avatar: '/images/student/avatar.png',
             medal: '/images/student/bmedal.png'
         }
@@ -199,7 +199,7 @@ function Home() {
                                 Students
                             </h1>
                             <div className="felx w-full items-center justify-center">
-                                <DoughnuChart />
+                                <DoughNutChart />
                             </div>
                         </div>
                     </section>

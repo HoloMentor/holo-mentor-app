@@ -3,15 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 interface actionsProps {
     payload: {
         name: string;
-        props?: any;
+        props?: ModelContainerActionProps;
     };
 }
 
 interface ModelStateProps {
     modelTypes: string[];
     modelProps: {
-        [key: string]: any;
-        [key: symbol]: any;
+        [key: string | symbol]: ModelContainerActionProps;
     };
 }
 

@@ -21,7 +21,7 @@ export default function AddAcademicStaff({}: ModelContainerProps) {
     return (
         <div>
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
-                Add Academic Staff Member
+                Add Supporting Staff Member
             </ModalHeader>
             <ModalBody>
                 <Form

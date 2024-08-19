@@ -20,6 +20,7 @@ export default function AutoComplete({
     const onChange = (e: string) => {
         if (onSelectionChange) onSelectionChange(e);
     };
+
     return (
         <NextAutoComplete
             labelPlacement="outside"
@@ -35,7 +36,11 @@ export default function AutoComplete({
                 }
             }}
             {...props}>
-            {(item: any) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
+            {({ label, ...props }: any) => (
+                <AutocompleteItem key={props.key || props.value} {...props}>
+                    {label}
+                </AutocompleteItem>
+            )}
         </NextAutoComplete>
     );
 }

@@ -3,7 +3,12 @@ import { cloneElement, isValidElement, useEffect } from 'react';
 
 interface Props extends ModelContainerWrap, Omit<ModalProps, 'children'> {}
 
-export default function ModelWrap({ children, placement = 'center' }: Props) {
+export default function ModelWrap({
+    children,
+    placement = 'center',
+    isDismissable = false,
+    ...props
+}: Props) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     useEffect(() => {
@@ -12,6 +17,7 @@ export default function ModelWrap({ children, placement = 'center' }: Props) {
 
     return (
         <Modal
+            isDismissable={isDismissable}
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             placement={placement}
@@ -35,7 +41,8 @@ export default function ModelWrap({ children, placement = 'center' }: Props) {
                         }
                     }
                 }
-            }}>
+            }}
+            {...props}>
             <ModalContent>
                 {(onClose) =>
                     isValidElement(children) ? cloneElement(children, { onClose }) : children

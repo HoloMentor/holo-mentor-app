@@ -3,8 +3,13 @@ import Table from '@/components/table';
 import Input from '@/components/input';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import Button from '@/components/button';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
+import { useDispatch } from 'react-redux';
 
 function classStudent() {
+    const dispatch = useDispatch();
+
     const renderTeacher = ({ data }: CustomTableCellData) => {
         return (
             <div className="flex flex-raw">
@@ -24,7 +29,7 @@ function classStudent() {
             subject: 'Chemistry',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Marco Panting'
             },
             type: 'A/L'
         },
@@ -33,7 +38,7 @@ function classStudent() {
             subject: 'Physics',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Jaquenette Trout'
             },
             type: 'A/L'
         },
@@ -42,7 +47,7 @@ function classStudent() {
             subject: 'Maths',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Catriona Blissett'
             },
             type: 'O/L'
         },
@@ -51,14 +56,14 @@ function classStudent() {
             subject: 'Science',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Sandy Emeny'
             },
             type: 'O/L'
         }
     ];
 
     const tableColumns: TableColumn[] = [
-        { name: 'Teacher', value: { render: renderTeacher } },
+        { name: 'Name', value: { render: renderTeacher } },
         { name: 'Subject', value: 'subject' },
         { name: 'No of Classes', value: 'classes' },
         { name: 'Type', value: 'type' }
@@ -66,11 +71,11 @@ function classStudent() {
 
     return (
         <div className="flex flex-col gap-3">
-            <Heading>Teachers</Heading>
+            <Heading>Students</Heading>
             <section className="w-full col-span-2 max-lg:pr-4">
                 <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                     <div className="flex items-center justify-between gap-5 mb-4">
-                        <Input className="max-w-36" placeholder="Search" />
+                        <Input className="max-w-96 w-full" placeholder="Search" />
                         <Dropdown>
                             <DropdownTrigger>
                                 <Button
@@ -96,15 +101,27 @@ function classStudent() {
                             <DropdownMenu>
                                 <DropdownItem
                                     className="text-center text-black"
-                                    key="new"
-                                    href={`${location.pathname}/addone`}>
-                                    Add One Student
+                                    key="one-student"
+                                    onClick={() =>
+                                        dispatch(
+                                            modelActions.show({
+                                                name: modelNames.ADD_STUDENT
+                                            })
+                                        )
+                                    }>
+                                    Add a Student
                                 </DropdownItem>
                                 <DropdownItem
                                     className="text-center text-black"
-                                    key="copy"
-                                    href={`${location.pathname}/addmany`}>
-                                    Add Using CSV File
+                                    key="upload-csv"
+                                    onClick={() =>
+                                        dispatch(
+                                            modelActions.show({
+                                                name: modelNames.ADD_STUDENTS
+                                            })
+                                        )
+                                    }>
+                                    Upload By CSV File
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>

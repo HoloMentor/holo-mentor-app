@@ -1,7 +1,14 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
+import useRoleHandler from '@/hooks/role-handler';
+import { IRootState } from '@/redux';
+import { snakeCaseToTitleCase } from '@/utils';
+import { useSelector } from 'react-redux';
 
 export default function Profile() {
+    const { user } = useSelector((state: IRootState) => state.user);
+    const role = useRoleHandler();
+
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
             <div className="flex flex-col gap-1">
@@ -28,31 +35,25 @@ export default function Profile() {
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher: 'Senaka Batagoda'
+            teacher: 'John Seed'
         },
+
         {
             class: {
-                name: 'Biology',
+                name: 'Chemistry',
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher: 'Senaka Batagoda'
+            teacher: 'Joshep Seed'
         },
+
         {
             class: {
-                name: 'Biology',
+                name: 'Physics',
                 institute: 'Theory - 2023'
             },
             students: '210',
-            teacher: 'Senaka Batagoda'
-        },
-        {
-            class: {
-                name: 'Biology',
-                institute: 'Theory - 2023'
-            },
-            students: '210',
-            teacher: 'Senaka Batagoda'
+            teacher: 'Jacob Seed'
         }
     ];
 
@@ -90,8 +91,12 @@ export default function Profile() {
                                 alt="Avatar"
                                 className="rounded-full w-24 h-24 mb-4"
                             />
-                            <h1 className="text-2xl font-semibold">Sasip Institute</h1>
-                            <span className="text-sm text-neutral-500">Educational Institute</span>
+                            <h1 className="text-2xl font-semibold">
+                                {user.firstName} {user.lastName}
+                            </h1>
+                            <span className="text-sm text-neutral-500 capitalize">
+                                {snakeCaseToTitleCase(role)}
+                            </span>
                         </div>
                     </div>
                     <div className="bg-white px-4 py-4 mb-4 rounded-lg relative">
@@ -189,7 +194,7 @@ export default function Profile() {
 
                 <section className="w-full col-span-2 max-lg:pr-4">
                     <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
-                        <h1 className="text-xl font-semibold text-dark-green mb-4">Students</h1>
+                        <h1 className="text-xl font-semibold text-dark-green mb-4">Classes</h1>
                         <Table data={tableData} columns={tableColumns} />
                     </div>
                 </section>

@@ -1,14 +1,22 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Button from '@/components/button';
+import { Link } from 'react-router-dom';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
+import { useDispatch } from 'react-redux';
 
 export default function teacherProfile() {
+    const dispatch = useDispatch();
+
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
-            <div className="flex flex-col gap-1">
-                <span className="font-semibold text-dark-green">{data.class.name}</span>
-                <span>{data.class.institute}</span>
-            </div>
+            <Link to={`/class/${data.id}/progress`}>
+                <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-dark-green">{data.class.name}</span>
+                    <span>{data.class.institute}</span>
+                </div>
+            </Link>
         );
     };
 
@@ -29,25 +37,28 @@ export default function teacherProfile() {
 
     const tableData = [
         {
+            id: 1,
             class: {
                 name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                institute: 'Devify Institute - 2023'
             },
             students: '210'
         },
         {
+            id: 2,
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Maths',
+                institute: 'Skiba Institute - 2023'
             },
-            students: '210'
+            students: '200'
         },
         {
+            id: 3,
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Physics',
+                institute: 'Roodel Institute - 2023'
             },
-            students: '210'
+            students: '430'
         }
     ];
 
@@ -55,6 +66,13 @@ export default function teacherProfile() {
         { name: 'Class', value: { render: renderClass } },
         { name: 'Students', value: 'students' },
         { name: '', value: { render: renderEdit } }
+    ];
+
+    const items = [
+        { key: '1', name: 'William Harpy' },
+        { key: '2', name: 'Tony Reichert' },
+        { key: '3', name: 'Zoey Lang' },
+        { key: '4', name: 'Jane Fisher' }
     ];
 
     return (
@@ -148,33 +166,24 @@ export default function teacherProfile() {
                             </li>
                         </ul>
                     </div>
-
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-                        <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
+                        <h1 className="text-xl font-semibold text-dark-green">Supporting Staff</h1>
 
                         <ul className="mt-4">
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
-                                    01
-                                </div>
-                                <span>
-                                    <a href="mailto:saliya@gmail.com" className="text-black">
-                                        saliya@gmail.com
-                                    </a>
-                                </span>
-                            </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 ">02</div>
-                                <span>
-                                    <a href="tel:+94771234567" className="text-black">
-                                        077 123 4567
-                                    </a>
-                                </span>
-                            </li>
-                            <li className="flex items-center gap-4 mb-1 text-sm">
-                                <div className="flex items-center justify-center w-5 h-5 ">03</div>
-                                <span>Sri Lanka</span>
-                            </li>
+                            {items.map((item) => (
+                                <li
+                                    key={item.key}
+                                    className="flex items-center justify-between gap-5 mb-1 text-sm">
+                                    <div className="flex flex-row items-center justify-center gap-4">
+                                        <img
+                                            src="/images/student/avatar-hd.jpg"
+                                            alt="Avatar"
+                                            className="w-10 h-10 mb-2 rounded-full"
+                                        />
+                                        <div className="font-semibold text-md">{item.name}</div>
+                                    </div>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </section>
@@ -185,6 +194,13 @@ export default function teacherProfile() {
                             <h1 className="mb-1 text-xl font-semibold text-dark-green">Classes</h1>
 
                             <Button
+                                onClick={() =>
+                                    dispatch(
+                                        modelActions.show({
+                                            name: modelNames.ADD_CLASS
+                                        })
+                                    )
+                                }
                                 className="flex items-center gap-2"
                                 endContent={
                                     <span>

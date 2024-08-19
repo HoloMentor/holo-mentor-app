@@ -4,17 +4,17 @@ function Home() {
     /* sample */
     const bestContributors = [
         {
-            name: 'Saliya Bandara',
+            name: 'Jill Volage',
             avatar: '/images/student/avatar.png',
             medal: '/images/student/gmedal.png'
         },
         {
-            name: 'Saliya Bandara',
+            name: 'Jhon Volage',
             avatar: '/images/student/avatar.png',
             medal: '/images/student/smedal.png'
         },
         {
-            name: 'Saliya Bandara',
+            name: 'Jane Break',
             avatar: '/images/student/avatar.png',
             medal: '/images/student/bmedal.png'
         }

@@ -53,8 +53,8 @@ export default function Profile() {
                                 alt="Avatar"
                                 className="w-24 h-24 mb-4 rounded-full"
                             />
-                            <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
-                            <span className="text-sm text-neutral-500">Student</span>
+                            <h1 className="text-2xl font-semibold">Jill Volage</h1>
+                            <span className="text-sm text-neutral-500">Supporting Staff </span>
                         </div>
                     </div>
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
@@ -105,7 +105,7 @@ export default function Profile() {
                                 </div>
                                 <span>
                                     <a href="mailto:saliya@gmail.com" className="text-black">
-                                        saliya@gmail.com
+                                        JillVolage@gmail.com
                                     </a>
                                 </span>
                             </li>

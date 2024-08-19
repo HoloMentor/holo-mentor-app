@@ -50,12 +50,10 @@ export default function FormEditor({
 
     return (
         <div
-            data-slot="main-wrapper"
             className={`flex flex-col gap-1 h-full ${
                 classNames?.mainWrapper ? classNames?.mainWrapper : ''
             }`}>
             <div
-                data-slot="inner-wrapper"
                 className={`flex flex-col gap-2 h-full ${
                     classNames?.innerWrapper ? classNames.innerWrapper : ''
                 }`}>

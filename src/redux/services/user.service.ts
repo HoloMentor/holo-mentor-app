@@ -12,7 +12,7 @@ const userServices = createApi({
                 url: `/user/authenticate`,
                 body: props
             }),
-            invalidatesTags: [{ type: 'User' }]
+            invalidatesTags: ['User']
         }),
         all: builder.query({
             query: ({ org_id, date }) => ({

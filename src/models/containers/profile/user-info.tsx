@@ -105,13 +105,13 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
                     <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
                         <FormInput label="First Name *" placeholder="First Name" name="firstName" />
                         <FormInput label="Last Name *" placeholder="Last Name" name="lastName" />
-                        <Select
+                        {/* <Select
                             label="Role"
                             options={roleOptions}
                             value={roleValue}
                             onChange={setRoleValue}
                             className="border-[#0000001A] border-2 rounded-md"
-                        />
+                        /> */}
                     </div>
                 </Form>
             </ModalBody>

@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import NavLink from './navlink';
+import { snakeCaseToTitleCase } from '@/utils';
+import useRoleHandler from '@/hooks/role-handler';
 
 export default function SideBar({ links, pathname }: SideBarProps) {
+    const role = useRoleHandler();
+
     return (
         <div className="flex flex-col gap-5 bg-white w-full max-w-64 h-screen max-md:max-w-14 overflow-visible sticky top-0 left-0">
             <Link to="/">
@@ -11,6 +15,8 @@ export default function SideBar({ links, pathname }: SideBarProps) {
                     className="w-full p-6 max-md:hidden"
                 />
             </Link>
+
+            <span className="font-bold px-6">{snakeCaseToTitleCase(role)}</span>
 
             <div className="hidden mt-4 w-full justify-center max-md:flex p-3">
                 <Link to="/">
@@ -25,29 +31,43 @@ export default function SideBar({ links, pathname }: SideBarProps) {
             <div className="flex flex-col mt-5">
                 {links
                     .filter((_) => !_.bottom)
-                    .map(({ name, icon: Icon, ...props }: NavOptionProps, index: number) => {
-                        return (
-                            <NavLink key={index} pathname={pathname} {...props}>
-                                <Icon />
+                    .map(
+                        (
+                            { name, render: Render, icon: Icon, ...props }: NavOptionProps,
+                            index: number
+                        ) => {
+                            return Render ? (
+                                <Render key={`top-${index}`} />
+                            ) : (
+                                <NavLink key={`top-${index}`} pathname={pathname} {...props}>
+                                    <Icon />
 
-                                <span className="max-md:hidden">{name}</span>
-                            </NavLink>
-                        );
-                    })}
+                                    <span className="max-md:hidden">{name}</span>
+                                </NavLink>
+                            );
+                        }
+                    )}
             </div>
 
             <div className="flex flex-col justify-end h-full sticky bottom-0">
                 {links
                     .filter((_) => _.bottom)
-                    .map(({ name, icon: Icon, ...props }: NavOptionProps, index: number) => {
-                        return (
-                            <NavLink key={index} pathname={pathname} {...props}>
-                                <Icon />
+                    .map(
+                        (
+                            { name, render: Render, icon: Icon, ...props }: NavOptionProps,
+                            index: number
+                        ) => {
+                            return Render ? (
+                                <Render key={`bottom-${index}`} />
+                            ) : (
+                                <NavLink key={`bottom-${index}`} pathname={pathname} {...props}>
+                                    <Icon />
 
-                                <span className="max-md:hidden">{name}</span>
-                            </NavLink>
-                        );
-                    })}
+                                    <span className="max-md:hidden">{name}</span>
+                                </NavLink>
+                            );
+                        }
+                    )}
             </div>
         </div>
     );

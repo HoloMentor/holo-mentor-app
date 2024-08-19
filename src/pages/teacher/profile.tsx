@@ -1,11 +1,16 @@
 import Heading from '@/components/headings/main';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Table from '@/components/table';
+import { snakeCaseToTitleCase } from '@/utils';
+import { IRootState } from '@/redux';
+import useRoleHandler from '@/hooks/role-handler';
 
 export default function Profile() {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+    const role = useRoleHandler();
 
     const Biology = [
         { id: 1, type: 'Theory', year: 2021 },
@@ -31,8 +36,8 @@ export default function Profile() {
     const tableData = [
         {
             class: {
-                name: 'Biology',
-                institute: 'Sasip Institute - 2023'
+                name: 'Physics',
+                institute: 'Roodel Institute - 2023'
             },
             students: '210'
         }
@@ -87,8 +92,12 @@ export default function Profile() {
                                 alt="Avatar"
                                 className="w-24 h-24 mb-4 rounded-full"
                             />
-                            <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
-                            <span className="text-sm text-neutral-500">Student</span>
+                            <h1 className="text-2xl font-semibold">
+                                {user.firstName} {user.lastName}
+                            </h1>
+                            <span className="text-sm text-neutral-500 capitalize">
+                                {snakeCaseToTitleCase(role)}
+                            </span>
                         </div>
                     </div>
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
@@ -139,7 +148,7 @@ export default function Profile() {
                                 </div>
                                 <span>
                                     <a href="mailto:saliya@gmail.com" className="text-black">
-                                        saliya@gmail.com
+                                        natashapithie@gmail.com
                                     </a>
                                 </span>
                             </li>
@@ -216,7 +225,7 @@ export default function Profile() {
                             </svg>
                         </div>
 
-                        <h1 className="text-xl font-semibold text-dark-green">Academic Staff</h1>
+                        <h1 className="text-xl font-semibold text-dark-green">Supporting Staff</h1>
 
                         <ul className="mt-4">
                             {items.map((item) => (
@@ -235,7 +244,7 @@ export default function Profile() {
                                         onClick={() =>
                                             dispatch(
                                                 modelActions.show({
-                                                    name: modelNames.REMOVE_ACADEMIX_STAFF
+                                                    name: modelNames.REMOVE_ACADEMIC_STAFF
                                                 })
                                             )
                                         }

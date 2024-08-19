@@ -17,7 +17,7 @@ export default function SubjectQuiz() {
             <section className="flex items-center justify-end gap-5 pr-5">
                 <div className="flex justify-end flex-row gap-2">
                     <div className="flex gap-2">
-                        <Input placeholder="Search" />
+                        <Input className="bg-white" placeholder="Search" />
                     </div>
                     {/* <Button
                         onClick={() =>

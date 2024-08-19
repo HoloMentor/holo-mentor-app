@@ -11,12 +11,8 @@ export default function Classes() {
             subject: 'Physics'
         },
         {
-            name: '2024-AL-Revision',
-            subject: 'Physics'
-        },
-        {
-            name: '2024-AL-Revision',
-            subject: 'Physics'
+            name: 'Lyceum College',
+            town: 'Negombo'
         }
     ];
 

@@ -37,53 +37,6 @@ export default function Quizes() {
             class: {
                 image: (
                     <img
-                        src="https://picsum.photos/400"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Senura Nawamina Kalubovila'
-            },
-
-            tier: 'tier 1',
-            gender: 'male',
-            status: 'Reviewed'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/400"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Senura Nawamina Kalubovila'
-            },
-
-            tier: 'tier 1',
-            gender: 'male',
-            status: 'Pending'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/401"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Senura Nawamina Kalubovila'
-            },
-            tier: 'Tier 1',
-            gender: 'male',
-            status: 'Pending'
-        },
-        {
-            class: {
-                image: (
-                    <img
                         src="https://picsum.photos/402"
                         alt="avatar"
                         className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
@@ -140,7 +93,6 @@ export default function Quizes() {
             gender: 'male',
             status: 'Reviewed'
         }
-        
     ];
 
     const tableColumns: TableColumn[] = [
@@ -151,7 +103,7 @@ export default function Quizes() {
     ];
 
     const handleRowClick = (rowData: any) => {
-        const currentpath = location.pathname
+        const currentpath = location.pathname;
         navigate(`${currentpath}/profile`);
     };
     return (
@@ -159,7 +111,7 @@ export default function Quizes() {
             <Heading>Students</Heading>
 
             <div className="flex justify-end mr-4 ">
-                <Input placeholder="Search" className="max-w-72" />
+                <Input placeholder="Search" className="max-w-72 bg-white" />
             </div>
             <section className="mt-2">
                 <Table data={tableData} columns={tableColumns} onRowClick={handleRowClick} />
