@@ -16,7 +16,17 @@ interface ModelContainerProps {
 
 const initialValues = {
     firstName: '',
-    lastName: ''
+    lastName: '',
+    topic: '',
+    subTopic: '',
+    question: '',
+    answers: [
+        { index: 0, value: '' },
+        { index: 1, value: '' },
+        { index: 2, value: '' },
+        { index: 3, value: '' },
+        { index: 4, value: '' }
+    ]
 };
 
 const validationSchema = Yup.object().shape({
@@ -30,14 +40,12 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
     };
 
     return (
-        <div className="w-6xl">
-            <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green w-6xl">
+        <div className="max-w-3xl justify-center">
+            <ModalHeader className="flex  flex-col gap-1 text-xl text-dark-green w-6xl">
                 Add New MCQ
             </ModalHeader>
-            <ModalBody>
+            <ModalBody className="max-h-96 overflow-y-auto">
                 <Content>
-                    <SubHeading>Add MCQ Question</SubHeading>
-
                     <Form
                         validationSchema={validationSchema}
                         initialValues={initialValues}
@@ -58,44 +66,49 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
                             />
                         </div>
 
-                        <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1">
+                        <div className="grid grid-cols-1 gap-4 max-lg:grid-cols-1">
                             <FormEditor
-                                className="min-h-52"
+                                className="min-h-52 w-full"
                                 classNames={{
                                     mainWrapper: 'col-span-2'
                                 }}
                                 label="Question"
                                 name="question"
                             />
-                            <div className="flex flex-col gap-2">
-                                <label className="text-sm text-foreground">Answers</label>
-                                <FieldArray
-                                    name="answers"
-                                    render={({ form: { values } }) => {
-                                        return values?.answers?.map((_: any, i: number) => (
-                                            <div key={i} className="flex items-center gap-2">
-                                                <span className="text-xs font-medium text-gray-600">
-                                                    0{i + 1}
-                                                </span>
-                                                <FormInput
-                                                    placeholder={`Answer ${i + 1}`}
-                                                    name={`answers.${i}.value`}
-                                                    classNames={{ mainWrapper: 'w-full' }}
-                                                />
-                                            </div>
-                                        ));
-                                    }}
-                                />
-                            </div>
                         </div>
-
-                        <SubmitButton className="mt-5">Submit Question</SubmitButton>
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm text-foreground">Answers</label>
+                            <FieldArray
+                                name="answers"
+                                render={({ form: { values } }) => {
+                                    return values?.answers?.map((_: any, i: number) => (
+                                        <div key={i} className="flex items-center gap-2">
+                                            <span className="text-xs font-medium text-gray-600">
+                                                0{i + 1}
+                                            </span>
+                                            {/* <FormInput
+                                                placeholder={`Answer ${i + 1}`}
+                                                name={`answers.${i}.value`}
+                                                classNames={{ mainWrapper: 'w-full' }}
+                                            /> */}
+                                            <FormEditor
+                                                className="min-h-20 w-full"
+                                                classNames={{
+                                                    mainWrapper: 'w-full'
+                                                }}
+                                                name={`answers.${i}.value`}
+                                            />
+                                        </div>
+                                    ));
+                                }}
+                            />
+                        </div>
                     </Form>
                 </Content>
             </ModalBody>
             <ModalFooter>
                 <Button type="submit" form="form">
-                    Save
+                    Submit Question
                 </Button>
             </ModalFooter>
         </div>

@@ -42,7 +42,8 @@ export const modelContainers: ModelContainers = {
         model: RemoveStaff
     },
     ADD_MCQ: {
-        model: AddMCQ
+        model: AddMCQ,
+        props: { size: '3xl' }
     },
     ADD_STUDY_PLAN: {
         model: AddStudyPlan
