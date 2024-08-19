@@ -13,7 +13,7 @@ const ClassMaterials = loadable(() => import('@/pages/teacher/classes/materials'
 const StudentList = loadable(() => import('@/pages/teacher/student-list'));
 const Submissions = loadable(() => import('@/pages/teacher/submissions'));
 const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'));
-const SubjectForums = loadable(() => import('@/pages/teacher/classes/forum/'));
+const SubjectForums = loadable(() => import('@/pages/teacher/classes/forum/index'));
 const SubjectForumMCQ = loadable(() => import('@/pages/teacher/classes/forum/mcq'));
 const SubjectForumEssay = loadable(() => import('@/pages/teacher/classes/forum/essay'));
 const SubjectForum = loadable(() => import('@/pages/teacher/classes/forum/question'));
@@ -51,7 +51,6 @@ export default function TeacherRoutes() {
 
                 <Route path="profile" element={<Profile />} />
                 <Route path="notifications" element={<Notifications />} />
-                {/* <Route path=":institute/:year/*" element={<ClassMaterials />}></Route> */}
             </Route>
         </Routes>
     );

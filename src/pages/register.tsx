@@ -22,13 +22,13 @@ const validationSchema = Yup.object().shape({
         .required('Confirm Password is required')
 });
 
-export default function Login() {
+export default function Register() {
     const onSubmit = (values: any) => {
         console.log(values);
     };
 
     return (
-        <div className="relative grid grid-cols-2 min-h-screen items-center justify-center justify-items-center px-[10%] py-6 max-lg:flex max-lg:flex-col bg-white">
+        <div className="relative grid grid-cols-2  gap-9 min-h-screen items-center justify-center justify-items-center px-[10%] py-6 max-lg:flex max-lg:flex-col bg-white">
             <div className="absolute bottom-0 right-0 overflow-hidden w-full h-full transform scale-x-[-1] scale-y-[-1] z-[0]">
                 <div className="max-w-[800px] max-h-[800px] h-[80vw] w-[80vw] absolute top-[-200px] left-[-150px] bg-[#F9F9F9] rounded-full min-w-[400px] min-h-[400px]"></div>
             </div>
@@ -62,7 +62,12 @@ export default function Login() {
                                 />
                             </div>
                         </div>
-                        <FormInput name="email" placeholder="Email" label="Email" required />
+                        <FormInput
+                            name="email"
+                            placeholder="example@example.com"
+                            label="Email"
+                            required
+                        />
 
                         <FormInput
                             name="password"

@@ -9,7 +9,7 @@ const NotificationsPage = () => {
             mainTopic: 'Main Topic 1',
             issuedBy: 'Issued By 1',
             notificationBody:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit.'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit. ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit.'
         },
         {
             id: 2,
@@ -23,21 +23,14 @@ const NotificationsPage = () => {
             mainTopic: 'Main Topic 3',
             issuedBy: 'Issued By 3',
             notificationBody:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit.'
+                'Lorem ipsum dolor sit amet,  consectetur adipiscing elit. Praesentium aliquam dolore velit. adipiscing elit. Praesentium aliquam dolore velit.'
         },
         {
             id: 4,
             mainTopic: 'Main Topic 4',
             issuedBy: 'Issued By 4',
             notificationBody:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit.'
-        },
-        {
-            id: 5,
-            mainTopic: 'Main Topic 5',
-            issuedBy: 'Issued By 5',
-            notificationBody:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit.'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit. ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit. ipsum dolor sit amet, consectetur adipiscing elit. Praesentium aliquam dolore velit.'
         }
     ]);
 

@@ -1,17 +1,14 @@
 import Heading from '@/components/headings/main';
 import LineChart from './chart-teacher-view.tsx';
 import Table from '@/components/table';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function studentProfileDetails() {
-
-    
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     const renderClass = ({ data }: CustomTableCellData) => {
-     
-        
-         
         return (
             <div className="flex flex-col gap-1">
                 <span className="font-semibold text-dark-green">{data.class.name}</span>
@@ -22,7 +19,7 @@ export default function studentProfileDetails() {
     const tableData = [
         {
             class: {
-                name: 'Quize 1',
+                name: 'Quiz 1',
                 date: '2024-07-28'
             },
             results: '8/10'
@@ -30,7 +27,7 @@ export default function studentProfileDetails() {
     ];
 
     const tableColumns: TableColumn[] = [
-        { name: 'Quize', value: { render: renderClass } },
+        { name: 'Quiz', value: { render: renderClass } },
         { name: 'Results', value: 'results' }
     ];
 
@@ -38,10 +35,12 @@ export default function studentProfileDetails() {
         <div>
             <Heading>Students</Heading>
             <div className="flex gap-2 px-8 mt-4 bg-white rounded-md">
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50" >
+                <p className="p-4 mx-1 border-b-3 border-[#489F2D] font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50">
                     Details
                 </p>
-                <p className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50" onClick={() => navigate(`/student/submissions`)}>
+                <p
+                    className="p-4 mx-1 font-medium cursor-pointer hover:border-b-4 hover:border-green-900 hover:scale-95 hover:bg-slate-50"
+                    onClick={() => navigate(currentPath.replace('/profile', '/submissions'))}>
                     Submissions
                 </p>
             </div>
@@ -55,7 +54,7 @@ export default function studentProfileDetails() {
                                     alt="Avatar"
                                     className="w-24 h-24 mb-4 rounded-full"
                                 />
-                                <h1 className="text-2xl font-semibold">Saliya Bandara</h1>
+                                <h1 className="text-2xl font-semibold">Jhon Blake</h1>
                                 <span className="text-sm text-neutral-500">Student</span>
                             </div>
                         </div>
@@ -83,7 +82,7 @@ export default function studentProfileDetails() {
                                     </div>
                                     <span>
                                         <a href="mailto:saliya@gmail.com" className="text-black">
-                                            saliya@gmail.com
+                                            jhon@gmail.com
                                         </a>
                                     </span>
                                 </li>

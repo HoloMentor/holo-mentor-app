@@ -20,7 +20,7 @@ export default function FormAutoComplete({
 
     return (
         <div className="flex flex-col gap-1">
-            <AutoComplete onSelectionChange={onChange} {...props} value={field.value} />
+            <AutoComplete onSelectionChange={onChange} {...props} selectedKey={field.value} />
             <ErrorMessage className="text-xs text-red-500" name={name} component="p" />
         </div>
     );

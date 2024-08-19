@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import Pagination from './pagination';
 
 export default function Table({
@@ -6,7 +7,7 @@ export default function Table({
     data = [],
     pagination = { enable: false, page: 0, limit: 10, pages: 1 },
     name = 'table',
-    onRowClick,
+    onRowClick
 }: TableProps) {
     const getAlignment = (length: number, i: number) => {
         switch (i) {
@@ -21,6 +22,13 @@ export default function Table({
         }
     };
 
+    const getCellValue = useCallback(
+        (data: any = {}, value: string) => {
+            return value.split('.').reduce((acc, key) => acc && acc[key], data) || '-';
+        },
+        [data]
+    );
+
     return (
         <div className="border rounded-lg border-border">
             <div className="overflow-x-auto overflow-y-hidden rounded-t-lg">
@@ -30,8 +38,8 @@ export default function Table({
                             {columns.map((_, i) => {
                                 return (
                                     <th
-                                        align={getAlignment(columns.length, i)}
                                         key={_?.key || `${name}-head-${i}`}
+                                        align={getAlignment(columns.length, i)}
                                         className="px-4 py-4 font-semibold whitespace-nowrap">
                                         {_.name}
                                     </th>
@@ -42,13 +50,18 @@ export default function Table({
 
                     <tbody className="border-t-2 border-t-light-border">
                         {data.length === 0 ? (
-                            <tr className="block px-4 py-2">No records.</tr>
+                            <tr className="block px-4 py-2">
+                                <td>No records.</td>
+                            </tr>
                         ) : (
                             data.map((_data, i) => {
                                 return (
-                                    <tr key={`${name}-row-${i}`}
-                                    onClick={onRowClick ? () => onRowClick(_data, i) : undefined}
-                                    className={onRowClick ? 'cursor-pointer' : ''}>
+                                    <tr
+                                        key={`${name}-row-${i}`}
+                                        onClick={
+                                            onRowClick ? () => onRowClick(_data, i) : undefined
+                                        }
+                                        className={onRowClick ? 'cursor-pointer' : ''}>
                                         {columns?.map((_, j) => {
                                             const { value, props } = _;
 
@@ -59,7 +72,7 @@ export default function Table({
                                                     className="px-4 py-2 font-normal text-gray-900 whitespace-nowrap border-b-1"
                                                     {...props}>
                                                     {typeof value === 'string' ? (
-                                                        _data[value]
+                                                        <span>{getCellValue(_data, value)}</span>
                                                     ) : (
                                                         <value.render
                                                             rowIndex={i}

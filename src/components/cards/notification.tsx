@@ -14,7 +14,7 @@ const Notification: React.FC<NotificationCardProps> = ({
     onClose
 }) => {
     return (
-        <div className="relative bg-white rounded-lg flex flex-row gap-8 w-full h-fit items-center justify-start shadow-md sm:w-full cursor-pointer p-2 border-l-4 border-[#489F2D]">
+        <div className="relative bg-white rounded-lg flex flex-row gap-8 w-full h-fit items-center justify-start shadow-md sm:w-full p-2 border-l-4 border-[#489F2D]">
             <button
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
                 onClick={onClose}>

@@ -3,9 +3,10 @@ import Table from '@/components/table';
 import Select, { SelectValue } from '@/components/select';
 import Input from '@/components/input';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Teachers() {
-    const [filterValue, setFilterValue] = useState<SelectValue>('top');
+    const [filterValue, setFilterValue] = useState<SelectValue>('all');
 
     const renderTeacher = ({ data }: CustomTableCellData) => {
         return (
@@ -15,45 +16,51 @@ function Teachers() {
                     alt="avatar"
                     className="relative inline-block h-8 w-8 !rounded-full  object-cover object-center border-2 border-dark-green"
                 />
-                <span className="text-left ml-5 mt-2">{data.teacher.name}</span>
+                <Link to={`/teachers/${data.id}`}>
+                    <span className="text-left ml-5 mt-2">{data.teacher.name}</span>
+                </Link>
             </div>
         );
     };
 
     const tableData = [
         {
+            id: 1,
             classes: '10',
             subject: 'Chemistry',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Donall Samart'
             },
             type: 'A/L'
         },
         {
+            id: 2,
             classes: '10',
             subject: 'Physics',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Reuven Presdie'
             },
             type: 'A/L'
         },
         {
+            id: 3,
             classes: '10',
             subject: 'Maths',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Irwin Havvock'
             },
             type: 'O/L'
         },
         {
+            id: 4,
             classes: '10',
             subject: 'Science',
             teacher: {
                 pnglink: 'https://picsum.photos/400',
-                name: 'Senaka Batagoda'
+                name: 'Bear Kestin'
             },
             type: 'O/L'
         }
@@ -68,8 +75,8 @@ function Teachers() {
 
     const filterOptions = [
         {
-            value: 'Type',
-            label: 'Type'
+            value: 'all',
+            label: 'All'
         }
     ];
 
@@ -85,7 +92,7 @@ function Teachers() {
                             value={filterValue}
                             onChange={setFilterValue}
                         />
-                        <Input className="max-w-36" placeholder="Search" />
+                        <Input className="max-w-96 w-full" placeholder="Search" />
                     </div>
                     <Table data={tableData} columns={tableColumns} />
                 </div>

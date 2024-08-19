@@ -1,4 +1,9 @@
+import { IRootState } from '@/redux';
+import { useSelector } from 'react-redux';
+
 export default function Navbar() {
+    const { user } = useSelector((state: IRootState) => state.user);
+
     return (
         <div className="flex items-center justify-end w-full h-16 gap-8 px-5 py-2 bg-white rounded-es-lg">
             <div className="relative">
@@ -19,7 +24,9 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center gap-4 cursor-pointer">
-                <span className="font-medium">Senura Edmons</span>
+                <span className="font-medium">
+                    {user.firstName} {user.lastName}
+                </span>
                 <img
                     src="https://picsum.photos/400"
                     alt="avatar"

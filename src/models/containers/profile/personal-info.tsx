@@ -4,21 +4,16 @@ import FormInput from '@/components/form/input';
 import FormAutoComplete from '@/components/form/autocomplete';
 import { FormikValues } from 'formik';
 import * as Yup from 'yup';
-import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
+import { AutocompleteItem, Avatar, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
+import { useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
 
 const initialValues = {
     firstName: '',
-    lastName: ''
+    lastName: '',
+    countryCode: '',
+    contactNumber: ''
 };
-
-const countryOptions = [
-    { value: 'Sri Lanka', label: 'Sri Lanka' },
-    { value: 'USA', label: 'USA' },
-    { value: 'Canada', label: 'Canada' },
-    { value: 'India', label: 'India' },
-    { value: 'Australia', label: 'Australia' },
-    { value: 'UK', label: 'UK' }
-];
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -28,6 +23,40 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
+    const [telCodes, setTelCodes] = useState([]);
+    const [countries, setCountries] = useState([]);
+
+    const fetchTelCodes = useMemo(
+        () => async () => {
+            const res = await axios.get(`${window.location.origin}/assets/country-codes.json`);
+            let telCodes = res.data.map((_: { name: string; dial_code: string; code: string }) => {
+                return {
+                    label: _.dial_code,
+                    key: `tel-${_.code}`,
+                    value: _.dial_code
+                };
+            });
+
+            let countries = res.data.map((_: { name: string; dial_code: string; code: string }) => {
+                return {
+                    label: _.name,
+                    key: `country-${_.code}`,
+                    value: _.name
+                };
+            });
+
+            setCountries(countries);
+            setTelCodes(telCodes);
+
+            return true;
+        },
+        []
+    );
+
+    useEffect(() => {
+        fetchTelCodes();
+    }, [fetchTelCodes]);
+
     const onSubmit = (v: FormikValues) => {
         console.log(v);
     };
@@ -48,12 +77,20 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
                             name="country"
                             label="Country *"
                             placeholder="Select Country"
-                            defaultItems={countryOptions}
+                            isLoading={countries.length === 0}
+                            defaultItems={countries}
                         />
                         <label className="text-sm">Contact Number *</label>
+
                         <div className="grid grid-cols-7 gap-4">
                             <div className="col-span-2">
-                                <FormInput name="countryCode" placeholder="+94" type="text" />
+                                {/* <FormInput name="countryCode" placeholder="+94" type="text" /> */}
+                                <FormAutoComplete
+                                    name="countryCode"
+                                    placeholder="+94"
+                                    isLoading={telCodes.length === 0}
+                                    defaultItems={telCodes}
+                                />
                             </div>
                             <div className="col-span-5">
                                 <FormInput

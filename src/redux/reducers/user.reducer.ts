@@ -1,12 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import config from '@/config';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { deleteCookie, getCookie } from 'cookies-next';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import userServices from '../services/user.service';
+import authServices from '../services/auth.service';
 
 interface userProps {
-    id: string;
+    userInstituteId?: string;
+    instituteId?: string;
+    userId: string;
     email: string;
     firstName: string;
     lastName: string;
-    role: string;
+    userRole: string;
+    instituteRole?: string;
     [prop: string]: string | boolean | number;
 }
 
@@ -26,23 +34,36 @@ const initState: userStateProps = {
     loading: true,
     logged: logged,
     user: {
-        id: '',
+        userInstituteId: '',
+        instituteId: '',
+        userId: '',
         email: '',
         firstName: '',
         lastName: '',
-        role: ''
+        userRole: '',
+        instituteRole: ''
     }
 };
 
-/* export const fetchUser = createAsyncThunk('user/me', async (_, { dispatch }) => {
-    if (!sessionStorage.getItem('token')) return null;
+export const authorizeUser = createAsyncThunk('auth/me', async (_, { dispatch }) => {
+    const token = getCookie('token');
 
-    const response = await axios.get(`${config.api_url}users/me`, {
-        withCredentials: true
-    });
+    if (!token) return null;
+    const data: any = jwtDecode(token);
 
-    return response.data.data;
-}); */
+    const response = await dispatch(authServices.endpoints.me.initiate({ id: data.sub })).unwrap();
+
+    return {
+        userId: response.data?.user_id,
+        instituteId: response.data?.institute_id,
+        userInstituteId: response.data?.user_institute_id,
+        email: response.data?.email,
+        firstName: response.data?.first_name,
+        lastName: response.data?.last_name,
+        userRole: response.data?.user_role,
+        instituteRole: response.data?.institute_role
+    };
+});
 
 const userSlice = createSlice({
     name: 'user',
@@ -60,28 +81,33 @@ const userSlice = createSlice({
 
             state.logged = false;
             state.user = {
-                id: '',
+                userInstituteId: '',
+                instituteId: '',
+                userId: '',
                 email: '',
                 firstName: '',
                 lastName: '',
-                role: ''
+                userRole: '',
+                instituteRole: ''
             };
 
             deleteCookie('token');
+
+            window.location.assign('/');
         }
-    }
-    /*  extraReducers: (builder) => {
-        builder.addCase(fetchUser.pending, (state, action) => {
+    },
+    extraReducers: (builder) => {
+        builder.addCase(authorizeUser.pending, (state, action) => {
             state.loading = true;
         });
-        builder.addCase(fetchUser.fulfilled, (state, action) => {
+        builder.addCase(authorizeUser.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload;
         });
-        builder.addCase(fetchUser.rejected, (state, action) => {
+        builder.addCase(authorizeUser.rejected, (state, action) => {
             state.loading = false;
         });
-    } */
+    }
 });
 
 export const userActions = userSlice.actions;

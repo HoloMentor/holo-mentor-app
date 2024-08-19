@@ -45,5 +45,5 @@ interface TableProps {
     columns: TableColumn[];
     data: TableData[];
     pagination?: PaginationProps;
-    onRowClick?:(rowData:any, rowIndex:number) => void;
+    onRowClick?: (rowData: any, rowIndex: number) => void;
 }
