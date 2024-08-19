@@ -1,79 +1,107 @@
-import Button from '@/components/button';
 import Form from '@/components/form';
+import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
-import Select, { SelectValue } from '@/components/select';
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
+import fileServices from '@/redux/services/file.service';
+import userServices from '@/redux/services/user.service';
+import { Avatar, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
+import { ChangeEvent, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
-import { useState, ChangeEvent } from 'react';
-
-interface ModelContainerProps {
-    onClose: () => void;
-}
-
-const initialValues = {
-    firstName: '',
-    lastName: ''
-};
 
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required')
 });
 
-const roleOptions = [
-    {
-        value: 'student',
-        label: 'Student'
-    },
-    {
-        value: 'teacher',
-        label: 'Teacher'
-    }
-];
+export default function ProfileUserInfo({}: ModelContainerProps) {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+    const [profileImage, setProfileImage] = useState<string>(user.image || '');
 
-export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
-    const [roleValue, setRoleValue] = useState<SelectValue>('student');
-    const [profileImage, setProfileImage] = useState<string>('https://picsum.photos/400');
+    const [upload, { isError: isUploadError, error: uploadError, isLoading: isUploading }] =
+        fileServices.useUploadMutation();
+    useErrorHandler(isUploadError, uploadError);
 
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const [update, { isError: isUpdateError, error: updateError, isLoading: isUpdating }] =
+        userServices.useUpdateUserMutation();
+    useErrorHandler(isUpdateError, updateError);
+
+    const initialValues = useMemo(() => {
+        const template = {
+            firstName: '',
+            lastName: ''
+        };
+
+        if (user.firstName) template.firstName = user.firstName;
+        if (user.lastName) template.lastName = user.lastName;
+
+        return template;
+    }, [user]);
+
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                if (event.target) {
-                    setProfileImage(event.target.result as string);
-                }
-            };
-            reader.readAsDataURL(e.target.files[0]);
+            const form = new FormData();
+            const file = e.target.files[0];
+            const fileName = file.name;
+
+            form.append('fileName', fileName);
+            form.append('file', file);
+            const result = await upload(form);
+
+            if (result.data?.data?.url) {
+                setProfileImage(result.data.data.url);
+            }
         }
     };
 
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+    const onSubmit = async (values: FormikValues) => {
+        const result = await update({
+            id: user.userId,
+            image: profileImage,
+            ...values
+        });
+
+        if (result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            dispatch(modelActions.hide());
+        }
     };
 
     return (
-        <div>
+        <Form
+            validationSchema={validationSchema}
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            className="flex flex-col gap-4">
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
-                Personal Information
+                User Information
             </ModalHeader>
 
-            <ModalBody>
-                <Form
-                    validationSchema={validationSchema}
-                    initialValues={initialValues}
-                    onSubmit={onSubmit}
-                    className="flex flex-col gap-4">
-                    <div className="flex justify-center mt-4">
-                        <div className="relative">
-                            <img
-                                src={profileImage}
-                                alt="Profile"
-                                className="w-28 h-28 rounded-full object-cover"
-                            />
-                            <label
-                                htmlFor="file-input"
-                                className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full cursor-pointer">
+            <ModalBody className="flex flex-col gap-4">
+                <div className="flex justify-center mt-4">
+                    <div className="relative">
+                        <Avatar
+                            src={profileImage}
+                            alt="Profile"
+                            className="w-28 h-28 rounded-full object-cover"
+                        />
+                        <label
+                            htmlFor="file-input"
+                            className={`absolute inset-0 flex justify-center items-center rounded-full cursor-pointer ${
+                                !profileImage ? 'bg-black bg-opacity-50' : ''
+                            }`}>
+                            {!profileImage && (
                                 <svg
                                     width="39"
                                     height="35"
@@ -92,35 +120,36 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
                                         strokeLinecap="round"
                                     />
                                 </svg>
-                            </label>
-                            <input
-                                id="file-input"
-                                type="file"
-                                accept="image/png, image/jpeg"
-                                className="hidden"
-                                onChange={handleImageChange}
-                            />
-                        </div>
+                            )}
+                        </label>
+                        <input
+                            id="file-input"
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
                     </div>
-                    <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
-                        <FormInput label="First Name *" placeholder="First Name" name="firstName" />
-                        <FormInput label="Last Name *" placeholder="Last Name" name="lastName" />
-                        {/* <Select
-                            label="Role"
-                            options={roleOptions}
-                            value={roleValue}
-                            onChange={setRoleValue}
-                            className="border-[#0000001A] border-2 rounded-md"
-                        /> */}
-                    </div>
-                </Form>
+                </div>
+                <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
+                    <FormInput
+                        label="First Name"
+                        placeholder="First Name"
+                        name="firstName"
+                        isRequired
+                    />
+                    <FormInput
+                        label="Last Name"
+                        placeholder="Last Name"
+                        name="lastName"
+                        isRequired
+                    />
+                </div>
             </ModalBody>
 
             <ModalFooter>
-                <Button type="submit" form="form">
-                    Save
-                </Button>
+                <SubmitButton isLoading={isUpdating}>Save</SubmitButton>
             </ModalFooter>
-        </div>
+        </Form>
     );
 }

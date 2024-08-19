@@ -1,9 +1,6 @@
-import config from '@/config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { deleteCookie, getCookie } from 'cookies-next';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import userServices from '../services/user.service';
 import authServices from '../services/auth.service';
 
 interface userProps {
@@ -15,6 +12,7 @@ interface userProps {
     lastName: string;
     userRole: string;
     instituteRole?: string;
+    image?: string;
     [prop: string]: string | boolean | number;
 }
 
@@ -41,7 +39,8 @@ const initState: userStateProps = {
         firstName: '',
         lastName: '',
         userRole: '',
-        instituteRole: ''
+        instituteRole: '',
+        image: ''
     }
 };
 
@@ -61,7 +60,8 @@ export const authorizeUser = createAsyncThunk('auth/me', async (_, { dispatch })
         firstName: response.data?.first_name,
         lastName: response.data?.last_name,
         userRole: response.data?.user_role,
-        instituteRole: response.data?.institute_role
+        instituteRole: response.data?.institute_role,
+        image: response.data?.image
     };
 });
 
@@ -88,7 +88,8 @@ const userSlice = createSlice({
                 firstName: '',
                 lastName: '',
                 userRole: '',
-                instituteRole: ''
+                instituteRole: '',
+                image: ''
             };
 
             deleteCookie('token');

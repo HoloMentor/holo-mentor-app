@@ -72,15 +72,22 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
                     onSubmit={onSubmit}
                     className="flex flex-col gap-4">
                     <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
-                        <FormInput label="Email *" placeholder="Email" name="email" />
+                        <FormInput
+                            label="Email"
+                            placeholder="Email"
+                            name="email"
+                            readOnly
+                            isRequired
+                        />
                         <FormAutoComplete
                             name="country"
-                            label="Country *"
+                            label="Country"
                             placeholder="Select Country"
                             isLoading={countries.length === 0}
                             defaultItems={countries}
+                            isRequired
                         />
-                        <label className="text-sm">Contact Number *</label>
+                        <label className="text-sm">Contact Number</label>
 
                         <div className="grid grid-cols-7 gap-4">
                             <div className="col-span-2">
@@ -90,6 +97,7 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
                                     placeholder="+94"
                                     isLoading={telCodes.length === 0}
                                     defaultItems={telCodes}
+                                    isRequired
                                 />
                             </div>
                             <div className="col-span-5">
@@ -97,6 +105,7 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
                                     placeholder="Contact Number"
                                     name="contactNumber"
                                     type="number"
+                                    isRequired
                                 />
                             </div>
                         </div>

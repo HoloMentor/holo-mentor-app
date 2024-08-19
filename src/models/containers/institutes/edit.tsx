@@ -100,21 +100,23 @@ export default function EditInstitute({ data }: ModelContainerProps) {
                 className="flex flex-col gap-4">
                 <ModalBody className="flex flex-col gap-4">
                     <p className="font-semibold">Institute Details</p>
-                    <FormInput label="Name" placeholder="Name" name="name" />
-                    <FormInput label="City" placeholder="City" name="city" />
-                    <FormInput label="Address" placeholder="Address" name="address" />
+                    <FormInput label="Name" placeholder="Name" name="name" isRequired />
+                    <FormInput label="City" placeholder="City" name="city" isRequired />
+                    <FormInput label="Address" placeholder="Address" name="address" isRequired />
 
                     <div className="grid grid-cols-2 gap-3">
                         <FormInput
                             label="Registration Number"
                             placeholder="Registration Number"
                             name="registrationNumber"
+                            isRequired
                         />
                         <FormInput
                             label="Established Date"
                             placeholder="Established Date"
                             name="establishedDate"
                             type="date"
+                            isRequired
                         />
                     </div>
                 </ModalBody>

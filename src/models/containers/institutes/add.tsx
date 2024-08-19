@@ -67,34 +67,47 @@ export default function AddInstitute({}: ModelContainerProps) {
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
                 <p className="font-semibold">Institute Details</p>
-                <FormInput label="Name" placeholder="Name" name="name" />
-                <FormInput label="City" placeholder="City" name="city" />
-                <FormInput label="Address" placeholder="Address" name="address" />
+                <FormInput label="Name" placeholder="Name" name="name" isRequired />
+                <FormInput label="City" placeholder="City" name="city" isRequired />
+                <FormInput label="Address" placeholder="Address" name="address" isRequired />
 
                 <div className="grid grid-cols-2 gap-3">
                     <FormInput
                         label="Registration Number"
                         placeholder="Registration Number"
                         name="registrationNumber"
+                        isRequired
                     />
                     <FormInput
                         label="Established Date"
                         placeholder="Established Date"
                         name="establishedDate"
                         type="date"
+                        isRequired
                     />
                 </div>
 
                 <p className="font-semibold">Admin Details</p>
                 <div className="grid grid-cols-2 gap-3">
-                    <FormInput label="First Name" placeholder="First Name" name="adminFirstName" />
-                    <FormInput label="Last Name" placeholder="Last Name" name="adminLastName" />
+                    <FormInput
+                        label="First Name"
+                        placeholder="First Name"
+                        name="adminFirstName"
+                        isRequired
+                    />
+                    <FormInput
+                        label="Last Name"
+                        placeholder="Last Name"
+                        name="adminLastName"
+                        isRequired
+                    />
                 </div>
                 <FormInput
                     label="Admin Email"
                     placeholder="Admin Email"
                     name="adminEmail"
                     type="email"
+                    isRequired
                 />
             </ModalBody>
             <ModalFooter>
