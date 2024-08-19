@@ -39,7 +39,7 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
     return (
         <div className="max-w-3xl justify-center">
             <ModalHeader className="flex  flex-col gap-1 text-xl text-dark-green w-6xl">
-                Add New MCQ
+                Edit MCQ
             </ModalHeader>
             <ModalBody className="max-h-96 overflow-y-auto">
                 <Content>
@@ -105,7 +105,7 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
             </ModalBody>
             <ModalFooter>
                 <Button type="submit" form="form">
-                    Submit Question
+                    Update Question
                 </Button>
             </ModalFooter>
         </div>
