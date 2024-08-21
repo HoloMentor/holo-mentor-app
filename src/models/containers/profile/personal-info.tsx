@@ -62,7 +62,7 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
     };
     return (
         <div>
-            <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
+            <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green">
                 Personal Information
             </ModalHeader>
             <ModalBody>
