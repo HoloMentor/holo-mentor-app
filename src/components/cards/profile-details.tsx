@@ -1,9 +1,29 @@
+import useErrorHandler from '@/hooks/error-handler';
 import { modelNames } from '@/models';
+import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
-import { useDispatch } from 'react-redux';
+import userServices from '@/redux/services/user.service';
+import { Skeleton } from '@nextui-org/react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProfileDetailsCard() {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const {
+        data: userData,
+        isError: isUserError,
+        error: userError,
+        isLoading: isUserLoading
+    } = userServices.useGetQuery(
+        {
+            id: user.userId
+        },
+        {
+            skip: !user.userId
+        }
+    );
+    useErrorHandler(isUserError, userError);
 
     return (
         <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
@@ -50,11 +70,13 @@ export default function ProfileDetailsCard() {
                             />
                         </svg>
                     </div>
-                    <span>
-                        <a href="mailto:saliya@gmail.com" className="text-black">
-                            saliya@gmail.com
-                        </a>
-                    </span>
+                    <Skeleton className="rounded-lg" isLoaded={!isUserLoading}>
+                        <span>
+                            <a href="mailto:saliya@gmail.com" className="text-black">
+                                {userData?.data?.email || '-'}
+                            </a>
+                        </span>
+                    </Skeleton>
                 </li>
                 <li className="flex gap-4 mb-4 text-sm items-center">
                     <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
@@ -72,11 +94,20 @@ export default function ProfileDetailsCard() {
                             />
                         </svg>
                     </div>
-                    <span>
-                        <a href="tel:+94771234567" className="text-black">
-                            077 123 4567
-                        </a>
-                    </span>
+                    <Skeleton className="rounded-lg" isLoaded={!isUserLoading}>
+                        <span>
+                            <a
+                                href={`tel:${
+                                    userData?.data?.contactNumber
+                                        ? userData?.data?.countryCode +
+                                          userData?.data?.contactNumber
+                                        : '#'
+                                }`}
+                                className="text-black">
+                                {userData?.data?.contactNumber || '-'}
+                            </a>
+                        </span>
+                    </Skeleton>
                 </li>
                 <li className="flex gap-4 mb-4 text-sm items-center">
                     <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
@@ -99,7 +130,9 @@ export default function ProfileDetailsCard() {
                             />
                         </svg>
                     </div>
-                    <span>Sri Lanka</span>
+                    <Skeleton className="rounded-lg" isLoaded={!isUserLoading}>
+                        <span>{userData?.data?.country || '-'}</span>
+                    </Skeleton>
                 </li>
             </ul>
         </div>

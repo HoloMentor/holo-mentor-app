@@ -14,6 +14,13 @@ const userServices = createApi({
             }),
             invalidatesTags: ['User']
         }),
+        get: builder.query({
+            query: ({ id }) => ({
+                method: 'GET',
+                url: `/users/${id}`
+            }),
+            providesTags: ['User']
+        }),
         updateUser: builder.mutation({
             query: ({ id, ...props }) => ({
                 method: 'PATCH',
