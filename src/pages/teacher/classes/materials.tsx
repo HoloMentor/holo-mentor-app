@@ -36,7 +36,7 @@ export default function Materials() {
                             onClick={() =>
                                 dispatch(
                                     modelActions.show({
-                                        name: modelNames.ADD_STUDY_PLAN
+                                        name: modelNames.ADD_MARKS
                                     })
                                 )}>
                             Upload Marks

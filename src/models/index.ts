@@ -14,7 +14,8 @@ import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
 import AddMaterials from './containers/teacher/add-material';
 import AddNewTopic from './containers/teacher/add-new-topic';
-import AddNewSubTopic from './containers/teacher/add-new-stopic'
+import AddNewSubTopic from './containers/teacher/add-new-stopic';
+import AddStudyPlan from './containers/teacher/add-study-plan';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -48,7 +49,7 @@ export const modelContainers: ModelContainers = {
         model: AddMCQ
     },
     ADD_STUDY_PLAN: {
-        model: AddMarks,
+        model: AddStudyPlan,
         props: { size: '2xl' }
     },
     ADD_CLASS: {
@@ -77,6 +78,10 @@ export const modelContainers: ModelContainers = {
     ADD_NEW_SUB_TOPIC:{
         model: AddNewSubTopic,
         props:{size:'2xl'}
+    },
+    ADD_MARKS:{
+        model:AddMarks,
+        props:{size:'2xl'}
     }
 };
 
@@ -97,5 +102,6 @@ export const modelNames = {
     EDIT_INSTITUTE: 'EDIT_INSTITUTE',
     ADD_MATERIALS: 'ADD_MATERIALS',
     ADD_NEW_TOPIC: 'ADD_NEW_TOPIC',
-    ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC'
+    ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC',
+    ADD_MARKS:'ADD_MARKS'
 };
