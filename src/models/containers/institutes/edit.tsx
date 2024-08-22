@@ -87,40 +87,45 @@ export default function EditInstitute({ data }: ModelContainerProps) {
     };
 
     return (
-        <Form
-            enableReinitialize
-            validationSchema={validationSchema}
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
                 Edit Institute
             </ModalHeader>
-            <ModalBody className="flex flex-col gap-4">
-                <p className="font-semibold">Institute Details</p>
-                <FormInput label="Name" placeholder="Name" name="name" />
-                <FormInput label="City" placeholder="City" name="city" />
-                <FormInput label="Address" placeholder="Address" name="address" />
+            <Form
+                isLoading={isInstituteLoading}
+                enableReinitialize
+                validationSchema={validationSchema}
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                className="flex flex-col gap-4">
+                <ModalBody className="flex flex-col gap-4">
+                    <p className="font-semibold">Institute Details</p>
+                    <FormInput label="Name" placeholder="Name" name="name" isRequired />
+                    <FormInput label="City" placeholder="City" name="city" isRequired />
+                    <FormInput label="Address" placeholder="Address" name="address" isRequired />
 
-                <div className="grid grid-cols-2 gap-3">
-                    <FormInput
-                        label="Registration Number"
-                        placeholder="Registration Number"
-                        name="registrationNumber"
-                    />
-                    <FormInput
-                        label="Established Date"
-                        placeholder="Established Date"
-                        name="establishedDate"
-                        type="date"
-                    />
-                </div>
-            </ModalBody>
-            <ModalFooter>
-                <SubmitButton isLoading={isUpdating} type="submit" form="form">
-                    Save
-                </SubmitButton>
-            </ModalFooter>
-        </Form>
+                    <div className="grid grid-cols-2 gap-3">
+                        <FormInput
+                            label="Registration Number"
+                            placeholder="Registration Number"
+                            name="registrationNumber"
+                            isRequired
+                        />
+                        <FormInput
+                            label="Established Date"
+                            placeholder="Established Date"
+                            name="establishedDate"
+                            type="date"
+                            isRequired
+                        />
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+                    <SubmitButton isLoading={isUpdating} type="submit" form="form">
+                        Save
+                    </SubmitButton>
+                </ModalFooter>
+            </Form>
+        </div>
     );
 }

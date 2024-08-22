@@ -1,10 +1,12 @@
 import React from 'react';
-import { Input as NextInput, InputProps as NextInputProps } from '@nextui-org/react';
+import { Input as NextInput, InputProps as NextInputProps, Spinner } from '@nextui-org/react';
 
-export interface InputProps extends NextInputProps {}
+export interface InputProps extends NextInputProps {
+    isLoading?: boolean;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ className, labelPlacement = 'outside', variant = 'bordered', ...props }, ref) => {
+    ({ className, labelPlacement = 'outside', variant = 'bordered', isLoading, ...props }, ref) => {
         const _className = React.useMemo(() => {
             let cl = `block w-full text-md file:cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500`;
 
@@ -12,6 +14,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
             return cl;
         }, [className]);
+
+        if (isLoading) {
+            props.endContent = <Spinner color="success" size="md" />;
+        }
 
         return (
             <NextInput

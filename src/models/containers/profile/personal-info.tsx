@@ -7,13 +7,14 @@ import * as Yup from 'yup';
 import { AutocompleteItem, Avatar, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
-
-const initialValues = {
-    firstName: '',
-    lastName: '',
-    countryCode: '',
-    contactNumber: ''
-};
+import userServices from '@/redux/services/user.service';
+import useErrorHandler from '@/hooks/error-handler';
+import SubmitButton from '@/components/form/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
+import { userActions } from '@/redux/reducers/user.reducer';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
+import { modelActions } from '@/redux/reducers/model.reducer';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -23,8 +24,45 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
     const [telCodes, setTelCodes] = useState([]);
     const [countries, setCountries] = useState([]);
+
+    const {
+        data: userData,
+        isError: isUserError,
+        error: userError,
+        isLoading: isUserLoading
+    } = userServices.useGetQuery(
+        {
+            id: user.userId
+        },
+        {
+            skip: !user.userId
+        }
+    );
+    useErrorHandler(isUserError, userError);
+
+    const initialValues = useMemo(() => {
+        const template = {
+            email: '',
+            country: '',
+            countryCode: '',
+            contactNumber: ''
+        };
+
+        if (userData?.data?.email) template.email = userData.data.email;
+        if (userData?.data?.country) template.country = userData.data.country;
+        if (userData?.data?.countryCode) template.countryCode = userData.data.countryCode;
+        if (userData?.data?.contactNumber) template.contactNumber = userData.data.contactNumber;
+
+        return template;
+    }, [userData]);
+
+    const [update, { isError: isUpdateError, error: updateError, isLoading: isUpdating }] =
+        userServices.useUpdateInfoMutation();
+    useErrorHandler(isUpdateError, updateError);
 
     const fetchTelCodes = useMemo(
         () => async () => {
@@ -57,58 +95,74 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
         fetchTelCodes();
     }, [fetchTelCodes]);
 
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+    const onSubmit = async (values: FormikValues) => {
+        // remove email value from the data set
+        if (values.email) delete values.email;
+        const result = await update({
+            id: user.userId,
+            ...values
+        });
+
+        if (result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            dispatch(modelActions.hide());
+        }
     };
+
     return (
-        <div>
-            <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green">
+         <Form
+            isLoading={isUserLoading}
+            validationSchema={validationSchema}
+            initialValues={initialValues}
+            onSubmit={onSubmit}>
+            <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
                 Personal Information
             </ModalHeader>
-            <ModalBody>
-                <Form
-                    validationSchema={validationSchema}
-                    initialValues={initialValues}
-                    onSubmit={onSubmit}
-                    className="flex flex-col gap-4">
-                    <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
-                        <FormInput label="Email *" placeholder="Email" name="email" />
-                        <FormAutoComplete
-                            name="country"
-                            label="Country *"
-                            placeholder="Select Country"
-                            isLoading={countries.length === 0}
-                            defaultItems={countries}
-                        />
-                        <label className="text-sm">Contact Number *</label>
+            <ModalBody className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
+                    <FormInput label="Email" placeholder="Email" name="email" readOnly isRequired />
+                    <FormAutoComplete
+                        name="country"
+                        label="Country"
+                        placeholder="Select Country"
+                        isLoading={countries.length === 0}
+                        defaultItems={countries}
+                        isRequired
+                    />
+                    <label className="text-sm">Contact Number</label>
 
-                        <div className="grid grid-cols-7 gap-4">
-                            <div className="col-span-2">
-                                {/* <FormInput name="countryCode" placeholder="+94" type="text" /> */}
-                                <FormAutoComplete
-                                    name="countryCode"
-                                    placeholder="+94"
-                                    isLoading={telCodes.length === 0}
-                                    defaultItems={telCodes}
-                                />
-                            </div>
-                            <div className="col-span-5">
-                                <FormInput
-                                    placeholder="Contact Number"
-                                    name="contactNumber"
-                                    type="number"
-                                />
-                            </div>
+                    <div className="grid grid-cols-7 gap-4">
+                        <div className="col-span-2">
+                            {/* <FormInput name="countryCode" placeholder="+94" type="text" /> */}
+                            <FormAutoComplete
+                                name="countryCode"
+                                placeholder="+94"
+                                isLoading={telCodes.length === 0}
+                                defaultItems={telCodes}
+                                isRequired
+                            />
+                        </div>
+                        <div className="col-span-5">
+                            <FormInput
+                                placeholder="Contact Number"
+                                name="contactNumber"
+                                type="number"
+                                isRequired
+                            />
                         </div>
                     </div>
-                </Form>
+                </div>
             </ModalBody>
 
             <ModalFooter>
-                <Button type="submit" form="form">
-                    Save
-                </Button>
+                <SubmitButton form="form">Save</SubmitButton>
             </ModalFooter>
-        </div>
+        </Form>
     );
 }

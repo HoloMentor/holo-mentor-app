@@ -9,17 +9,33 @@ const userServices = createApi({
         authenticate: builder.mutation({
             query: (props) => ({
                 method: 'POST',
-                url: `/user/authenticate`,
+                url: `/users/authenticate`,
                 body: props
             }),
             invalidatesTags: ['User']
         }),
-        all: builder.query({
-            query: ({ org_id, date }) => ({
+        get: builder.query({
+            query: ({ id }) => ({
                 method: 'GET',
-                url: `/dashboard/${org_id}/analytics`,
-                params: { date }
-            })
+                url: `/users/${id}`
+            }),
+            providesTags: ['User']
+        }),
+        updateUser: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/users/update/user/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['User']
+        }),
+        updateInfo: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/users/update/info/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['User']
         })
     })
 });

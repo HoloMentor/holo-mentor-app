@@ -1,4 +1,5 @@
 import { IRootState } from '@/redux';
+import { Avatar } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 
 export default function Navbar() {
@@ -27,8 +28,8 @@ export default function Navbar() {
                 <span className="font-medium">
                     {user.firstName} {user.lastName}
                 </span>
-                <img
-                    src="https://picsum.photos/400"
+                <Avatar
+                    src={user.image}
                     alt="avatar"
                     className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
                 />
