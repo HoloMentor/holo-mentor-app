@@ -116,7 +116,7 @@ export default function ProfilePersonalInfo({ onClose }: ModelContainerProps) {
     };
 
     return (
-        <Form
+         <Form
             isLoading={isUserLoading}
             validationSchema={validationSchema}
             initialValues={initialValues}
