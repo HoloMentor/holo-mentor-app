@@ -28,8 +28,8 @@ export default function Subjects() {
                                             key={`subject-${j}`}
                                             to={`/subjects/${j}`}
                                             className="text-black">
-                                            <div className="w-full relative rounded-md p-5 border border-light-border">
-                                                <span className="font-semibold truncate block max-w-52">
+                                            <div className="relative w-full p-5 border rounded-md border-light-border">
+                                                <span className="block font-semibold truncate max-w-52">
                                                     Physics
                                                 </span>
                                                 <img
