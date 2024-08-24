@@ -4,10 +4,29 @@ import { Button, Popover, PopoverTrigger, PopoverContent } from '@nextui-org/rea
 import { useDispatch } from 'react-redux';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
+import { Tabs, Tab, Card, CardBody, CardHeader } from '@nextui-org/react';
 
 export default function StudyPlan() {
     const [toggleState, setToggleState] = useState<number>(1);
     const dispatch = useDispatch();
+
+    let tabs = [
+        {
+          id: "photos",
+          label: "Photos",
+          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        },
+        {
+          id: "music",
+          label: "Music",
+          content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        },
+        {
+          id: "videos",
+          label: "Videos",
+          content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        }
+      ];
 
     const tiers = [
         {
@@ -54,71 +73,18 @@ export default function StudyPlan() {
             <div className="flex p-4 mr-4 bg-white rounded-md shadow-md">
                 <p className="ml-3 text-3xl font-bold text-dark-green">Study Plan</p>
             </div>
-            <section className="flex flex-col h-full mt-4">
-                <div className="grid grid-cols-5 gap-2 mr-4 rounded-md shadow-custom">
-                    {tiers.map((tier) => (
-                        <button
-                            key={tier.id}
-                            className={buttonClasses(tier.id)}
-                            onClick={() => setToggleState(tier.id)}>
-                            <span className="hidden max-sm:inline">{tier.id}</span>
-                            <span className=" max-sm:hidden">Tier {tier.id}</span>
-                            {toggleState === tier.id && (
-                                <Popover placement="right">
-                                    <PopoverTrigger>
-                                        <img src="/images/Information-circle.png" alt="Info" />
-                                    </PopoverTrigger>
-                                    <PopoverContent>
-                                        <div className="px-1 py-2">
-                                            <div className="font-bold text-small">
-                                                {tier.tierDescription}
-                                            </div>
-                                            <div className="text-tiny">
-                                                Clusters are identified according <br />
-                                                to the results of students
-                                            </div>
-                                        </div>
-                                    </PopoverContent>
-                                </Popover>
-                            )}
-                        </button>
-                    ))}
+            <section className='my-3 mr-3'>
+                <div className="flex flex-col w-full">
+                    <Tabs aria-label="Dynamic tabs" items={tabs}>
+                        {(item) => (
+                            <Tab key={item.id} title={item.label}>
+                                <Card className='py-4 rounded-md'>
+                                    <CardBody >{item.content}</CardBody>
+                                </Card>
+                            </Tab>
+                        )}
+                    </Tabs>
                 </div>
-                <div className="flex px-8 pt-8 pb-5 mr-4 bg-white place-content-between max-sm:flex-col max-sm:space-y-5">
-                    <h1 className="pl-4 text-xl font-semibold text-dark-green">
-                        Current Study Plan
-                    </h1>
-                    <Button
-                        className="text-white bg-dark-green"
-                        onClick={() =>
-                            dispatch(
-                                modelActions.show({
-                                    name: modelNames.ADD_STUDY_PLAN
-                                })
-                            )
-                        }>
-                        Create New Plan
-                    </Button>
-                </div>
-                {tiers.map(
-                    (tier) =>
-                        toggleState === tier.id && (
-                            <div className="grid h-full grid-cols-2 mr-4 overflow-auto bg-white rounded-md min-h-96 max-sm:grid-cols-1">
-                                <div key={tier.id} className="p-4 space-y-10">
-                                    {tier.content.map(
-                                        (contentItem, index) =>
-                                            index % 2 == 0 && <div>{contentItem}</div>
-                                    )}
-                                </div>
-                                <div key={tier.id} className="p-4 space-y-10 ">
-                                    {tier.content.map(
-                                        (contentItem, index) =>
-                                            index % 2 == 1 && <div>{contentItem}</div>
-                                    )}
-                                </div>
-                            </div>
-                        )
-                )}
             </section>
         </section>
     );
