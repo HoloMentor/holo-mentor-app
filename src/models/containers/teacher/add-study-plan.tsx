@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
     lastName: Yup.string().required('Last Name is required')
 });
 
-export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
+export default function AddStudyPlan({ onClose }: ModelContainerProps) {
     const onSubmit = (v: FormikValues) => {
         console.log(v);
     };

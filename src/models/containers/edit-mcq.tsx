@@ -100,6 +100,22 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
                                 }}
                             />
                         </div>
+                        <div>
+                            <div>
+                                <FormAutoComplete
+                                    name="answer"
+                                    label="Correct Answer"
+                                    placeholder="Select Topic"
+                                    defaultItems={[
+                                        { label: 'Answer 01', value: '1' },
+                                        { label: 'Answer 02', value: '2' },
+                                        { label: 'Answer 03', value: '3' },
+                                        { label: 'Answer 04', value: '4' },
+                                        { label: 'Answer 05', value: '5' }
+                                    ]}
+                                />
+                            </div>
+                        </div>
                     </Form>
                 </Content>
             </ModalBody>

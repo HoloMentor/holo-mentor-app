@@ -5,6 +5,7 @@ import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
+import { userActions } from '@/redux/reducers/user.reducer';
 import fileServices from '@/redux/services/file.service';
 import userServices from '@/redux/services/user.service';
 import { Avatar, ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
@@ -67,6 +68,15 @@ export default function ProfileUserInfo({}: ModelContainerProps) {
         });
 
         if (result?.data?.status === 200) {
+            dispatch(
+                userActions.set({
+                    ...user,
+                    image: profileImage,
+                    firstName: values.firstName,
+                    lastName: values.lastName
+                })
+            );
+
             dispatch(
                 notifyActions.open({
                     type: 'success',

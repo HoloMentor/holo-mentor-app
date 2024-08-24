@@ -3,6 +3,7 @@ import { modelNames } from '@/models';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { snakeCaseToTitleCase } from '@/utils';
+import { Avatar } from '@nextui-org/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProfileInfoCard() {
@@ -36,12 +37,8 @@ export default function ProfileInfoCard() {
                 </svg>
             </div>
 
-            <div className="">
-                <img
-                    src="https://picsum.photos/400"
-                    alt="Avatar"
-                    className="w-24 h-24 mb-4 rounded-full"
-                />
+            <div>
+                <Avatar src={user.image} alt="Avatar" className="w-24 h-24 mb-4 rounded-full" />
                 <h1 className="text-2xl font-semibold">
                     {user.firstName} {user.lastName}
                 </h1>

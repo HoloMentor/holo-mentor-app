@@ -5,7 +5,7 @@ import ProfilePersonalInfo from './containers/profile/personal-info';
 import AddStaff from './containers/profile/add-academic-staff';
 import RemoveStaff from './containers/profile/remove-academic-staff';
 import AddMCQ from './containers/add-mcq';
-import AddStudyPlan from './containers/add-study-plan';
+import AddMarks from './containers/upload-marks';
 import AddInstitute from './containers/institutes/add';
 import AddClass from './containers/classes/add';
 import AddStudent from './containers/students/add-student';
@@ -13,6 +13,10 @@ import AddStudents from './containers/students/add-students';
 import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
 import EditMCQ from './containers/edit-mcq';
+import AddMaterials from './containers/teacher/add-material';
+import AddNewTopic from './containers/teacher/add-new-topic';
+import AddNewSubTopic from './containers/teacher/add-new-stopic';
+import AddStudyPlan from './containers/teacher/add-study-plan';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -51,7 +55,8 @@ export const modelContainers: ModelContainers = {
         props: { size: '3xl' }
     },
     ADD_STUDY_PLAN: {
-        model: AddStudyPlan
+        model: AddStudyPlan,
+        props: { size: '2xl' }
     },
     ADD_CLASS: {
         model: AddClass,
@@ -67,6 +72,22 @@ export const modelContainers: ModelContainers = {
     },
     DELETE_INSTITUTE: {
         model: DeleteInstitute
+    },
+    ADD_MATERIALS:{
+        model: AddMaterials,
+        props:{size:'2xl'}
+    },
+    ADD_NEW_TOPIC:{
+        model: AddNewTopic,
+        props:{size:'2xl'}
+    },
+    ADD_NEW_SUB_TOPIC:{
+        model: AddNewSubTopic,
+        props:{size:'2xl'}
+    },
+    ADD_MARKS:{
+        model:AddMarks,
+        props:{size:'2xl'}
     }
 };
 
@@ -85,5 +106,9 @@ export const modelNames = {
     ADD_STUDENT: 'ADD_STUDENT',
     ADD_STUDENTS: 'ADD_STUDENTS',
     DELETE_INSTITUTE: 'DELETE_INSTITUTE',
-    EDIT_INSTITUTE: 'EDIT_INSTITUTE'
+    EDIT_INSTITUTE: 'EDIT_INSTITUTE',
+    ADD_MATERIALS: 'ADD_MATERIALS',
+    ADD_NEW_TOPIC: 'ADD_NEW_TOPIC',
+    ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC',
+    ADD_MARKS:'ADD_MARKS'
 };

@@ -26,9 +26,6 @@ export default function AddAcademicStaff({}: ModelContainerProps) {
                 </div>
             </ModalBody>
             <ModalFooter>
-                <button className="bg-white py-2  px-4 rounded hover:bg-light-gray cursor-pointer select-none inline-flex items-center gap-2 border-0 py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm">
-                    Cancel
-                </button>
                 <button className="bg-orange outline-none cursor-pointer select-none hover:bg-red-500 inline-flex items-center gap-2 border-0 text-white py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm">
                     Delete
                 </button>

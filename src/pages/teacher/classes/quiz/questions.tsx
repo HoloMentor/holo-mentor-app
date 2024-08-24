@@ -27,7 +27,6 @@ export default function QuizInfo() {
                         molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla
                         accumsan, Torem ipsum dolor sit amet,
                     </p>
-
                     <div className="!shadow-none p-10">
                         <div className="flex flex-col gap-10 pb-4">
                             {Array.from({ length: 10 }).map((_, qIndex) => (
@@ -44,7 +43,7 @@ export default function QuizInfo() {
                                                     <DropdownTrigger>
                                                         <NextUIButton
                                                             isIconOnly
-                                                            className="rounded-full !size-7 !min-w-7">
+                                                            className="rounded-full !size-7 !min-w-7 bg-[white]">
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 viewBox="0 0 24 24"
