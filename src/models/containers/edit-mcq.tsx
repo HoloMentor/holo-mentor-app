@@ -6,7 +6,6 @@ import FormAutoComplete from '@/components/form/autocomplete';
 import FormEditor from '@/components/form/editor';
 import { FieldArray, FormikValues } from 'formik';
 import * as Yup from 'yup';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 
 interface ModelContainerProps {
     onClose: () => void;
@@ -40,7 +39,7 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
     return (
         <div className="max-w-3xl justify-center">
             <ModalHeader className="flex  flex-col gap-1 text-xl text-dark-green w-6xl">
-                Add New MCQ
+                Edit MCQ
             </ModalHeader>
             <ModalBody className="max-h-96 overflow-y-auto">
                 <Content>
@@ -102,25 +101,27 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
                             />
                         </div>
                         <div>
-                            <FormAutoComplete
-                                name="answer"
-                                label="Correct Answer"
-                                placeholder="Select Topic"
-                                defaultItems={[
-                                    { label: 'Answer 01', value: '1' },
-                                    { label: 'Answer 02', value: '2' },
-                                    { label: 'Answer 03', value: '3' },
-                                    { label: 'Answer 04', value: '4' },
-                                    { label: 'Answer 05', value: '5' }
-                                ]}
-                            />
+                            <div>
+                                <FormAutoComplete
+                                    name="answer"
+                                    label="Correct Answer"
+                                    placeholder="Select Topic"
+                                    defaultItems={[
+                                        { label: 'Answer 01', value: '1' },
+                                        { label: 'Answer 02', value: '2' },
+                                        { label: 'Answer 03', value: '3' },
+                                        { label: 'Answer 04', value: '4' },
+                                        { label: 'Answer 05', value: '5' }
+                                    ]}
+                                />
+                            </div>
                         </div>
                     </Form>
                 </Content>
             </ModalBody>
             <ModalFooter>
                 <Button type="submit" form="form">
-                    Submit Question
+                    Update Question
                 </Button>
             </ModalFooter>
         </div>
