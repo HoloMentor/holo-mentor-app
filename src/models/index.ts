@@ -67,21 +67,21 @@ export const modelContainers: ModelContainers = {
     DELETE_INSTITUTE: {
         model: DeleteInstitute
     },
-    ADD_MATERIALS:{
+    ADD_MATERIALS: {
         model: AddMaterials,
-        props:{size:'2xl'}
+        props: { size: '2xl' }
     },
-    ADD_NEW_TOPIC:{
+    ADD_NEW_TOPIC: {
         model: AddNewTopic,
-        props:{size:'2xl'}
+        props: { size: '2xl' }
     },
-    ADD_NEW_SUB_TOPIC:{
+    ADD_NEW_SUB_TOPIC: {
         model: AddNewSubTopic,
-        props:{size:'2xl'}
+        props: { size: '2xl' }
     },
-    ADD_MARKS:{
-        model:AddMarks,
-        props:{size:'2xl'}
+    ADD_MARKS: {
+        model: AddMarks,
+        props: { size: '2xl' }
     }
 };
 
@@ -103,5 +103,5 @@ export const modelNames = {
     ADD_MATERIALS: 'ADD_MATERIALS',
     ADD_NEW_TOPIC: 'ADD_NEW_TOPIC',
     ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC',
-    ADD_MARKS:'ADD_MARKS'
+    ADD_MARKS: 'ADD_MARKS'
 };

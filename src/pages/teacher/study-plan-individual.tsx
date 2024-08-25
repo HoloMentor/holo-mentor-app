@@ -22,8 +22,6 @@ const Tasks = [
     }
 ];
 
-
-
 export default function StudyPlanIndividual() {
     const [visibleTasks, setVisibleTasks] = useState<{ [key: number]: boolean }>({});
     const navigate = useNavigate();
@@ -52,11 +50,7 @@ export default function StudyPlanIndividual() {
                                 className="w-4.5 h-3 al cursor-pointer"
                                 onClick={() => toggleTaskVisibility(task.id)}></img>
                             <p className="ml-4 text-xl font-medium">Task {task.id}</p>
-                            <img
-                                src="/images/pencil-alt.svg"
-                                className="cursor-pointer"
-                                >
-                                </img>
+                            <img src="/images/pencil-alt.svg" className="cursor-pointer"></img>
                         </div>
 
                         {visibleTasks[task.id] && (
