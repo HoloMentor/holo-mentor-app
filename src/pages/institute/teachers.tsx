@@ -2,10 +2,16 @@ import Heading from '@/components/headings/main';
 import Table from '@/components/table';
 import Select, { SelectValue } from '@/components/select';
 import Input from '@/components/input';
+import Button from '@/components/button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@/components/button';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
+import { useDispatch } from 'react-redux';
 
 function Teachers() {
+    const dispatch = useDispatch();
     const [filterValue, setFilterValue] = useState<SelectValue>('all');
 
     const renderTeacher = ({ data }: CustomTableCellData) => {
@@ -86,13 +92,46 @@ function Teachers() {
             <section className="w-full col-span-2 max-lg:pr-4">
                 <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                     <div className="flex items-center justify-between gap-5 mb-4">
-                        <Select
+                        {/* <Select
                             className="max-w-36"
                             options={filterOptions}
                             value={filterValue}
                             onChange={setFilterValue}
+                        /> */}
+                        <div className='flex flex-row gap-3'>
+                            <Input className="max-w-96 w-full" placeholder="Search" />
+                            <Button
+                                onClick={() =>
+                                    dispatch(
+                                        modelActions.show({
+                                            name: modelNames.ADD_TEACHER
+                                        })
+                                    )
+                                }
+                            >Add Teacher</Button>
                         />
-                        <Input className="max-w-96 w-full" placeholder="Search" />
+
+                        <div className="flex items-center gap-2">
+                            <Input className="max-w-96 w-full" placeholder="Search" />
+                            <Button
+                                endContent={
+                                    <span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                            className="size-6">
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </span>
+                                }>
+                                Add New
+                            </Button>
+                        </div>
                     </div>
                     <Table data={tableData} columns={tableColumns} />
                 </div>

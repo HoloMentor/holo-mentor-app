@@ -1,8 +1,10 @@
+import Button from '@/components/button';
 import ForumQuestionReply from '@/components/forum/reply';
+import ForumQuestionReplyForm from '@/components/forum/reply-form';
 import ForumQuestionVote from '@/components/forum/vote';
 import Heading from '@/components/headings/main';
 import {
-    Button,
+    Button as NextUIButton,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -10,9 +12,12 @@ import {
     DropdownTrigger,
     User
 } from '@nextui-org/react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function ForumPage() {
+    const [onReplyAll, setOnReplyAll] = useState(null);
+    const [onReplyQuestion, setOnReplyQuestion] = useState(null);
     const params = useParams();
 
     return (
@@ -35,7 +40,7 @@ export default function ForumPage() {
 
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button isIconOnly className="rounded-full !size-7 !min-w-7">
+                                <NextUIButton isIconOnly className="rounded-full !size-7 !min-w-7">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
@@ -47,28 +52,10 @@ export default function ForumPage() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </Button>
+                                </NextUIButton>
                             </DropdownTrigger>
                             <DropdownMenu>
                                 <DropdownSection showDivider>
-                                    <DropdownItem
-                                        endContent={
-                                            <svg
-                                                width="19"
-                                                height="19"
-                                                viewBox="0 0 19 19"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M8.70833 13.4583H10.2917V10.2917H13.4583V8.70833H10.2917V5.54167H8.70833V8.70833H5.54167V10.2917H8.70833V13.4583ZM3.95833 16.625C3.52292 16.625 3.15031 16.4701 2.8405 16.1603C2.53069 15.8505 2.37553 15.4776 2.375 15.0417V3.95833C2.375 3.52292 2.53017 3.15031 2.8405 2.8405C3.15083 2.53069 3.52344 2.37553 3.95833 2.375H15.0417C15.4771 2.375 15.85 2.53017 16.1603 2.8405C16.4706 3.15083 16.6255 3.52344 16.625 3.95833V15.0417C16.625 15.4771 16.4701 15.85 16.1603 16.1603C15.8505 16.4706 15.4776 16.6255 15.0417 16.625H3.95833ZM3.95833 15.0417H15.0417V3.95833H3.95833V15.0417Z"
-                                                    fill="black"
-                                                />
-                                            </svg>
-                                        }
-                                        className="text-black"
-                                        key="edit">
-                                        Add to Databsae
-                                    </DropdownItem>
                                     <DropdownItem
                                         endContent={
                                             <svg
@@ -150,8 +137,24 @@ export default function ForumPage() {
                     </div>
 
                     <div className="flex flex-col gap-3 border border-light-gray rounded-md">
-                        <ForumQuestionReply />
+                        <ForumQuestionReply
+                            onReply={(id: number | string) => setOnReplyQuestion(id)}
+                        />
                         <ForumQuestionReply reply />
+                        {onReplyQuestion && (
+                            <ForumQuestionReplyForm
+                                reply
+                                onCancel={() => setOnReplyQuestion(null)}
+                            />
+                        )}
+
+                        {onReplyAll && (
+                            <ForumQuestionReplyForm onCancel={() => setOnReplyAll(null)} />
+                        )}
+                    </div>
+
+                    <div className="flex justify-end">
+                        <Button onClick={() => setOnReplyAll(1)}>Leave an Answer</Button>
                     </div>
                 </div>
             </div>

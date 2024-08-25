@@ -10,8 +10,11 @@ import AddInstitute from './containers/institutes/add';
 import AddClass from './containers/classes/add';
 import AddStudent from './containers/students/add-student';
 import AddStudents from './containers/students/add-students';
+import AddTeacher from './containers/institutes/add-teacher';
+import AddSubjects from './containers/institutes/add-subject';
 import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
+import EditMCQ from './containers/edit-mcq';
 import AddMaterials from './containers/teacher/add-material';
 import AddNewTopic from './containers/teacher/add-new-topic';
 import AddNewSubTopic from './containers/teacher/add-new-stopic';
@@ -46,7 +49,12 @@ export const modelContainers: ModelContainers = {
         model: RemoveStaff
     },
     ADD_MCQ: {
-        model: AddMCQ
+        model: AddMCQ,
+        props: { size: '3xl' }
+    },
+    EDIT_MCQ: {
+        model: EditMCQ,
+        props: { size: '3xl' }
     },
     ADD_STUDY_PLAN: {
         model: AddStudyPlan,
@@ -64,6 +72,13 @@ export const modelContainers: ModelContainers = {
         model: AddStudents,
         props: { size: 'xl' }
     },
+    ADD_TEACHER:{
+        model: AddTeacher,
+        props: { size: 'xl' }
+    },
+    ADD_SUBJECTS:{
+        model: AddSubjects,
+        props: { size: 'xl' },
     DELETE_INSTITUTE: {
         model: DeleteInstitute
     },
@@ -94,10 +109,13 @@ export const modelNames = {
     ADD_INSTITUTE: 'ADD_INSTITUTE',
     REMOVE_ACADEMIC_STAFF: 'REMOVE_ACADEMIC_STAFF',
     ADD_MCQ: 'ADD_MCQ',
+    EDIT_MCQ: 'EDIT_MCQ',
     ADD_STUDY_PLAN: 'ADD_STUDY_PLAN',
     ADD_CLASS: 'ADD_CLASS',
     ADD_STUDENT: 'ADD_STUDENT',
     ADD_STUDENTS: 'ADD_STUDENTS',
+    ADD_TEACHER: 'ADD_TEACHER',
+    ADD_SUBJECTS: 'ADD_SUBJECTS'
     DELETE_INSTITUTE: 'DELETE_INSTITUTE',
     EDIT_INSTITUTE: 'EDIT_INSTITUTE',
     ADD_MATERIALS: 'ADD_MATERIALS',
