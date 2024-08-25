@@ -1,12 +1,15 @@
 import { Spinner } from '@nextui-org/react';
-import { Formik, Form as FormikForm, FormikHelpers, FormikValues } from 'formik';
+import { Formik, Form as FormikForm, FormikHelpers, FormikProps, FormikValues } from 'formik';
+
+export type FormikInnerRef = FormikProps<any>;
 
 interface OtherProps {
     [x: string]: any;
 }
 
 interface Props {
-    children: any;
+    innerRef?: React.MutableRefObject<FormikInnerRef>;
+    children: React.ReactNode | ((props: FormikProps<any>) => React.ReactNode);
     isLoading?: boolean;
     initialValues: OtherProps;
     validationSchema: OtherProps;
@@ -22,7 +25,13 @@ export default function Form({ children, className, isLoading, ...props }: Props
         </div>
     ) : (
         <Formik {...props}>
-            <FormikForm className={className}>{children}</FormikForm>
+            {typeof children === 'function' ? (
+                (formikProps) => (
+                    <FormikForm className={className}>{children(formikProps)}</FormikForm>
+                )
+            ) : (
+                <FormikForm className={className}>{children}</FormikForm>
+            )}
         </Formik>
     );
 }

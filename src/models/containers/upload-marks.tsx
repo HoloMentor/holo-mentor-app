@@ -18,14 +18,14 @@ export default function UploadMarks({ onClose }: ModelContainerProps) {
             </ModalHeader>
             <ModalBody>
                 <Content>
-                    <div className='flex justify-end'>
-                    <Button
-                        variant="bordered"
-                        className="border-2 text-dark-green border-dark-green">
-                        Download MarkSheet
-                    </Button>
+                    <div className="flex justify-end">
+                        <Button
+                            variant="bordered"
+                            className="border-2 text-dark-green border-dark-green">
+                            Download MarkSheet
+                        </Button>
                     </div>
-                    
+
                     <div className="p-4 rounded-md outline-dashed outline-slate-300">
                         <div className="flex justify-center p-4">
                             <img src="/images/teacher/upload-csv.svg"></img>

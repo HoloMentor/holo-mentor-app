@@ -1,9 +1,12 @@
 import Button from '@/components/button';
-import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import Content from '@/components/content';
+import Form, { FormikInnerRef } from '@/components/form';
+import FormAutoComplete from '@/components/form/autocomplete';
+import FormInput from '@/components/form/input';
+import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
-import { Autocomplete, AutocompleteItem } from '@nextui-org/autocomplete';
-import { Input } from '@nextui-org/react';
+import { Fragment, useRef } from 'react';
+import * as Yup from 'yup';
 
 interface ModelContainerProps {
     onClose: () => void;
@@ -17,89 +20,103 @@ const topics = [
 ];
 
 const types = [
-    { value: 'pdf', label: 'Pdf' },
-    { value: 'pdf', label: 'Pdf' },
-    { value: 'pdf', label: 'Pdf' }
+    { value: 'link', label: 'URL' },
+    { value: 'pdf', label: 'PDF' }
 ];
 
 const subTopics = [
-    { SubTopic: 'Kinematics' },
-    { SubTopic: 'Dynamics' },
-    { SubTopic: 'Circular Motion' },
-    { SubTopic: 'Gravitational Fields' },
-    { SubTopic: 'Thermal Physics' },
-    { SubTopic: 'Electric Fields' },
-    { SubTopic: 'Current Electricity' },
-    { SubTopic: 'Electromagnetism' },
-    { SubTopic: 'Electromagnetic Induction' },
-    { SubTopic: 'Oscillations' },
-    { SubTopic: 'Superposition' },
-    { SubTopic: 'Interference' },
-    { SubTopic: 'Diffraction' },
-    { SubTopic: 'Doppler Effect' },
-    { SubTopic: 'Atomic Structure' },
-    { SubTopic: 'Nuclear Physics' },
-    { SubTopic: 'Medical Physics' }
+    { value: 'kinematics', label: 'Kinematics' },
+    { value: 'dynamics', label: 'Dynamics' },
+    { value: 'circular-motion', label: 'Circular Motion' },
+    { value: 'gravitational-fields', label: 'Gravitational Fields' },
+    { value: 'thermal-physics', label: 'Thermal Physics' },
+    { value: 'electric-fields', label: 'Electric Fields' },
+    { value: 'current-electricity', label: 'Current Electricity' },
+    { value: 'electromagnetism', label: 'Electromagnetism' },
+    { value: 'electromagnetic-induction', label: 'Electromagnetic Induction' },
+    { value: 'oscillations', label: 'Oscillations' },
+    { value: 'superposition', label: 'Superposition' },
+    { value: 'interference', label: 'Interference' },
+    { value: 'diffraction', label: 'Diffraction' },
+    { value: 'doppler-effect', label: 'Doppler Effect' },
+    { value: 'atomic-structure', label: 'Atomic Structure' },
+    { value: 'nuclear-physics', label: 'Nuclear Physics' },
+    { value: 'medical-physics', label: 'Medical Physics' }
 ];
 
+const initialValues = {
+    topic: '',
+    subTopic: '',
+    materialType: '',
+    materialData: ''
+};
+
+const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required('First Name is required'),
+    lastName: Yup.string().required('Last Name is required')
+});
+
 export default function AddMaterials({ onClose }: ModelContainerProps) {
+    const formRef = useRef<FormikInnerRef>(null);
+    console.log(formRef.current?.values);
     const onSubmit = (v: FormikValues) => {
         console.log(v);
     };
 
     return (
-        <div className="w-6xl">
-            <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green w-6xl">
-                Add Study Materials
-            </ModalHeader>
-            <ModalBody>
-                <Content>
-                    <div className="flex w-full gap-4 ">
-                        <Autocomplete
-                            placeholder="Select a topic"
-                            className="max-w-xs"
-                            style={{ border: 'none', boxShadow: 'none' }}>
-                            {topics.map((topic) => (
-                                <AutocompleteItem key={topic.value} value={topic.value}>
-                                    {topic.label}
-                                </AutocompleteItem>
-                            ))}
-                        </Autocomplete>
-                        <Autocomplete
-                            placeholder="Select a sub-topic"
-                            className="max-w-xs"
-                            defaultItems={subTopics}
-                            style={{ border: 'none', boxShadow: 'none' }}>
-                            {(item) => (
-                                <AutocompleteItem key={item.SubTopic}>
-                                    {item.SubTopic}
-                                </AutocompleteItem>
-                            )}
-                        </Autocomplete>
-                    </div>
-                    <div className="flex w-full gap-4 ">
-                        <Autocomplete
-                            placeholder="Select a type"
-                            className="max-w-xs"
-                            style={{ border: 'none', boxShadow: 'none' }}>
-                            {types.map((topic) => (
-                                <AutocompleteItem key={topic.value} value={topic.value}>
-                                    {topic.label}
-                                </AutocompleteItem>
-                            ))}
-                        </Autocomplete>
-                        <Input
-                            placeholder="Enter the URL"
-                            style={{ border: 'none', boxShadow: 'none' }}
-                        />
-                    </div>
-                </Content>
-            </ModalBody>
-            <ModalFooter>
-                <Button type="submit" form="form">
-                    Upload
-                </Button>
-            </ModalFooter>
-        </div>
+        <Form
+            innerRef={formRef}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+            className="w-6xl">
+            {({ values }) => {
+                return (
+                    <Fragment>
+                        <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green w-6xl">
+                            Add Study Materials
+                        </ModalHeader>
+                        <ModalBody>
+                            <Content>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <FormAutoComplete
+                                        label="Select a topic"
+                                        name="topic"
+                                        defaultItems={topics}
+                                        isRequired
+                                    />
+                                    <FormAutoComplete
+                                        label="Select a sub topic"
+                                        name="subTopic"
+                                        defaultItems={subTopics}
+                                        isRequired
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <FormAutoComplete
+                                        label="Select a type"
+                                        name="materialType"
+                                        defaultItems={types}
+                                        isRequired
+                                    />
+                                    <FormInput
+                                        label="Enter the URL"
+                                        name="materialData"
+                                        placeholder="Enter the URL"
+                                        className="w-full"
+                                        type={values.materialType === 'pdf' ? 'file' : 'text'}
+                                    />
+                                </div>
+                            </Content>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button type="submit" form="form">
+                                Upload
+                            </Button>
+                        </ModalFooter>
+                    </Fragment>
+                );
+            }}
+        </Form>
     );
 }

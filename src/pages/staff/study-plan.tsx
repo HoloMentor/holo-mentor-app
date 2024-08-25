@@ -10,33 +10,33 @@ export default function StudyPlan() {
         {
             id: 1,
             content: [
-                <StudyPlanCard planName="Plan for Tier 1" autherName="Amith Pussella" />,
-                <StudyPlanCard planName="Plan for Tier 1B" autherName="Amith Pussella" />
+                <StudyPlanCard planName="Plan for Tier 1" authorName="Amith Pussella" />,
+                <StudyPlanCard planName="Plan for Tier 1B" authorName="Amith Pussella" />
             ],
             tierDescription: 'Tier 01: Marks 80 - 100'
         },
         {
             id: 2,
             content: [
-                <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,
-                <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />,
-                <StudyPlanCard planName="Plan for Tier 2" autherName="Author 1" />
+                <StudyPlanCard planName="Plan for Tier 2" authorName="Author 1" />,
+                <StudyPlanCard planName="Plan for Tier 2" authorName="Author 1" />,
+                <StudyPlanCard planName="Plan for Tier 2" authorName="Author 1" />
             ],
             tierDescription: 'Tier 02: Marks 60 - 80'
         },
         {
             id: 3,
-            content: [<StudyPlanCard planName="Plan for Tier 3" autherName="Author 1" />],
+            content: [<StudyPlanCard planName="Plan for Tier 3" authorName="Author 1" />],
             tierDescription: 'Tier 03: Marks 40 - 60'
         },
         {
             id: 4,
-            content: [<StudyPlanCard planName="Plan for Tier 4" autherName="Author 1" />],
+            content: [<StudyPlanCard planName="Plan for Tier 4" authorName="Author 1" />],
             tierDescription: 'Tier 04: Marks 20 - 40'
         },
         {
             id: 5,
-            content: [<StudyPlanCard planName="Plan for Tier 5" autherName="Author 1" />],
+            content: [<StudyPlanCard planName="Plan for Tier 5" authorName="Author 1" />],
             tierDescription: 'Tier 05: Marks 0 - 20'
         }
     ];
