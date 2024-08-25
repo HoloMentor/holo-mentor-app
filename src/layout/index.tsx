@@ -37,10 +37,10 @@ export default function Layout() {
         return roleLinks.general;
     }, [role, location.pathname]);
     return (
-        <div className="flex gap-6 min-h-screen bg-light-gray max-md:gap-3">
+        <div className="flex min-h-screen gap-6 bg-light-gray max-md:gap-3">
             <SideBar links={routeLinks} pathname={location.pathname} />
 
-            <div className="flex flex-col gap-6 w-full pb-5">
+            <div className="flex flex-col w-full gap-6 pb-5">
                 <Navbar />
                 <Outlet />
             </div>

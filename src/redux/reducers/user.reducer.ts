@@ -1,8 +1,7 @@
-import config from '@/config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { deleteCookie, getCookie } from 'cookies-next';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import authServices from '../services/auth.service';
 
 interface userProps {
     userInstituteId?: string;
@@ -13,6 +12,7 @@ interface userProps {
     lastName: string;
     userRole: string;
     instituteRole?: string;
+    image?: string;
     [prop: string]: string | boolean | number;
 }
 
@@ -39,7 +39,8 @@ const initState: userStateProps = {
         firstName: '',
         lastName: '',
         userRole: '',
-        instituteRole: ''
+        instituteRole: '',
+        image: ''
     }
 };
 
@@ -49,19 +50,18 @@ export const authorizeUser = createAsyncThunk('auth/me', async (_, { dispatch })
     if (!token) return null;
     const data: any = jwtDecode(token);
 
-    const response = await axios.get(`${config.api_url}auth/me/${data.sub}`, {
-        withCredentials: true
-    });
+    const response = await dispatch(authServices.endpoints.me.initiate({ id: data.sub })).unwrap();
 
     return {
-        userId: response.data?.data?.user_id,
-        instituteId: response.data?.data?.institute_id,
-        userInstituteId: response.data?.data?.user_institute_id,
-        email: response.data?.data?.email,
-        firstName: response.data?.data?.first_name,
-        lastName: response.data?.data?.last_name,
-        userRole: response.data?.data?.user_role,
-        instituteRole: response.data?.data?.institute_role
+        userId: response.data?.user_id,
+        instituteId: response.data?.institute_id,
+        userInstituteId: response.data?.user_institute_id,
+        email: response.data?.email,
+        firstName: response.data?.first_name,
+        lastName: response.data?.last_name,
+        userRole: response.data?.user_role,
+        instituteRole: response.data?.institute_role,
+        image: response.data?.image
     };
 });
 
@@ -88,7 +88,8 @@ const userSlice = createSlice({
                 firstName: '',
                 lastName: '',
                 userRole: '',
-                instituteRole: ''
+                instituteRole: '',
+                image: ''
             };
 
             deleteCookie('token');

@@ -136,7 +136,7 @@ export default function NotifyContainer() {
                 key={`notify-${id}`}
                 role="alert"
                 style={{ top: `${idx * 95 + offset}px` }}
-                className={`fixed z-20 rounded-xl border border-gray-100 bg-white p-4 right-7`}>
+                className={`fixed z-[9999] rounded-xl border border-gray-100 bg-white p-4 right-7`}>
                 <div className="flex items-start gap-4">
                     <NotifyIcon type={options.type} />
 

@@ -38,8 +38,8 @@ export default function Table({
                             {columns.map((_, i) => {
                                 return (
                                     <th
-                                        align={getAlignment(columns.length, i)}
                                         key={_?.key || `${name}-head-${i}`}
+                                        align={getAlignment(columns.length, i)}
                                         className="px-4 py-4 font-semibold whitespace-nowrap">
                                         {_.name}
                                     </th>
@@ -50,7 +50,9 @@ export default function Table({
 
                     <tbody className="border-t-2 border-t-light-border">
                         {data.length === 0 ? (
-                            <tr className="block px-4 py-2">No records.</tr>
+                            <tr className="block px-4 py-2">
+                                <td>No records.</td>
+                            </tr>
                         ) : (
                             data.map((_data, i) => {
                                 return (
@@ -70,7 +72,7 @@ export default function Table({
                                                     className="px-4 py-2 font-normal text-gray-900 whitespace-nowrap border-b-1"
                                                     {...props}>
                                                     {typeof value === 'string' ? (
-                                                        getCellValue(_data, value)
+                                                        <span>{getCellValue(_data, value)}</span>
                                                     ) : (
                                                         <value.render
                                                             rowIndex={i}

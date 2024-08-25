@@ -1,7 +1,8 @@
+import ProfileInfoCard from '@/components/cards/profile';
+import ProfileDetailsCard from '@/components/cards/profile-details';
 import Heading from '@/components/headings/main';
 import useRoleHandler from '@/hooks/role-handler';
 import { IRootState } from '@/redux';
-import { snakeCaseToTitleCase } from '@/utils';
 import { useSelector } from 'react-redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
@@ -157,6 +158,8 @@ export default function Profile() {
                             </li>
                         </ul>
                     </div>
+                    <ProfileInfoCard />
+                    <ProfileDetailsCard />
                 </section>
             </div>
         </div>

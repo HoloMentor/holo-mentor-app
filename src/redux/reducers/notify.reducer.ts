@@ -34,7 +34,7 @@ const notifySlice = createSlice({
             state.notifyProps[id] = {
                 id: id,
                 type: payload.type,
-                message: payload?.message || 'error',
+                message: payload?.message || '',
                 format: payload.format !== false ? true : payload.format
             };
         },

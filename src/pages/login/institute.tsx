@@ -32,7 +32,6 @@ export default function InstituteForm({ data, userInstitutes = [], loading }: Pr
         authServices.useSignInMutation();
 
     // error handler
-
     useErrorHandler(isSignInError, signInError);
 
     const institutes = useMemo(() => {
@@ -80,7 +79,8 @@ export default function InstituteForm({ data, userInstitutes = [], loading }: Pr
                     firstName: result.data.data.first_name,
                     lastName: result.data.data.last_name,
                     userRole: result.data.data.user_role,
-                    instituteRole: result.data.data.institute_role
+                    instituteRole: result.data.data.institute_role,
+                    image: result.data.data.image
                 })
             );
 

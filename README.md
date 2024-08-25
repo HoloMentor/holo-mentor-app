@@ -2,6 +2,14 @@
 
 Holo Mentor web application. Build with `React.Js` with `Client-Server` architecture model.
 
+### Prerequisite
+
+Create `.env` file in the root of the project
+
+```env
+VITE_API_URL=http://localhost:8080/api/v1
+```
+
 ## Naming Conventions
 
 | Type      | Convention  | Example     |

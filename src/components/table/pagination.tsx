@@ -5,10 +5,12 @@ export default function Pagination({ page = 1, pages = 0 }: PaginationProps) {
     const location = useLocation();
     const pathname = location.pathname;
     const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    if (searchParams.get('page')) page = parseInt(searchParams.get('page'));
     const pageNumbers = getPageNumbers({ page, pages });
 
     const generateLink = (page: number = 1): string => {
-        const searchParams = new URLSearchParams(params.toString());
         if (page <= 0) page = 1;
         if (page >= pages) page = pages;
         searchParams.set('page', page.toString());
@@ -42,13 +44,13 @@ export default function Pagination({ page = 1, pages = 0 }: PaginationProps) {
 
                 {pageNumbers.map((pageNumber: number | string) => {
                     return pageNumber === '...' ? (
-                        <li>
-                            <p className="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
+                        <li key={`pagination-${pageNumber}`}>
+                            <span className="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
                                 &hellip;
-                            </p>
+                            </span>
                         </li>
                     ) : (
-                        <li>
+                        <li key={`pagination-${pageNumber}`}>
                             <Link
                                 to={generateLink(pageNumber as number)}
                                 className={`block size-8 rounded border text-center leading-8 ${
