@@ -5,8 +5,13 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@/components/button';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
+import { useDispatch } from 'react-redux';
 
 function Teachers() {
+    const dispatch = useDispatch();
     const [filterValue, setFilterValue] = useState<SelectValue>('all');
 
     const renderTeacher = ({ data }: CustomTableCellData) => {
@@ -87,11 +92,23 @@ function Teachers() {
             <section className="w-full col-span-2 max-lg:pr-4">
                 <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                     <div className="flex items-center justify-between gap-5 mb-4">
-                        <Select
+                        {/* <Select
                             className="max-w-36"
                             options={filterOptions}
                             value={filterValue}
                             onChange={setFilterValue}
+                        /> */}
+                        <div className='flex flex-row gap-3'>
+                            <Input className="max-w-96 w-full" placeholder="Search" />
+                            <Button
+                                onClick={() =>
+                                    dispatch(
+                                        modelActions.show({
+                                            name: modelNames.ADD_TEACHER
+                                        })
+                                    )
+                                }
+                            >Add Teacher</Button>
                         />
 
                         <div className="flex items-center gap-2">
