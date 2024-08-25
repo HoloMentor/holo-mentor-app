@@ -10,6 +10,8 @@ import AddInstitute from './containers/institutes/add';
 import AddClass from './containers/classes/add';
 import AddStudent from './containers/students/add-student';
 import AddStudents from './containers/students/add-students';
+import AddTeacher from './containers/institutes/add-teacher';
+import AddSubjects from './containers/institutes/add-subject';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -52,6 +54,14 @@ export const modelContainers: ModelContainers = {
     ADD_STUDENTS: {
         model: AddStudents,
         props: { size: 'xl' }
+    },
+    ADD_TEACHER:{
+        model: AddTeacher,
+        props: { size: 'xl' }
+    },
+    ADD_SUBJECTS:{
+        model: AddSubjects,
+        props: { size: 'xl' }
     }
 };
 
@@ -67,5 +77,7 @@ export const modelNames = {
     ADD_STUDY_PLAN: 'ADD_STUDY_PLAN',
     ADD_CLASS: 'ADD_CLASS',
     ADD_STUDENT: 'ADD_STUDENT',
-    ADD_STUDENTS: 'ADD_STUDENTS'
+    ADD_STUDENTS: 'ADD_STUDENTS',
+    ADD_TEACHER: 'ADD_TEACHER',
+    ADD_SUBJECTS: 'ADD_SUBJECTS'
 };

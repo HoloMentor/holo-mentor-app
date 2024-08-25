@@ -1,8 +1,13 @@
 import Table from '@/components/table';
 import Heading from '@/components/headings/main';
+import Input from '@/components/input';
+import Button from '@/components/button';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { modelNames } from '@/models';
+import { useDispatch } from 'react-redux';
 
 export default function Classes() {
-    
+    const dispatch = useDispatch();
     const tableData = [
         {
             
@@ -41,6 +46,18 @@ export default function Classes() {
             <Heading>Classes</Heading>
             <section className="w-full col-span-2 max-lg:pr-4">
                     <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
+                        <div className='flex flex-row-reverse gap-3 mb-3'>
+                            <Button
+                                onClick={() =>
+                                    dispatch(
+                                        modelActions.show({
+                                            name: modelNames.ADD_CLASS
+                                        })
+                                    )
+                                }
+                            >Add New</Button>
+                            <Input className="max-w-96 w-full" placeholder="Search" />
+                        </div>
                         <Table data={tableData} columns={tableColumns} />
                     </div>
             </section>
