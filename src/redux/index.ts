@@ -7,6 +7,7 @@ import userServices from './services/user.service';
 import notifyReducer from './reducers/notify.reducer';
 import instituteServices from './services/institute.service';
 import fileServices from './services/file.service';
+import subjectServices from '@/redux/services/subject.service.ts';
 
 const store = configureStore({
     reducer: combineReducers({
@@ -16,7 +17,8 @@ const store = configureStore({
         [authServices.reducerPath]: authServices.reducer,
         [userServices.reducerPath]: userServices.reducer,
         [instituteServices.reducerPath]: instituteServices.reducer,
-        [fileServices.reducerPath]: fileServices.reducer
+        [fileServices.reducerPath]: fileServices.reducer,
+        [subjectServices.reducerPath]: subjectServices.reducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -24,6 +26,7 @@ const store = configureStore({
             .concat(userServices.middleware)
             .concat(instituteServices.middleware)
             .concat(fileServices.middleware)
+            .concat(subjectServices.middleware)
 });
 
 export default store;

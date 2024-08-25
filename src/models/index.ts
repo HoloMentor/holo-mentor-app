@@ -11,7 +11,9 @@ import AddClass from './containers/classes/add';
 import AddStudent from './containers/students/add-student';
 import AddStudents from './containers/students/add-students';
 import AddTeacher from './containers/institutes/add-teacher';
-import AddSubjects from './containers/institutes/add-subject';
+import AddSubject from './containers/subject/add.tsx';
+import EditSubject from './containers/subject/edit.tsx';
+import DeleteSubject from './containers/subject/delete.tsx';
 import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
 import EditMCQ from './containers/edit-mcq';
@@ -76,9 +78,16 @@ export const modelContainers: ModelContainers = {
         model: AddTeacher,
         props: { size: 'xl' }
     },
-    ADD_SUBJECTS: {
-        model: AddSubjects,
+    ADD_SUBJECT: {
+        model: AddSubject,
         props: { size: 'xl' }
+    },
+    EDIT_SUBJECT: {
+        model: EditSubject,
+        props: { size: 'xl' }
+    },
+    DELETE_SUBJECT: {
+        model: DeleteSubject
     },
     DELETE_INSTITUTE: {
         model: DeleteInstitute
@@ -116,7 +125,9 @@ export const modelNames = {
     ADD_STUDENT: 'ADD_STUDENT',
     ADD_STUDENTS: 'ADD_STUDENTS',
     ADD_TEACHER: 'ADD_TEACHER',
-    ADD_SUBJECTS: 'ADD_SUBJECTS',
+    ADD_SUBJECT: 'ADD_SUBJECT',
+    EDIT_SUBJECT: 'EDIT_SUBJECT',
+    DELETE_SUBJECT: 'DELETE_SUBJECT',
     DELETE_INSTITUTE: 'DELETE_INSTITUTE',
     EDIT_INSTITUTE: 'EDIT_INSTITUTE',
     ADD_MATERIALS: 'ADD_MATERIALS',

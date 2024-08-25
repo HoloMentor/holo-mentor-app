@@ -22,7 +22,7 @@ const studentSideBar: RoleSideBarProps = {
             },
             {
                 to: '/subjects',
-                name: 'Subjects',
+                name: 'Index',
                 icon: () => (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

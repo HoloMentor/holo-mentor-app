@@ -5,6 +5,7 @@ import {
     Selection
 } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
+import { isEqual } from 'lodash';
 
 export type SelectValue = string | number | null;
 
@@ -26,13 +27,8 @@ export default function Select({ options, value, onChange, ...props }: SelectPro
     const [selectedValue, setSelectedValue] = useState(new Set([]));
 
     useEffect(() => {
-        console.log(value);
-        console.log(selectedValue);
-        console.log(new Set([value]));
-        console.log(new Set([value]) !== selectedValue);
-        if (new Set([value]) !== selectedValue) {
-            const exist = options.find((_: { label: string; value: string }) => _.value == value);
-
+        if (!isEqual(new Set([value]), selectedValue)) {
+            const exist = options.find((_: SelectOption) => _.value == value);
             if (exist) setSelectedValue(new Set([exist.value]));
         }
     }, [selectedValue, options, value]);
@@ -53,9 +49,9 @@ export default function Select({ options, value, onChange, ...props }: SelectPro
             }}
             onSelectionChange={handleOnChange}
             {...props}>
-            {options.map((item) => (
-                <SelectItem key={item.value}>{item.label}</SelectItem>
-            ))}
+            {options.map((item: SelectOption) => {
+                return <SelectItem key={item.value}>{item.label}</SelectItem>;
+            })}
         </NextSelect>
     );
 }

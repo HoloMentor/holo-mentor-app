@@ -24,7 +24,7 @@ export default function Table({
 
     const getCellValue = useCallback(
         (data: any = {}, value: string) => {
-            return value.split('.').reduce((acc, key) => acc && acc[key], data) || '-';
+            return value.split('.').reduce((acc, key) => acc && acc[key], data) ?? '-';
         },
         [data]
     );

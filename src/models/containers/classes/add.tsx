@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
         })
 });
 
-export default function AddClass({}: ModelContainerProps) {
+export default function AddClass() {
     const onSubmit = (v: FormikValues) => {
         console.log(v);
     };
