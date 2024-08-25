@@ -6,11 +6,11 @@ import { FormikValues } from 'formik';
 import * as Yup from 'yup';
 
 const initialValues = {
-    subjectName: '',
+    subjectName: ''
 };
 
 const validationSchema = Yup.object().shape({
-    subjectName: Yup.string().required('Subject name is required'),
+    subjectName: Yup.string().required('Subject name is required')
 });
 
 export default function AddSubjects({}: ModelContainerProps) {
@@ -27,7 +27,7 @@ export default function AddSubjects({}: ModelContainerProps) {
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
                 Add a Subject
             </ModalHeader>
-            <ModalBody className="flex flex-col gap-4">        
+            <ModalBody className="flex flex-col gap-4">
                 <FormInput label="Subject Name" placeholder="Subject Name" name="subjectName" />
             </ModalBody>
             <ModalFooter>

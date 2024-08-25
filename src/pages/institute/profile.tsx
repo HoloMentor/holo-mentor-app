@@ -19,7 +19,7 @@ export default function Profile() {
             <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
                 <section className="w-full h-fit col-span-1">
                     <div className="bg-white px-4 py-6 mb-4 rounded-lg relative">
-                        <div 
+                        <div
                             onClick={() =>
                                 dispatch(
                                     modelActions.show({
@@ -27,7 +27,6 @@ export default function Profile() {
                                     })
                                 )
                             }
-                        
                             className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +58,7 @@ export default function Profile() {
                         </div>
                     </div>
                     <div className="bg-white px-4 py-4 mb-4 rounded-lg relative">
-                        <div 
+                        <div
                             onClick={() =>
                                 dispatch(
                                     modelActions.show({
@@ -67,7 +66,6 @@ export default function Profile() {
                                     })
                                 )
                             }
-                            
                             className="absolute right-4 top-4 cursor-pointer z-[+1]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

@@ -14,7 +14,6 @@ export default function Subjects() {
 
     const tableData = [
         {
-            
             subject: 'Biology',
             type: 'OL',
             students: '210',
@@ -22,7 +21,6 @@ export default function Subjects() {
         },
 
         {
-            
             subject: 'Chemistry',
             type: 'AL',
             students: '210',
@@ -30,7 +28,6 @@ export default function Subjects() {
         },
 
         {
-            
             subject: 'Physics',
             type: 'OL',
             students: '210',
@@ -41,7 +38,7 @@ export default function Subjects() {
     const tableColumns: TableColumn[] = [
         { name: 'Subject', value: 'subject' },
         { name: 'AL/OL', value: 'type' },
-        { name: 'Classes', value:"classes" },
+        { name: 'Classes', value: 'classes' },
         { name: 'Students', value: 'students' }
     ];
 
@@ -56,7 +53,7 @@ export default function Subjects() {
         <div className="flex flex-col gap-3">
             <Heading>Subjects</Heading>
             <section className="w-full col-span-2 max-lg:pr-4">
-                    <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
+                <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                     <div className="flex items-center justify-between gap-5 mb-4">
                         <Select
                             className="max-w-36"
@@ -64,7 +61,7 @@ export default function Subjects() {
                             value={filterValue}
                             onChange={setFilterValue}
                         />
-                        <div className='flex flex-row gap-3'>
+                        <div className="flex flex-row gap-3">
                             <Input className="max-w-96 w-full" placeholder="Search" />
                             <Button
                                 onClick={() =>
@@ -73,14 +70,14 @@ export default function Subjects() {
                                             name: modelNames.ADD_SUBJECTS
                                         })
                                     )
-                                }
-                            >Add Subject</Button>
+                                }>
+                                Add Subject
+                            </Button>
                         </div>
                     </div>
-                        <Table data={tableData} columns={tableColumns} />
-                    </div>
+                    <Table data={tableData} columns={tableColumns} />
+                </div>
             </section>
         </div>
     );
-        
 }

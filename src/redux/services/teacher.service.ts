@@ -13,7 +13,6 @@ const teacherServices = createApi({
         //         params: { date }
         //     })
         // })
-
         //post request - mutate
         // authenticate: builder.mutation({
         //     query: (props) => ({
