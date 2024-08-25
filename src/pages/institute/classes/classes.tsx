@@ -5,6 +5,7 @@ import Button from '@/components/button';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
 import { useDispatch } from 'react-redux';
+import { renderMoreActions } from '@/pages/institute/class/columns.tsx';
 
 export default function Classes() {
     const dispatch = useDispatch();
@@ -35,7 +36,8 @@ export default function Classes() {
         { name: 'Teacher', value: 'teacher' },
         { name: 'Subject', value: 'subject' },
         { name: 'Class', value: 'class' },
-        { name: 'Students', value: 'students' }
+        { name: 'Students', value: 'students' },
+        { name: 'Actions',value: { render: renderMoreActions}}
     ];
 
     return (

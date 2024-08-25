@@ -36,7 +36,7 @@ export function renderMoreActions({ data }: CustomTableCellData) {
                         onClick={() =>
                             dispatch(
                                 modelActions.show({
-                                    name: modelNames.EDIT_TEACHER,
+                                    name: modelNames.EDIT_CLASS,
                                     props: { data }
                                 })
                             )
@@ -66,7 +66,7 @@ export function renderMoreActions({ data }: CustomTableCellData) {
                         onClick={() =>
                             dispatch(
                                 modelActions.show({
-                                    name: modelNames.DELETE_TEACHER,
+                                    name: modelNames.DELETE_CLASS,
                                     props: { id: data.id }
                                 })
                             )

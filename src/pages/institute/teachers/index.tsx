@@ -5,21 +5,11 @@ import Button from '@/components/button.tsx';
 import { Link } from 'react-router-dom';
 import { modelActions } from '@/redux/reducers/model.reducer.ts';
 import { modelNames } from '@/models';
-import { useDispatch, useSelector } from 'react-redux';
-import { renderMoreActions } from './columns.tsx';
-import { useLocation } from 'react-router-dom';
-import { IRootState } from '@/redux';
-import useErrorHandler from '@/hooks/error-handler.tsx';
-import teacherServices from '@/redux/services/teacher.service.ts'
+import { useDispatch } from 'react-redux';
+import { renderMoreActions } from '@/pages/institute/teachers/columns.tsx';
 
 function Teachers() {
     const dispatch = useDispatch();
-    const { user } = useSelector((state: IRootState) => state.user);
-
-    const location = useLocation();
-    const params = location.search;
-    const searchParams = new URLSearchParams(params.toString());
-
 
     const renderTeacher = ({ data }: CustomTableCellData) => {
         return (
@@ -36,29 +26,55 @@ function Teachers() {
         );
     };
 
-    const {
-        data: institueTeachers,
-        isLoading : TeachersLoading,
-        isError: isTeachersError,
-        error : TeachersError
-    } = teacherServices.useGetInstituteTeacherQuery(
+    const tableData = [
         {
-            teacherID : user.teacherID,
-            search: searchParams.get('search') || '',
-            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
+            id: 1,
+            classes: '10',
+            subject: 'Chemistry',
+            teacher: {
+                pnglink: 'https://picsum.photos/400',
+                name: 'Donall Samart'
+            },
+            type: 'A/L'
         },
         {
-            skip: !user.teacherID
+            id: 2,
+            classes: '10',
+            subject: 'Physics',
+            teacher: {
+                pnglink: 'https://picsum.photos/400',
+                name: 'Reuven Presdie'
+            },
+            type: 'A/L'
+        },
+        {
+            id: 3,
+            classes: '10',
+            subject: 'Maths',
+            teacher: {
+                pnglink: 'https://picsum.photos/400',
+                name: 'Irwin Havvock'
+            },
+            type: 'O/L'
+        },
+        {
+            id: 4,
+            classes: '10',
+            subject: 'Science',
+            teacher: {
+                pnglink: 'https://picsum.photos/400',
+                name: 'Bear Kestin'
+            },
+            type: 'O/L'
         }
-    );
-    useErrorHandler(isTeachersError, TeachersError);
+    ];
 
     const tableColumns: TableColumn[] = [
         { name: 'Teacher', value: { render: renderTeacher } },
         { name: 'No of Classes', value: 'classes' },
         { name: 'Subject', value: 'subject' },
         { name: 'Type', value: 'type' },
-        { name: 'Actions',value: { render: renderMoreActions}}
+        { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
     return (
@@ -94,12 +110,7 @@ function Teachers() {
                             Add New
                         </Button>
                     </div>
-                    <Table
-                        data={institueTeachers?.data?.data}
-                        columns={tableColumns}
-                        loading={TeachersLoading}
-                        pagination={{ enable: true, pages: institueTeachers?.data?.pages }}
-                    />
+                    <Table data={tableData} columns={tableColumns} />
                 </div>
             </section>
         </div>
