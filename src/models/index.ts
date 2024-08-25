@@ -72,13 +72,14 @@ export const modelContainers: ModelContainers = {
         model: AddStudents,
         props: { size: 'xl' }
     },
-    ADD_TEACHER:{
+    ADD_TEACHER: {
         model: AddTeacher,
         props: { size: 'xl' }
     },
-    ADD_SUBJECTS:{
+    ADD_SUBJECTS: {
         model: AddSubjects,
-        props: { size: 'xl' },
+        props: { size: 'xl' }
+    },
     DELETE_INSTITUTE: {
         model: DeleteInstitute
     },
@@ -115,7 +116,7 @@ export const modelNames = {
     ADD_STUDENT: 'ADD_STUDENT',
     ADD_STUDENTS: 'ADD_STUDENTS',
     ADD_TEACHER: 'ADD_TEACHER',
-    ADD_SUBJECTS: 'ADD_SUBJECTS'
+    ADD_SUBJECTS: 'ADD_SUBJECTS',
     DELETE_INSTITUTE: 'DELETE_INSTITUTE',
     EDIT_INSTITUTE: 'EDIT_INSTITUTE',
     ADD_MATERIALS: 'ADD_MATERIALS',

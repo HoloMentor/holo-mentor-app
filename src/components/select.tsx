@@ -26,8 +26,12 @@ export default function Select({ options, value, onChange, ...props }: SelectPro
     const [selectedValue, setSelectedValue] = useState(new Set([]));
 
     useEffect(() => {
+        console.log(value);
+        console.log(selectedValue);
+        console.log(new Set([value]));
+        console.log(new Set([value]) !== selectedValue);
         if (new Set([value]) !== selectedValue) {
-            const exist = options.find((_: any) => _.value == value);
+            const exist = options.find((_: { label: string; value: string }) => _.value == value);
 
             if (exist) setSelectedValue(new Set([exist.value]));
         }

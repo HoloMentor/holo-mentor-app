@@ -5,7 +5,6 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@/components/button';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
 import { useDispatch } from 'react-redux';
@@ -92,13 +91,17 @@ function Teachers() {
             <section className="w-full col-span-2 max-lg:pr-4">
                 <div className="bg-white px-6 py-4 mb-4 rounded-lg relative">
                     <div className="flex items-center justify-between gap-5 mb-4">
-                        {/* <Select
-                            className="max-w-36"
-                            options={filterOptions}
-                            value={filterValue}
-                            onChange={setFilterValue}
-                        /> */}
-                        <div className='flex flex-row gap-3'>
+                        <div className="flex flex-row gap-3">
+                            <Select
+                                className="max-w-36"
+                                options={filterOptions}
+                                value={filterValue}
+                                onChange={setFilterValue}
+                            />
+                            <Input className="max-w-96 w-full" placeholder="Search" />
+                        </div>
+
+                        <div className="flex items-center gap-2">
                             <Input className="max-w-96 w-full" placeholder="Search" />
                             <Button
                                 onClick={() =>
@@ -108,12 +111,6 @@ function Teachers() {
                                         })
                                     )
                                 }
-                            >Add Teacher</Button>
-                        />
-
-                        <div className="flex items-center gap-2">
-                            <Input className="max-w-96 w-full" placeholder="Search" />
-                            <Button
                                 endContent={
                                     <span>
                                         <svg
