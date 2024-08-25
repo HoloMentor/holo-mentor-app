@@ -21,6 +21,8 @@ import AddMaterials from './containers/teacher/add-material';
 import AddNewTopic from './containers/teacher/add-new-topic';
 import AddNewSubTopic from './containers/teacher/add-new-stopic';
 import AddStudyPlan from './containers/teacher/add-study-plan';
+import EditTeacher from './containers/institutes/edit-teacher.tsx';
+import DeleteTeacher from './containers/institutes/delete-teacher.tsx';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -107,6 +109,14 @@ export const modelContainers: ModelContainers = {
     ADD_MARKS: {
         model: AddMarks,
         props: { size: '2xl' }
+    },
+    EDIT_TEACHER: {
+        model: EditTeacher,
+        props: { size: 'xl' }
+    },
+    DELETE_TEACHER: {
+        model: DeleteTeacher,
+        props: { size: 'xl' }
     }
 };
 
@@ -133,5 +143,6 @@ export const modelNames = {
     ADD_MATERIALS: 'ADD_MATERIALS',
     ADD_NEW_TOPIC: 'ADD_NEW_TOPIC',
     ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC',
-    ADD_MARKS: 'ADD_MARKS'
+    ADD_MARKS: 'ADD_MARKS',
+    EDIT_TEACHER: 'EDIT_TEACHER',
 };
