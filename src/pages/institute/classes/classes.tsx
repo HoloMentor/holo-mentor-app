@@ -5,7 +5,7 @@ import Button from '@/components/button';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
 import { useDispatch } from 'react-redux';
-import { renderMoreActions } from '@/pages/institute/class/columns.tsx';
+import { renderMoreActions } from '@/pages/institute/classes/columns.tsx';
 
 export default function Classes() {
     const dispatch = useDispatch();
