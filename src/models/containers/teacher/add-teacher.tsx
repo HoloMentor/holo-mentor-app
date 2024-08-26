@@ -4,6 +4,12 @@ import FormInput from '@/components/form/input';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
+import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
+import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import teacherServices from '@/redux/services/teacher.service.ts';
+import useErrorHandler from '@/hooks/error-handler.tsx';
 
 const initialValues = {
     firstName: '',
@@ -19,9 +25,35 @@ const validationSchema = Yup.object().shape({
     registrationNumber: Yup.string().required('Registration number is required')
 });
 
-export default function AddTeacher({}: ModelContainerProps) {
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+export default function AddTeacher() {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const [
+        createTeacher,
+        { isLoading: isTeacherCreating, isError: isTeacherCreateError, error: teacherCreateError }
+    ] = teacherServices.useCreateMutation();
+    useErrorHandler(isTeacherCreateError, teacherCreateError);
+    
+    const onSubmit = async (values: FormikValues) => {
+        const result = await createTeacher({
+            instituteId: user.instituteId,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            registrationNumber: values.registrationNumber
+        });
+
+        if (result?.data?.status === 201 || result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            dispatch(modelActions.hide());
+        }
     };
 
     return (
@@ -46,7 +78,7 @@ export default function AddTeacher({}: ModelContainerProps) {
                 />
             </ModalBody>
             <ModalFooter>
-                <SubmitButton type="submit">Add</SubmitButton>
+                <SubmitButton isLoading={isTeacherCreating} type="submit">Add</SubmitButton>
             </ModalFooter>
         </Form>
     );
