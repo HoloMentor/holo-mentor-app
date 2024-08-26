@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { modelActions } from '@/redux/reducers/model.reducer.ts';
 import { modelNames } from '@/models';
 import { useDispatch } from 'react-redux';
+import { renderMoreActions } from '@/pages/institute/teachers/columns.tsx';
 
 function Teachers() {
     const dispatch = useDispatch();
@@ -72,7 +73,8 @@ function Teachers() {
         { name: 'Teacher', value: { render: renderTeacher } },
         { name: 'No of Classes', value: 'classes' },
         { name: 'Subject', value: 'subject' },
-        { name: 'Type', value: 'type' }
+        { name: 'Type', value: 'type' },
+        { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
     return (

@@ -7,9 +7,9 @@ const Profile = loadable(() => import('@/pages/institute/profile'));
 const Notification = loadable(() => import('@/pages/institute/notifications'));
 const Teachers = loadable(() => import('@/pages/institute/teachers/index.tsx'));
 const TeacherProfile = loadable(() => import('@/pages/institute/teachers/profile'));
-const Class = loadable(() => import('@/pages/institute/class/class-progress'));
-const Students = loadable(() => import('@/pages/institute/class/class-students'));
-const ClassProgress = loadable(() => import('@/pages/institute/classes'));
+const Class = loadable(() => import('@/pages/institute/classes/class-progress'));
+const Students = loadable(() => import('@/pages/institute/classes/class-students'));
+const ClassProgress = loadable(() => import('@/pages/institute/classes/classes'));
 const Subjects = loadable(() => import('@/pages/institute/subjects/index.tsx'));
 
 export default function InstituteRoutes() {
