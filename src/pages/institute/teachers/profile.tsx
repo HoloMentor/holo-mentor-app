@@ -16,7 +16,7 @@ export default function teacherProfile() {
             <Link to={`/class/${data.id}/progress`}>
                 <div className="flex flex-col gap-1">
                     <span className="font-semibold text-dark-green">{data.class.name}</span>
-                    <span>{data.class.institute}</span>
+                    <span>{data.class.type}</span>
                 </div>
             </Link>
         );
@@ -42,7 +42,7 @@ export default function teacherProfile() {
             id: 1,
             class: {
                 name: 'Biology',
-                institute: 'Devify Institute - 2023'
+                type: 'Theory type - 2023'
             },
             students: '210'
         },
@@ -50,7 +50,7 @@ export default function teacherProfile() {
             id: 2,
             class: {
                 name: 'Maths',
-                institute: 'Skiba Institute - 2023'
+                type: 'Theory - 2023'
             },
             students: '200'
         },
@@ -58,7 +58,7 @@ export default function teacherProfile() {
             id: 3,
             class: {
                 name: 'Physics',
-                institute: 'Roodel Institute - 2023'
+                type: 'Theory type - 2023'
             },
             students: '430'
         }

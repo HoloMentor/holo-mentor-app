@@ -5,75 +5,59 @@ import Button from '@/components/button.tsx';
 import { Link } from 'react-router-dom';
 import { modelActions } from '@/redux/reducers/model.reducer.ts';
 import { modelNames } from '@/models';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { IRootState } from '@/redux';
 import { renderMoreActions } from '@/pages/institute/teachers/columns.tsx';
+import useErrorHandler from '@/hooks/error-handler.tsx';
+import teacherServices from '@/redux/services/teacher.service';
 
 function Teachers() {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const location = useLocation();
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
 
     const renderTeacher = ({ data }: CustomTableCellData) => {
         return (
-            <div className="flex flex-raw">
+            <div className="flex flex-row">
                 <img
-                    src={data.teacher.pnglink}
+                    src={data.image || '/path/to/default/avatar.png'}
                     alt="avatar"
-                    className="relative inline-block h-8 w-8 !rounded-full  object-cover object-center border-2 border-dark-green"
+                    className="relative inline-block h-8 w-8 !rounded-full object-cover object-center border-2 border-dark-green"
                 />
                 <Link to={`/teachers/${data.id}`}>
-                    <span className="text-left ml-5 mt-2">{data.teacher.name}</span>
+                    <span className="text-left ml-5 mt-2">{data.firstname} {data.lastname}</span>
                 </Link>
             </div>
         );
     };
 
-    const tableData = [
+    const {
+        data: instituteTeachers,
+        isLoading: teacherLoading,
+        isError: isTeacherError,
+        error: teacherError
+    } = teacherServices.useGetInstituteTeacherQuery(
         {
-            id: 1,
-            classes: '10',
-            subject: 'Chemistry',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Donall Samart'
-            },
-            type: 'A/L'
+            instituteId: user.instituteId,
+            search: searchParams.get('search') || '',
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
         },
         {
-            id: 2,
-            classes: '10',
-            subject: 'Physics',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Reuven Presdie'
-            },
-            type: 'A/L'
-        },
-        {
-            id: 3,
-            classes: '10',
-            subject: 'Maths',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Irwin Havvock'
-            },
-            type: 'O/L'
-        },
-        {
-            id: 4,
-            classes: '10',
-            subject: 'Science',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Bear Kestin'
-            },
-            type: 'O/L'
+            skip: !user.instituteId
         }
-    ];
+    );
+
+    useErrorHandler(isTeacherError, teacherError);
 
     const tableColumns: TableColumn[] = [
         { name: 'Teacher', value: { render: renderTeacher } },
-        { name: 'No of Classes', value: 'classes' },
-        { name: 'Subject', value: 'subject' },
-        { name: 'Type', value: 'type' },
+        { name: 'No of Classes', value: 'classes' }, // Adjust this according to your data
+        { name: 'Subject', value: 'subject' },       // Adjust this according to your data
+        { name: 'Type', value: 'type' },             // Adjust this according to your data
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
@@ -110,7 +94,12 @@ function Teachers() {
                             Add New
                         </Button>
                     </div>
-                    <Table data={tableData} columns={tableColumns} />
+                    <Table 
+                        data={instituteTeachers?.data?.data}
+                        columns={tableColumns}
+                        loading={teacherLoading}
+                        pagination={{ enable: true, pages: instituteTeachers?.data?.pages }}
+                    />
                 </div>
             </section>
         </div>
