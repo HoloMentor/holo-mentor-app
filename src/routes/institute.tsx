@@ -7,9 +7,9 @@ const Profile = loadable(() => import('@/pages/institute/profile'));
 const Notification = loadable(() => import('@/pages/institute/notifications'));
 const Teachers = loadable(() => import('@/pages/institute/teachers/index.tsx'));
 const TeacherProfile = loadable(() => import('@/pages/institute/teachers/profile'));
-const Class = loadable(() => import('@/pages/institute/classes/class-progress'));
+const ClassProgress = loadable(() => import('@/pages/institute/classes/class-progress'));
 const Students = loadable(() => import('@/pages/institute/classes/class-students'));
-const ClassProgress = loadable(() => import('@/pages/institute/classes/classes'));
+const Class = loadable(() => import('@/pages/institute/classes/classes'));
 const Subjects = loadable(() => import('@/pages/institute/subjects/index.tsx'));
 
 export default function InstituteRoutes() {
@@ -22,10 +22,10 @@ export default function InstituteRoutes() {
                     <Route path=":teacherId" element={<TeacherProfile />} />
                 </Route>
                 <Route path="class" element={<Outlet />}>
-                    <Route path=":classId/progress" element={<Class />} />
+                    <Route path=":classId/progress" element={<ClassProgress />} />
                     <Route path=":classId/students" element={<Students />} />
                 </Route>
-                <Route path="classes" element={<ClassProgress />} />
+                <Route path="classes" element={<Class />} />
                 <Route path="subjects" element={<Subjects />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="notifications" element={<Notification />} />
