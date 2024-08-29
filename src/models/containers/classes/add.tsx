@@ -66,6 +66,22 @@ export default function AddClass() {
                     ]}
                 />
                 <FormInput label="Class name" placeholder="Class name" name="classname" />
+                <FormDropdown
+                    classNames={{ mainWrapper: 'w-full' }}
+                    label="Day of the week"
+                    name="dayOfTheWeek"
+                    options={
+                        [
+                            { value: '1', label: 'Monday' },
+                            { value: '2', label: 'Tuesday' },
+                            { value: '3', label: 'Wednesday' },
+                            { value: '4', label: 'Thursday' },
+                            { value: '5', label: 'Friday' },
+                            { value: '6', label: 'Saturday' },
+                            { value: '7', label: 'Sunday' }
+                        ] as any
+                    }
+                />
                 <div className="grid grid-cols-2 gap-3">
                     <FormInput
                         label="Start Time"
