@@ -1,20 +1,23 @@
 import Form from '@/components/form';
 import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
+import FormDropdown from '@/components/form/dropdown';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
 
 const initialValues = {
-    subject: '',
+    subjectId: '',
+    teacherID: '',
     className: '',
     startTime: '',
     endTime: ''
 };
 
 const validationSchema = Yup.object().shape({
-    subject: Yup.string().required('Subject is required'),
+    subjectId: Yup.string().required('Subject is required'),
+    teacherId: Yup.string().required('Teacher is required'),
     className: Yup.string().required('className is required'),
     startTime: Yup.string()
         .required('Start time is required')
@@ -45,7 +48,23 @@ export default function AddClass() {
                 Create Class
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
-                <FormInput label="Subject" placeholder="Subject" name="subject" />
+                <FormDropdown
+                    label="Subject"
+                    name="subjectId"
+                    options={[
+                        { value: '1', label: 'Subject 1' },
+                        { value: '2', label: 'Subject 2' }
+                    ]}
+                />
+                <FormDropdown
+                    classNames={{ mainWrapper: 'w-full' }}
+                    label="Teacher"
+                    name="teacherId"
+                    options={[
+                        { value: '1', label: 'Teacher 1' },
+                        { value: '2', label: 'Teacher 2' }
+                    ]}
+                />
                 <FormInput label="Class name" placeholder="Class name" name="classname" />
                 <div className="grid grid-cols-2 gap-3">
                     <FormInput
