@@ -2,15 +2,15 @@ import Button from '@/components/button';
 import useErrorHandler from '@/hooks/error-handler';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
-import instituteServices from '@/redux/services/institute.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
+import classServices from '@/redux/services/class.service';
 
 export default function DeleteClass({ id }: ModelContainerProps) {
     const dispatch = useDispatch();
 
     const [deleteRecord, { isLoading: isDeleting, isError: isDeleteError, error: deleteError }] =
-        instituteServices.useDeleteMutation();
+        classServices.useDeleteMutation();
     useErrorHandler(isDeleteError, deleteError);
 
     const onSubmit = async () => {
