@@ -52,6 +52,13 @@ const classServices = createApi({
             }),
             providesTags: ['Class']
         }),
+        getClassByTeacherAndInstitute: builder.query({
+            query: ({ teacherId, instituteId }) => ({
+                method: 'GET',
+                url: `/classes/teacher/${teacherId}/institute/${instituteId}`
+            }),
+            providesTags: ['Class']
+        }),
 })
 });
 

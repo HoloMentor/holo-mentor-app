@@ -29,7 +29,7 @@ function Teachers() {
                     className="relative inline-block h-8 w-8 !rounded-full object-cover object-center border-2 border-dark-green"
                 />
                 <Link to={`/teachers/${data.id}`}>
-                    <span className="text-left ml-5 mt-2">{data.firstname} {data.lastname}</span>
+                    <span className="text-left ml-5 mt-2  text-dark-green">{data.firstname} {data.lastname}</span>
                 </Link>
             </div>
         );
@@ -51,14 +51,11 @@ function Teachers() {
         }
     );
 
-    console.log(instituteTeachers);
-
     useErrorHandler(isTeacherError, teacherError);
 
     const tableColumns: TableColumn[] = [
         { name: 'Teacher', value: { render: renderTeacher } },
-        { name: 'No of Classes', value: 'noOfClasses' }, // Adjust this according to your data
-        { name: 'Type', value: 'type' },             // Adjust this according to your data
+        { name: 'No of Classes', value: 'noOfClasses' }, 
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
 

@@ -91,7 +91,7 @@ export default function EditClass({ data }: { data: { id: number } }) {
         };
 
         const result = await updateClass({
-            id: data.id,  // Make sure to pass the class ID for updating
+            id: data.id,  
             instituteId: user.instituteId,
             subjectId: values.subjectId,
             teacherId: values.teacherId,
