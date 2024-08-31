@@ -12,6 +12,8 @@ import { modelActions } from '@/redux/reducers/model.reducer.ts';
 import { IRootState } from '@/redux';
 import classServices from '@/redux/services/class.service';
 import useErrorHandler from '@/hooks/error-handler';
+import teacherServices from '@/redux/services/teacher.service';
+import subjectServices from '@/redux/services/subject.service';
 
 const initialValues = {
     subjectId: '',
@@ -46,6 +48,37 @@ export default function AddClass() {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 
+
+    const {
+        data: instituteTeachers,
+    } = teacherServices.useGetInstituteTeacherQuery(
+        {
+            instituteId: user.instituteId,
+            search: '',
+            page: 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
+    const {
+        data: instituteSubjects,
+        } = subjectServices.useGetInstituteSubjectsQuery(
+        {
+            instituteId: user.instituteId,
+            search: '',
+            page: 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+  
+  
+    console.log(instituteSubjects);
+
+    
     const [
         createClass,
         { isLoading: isClassCreating, isError: isClassCreateError, error: classCreateError }
@@ -67,7 +100,7 @@ export default function AddClass() {
             subjectId: values.subjectId,
             teacherId: values.teacherId, 
             className: values.className,
-            dayOfWeek: values.dayOfWeek, // Added missing field
+            dayOfWeek: values.dayOfWeek, 
             startTime: formattedValues.startTime,
             endTime: formattedValues.endTime,
         });
@@ -97,20 +130,33 @@ export default function AddClass() {
                 <FormDropdown
                     label="Subject"
                     name="subjectId"
-                    options={[
-                        { value: '1', label: 'Subject 1' },
-                        { value: '2', label: 'Subject 2' }
-                    ]}
+                    options={
+                        instituteSubjects?.data?.data && instituteSubjects.data.data.length > 0
+                            ? [
+                                {
+                                    value: instituteSubjects.data.data[0].id,
+                                    label: instituteSubjects.data.data[0].name
+                                }
+                            ]
+                            : []
+                    }
                 />
                 <FormDropdown
                     classNames={{ mainWrapper: 'w-full' }}
                     label="Teacher"
                     name="teacherId"
-                    options={[
-                        { value: '1', label: 'Teacher 1' },
-                        { value: '2', label: 'Teacher 2' }
-                    ]}
+                    options={
+                        instituteTeachers?.data?.data && instituteTeachers.data.data.length > 0
+                            ? [
+                                {
+                                    value: instituteTeachers.data.data[0].id,
+                                    label: `${instituteTeachers.data.data[0].firstname} ${instituteTeachers.data.data[0].lastname}`,
+                                }
+                            ]
+                            : []
+                    }
                 />
+
                 <FormInput label="Class name" placeholder="Class name" name="className" /> {/* Corrected name */}
                 <FormDropdown
                     classNames={{ mainWrapper: 'w-full' }}
