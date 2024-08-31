@@ -14,6 +14,8 @@ import classServices from '@/redux/services/class.service';
 import useErrorHandler from '@/hooks/error-handler';
 import teacherServices from '@/redux/services/teacher.service';
 import subjectServices from '@/redux/services/subject.service';
+import FormAutoComplete from '@/components/form/autocomplete';
+import { useMemo } from 'react';
 
 const initialValues = {
     subjectId: '',
@@ -44,14 +46,25 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function AddClass() {
-
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 
+    const DaysOfTheWeek = [
+        { value: 'MON', label: 'Monday' },
+        { value: 'TUE', label: 'Tuesday' },
+        { value: 'WED', label: 'Wednesday' },
+        { value: 'THU', label: 'Thursday' },
+        { value: 'FRI', label: 'Friday' },
+        { value: 'SAT', label: 'Saturday' },
+        { value: 'SUN', label: 'Sunday' }
+    ];
 
     const {
         data: instituteTeachers,
-    } = teacherServices.useGetInstituteTeacherQuery(
+        isError: isInstituteTeachersError,
+        error: instituteTeachersError,
+        isLoading: isInstituteTeachersLoading
+    } = teacherServices.useGetInstituteTeachersQuery(
         {
             instituteId: user.instituteId,
             search: '',
@@ -61,10 +74,14 @@ export default function AddClass() {
             skip: !user.instituteId
         }
     );
+    useErrorHandler(isInstituteTeachersError, instituteTeachersError);
 
     const {
         data: instituteSubjects,
-        } = subjectServices.useGetInstituteSubjectsQuery(
+        isError: isInstituteSubjectsError,
+        error: instituteSubjectsError,
+        isLoading: isInstituteSubjectsLoading
+    } = subjectServices.useGetInstituteSubjectsQuery(
         {
             instituteId: user.instituteId,
             search: '',
@@ -74,35 +91,23 @@ export default function AddClass() {
             skip: !user.instituteId
         }
     );
-  
-  
-    console.log(instituteSubjects);
+    useErrorHandler(isInstituteSubjectsError, instituteSubjectsError);
 
-    
     const [
         createClass,
         { isLoading: isClassCreating, isError: isClassCreateError, error: classCreateError }
     ] = classServices.useCreateMutation();
-
     useErrorHandler(isClassCreateError, classCreateError); // Fixed typo here
 
     const onSubmit = async (values: FormikValues) => {
-
-        console.log(values);
-
-        const formattedValues = {
-            startTime: moment(values.startTime, 'HH:mm').format('HH:mm:ss'),
-            endTime: moment(values.endTime, 'HH:mm').format('HH:mm:ss'),
-        };
-
         const result = await createClass({
             instituteId: user.instituteId,
             subjectId: values.subjectId,
-            teacherId: values.teacherId, 
+            teacherId: values.teacherId,
             className: values.className,
-            dayOfWeek: values.dayOfWeek, 
-            startTime: formattedValues.startTime,
-            endTime: formattedValues.endTime,
+            dayOfWeek: values.dayOfWeek,
+            startTime: moment(values.startTime, 'HH:mm').format('HH:mm:ss'),
+            endTime: moment(values.endTime, 'HH:mm').format('HH:mm:ss')
         });
 
         if (result?.data?.status === 201 || result?.data?.status === 200) {
@@ -117,6 +122,39 @@ export default function AddClass() {
         }
     };
 
+    const instituteSubjectsOptions = useMemo(() => {
+        let template = [];
+
+        if (instituteSubjects?.data?.data?.length > 0) {
+            template = instituteSubjects.data.data.map((subject: { name: string; id: number }) => {
+                return {
+                    value: subject.id,
+                    label: subject.name
+                };
+            });
+        }
+
+        return template;
+    }, [instituteSubjects]);
+
+    const instituteTeachersOptions = useMemo(() => {
+        let template = [];
+
+        if (instituteTeachers?.data?.data?.length > 0) {
+            console.log(instituteTeachers.data.data);
+            template = instituteTeachers.data.data.map(
+                (teacher: { firstName: string; lastName: string; id: number }) => {
+                    return {
+                        value: teacher.id,
+                        label: `${teacher.firstName} ${teacher.lastName}`
+                    };
+                }
+            );
+        }
+
+        return template;
+    }, [instituteTeachers]);
+
     return (
         <Form
             validationSchema={validationSchema}
@@ -127,50 +165,32 @@ export default function AddClass() {
                 Create Class
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
-                <FormDropdown
+                <FormAutoComplete
                     label="Subject"
                     name="subjectId"
-                    options={
-                        instituteSubjects?.data?.data && instituteSubjects.data.data.length > 0
-                            ? [
-                                {
-                                    value: instituteSubjects.data.data[0].id,
-                                    label: instituteSubjects.data.data[0].name
-                                }
-                            ]
-                            : []
-                    }
+                    isLoading={isInstituteSubjectsLoading}
+                    isRequired
+                    defaultItems={instituteSubjectsOptions}
                 />
-                <FormDropdown
-                    classNames={{ mainWrapper: 'w-full' }}
+                <FormAutoComplete
                     label="Teacher"
                     name="teacherId"
-                    options={
-                        instituteTeachers?.data?.data && instituteTeachers.data.data.length > 0
-                            ? [
-                                {
-                                    value: instituteTeachers.data.data[0].id,
-                                    label: `${instituteTeachers.data.data[0].firstname} ${instituteTeachers.data.data[0].lastname}`,
-                                }
-                            ]
-                            : []
-                    }
+                    isLoading={isInstituteTeachersLoading}
+                    isRequired
+                    defaultItems={instituteTeachersOptions}
                 />
-
-                <FormInput label="Class name" placeholder="Class name" name="className" /> {/* Corrected name */}
-                <FormDropdown
-                    classNames={{ mainWrapper: 'w-full' }}
+                <FormInput
+                    label="Class name"
+                    placeholder="Class name"
+                    name="className"
+                    isRequired
+                />
+                {/* Corrected name */}
+                <FormAutoComplete
                     label="Day of the week"
                     name="dayOfWeek"
-                    options={[
-                        { value: 'MON', label: 'Monday' },
-                        { value: 'TUE', label: 'Tuesday' },
-                        { value: 'WED', label: 'Wednesday' },
-                        { value: 'THU', label: 'Thursday' },
-                        { value: 'FRI', label: 'Friday' },
-                        { value: 'SAT', label: 'Saturday' },
-                        { value: 'SUN', label: 'Sunday' }
-                    ]}
+                    defaultItems={DaysOfTheWeek}
+                    isRequired
                 />
                 <div className="grid grid-cols-2 gap-3">
                     <FormInput
@@ -178,8 +198,15 @@ export default function AddClass() {
                         placeholder="Start Time"
                         name="startTime"
                         type="time"
+                        isRequired
                     />
-                    <FormInput label="End Time" placeholder="End Time" name="endTime" type="time" />
+                    <FormInput
+                        label="End Time"
+                        placeholder="End Time"
+                        name="endTime"
+                        type="time"
+                        isRequired
+                    />
                 </div>
             </ModalBody>
             <ModalFooter>

@@ -12,7 +12,7 @@ const subjectServices = createApi({
                 url: `/subjects/create`,
                 body: props
             }),
-            invalidatesTags: ['Subjects']
+            invalidatesTags: ['Subjects', 'InstituteSubjects']
         }),
         delete: builder.mutation({
             query: ({ id }) => ({
@@ -27,7 +27,7 @@ const subjectServices = createApi({
                 url: `/subjects/update/${id}`,
                 body: props
             }),
-            invalidatesTags: ['Subjects']
+            invalidatesTags: ['Subjects', 'InstituteSubjects', 'Subject']
         }),
         get: builder.query({
             query: ({ id }) => ({

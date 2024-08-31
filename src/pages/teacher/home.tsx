@@ -1,9 +1,27 @@
 import InfoCard from '@/components/cards/info';
 import DoughnuChart from '@/components/charts/doughnut';
-import { useNavigate } from 'react-router-dom';
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+import teacherServices from '@/redux/services/teacher.service';
+import { useSelector } from 'react-redux';
 
 function Home() {
-    const navigate = useNavigate();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const {
+        data: teacherStats,
+        isError: isTeacherStatsError,
+        error: teacherStatsError,
+        isLoading: isTeacherStatsLoading
+    } = teacherServices.useGetTeacherStatsQuery(
+        {
+            id: user.userInstituteId
+        },
+        {
+            skip: !user.userInstituteId
+        }
+    );
+    useErrorHandler(isTeacherStatsError, teacherStatsError);
 
     /* sample */
     const bestContributors = [
@@ -34,7 +52,10 @@ function Home() {
                 />
             </div>
             <div className="grid w-full h-full grid-cols-4 gap-5 px-5 py-4 max-xl:grid-cols-2 max-sm:grid-cols-1">
-                <InfoCard number={560} label="Students" onClick={() => navigate('/student')}>
+                <InfoCard
+                    isLoading={isTeacherStatsLoading}
+                    number={teacherStats?.data?.studentCount}
+                    label="Students">
                     <svg
                         width="51"
                         height="51"
@@ -51,7 +72,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard number={50} label="Staff">
+                <InfoCard isLoading={isTeacherStatsLoading} number={50} label="Staff">
                     <svg
                         width="51"
                         height="50"
@@ -71,7 +92,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard number={500} label="MCQ">
+                <InfoCard isLoading={isTeacherStatsLoading} number={500} label="MCQ">
                     <svg
                         width="51"
                         height="51"
@@ -96,7 +117,10 @@ function Home() {
                         </defs>
                     </svg>
                 </InfoCard>
-                <InfoCard number={5} label="Classes">
+                <InfoCard
+                    isLoading={isTeacherStatsLoading}
+                    number={teacherStats?.data?.classCount}
+                    label="Classes">
                     <svg
                         width="51"
                         height="51"
