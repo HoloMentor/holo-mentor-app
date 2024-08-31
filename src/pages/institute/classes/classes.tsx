@@ -71,7 +71,7 @@ export default function Classes() {
                         </Button>
                         <Input className="max-w-96 w-full" placeholder="Search" />
                     </div>
-                    <Table 
+                    <Table
                         data={tableData}
                         columns={tableColumns}
                         loading={classesLoading}

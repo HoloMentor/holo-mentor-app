@@ -4,9 +4,9 @@ import { baseQuery } from '@/redux/services/base';
 const classServices = createApi({
     reducerPath: 'class-service',
     baseQuery: baseQuery,
-    tagTypes: ['Class','Classes','InstituteClasses'],
+    tagTypes: ['Class', 'Classes', 'InstituteClasses'],
     endpoints: (builder) => ({
-        create : builder.mutation({
+        create: builder.mutation({
             query: (props) => ({
                 method: 'POST',
                 url: `/classes/create`,
@@ -51,8 +51,8 @@ const classServices = createApi({
                 params
             }),
             providesTags: ['Class']
-        }),
-})
+        })
+    })
 });
 
 export default classServices;

@@ -34,7 +34,7 @@ export default function AddTeacher() {
         { isLoading: isTeacherCreating, isError: isTeacherCreateError, error: teacherCreateError }
     ] = teacherServices.useCreateMutation();
     useErrorHandler(isTeacherCreateError, teacherCreateError);
-    
+
     const onSubmit = async (values: FormikValues) => {
         const result = await createTeacher({
             instituteId: user.instituteId,
@@ -78,7 +78,9 @@ export default function AddTeacher() {
                 />
             </ModalBody>
             <ModalFooter>
-                <SubmitButton isLoading={isTeacherCreating} type="submit">Add</SubmitButton>
+                <SubmitButton isLoading={isTeacherCreating} type="submit">
+                    Add
+                </SubmitButton>
             </ModalFooter>
         </Form>
     );
