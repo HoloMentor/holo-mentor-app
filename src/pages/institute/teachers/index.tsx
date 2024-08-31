@@ -51,12 +51,13 @@ function Teachers() {
         }
     );
 
+    console.log(instituteTeachers);
+
     useErrorHandler(isTeacherError, teacherError);
 
     const tableColumns: TableColumn[] = [
         { name: 'Teacher', value: { render: renderTeacher } },
-        { name: 'No of Classes', value: 'classes' }, // Adjust this according to your data
-        { name: 'Subject', value: 'subject' },       // Adjust this according to your data
+        { name: 'No of Classes', value: 'noOfClasses' }, // Adjust this according to your data
         { name: 'Type', value: 'type' },             // Adjust this according to your data
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
