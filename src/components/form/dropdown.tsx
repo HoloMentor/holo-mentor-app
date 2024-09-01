@@ -1,6 +1,12 @@
 import { ErrorMessage, useField, useFormikContext } from 'formik';
 import React from 'react';
-import { Dropdown as NextDropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@nextui-org/dropdown";
+import {
+    Dropdown as NextDropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownSection,
+    DropdownItem
+} from '@nextui-org/dropdown';
 
 interface ClassNamesProps {
     mainWrapper?: string;
@@ -14,7 +20,14 @@ interface FormDropdownProps {
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export default function FormDropdown({ name, label, options, classNames, onChange, ...props }: FormDropdownProps) {
+export default function FormDropdown({
+    name,
+    label,
+    options,
+    classNames,
+    onChange,
+    ...props
+}: FormDropdownProps) {
     const [field] = useField(name);
     const { setFieldValue } = useFormikContext();
 
@@ -24,7 +37,10 @@ export default function FormDropdown({ name, label, options, classNames, onChang
     };
 
     return (
-        <div className={`flex flex-col gap-1 ${classNames?.mainWrapper ? classNames.mainWrapper : ''}`}>
+        <div
+            className={`flex flex-col gap-1 ${
+                classNames?.mainWrapper ? classNames.mainWrapper : ''
+            }`}>
             {label && (
                 <label htmlFor={name} className="text-sm">
                     {label}
@@ -37,8 +53,7 @@ export default function FormDropdown({ name, label, options, classNames, onChang
                         {...props}
                         id={name}
                         onChange={handleChange}
-                        className={`block text-sm shadow-none border-2 border-[#0000001A] rounded-md data-[focus=true]:!border-dark-green`}
-                    >
+                        className={`block text-sm shadow-none border-2 border-[#0000001A] rounded-md data-[focus=true]:!border-dark-green`}>
                         <option value="">Select {label}</option>
                         {options.map((option) => (
                             <option key={option.value} value={option.value}>
@@ -53,8 +68,7 @@ export default function FormDropdown({ name, label, options, classNames, onChang
                             <DropdownItem
                                 key={option.value}
                                 value={option.value}
-                                onClick={() => setFieldValue(name, option.value)}
-                            >
+                                onClick={() => setFieldValue(name, option.value)}>
                                 {option.label}
                             </DropdownItem>
                         ))}

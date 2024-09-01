@@ -1,37 +1,51 @@
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+import teacherServices from '@/redux/services/teacher.service';
 import { Card, CardBody, CardHeader } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 
 interface InstituteClass {
+    id: number;
     name: string;
     subject: string;
-    town?: string;
+    institute: {
+        logo: string;
+    };
 }
 
 export default function Classes() {
-    const instituteClasses: InstituteClass[] = [
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const location = useLocation();
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const {
+        data: teacherClasses,
+        isError: isTeacherClassesError,
+        error: teacherClassesError,
+        isLoading: isTeacherClassesLoading
+    } = teacherServices.useGetTeacherClassesQuery(
         {
-            name: '2024-AL-Theory',
-            subject: 'Physics'
+            id: user.userInstituteId,
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
         },
         {
-            name: '2024-AL-Theory',
-            subject: 'Physics'
-        },
-        {
-            name: 'Lyceum College',
-            subject: 'Physics',
-            town: 'Negombo'
+            skip: !user.userInstituteId
         }
-    ];
+    );
+    useErrorHandler(isTeacherClassesError, teacherClassesError);
+
+    console.log(teacherClasses);
 
     return (
         <div className="grid justify-between grid-cols-4 gap-5 pr-4 m-3 max-xl:grid-cols-2 max-sm:grid-cols-1 max-xl:m-0">
-            {instituteClasses.map((instituteClass, i: number) => {
+            {/* {teacherClasses.map((instituteClass: InstituteClass, i: number) => {
                 return (
-                    <Link key={`class-${i}`} to={`/classes/${i}`}>
-                        <Card className="py-4 cursor-pointer hover:scale-[.97]">
+                    <Link key={`class-${i}`} to={`/classes/${instituteClass.id}`}>
+                        <Card className="py-4 cursor-pointer hover:scale-[.99] !transition-all">
                             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                                {/* <p className="text-tiny uppercase font-bold"></p> */}
                                 <small className="text-default-500">{instituteClass.subject}</small>
                                 <h4 className="font-bold text-large">{instituteClass.name}</h4>
                             </CardHeader>
@@ -46,7 +60,7 @@ export default function Classes() {
                         </Card>
                     </Link>
                 );
-            })}
+            })} */}
         </div>
     );
 }

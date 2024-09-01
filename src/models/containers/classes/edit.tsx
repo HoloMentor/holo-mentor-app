@@ -39,7 +39,7 @@ export default function EditClass({ data }: { data: { id: number } }) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 
-    const { data: instituteTeachers } = teacherServices.useGetInstituteTeacherQuery(
+    const { data: instituteTeachers } = teacherServices.useGetInstituteTeachersQuery(
         { instituteId: user.instituteId, search: '', page: 1 },
         { skip: !user.instituteId }
     );
@@ -49,10 +49,17 @@ export default function EditClass({ data }: { data: { id: number } }) {
         { skip: !user.instituteId }
     );
 
-    const [updateClass, { isLoading: isClassUpdating, isError: isClassUpdateError, error: classUpdateError }] = classServices.useUpdateMutation();
+    const [
+        updateClass,
+        { isLoading: isClassUpdating, isError: isClassUpdateError, error: classUpdateError }
+    ] = classServices.useUpdateMutation();
     useErrorHandler(isClassUpdateError, classUpdateError);
 
-    const { data: classData, isError: isClassLoadingError, error: classLoadingError } = classServices.useGetQuery(
+    const {
+        data: classData,
+        isError: isClassLoadingError,
+        error: classLoadingError
+    } = classServices.useGetQuery(
         {
             id: data.id
         },
@@ -87,18 +94,18 @@ export default function EditClass({ data }: { data: { id: number } }) {
     const onSubmit = async (values: FormikValues) => {
         const formattedValues = {
             startTime: moment(values.startTime, 'HH:mm').format('HH:mm:ss'),
-            endTime: moment(values.endTime, 'HH:mm').format('HH:mm:ss'),
+            endTime: moment(values.endTime, 'HH:mm').format('HH:mm:ss')
         };
 
         const result = await updateClass({
-            id: data.id,  
+             id: data.id,
             instituteId: user.instituteId,
             subjectId: values.subjectId,
             teacherId: values.teacherId,
             className: values.className,
             dayOfWeek: values.dayOfWeek,
             startTime: formattedValues.startTime,
-            endTime: formattedValues.endTime,
+            endTime: formattedValues.endTime
         });
 
         if (result?.data?.status === 200 || result?.data?.status === 201) {
@@ -141,7 +148,7 @@ export default function EditClass({ data }: { data: { id: number } }) {
                         instituteTeachers?.data?.data?.length > 0
                             ? instituteTeachers.data.data.map((teacher: any) => ({
                                   value: teacher.id,
-                                  label: `${teacher.firstname} ${teacher.lastname}`
+                                  label: `${teacher.firstName} ${teacher.lastName}`
                               }))
                             : []
                     }

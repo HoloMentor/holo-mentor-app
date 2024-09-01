@@ -1,16 +1,15 @@
-import Heading from '@/components/headings/main.tsx';
-import Table from '@/components/table';
-import Input from '@/components/input.tsx';
 import Button from '@/components/button.tsx';
-import { Link } from 'react-router-dom';
-import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import Heading from '@/components/headings/main.tsx';
+import Input from '@/components/input.tsx';
+import Table from '@/components/table';
+import useErrorHandler from '@/hooks/error-handler.tsx';
 import { modelNames } from '@/models';
+import { renderMoreActions, renderTeacher } from '@/pages/institute/teachers/columns.tsx';
+import { IRootState } from '@/redux';
+import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import teacherServices from '@/redux/services/teacher.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { IRootState } from '@/redux';
-import { renderMoreActions } from '@/pages/institute/teachers/columns.tsx';
-import useErrorHandler from '@/hooks/error-handler.tsx';
-import teacherServices from '@/redux/services/teacher.service';
 
 function Teachers() {
     const dispatch = useDispatch();
@@ -20,27 +19,12 @@ function Teachers() {
     const params = location.search;
     const searchParams = new URLSearchParams(params.toString());
 
-    const renderTeacher = ({ data }: CustomTableCellData) => {
-        return (
-            <div className="flex flex-row">
-                <img
-                    src={data.image || '/path/to/default/avatar.png'}
-                    alt="avatar"
-                    className="relative inline-block h-8 w-8 !rounded-full object-cover object-center border-2 border-dark-green"
-                />
-                <Link to={`/teachers/${data.id}`}>
-                    <span className="text-left ml-5 mt-2  text-dark-green">{data.firstname} {data.lastname}</span>
-                </Link>
-            </div>
-        );
-    };
-
     const {
         data: instituteTeachers,
         isLoading: teacherLoading,
         isError: isTeacherError,
         error: teacherError
-    } = teacherServices.useGetInstituteTeacherQuery(
+    } = teacherServices.useGetInstituteTeachersQuery(
         {
             instituteId: user.instituteId,
             search: searchParams.get('search') || '',
@@ -50,12 +34,13 @@ function Teachers() {
             skip: !user.instituteId
         }
     );
-
     useErrorHandler(isTeacherError, teacherError);
 
     const tableColumns: TableColumn[] = [
         { name: 'Teacher', value: { render: renderTeacher } },
         { name: 'No of Classes', value: 'noOfClasses' }, 
+        { name: 'Subject', value: 'subject' }, // Adjust this according to your data
+        { name: 'Type', value: 'type' }, // Adjust this according to your data
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
@@ -92,7 +77,7 @@ function Teachers() {
                             Add New
                         </Button>
                     </div>
-                    <Table 
+                    <Table
                         data={instituteTeachers?.data?.data}
                         columns={tableColumns}
                         loading={teacherLoading}

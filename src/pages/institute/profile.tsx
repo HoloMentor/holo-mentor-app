@@ -3,7 +3,6 @@ import ProfileDetailsCard from '@/components/cards/profile-details';
 import Heading from '@/components/headings/main';
 
 export default function Profile() {
-
     return (
         <div className="flex flex-col gap-3">
             <Heading>Profile</Heading>
