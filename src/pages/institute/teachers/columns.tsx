@@ -13,15 +13,15 @@ import { Link } from 'react-router-dom';
 
 export const renderTeacher = ({ data }: CustomTableCellData) => {
     return (
-        <div className="flex flex-row">
+        <div className="flex items-center gap-3">
             <img
                 src={data.image || '/path/to/default/avatar.png'}
                 alt="avatar"
                 className="relative inline-block h-8 w-8 !rounded-full object-cover object-center border-2 border-dark-green"
             />
             <Link to={`/teachers/${data.id}`}>
-                <span className="text-left ml-5 mt-2">
-                    {data.firstname} {data.lastname}
+                <span className="text-left">
+                    {data.firstName} {data.lastName}
                 </span>
             </Link>
         </div>

@@ -141,7 +141,6 @@ export default function AddClass() {
         let template = [];
 
         if (instituteTeachers?.data?.data?.length > 0) {
-            console.log(instituteTeachers.data.data);
             template = instituteTeachers.data.data.map(
                 (teacher: { firstName: string; lastName: string; id: number }) => {
                     return {
