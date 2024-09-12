@@ -1,19 +1,15 @@
-interface ProfileInfoDetailsProps{
+interface ProfileInfoDetailsProps {
     user: {
         email: string;
         country: string;
         contactNumber: string;
         countryCode: string;
     };
-    
 }
 
 export default function ProfileDetailsCardId({ user }: ProfileInfoDetailsProps) {
-
-
     return (
         <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
-
             <h1 className="text-xl font-semibold text-dark-green">Personal Information</h1>
 
             <ul className="mt-4">
@@ -35,7 +31,7 @@ export default function ProfileDetailsCardId({ user }: ProfileInfoDetailsProps) 
                     </div>
                     <span>
                         <a href="mailto:saliya@gmail.com" className="text-black">
-                                {user.email || '-'}
+                            {user.email || '-'}
                         </a>
                     </span>
                 </li>
@@ -55,18 +51,15 @@ export default function ProfileDetailsCardId({ user }: ProfileInfoDetailsProps) 
                             />
                         </svg>
                     </div>
-                        <span>
-                            <a
-                                href={`tel:${
-                                    user.contactNumber
-                                        ? user.countryCode +
-                                          user.contactNumber
-                                        : '#'
-                                }`}
-                                className="text-black">
-                                {user.contactNumber || '-'}
-                            </a>
-                        </span>
+                    <span>
+                        <a
+                            href={`tel:${
+                                user.contactNumber ? user.countryCode + user.contactNumber : '#'
+                            }`}
+                            className="text-black">
+                            {user.contactNumber || '-'}
+                        </a>
+                    </span>
                 </li>
                 <li className="flex gap-4 mb-4 text-sm items-center">
                     <div className="flex items-center justify-center w-5 h-5 text-neutral-500">
@@ -91,7 +84,6 @@ export default function ProfileDetailsCardId({ user }: ProfileInfoDetailsProps) 
                     </div>
 
                     <span>{user.country || '-'}</span>
-                   
                 </li>
             </ul>
         </div>

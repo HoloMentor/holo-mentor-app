@@ -1,5 +1,5 @@
 import StudyPlanCard from '@/components/cards/study-plan-card';
-import { Tabs, Tab, Card, CardBody} from '@nextui-org/react';
+import { Tabs, Tab, Card, CardBody } from '@nextui-org/react';
 import Button from '@/components/button';
 import { useDispatch } from 'react-redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
@@ -62,19 +62,24 @@ export default function StudyPlan() {
                                 className="py-5 font-semibold px-7 text-medium">
                                 <Card className="rounded-md ">
                                     <div className="flex justify-between px-8 py-2 mt-4">
-                                        <p className='text-xl text-dark-green'>Current Study Plan</p>
-                                        <Button onClick={() =>
-                            dispatch(
-                                modelActions.show({
-                                    name: modelNames.ADD_STUDY_PLAN
-                                })
-                            )
-                        }>Add New Plan</Button>
+                                        <p className="text-xl text-dark-green">
+                                            Current Study Plan
+                                        </p>
+                                        <Button
+                                            onClick={() =>
+                                                dispatch(
+                                                    modelActions.show({
+                                                        name: modelNames.ADD_STUDY_PLAN
+                                                    })
+                                                )
+                                            }>
+                                            Add New Plan
+                                        </Button>
                                     </div>
                                     <div className="flex flex-col">
                                         <CardBody className="grid grid-cols-2 gap-4">
                                             {item.content.map((card, index) => (
-                                                <div key={index} className='py-4'>
+                                                <div key={index} className="py-4">
                                                     {card}
                                                 </div>
                                             ))}

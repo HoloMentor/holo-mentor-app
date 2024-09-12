@@ -98,7 +98,7 @@ export default function EditClass({ data }: { data: { id: number } }) {
         };
 
         const result = await updateClass({
-             id: data.id,
+            id: data.id,
             instituteId: user.instituteId,
             subjectId: values.subjectId,
             teacherId: values.teacherId,

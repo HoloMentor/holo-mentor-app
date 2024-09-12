@@ -12,7 +12,6 @@ import { IRootState } from '@/redux';
 import { useSelector } from 'react-redux';
 
 export default function teacherProfile() {
-    
     const { user } = useSelector((state: IRootState) => state.user);
 
     const { teacherId } = useParams<{ teacherId: string }>();
@@ -22,7 +21,11 @@ export default function teacherProfile() {
     const params = location.search;
     const searchParams = new URLSearchParams(params.toString());
 
-    const { data: teacherData, isError: isTeacherLoadingError, error: teacherLoadingError } = userServices.useGetQuery(
+    const {
+        data: teacherData,
+        isError: isTeacherLoadingError,
+        error: teacherLoadingError
+    } = userServices.useGetQuery(
         {
             id: parseInt(teacherId)
         },
@@ -78,7 +81,6 @@ export default function teacherProfile() {
         id: classItem.id
     }));
 
-
     const items = [
         { key: '1', name: 'William Harpy' },
         { key: '2', name: 'Tony Reichert' },
@@ -92,17 +94,8 @@ export default function teacherProfile() {
 
             <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1 max-lg:gap-0">
                 <section className="w-full col-span-1 h-fit">
-                    {teacherData && (
-                        <ProfileInfoCardId 
-                            user={teacherData.data} 
-                            role={userRole}
-                        />
-                    )}
-                    {
-                        teacherData && (
-                            <ProfileDetailsCardId user={teacherData.data} />
-                        )
-                    }
+                    {teacherData && <ProfileInfoCardId user={teacherData.data} role={userRole} />}
+                    {teacherData && <ProfileDetailsCardId user={teacherData.data} />}
                     <div className="relative px-4 py-4 mb-4 bg-white rounded-lg">
                         <h1 className="text-xl font-semibold text-dark-green">Supporting Staff</h1>
 
@@ -136,7 +129,6 @@ export default function teacherProfile() {
                             loading={classesLoading}
                             pagination={{ enable: true, pages: instituteClasses?.pages }}
                         />
-                        
                     </div>
                 </section>
             </div>

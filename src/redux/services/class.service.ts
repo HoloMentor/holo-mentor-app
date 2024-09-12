@@ -58,7 +58,7 @@ const classServices = createApi({
                 url: `/classes/teacher/${teacherId}/institute/${instituteId}`
             }),
             providesTags: ['Class']
-        }),
+        })
     })
 });
 

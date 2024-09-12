@@ -50,7 +50,7 @@ export default function Classes() {
         subject: classItem.subjectName,
         class: classItem.className,
         students: classItem.studentCount,
-        id: classItem.id 
+        id: classItem.id
     }));
 
     return (
