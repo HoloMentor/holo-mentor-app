@@ -1,14 +1,17 @@
 import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
 import teacherServices from '@/redux/services/teacher.service';
-import { Card, CardBody, CardHeader } from '@nextui-org/react';
+import { Card, Skeleton } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 interface InstituteClass {
     id: number;
     name: string;
-    subject: string;
+    subject: {
+        name: string;
+    };
+    className: string;
     institute: {
         logo: string;
     };
@@ -26,7 +29,7 @@ export default function Classes() {
         isError: isTeacherClassesError,
         error: teacherClassesError,
         isLoading: isTeacherClassesLoading
-    } = teacherServices.useGetTeacherClassesQuery(
+    } = teacherServices.useGetInstituteTeacherClassesQuery(
         {
             id: user.userInstituteId,
             page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
@@ -37,30 +40,58 @@ export default function Classes() {
     );
     useErrorHandler(isTeacherClassesError, teacherClassesError);
 
-    console.log(teacherClasses);
-
     return (
-        <div className="grid justify-between grid-cols-4 gap-5 pr-4 m-3 max-xl:grid-cols-2 max-sm:grid-cols-1 max-xl:m-0">
-            {/* {teacherClasses.map((instituteClass: InstituteClass, i: number) => {
-                return (
-                    <Link key={`class-${i}`} to={`/classes/${instituteClass.id}`}>
-                        <Card className="py-4 cursor-pointer hover:scale-[.99] !transition-all">
-                            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                                <small className="text-default-500">{instituteClass.subject}</small>
-                                <h4 className="font-bold text-large">{instituteClass.name}</h4>
-                            </CardHeader>
-                            <CardBody className="overflow-visible items-center py-2">
-                                <img
-                                    alt="Card background"
-                                    className="object-cover rounded-xl"
-                                    src="/images/institute.png"
-                                    width={270}
-                                />
-                            </CardBody>
-                        </Card>
-                    </Link>
-                );
-            })} */}
+        <div className="grid justify-between grid-cols-6 gap-5 pr-4 m-3 max-xl:grid-cols-2 max-sm:grid-cols-1 max-xl:m-0">
+            {isTeacherClassesLoading
+                ? Array.from({ length: 3 }).map((_, i: number) => {
+                      return (
+                          <Card
+                              key={`class-skeleton-${i}`}
+                              className="w-[200px] space-y-5 p-4"
+                              radius="lg">
+                              <Skeleton className="rounded-lg">
+                                  <div className="h-32 rounded-lg bg-default-300"></div>
+                              </Skeleton>
+                              <div className="space-y-1">
+                                  <Skeleton className="w-3/5 rounded-lg">
+                                      <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                                  </Skeleton>
+                                  <Skeleton className="w-4/5 rounded-lg">
+                                      <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                                  </Skeleton>
+                              </div>
+                          </Card>
+                      );
+                  })
+                : teacherClasses?.data?.data?.map((instituteClass: InstituteClass, i: number) => {
+                      return (
+                          <Link
+                              key={`class-${instituteClass.id}`}
+                              to={`/classes/${instituteClass.id}`}>
+                              <Card
+                                  key={`class-skeleton-${i}`}
+                                  className="w-[200px] space-y-5 p-4 hover:scale-[.99] !transition-all shadow-sm"
+                                  radius="lg">
+                                  <div className="h-32 rounded-lg flex justify-center w-full">
+                                      <img
+                                          alt="Card background"
+                                          className="object-cover rounded-xl overflow-visible"
+                                          src="/images/institute.png"
+                                          width={100}
+                                      />
+                                  </div>
+                                  <div className="space-y-1">
+                                      <small className="text-default-500">
+                                          {instituteClass.subject.name}
+                                      </small>
+                                      <h4 className="font-bold text-large">
+                                          {instituteClass.className}
+                                      </h4>
+                                  </div>
+                              </Card>
+                          </Link>
+                      );
+                  })}
         </div>
     );
 }

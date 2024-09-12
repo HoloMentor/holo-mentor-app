@@ -8,10 +8,29 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
+import classServices from '@/redux/services/class.service';
+import { useParams } from 'react-router-dom';
+import useErrorHandler from '@/hooks/error-handler';
 
 export default function Materials() {
+    const params = useParams();
     const [openItems, setOpenItems] = useState([]);
     const dispatch = useDispatch();
+
+    const {
+        data: classData,
+        isLoading: isClassLoading,
+        error: classError,
+        isError: isClassError
+    } = classServices.useGetQuery(
+        {
+            id: params.classId
+        },
+        {
+            skip: !params.classId
+        }
+    );
+    useErrorHandler(isClassError, classError);
 
     const handleToggle = (index: number) => {
         setOpenItems((prev) => {
@@ -22,9 +41,11 @@ export default function Materials() {
             }
         });
     };
+
+    console.log(classData?.data);
     return (
         <div className="flex flex-col gap-3">
-            <Heading>Sasip 2023</Heading>
+            <Heading isLoading={isClassLoading}>{classData?.data.className}</Heading>
 
             <Content>
                 <div className="flex justify-between">
