@@ -4,11 +4,11 @@ import Heading from '@/components/headings/main';
 import { Button } from '@nextui-org/react';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 
-
 const Tasks = [
     {
         id: 1,
-        description: 'Do 50 Mcqs on Compiler Theory Complete 2021, 2022, 2023 AL Physics Past Paper Part II Question 03 and upload.'
+        description:
+            'Do 50 Mcqs on Compiler Theory Complete 2021, 2022, 2023 AL Physics Past Paper Part II Question 03 and upload.'
     },
     {
         id: 1,
@@ -65,12 +65,10 @@ export default function StudyPlanIndividual() {
                                 classNames={{
                                     content: 'flex flex-col gap-10'
                                 }}
-                                onPress={() => handleToggle(i + 1)}
-                            >
-                                {Tasks.filter(task => task.id === i + 1).map((task) => (
+                                onPress={() => handleToggle(i + 1)}>
+                                {Tasks.filter((task) => task.id === i + 1).map((task) => (
                                     <div key={task.id} className="flex flex-col gap-2">
-                                       
-                                        <p className='ml-4'>{task.description}</p>
+                                        <p className="ml-4">{task.description}</p>
                                     </div>
                                 ))}
                             </AccordionItem>
