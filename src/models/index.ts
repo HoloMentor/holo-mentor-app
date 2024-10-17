@@ -18,8 +18,8 @@ import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
 import EditMCQ from './containers/edit-mcq';
 import AddMaterials from './containers/teacher/add-material';
-import AddNewTopic from './containers/teacher/add-new-topic';
-import AddNewSubTopic from './containers/teacher/add-new-stopic';
+import AddNewTopic from './containers/teacher/topic/add.tsx';
+import AddNewSubTopic from './containers/teacher/sub-topic/add.tsx';
 import AddStudyPlan from './containers/teacher/add-study-plan';
 import EditTeacher from './containers/teacher/edit-teacher.tsx';
 import DeleteTeacher from './containers/teacher/delete-teacher.tsx';
@@ -102,11 +102,11 @@ export const modelContainers: ModelContainers = {
     },
     ADD_NEW_TOPIC: {
         model: AddNewTopic,
-        props: { size: '2xl' }
+        props: { size: 'xl' }
     },
     ADD_NEW_SUB_TOPIC: {
         model: AddNewSubTopic,
-        props: { size: '2xl' }
+        props: { size: 'xl' }
     },
     ADD_MARKS: {
         model: AddMarks,

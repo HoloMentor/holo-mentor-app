@@ -1,7 +1,12 @@
 import Select, { SelectValue } from '@/components/select';
 import React from 'react';
 
-export default function SubTopic() {
+export interface SubTopicProps {
+    id: string;
+    name: string;
+}
+
+export default function SubTopic({ data }: { data: SubTopicProps }) {
     const [filterState, setFilterState] = React.useState<SelectValue>('all');
 
     const filterOptions = [
@@ -22,7 +27,7 @@ export default function SubTopic() {
     return (
         <div className="flex flex-col gap-5 p-3">
             <div className="flex items-center justify-between gap-3">
-                <p className="font-semibold">1.1 Measurement</p>
+                <p className="font-semibold">{data.name}</p>
                 <div className="w-40">
                     <Select
                         value={filterState}

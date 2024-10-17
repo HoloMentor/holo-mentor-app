@@ -35,7 +35,7 @@ const validationSchema = Yup.object().shape({
         })
 });
 
-export default function EditClass({ data }: { data: { id: number } }) {
+export default function EditClass({ data }: ModelContainerProps) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 
