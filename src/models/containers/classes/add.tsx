@@ -1,21 +1,36 @@
 import Form from '@/components/form';
 import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
+import FormDropdown from '@/components/form/dropdown';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
+import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import { IRootState } from '@/redux';
+import classServices from '@/redux/services/class.service';
+import useErrorHandler from '@/hooks/error-handler';
+import teacherServices from '@/redux/services/teacher.service';
+import subjectServices from '@/redux/services/subject.service';
+import FormAutoComplete from '@/components/form/autocomplete';
+import { useMemo } from 'react';
 
 const initialValues = {
-    subject: '',
+    subjectId: '',
+    teacherId: '', // Fixed typo here
     className: '',
+    dayOfWeek: '', // Added missing field
     startTime: '',
     endTime: ''
 };
 
 const validationSchema = Yup.object().shape({
-    subject: Yup.string().required('Subject is required'),
-    className: Yup.string().required('className is required'),
+    subjectId: Yup.string().required('Subject is required'),
+    teacherId: Yup.string().required('Teacher is required'),
+    className: Yup.string().required('Class name is required'), // Corrected case
+    dayOfWeek: Yup.string().required('Day of the week is required'), // Added validation for dayOfWeek
     startTime: Yup.string()
         .required('Start time is required')
         .test('is-lesser', 'Start time should be lesser', function (value) {
@@ -30,10 +45,114 @@ const validationSchema = Yup.object().shape({
         })
 });
 
-export default function AddClass({}: ModelContainerProps) {
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+export default function AddClass() {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const DaysOfTheWeek = [
+        { value: 'MON', label: 'Monday' },
+        { value: 'TUE', label: 'Tuesday' },
+        { value: 'WED', label: 'Wednesday' },
+        { value: 'THU', label: 'Thursday' },
+        { value: 'FRI', label: 'Friday' },
+        { value: 'SAT', label: 'Saturday' },
+        { value: 'SUN', label: 'Sunday' }
+    ];
+
+    const {
+        data: instituteTeachers,
+        isError: isInstituteTeachersError,
+        error: instituteTeachersError,
+        isLoading: isInstituteTeachersLoading
+    } = teacherServices.useGetInstituteTeachersQuery(
+        {
+            instituteId: user.instituteId,
+            search: '',
+            page: 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+    useErrorHandler(isInstituteTeachersError, instituteTeachersError);
+
+    const {
+        data: instituteSubjects,
+        isError: isInstituteSubjectsError,
+        error: instituteSubjectsError,
+        isLoading: isInstituteSubjectsLoading
+    } = subjectServices.useGetInstituteSubjectsQuery(
+        {
+            instituteId: user.instituteId,
+            search: '',
+            page: 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+    useErrorHandler(isInstituteSubjectsError, instituteSubjectsError);
+
+    const [
+        createClass,
+        { isLoading: isClassCreating, isError: isClassCreateError, error: classCreateError }
+    ] = classServices.useCreateMutation();
+    useErrorHandler(isClassCreateError, classCreateError); // Fixed typo here
+
+    const onSubmit = async (values: FormikValues) => {
+        const result = await createClass({
+            instituteId: user.instituteId,
+            subjectId: values.subjectId,
+            teacherId: values.teacherId,
+            className: values.className,
+            dayOfWeek: values.dayOfWeek,
+            startTime: moment(values.startTime, 'HH:mm').format('HH:mm:ss'),
+            endTime: moment(values.endTime, 'HH:mm').format('HH:mm:ss')
+        });
+
+        if (result?.data?.status === 201 || result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            dispatch(modelActions.hide());
+        }
     };
+
+    const instituteSubjectsOptions = useMemo(() => {
+        let template = [];
+
+        if (instituteSubjects?.data?.data?.length > 0) {
+            template = instituteSubjects.data.data.map((subject: { name: string; id: number }) => {
+                return {
+                    value: subject.id,
+                    label: subject.name
+                };
+            });
+        }
+
+        return template;
+    }, [instituteSubjects]);
+
+    const instituteTeachersOptions = useMemo(() => {
+        let template = [];
+
+        if (instituteTeachers?.data?.data?.length > 0) {
+            template = instituteTeachers.data.data.map(
+                (teacher: { firstName: string; lastName: string; id: number }) => {
+                    return {
+                        value: teacher.id,
+                        label: `${teacher.firstName} ${teacher.lastName}`
+                    };
+                }
+            );
+        }
+
+        return template;
+    }, [instituteTeachers]);
 
     return (
         <Form
@@ -45,20 +164,54 @@ export default function AddClass({}: ModelContainerProps) {
                 Create Class
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
-                <FormInput label="Subject" placeholder="Subject" name="subject" />
-                <FormInput label="Class name" placeholder="Class name" name="classname" />
+                <FormAutoComplete
+                    label="Subject"
+                    name="subjectId"
+                    isLoading={isInstituteSubjectsLoading}
+                    isRequired
+                    defaultItems={instituteSubjectsOptions}
+                />
+                <FormAutoComplete
+                    label="Teacher"
+                    name="teacherId"
+                    isLoading={isInstituteTeachersLoading}
+                    isRequired
+                    defaultItems={instituteTeachersOptions}
+                />
+                <FormInput
+                    label="Class name"
+                    placeholder="Class name"
+                    name="className"
+                    isRequired
+                />
+                {/* Corrected name */}
+                <FormAutoComplete
+                    label="Day of the week"
+                    name="dayOfWeek"
+                    defaultItems={DaysOfTheWeek}
+                    isRequired
+                />
                 <div className="grid grid-cols-2 gap-3">
                     <FormInput
                         label="Start Time"
                         placeholder="Start Time"
                         name="startTime"
                         type="time"
+                        isRequired
                     />
-                    <FormInput label="End Time" placeholder="End Time" name="endTime" type="time" />
+                    <FormInput
+                        label="End Time"
+                        placeholder="End Time"
+                        name="endTime"
+                        type="time"
+                        isRequired
+                    />
                 </div>
             </ModalBody>
             <ModalFooter>
-                <SubmitButton type="submit">Create</SubmitButton>
+                <SubmitButton isLoading={isClassCreating} type="submit">
+                    Create
+                </SubmitButton>
             </ModalFooter>
         </Form>
     );

@@ -30,6 +30,8 @@ export default function AddAcademicStaff({}: ModelContainerProps) {
                     onSubmit={onSubmit}
                     className="flex flex-col gap-4 ">
                     <div className="grid grid-cols-1 gap-4 max-sm:grid-cols-1">
+                        <FormInput label="First Name *" placeholder="First Name" name="fname" />
+                        <FormInput label="Last Name *" placeholder="Last Name" name="lname" />
                         <FormInput label="Email *" placeholder="Email" name="email" />
                     </div>
                 </Form>

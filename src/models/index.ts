@@ -7,9 +7,13 @@ import RemoveStaff from './containers/profile/remove-academic-staff';
 import AddMCQ from './containers/add-mcq';
 import AddMarks from './containers/upload-marks';
 import AddInstitute from './containers/institutes/add';
-import AddClass from './containers/classes/add';
+import AddClass from './containers/classes/add.tsx';
 import AddStudent from './containers/students/add-student';
 import AddStudents from './containers/students/add-students';
+import AddTeacher from './containers/teacher/add-teacher.tsx';
+import AddSubject from './containers/subject/add.tsx';
+import EditSubject from './containers/subject/edit.tsx';
+import DeleteSubject from './containers/subject/delete.tsx';
 import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
 import EditMCQ from './containers/edit-mcq';
@@ -17,6 +21,10 @@ import AddMaterials from './containers/teacher/add-material';
 import AddNewTopic from './containers/teacher/add-new-topic';
 import AddNewSubTopic from './containers/teacher/add-new-stopic';
 import AddStudyPlan from './containers/teacher/add-study-plan';
+import EditTeacher from './containers/teacher/edit-teacher.tsx';
+import DeleteTeacher from './containers/teacher/delete-teacher.tsx';
+import EditClass from './containers/classes/edit.tsx';
+import DeleteClass from './containers/classes/delete.tsx';
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -70,24 +78,55 @@ export const modelContainers: ModelContainers = {
         model: AddStudents,
         props: { size: 'xl' }
     },
+    ADD_TEACHER: {
+        model: AddTeacher,
+        props: { size: 'xl' }
+    },
+    ADD_SUBJECT: {
+        model: AddSubject,
+        props: { size: 'xl' }
+    },
+    EDIT_SUBJECT: {
+        model: EditSubject,
+        props: { size: 'xl' }
+    },
+    DELETE_SUBJECT: {
+        model: DeleteSubject
+    },
     DELETE_INSTITUTE: {
         model: DeleteInstitute
     },
-    ADD_MATERIALS:{
+    ADD_MATERIALS: {
         model: AddMaterials,
-        props:{size:'2xl'}
+        props: { size: '2xl' }
     },
-    ADD_NEW_TOPIC:{
+    ADD_NEW_TOPIC: {
         model: AddNewTopic,
-        props:{size:'2xl'}
+        props: { size: '2xl' }
     },
-    ADD_NEW_SUB_TOPIC:{
+    ADD_NEW_SUB_TOPIC: {
         model: AddNewSubTopic,
-        props:{size:'2xl'}
+        props: { size: '2xl' }
     },
-    ADD_MARKS:{
-        model:AddMarks,
-        props:{size:'2xl'}
+    ADD_MARKS: {
+        model: AddMarks,
+        props: { size: '2xl' }
+    },
+    EDIT_TEACHER: {
+        model: EditTeacher,
+        props: { size: 'xl' }
+    },
+    DELETE_TEACHER: {
+        model: DeleteTeacher,
+        props: { size: 'xl' }
+    },
+    EDIT_CLASS: {
+        model: EditClass,
+        props: { size: 'xl' }
+    },
+    DELETE_CLASS: {
+        model: DeleteClass,
+        props: { size: 'xl' }
     }
 };
 
@@ -105,10 +144,18 @@ export const modelNames = {
     ADD_CLASS: 'ADD_CLASS',
     ADD_STUDENT: 'ADD_STUDENT',
     ADD_STUDENTS: 'ADD_STUDENTS',
+    ADD_TEACHER: 'ADD_TEACHER',
+    ADD_SUBJECT: 'ADD_SUBJECT',
+    EDIT_SUBJECT: 'EDIT_SUBJECT',
+    DELETE_SUBJECT: 'DELETE_SUBJECT',
     DELETE_INSTITUTE: 'DELETE_INSTITUTE',
     EDIT_INSTITUTE: 'EDIT_INSTITUTE',
     ADD_MATERIALS: 'ADD_MATERIALS',
     ADD_NEW_TOPIC: 'ADD_NEW_TOPIC',
     ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC',
-    ADD_MARKS:'ADD_MARKS'
+    ADD_MARKS: 'ADD_MARKS',
+    EDIT_TEACHER: 'EDIT_TEACHER',
+    EDIT_CLASS: 'EDIT_CLASS',
+    DELETE_CLASS: 'DELETE_CLASS',
+    DELETE_TEACHER: 'DELETE_TEACHER'
 };
