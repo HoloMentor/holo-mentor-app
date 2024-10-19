@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { renderMoreActions } from '@/pages/institute/classes/columns.tsx';
 import { IRootState } from '@/redux';
 import { useLocation } from 'react-router-dom';
-import classServices from '@/redux/services/class.service';
+import classServices from '@/redux/services/class/class.service';
 import useErrorHandler from '@/hooks/error-handler.tsx';
 
 export default function Classes() {

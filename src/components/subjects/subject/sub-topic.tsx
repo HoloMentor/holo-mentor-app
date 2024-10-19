@@ -1,13 +1,32 @@
 import Select, { SelectValue } from '@/components/select';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 export interface SubTopicProps {
     id: string;
     name: string;
 }
 
-export default function SubTopic({ data }: { data: SubTopicProps }) {
+export interface TopicMaterials {
+    id: string;
+    name: string;
+    topicId: string;
+    subTopicId: string;
+    type: 'URL' | 'VIDEO' | 'FILE' | 'PDF' | 'OTHER';
+    url: string;
+}
+
+export default function SubTopic({
+    details,
+    materials = []
+}: {
+    details: SubTopicProps;
+    materials: TopicMaterials[];
+}) {
     const [filterState, setFilterState] = React.useState<SelectValue>('all');
+    const materialData = useMemo(
+        () => (filterState === 'all' ? materials : materials.filter((_) => _.type === filterState)),
+        [filterState, materials]
+    );
 
     const filterOptions = [
         {
@@ -15,19 +34,31 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
             value: 'all'
         },
         {
+            label: 'URL',
+            value: 'URL'
+        },
+        {
             label: 'Video',
-            value: 'video'
+            value: 'VIDEO'
         },
         {
             label: 'PDF',
-            value: 'pdf'
+            value: 'PDF'
         }
     ];
+
+    const extractFileName = useCallback(
+        (url: string) => {
+            const result = url.split('/');
+            return result[result.length - 1];
+        },
+        [materials]
+    );
 
     return (
         <div className="flex flex-col gap-5 p-3">
             <div className="flex items-center justify-between gap-3">
-                <p className="font-semibold">{data.name}</p>
+                <p className="font-semibold">{details.name}</p>
                 <div className="w-40">
                     <Select
                         value={filterState}
@@ -39,22 +70,26 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
             </div>
 
             <div className="grid grid-cols-5 gap-4 gap-y-10 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-                {Array.from({ length: 7 }).map((_, j) => {
-                    return (
-                        <a
-                            title={'Subject Name'}
-                            key={`subject-${j}`}
-                            href={`/subjects/${j}`}
-                            className="flex flex-col items-center gap-2 text-dark-gray">
-                            <img
-                                src="/images/subjects/doc.svg"
-                                alt="PDF Material"
-                                className="size-20"
-                            />
-                            <span className="block">Measurement 1.1 - SI</span>
-                        </a>
-                    );
-                })}
+                {materialData.length === 0 ? (
+                    <p>No materials found.</p>
+                ) : (
+                    materialData.map((_, j) => {
+                        return (
+                            <a
+                                title={'Subject Name'}
+                                key={`material-${_.id}`}
+                                href={`/subjects/${j}`}
+                                className="flex flex-col items-center gap-2 text-dark-gray">
+                                <img
+                                    src="/images/subjects/doc.svg"
+                                    alt="PDF Material"
+                                    className="size-20"
+                                />
+                                <span className="block">{_.name || extractFileName(_.url)}</span>
+                            </a>
+                        );
+                    })
+                )}
             </div>
         </div>
     );

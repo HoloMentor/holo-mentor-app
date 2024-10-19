@@ -17,7 +17,7 @@ import DeleteSubject from './containers/subject/delete.tsx';
 import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
 import EditMCQ from './containers/edit-mcq';
-import AddMaterials from './containers/teacher/add-material';
+import AddMaterials from './containers/teacher/material/add.tsx';
 import AddNewTopic from './containers/teacher/topic/add.tsx';
 import AddNewSubTopic from './containers/teacher/sub-topic/add.tsx';
 import AddStudyPlan from './containers/teacher/add-study-plan';

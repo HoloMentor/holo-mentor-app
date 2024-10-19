@@ -5,7 +5,7 @@ import useErrorHandler from '@/hooks/error-handler.tsx';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer.ts';
 import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
-import classTopicServices from '@/redux/services/class-topics/topics.service';
+import classTopicServices from '@/redux/services/class/topics.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';

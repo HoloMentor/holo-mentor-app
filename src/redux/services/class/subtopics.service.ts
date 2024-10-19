@@ -9,7 +9,7 @@ const classSubTopicServices = createApi({
         create: builder.mutation({
             query: (props) => ({
                 method: 'POST',
-                url: `/subtopic/create`,
+                url: `/subtopics/create`,
                 body: props
             }),
             invalidatesTags: ['SubClassTopic', 'SubClassTopics']
@@ -17,14 +17,14 @@ const classSubTopicServices = createApi({
         delete: builder.mutation({
             query: ({ id }) => ({
                 method: 'DELETE',
-                url: `/subtopic/delete/${id}`
+                url: `/subtopics/delete/${id}`
             }),
             invalidatesTags: ['SubClassTopic', 'SubClassTopics']
         }),
         update: builder.mutation({
             query: ({ id, ...props }) => ({
                 method: 'PATCH',
-                url: `/subtopic/update/${id}`,
+                url: `/subtopics/update/${id}`,
                 body: props
             }),
             invalidatesTags: ['SubClassTopic', 'SubClassTopics']
@@ -32,7 +32,7 @@ const classSubTopicServices = createApi({
         get: builder.query({
             query: ({ id }) => ({
                 method: 'GET',
-                url: `/subtopic/${id}`
+                url: `/subtopics/${id}`
             }),
             providesTags: ['SubClassTopic']
         })

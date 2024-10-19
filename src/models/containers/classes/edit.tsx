@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { IRootState } from '@/redux';
-import classServices from '@/redux/services/class.service';
+import classServices from '@/redux/services/class/class.service';
 import useErrorHandler from '@/hooks/error-handler';
 import teacherServices from '@/redux/services/teacher.service';
 import subjectServices from '@/redux/services/subject.service';

@@ -9,7 +9,7 @@ const classTopicServices = createApi({
         create: builder.mutation({
             query: (props) => ({
                 method: 'POST',
-                url: `/topic/create`,
+                url: `/topics/create`,
                 body: props
             }),
             invalidatesTags: ['ClassTopic', 'ClassTopics']
@@ -17,14 +17,14 @@ const classTopicServices = createApi({
         delete: builder.mutation({
             query: ({ id }) => ({
                 method: 'DELETE',
-                url: `/topic/delete/${id}`
+                url: `/topics/delete/${id}`
             }),
             invalidatesTags: ['ClassTopic', 'ClassTopics']
         }),
         update: builder.mutation({
             query: ({ id, ...props }) => ({
                 method: 'PATCH',
-                url: `/topic/update/${id}`,
+                url: `/topics/update/${id}`,
                 body: props
             }),
             invalidatesTags: ['ClassTopic', 'ClassTopics']
@@ -32,14 +32,15 @@ const classTopicServices = createApi({
         get: builder.query({
             query: ({ id }) => ({
                 method: 'GET',
-                url: `/topic/${id}`
+                url: `/topics/${id}`
             }),
             providesTags: ['ClassTopic']
         }),
         getClassTopics: builder.query({
-            query: ({ classId }) => ({
+            query: ({ classId, ...params }) => ({
                 method: 'GET',
-                url: `/topic/class/${classId}`
+                url: `/topics/class/${classId}`,
+                params
             }),
             providesTags: ['ClassTopics']
         })
