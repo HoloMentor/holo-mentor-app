@@ -3,15 +3,17 @@ import Form, { FormikInnerRef } from '@/components/form';
 import FormAutoComplete from '@/components/form/autocomplete';
 import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
+import Input from '@/components/input';
 import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import classMaterialServices from '@/redux/services/class/materials.service';
 import classTopicServices from '@/redux/services/class/topics.service';
+import fileServices from '@/redux/services/file.service';
 import { ModalBody, ModalFooter, ModalHeader, user } from '@nextui-org/react';
 import { FormikValues } from 'formik';
-import { Fragment, useCallback, useMemo, useRef } from 'react';
+import { ChangeEvent, Fragment, useCallback, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -51,6 +53,9 @@ export default function AddMaterials({ classId }: ModelContainerProps) {
         }
     ] = classMaterialServices.useCreateMutation();
     useErrorHandler(isClassMaterialCreateError, classMaterialCreateError);
+    const [upload, { isError: isUploadError, error: uploadError, isLoading: isUploading }] =
+        fileServices.useUploadMutation();
+    useErrorHandler(isUploadError, uploadError);
 
     /* get class topics */
     const {
@@ -82,6 +87,25 @@ export default function AddMaterials({ classId }: ModelContainerProps) {
         return [];
     }, [classTopics]);
 
+    const handleOnFileUpload = async (
+        e: ChangeEvent<HTMLInputElement>,
+        setFieldValue: (field: string, value: string) => void
+    ) => {
+        if (e.target.files && e.target.files[0]) {
+            const form = new FormData();
+            const file = e.target.files[0];
+            const fileName = file.name;
+
+            form.append('fileName', fileName);
+            form.append('file', file);
+            const result = await upload(form);
+
+            if (result.data?.data?.url) {
+                setFieldValue('materialData', result.data.data.url);
+            }
+        }
+    };
+
     const getClassSubTopics = useCallback(
         (topicId: number | string): { value: string; label: string }[] => {
             if (!topicId) return [];
@@ -111,6 +135,7 @@ export default function AddMaterials({ classId }: ModelContainerProps) {
         });
 
         if (result?.data?.status === 201) {
+            dispatch(classTopicServices.util.invalidateTags(['ClassTopics']));
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -162,18 +187,24 @@ export default function AddMaterials({ classId }: ModelContainerProps) {
                                         defaultItems={types}
                                         isRequired
                                     />
-                                    <FormInput
-                                        isRequired
-                                        label="Enter the URL"
-                                        name="materialData"
-                                        placeholder="Enter the URL"
-                                        className="w-full"
-                                        type={
-                                            ['FILE', 'PDF'].includes(values.materialType)
-                                                ? 'file'
-                                                : 'text'
-                                        }
-                                    />
+                                    {['FILE', 'PDF'].includes(values.materialType) ? (
+                                        <Input
+                                            isRequired
+                                            label="Select the File"
+                                            className="w-full"
+                                            onChange={(e) => handleOnFileUpload(e, setFieldValue)}
+                                            type="file"
+                                        />
+                                    ) : (
+                                        <FormInput
+                                            isRequired
+                                            label="Enter the URL"
+                                            placeholder="Enter the URL"
+                                            name="materialData"
+                                            className="w-full"
+                                            type="text"
+                                        />
+                                    )}
                                 </div>
                             </Content>
                         </ModalBody>

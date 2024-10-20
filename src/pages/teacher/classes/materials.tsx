@@ -48,6 +48,7 @@ export default function Materials() {
         }
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
+    console.log(classTopics?.data);
 
     return (
         <div className="flex flex-col gap-3">
@@ -99,7 +100,6 @@ export default function Materials() {
                                     id: string;
                                     name: string;
                                     subTopics: SubTopicProps[];
-                                    materials: TopicMaterials[];
                                 },
                                 i: number
                             ) => {
@@ -140,10 +140,7 @@ export default function Materials() {
                                                 return (
                                                     <SubTopic
                                                         key={`class-sub-topic-${classTopic.id}-${j}`}
-                                                        details={classSubTopic}
-                                                        materials={classTopic.materials?.filter(
-                                                            (_) => _.subTopicId === classSubTopic.id
-                                                        )}
+                                                        data={classSubTopic}
                                                     />
                                                 );
                                             })

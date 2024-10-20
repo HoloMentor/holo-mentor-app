@@ -4,6 +4,7 @@ import React, { useCallback, useMemo } from 'react';
 export interface SubTopicProps {
     id: string;
     name: string;
+    materials: TopicMaterials[];
 }
 
 export interface TopicMaterials {
@@ -15,17 +16,14 @@ export interface TopicMaterials {
     url: string;
 }
 
-export default function SubTopic({
-    details,
-    materials = []
-}: {
-    details: SubTopicProps;
-    materials: TopicMaterials[];
-}) {
+export default function SubTopic({ data }: { data: SubTopicProps }) {
     const [filterState, setFilterState] = React.useState<SelectValue>('all');
     const materialData = useMemo(
-        () => (filterState === 'all' ? materials : materials.filter((_) => _.type === filterState)),
-        [filterState, materials]
+        () =>
+            filterState === 'all'
+                ? data.materials
+                : data.materials.filter((_) => _.type === filterState),
+        [filterState, data.materials]
     );
 
     const filterOptions = [
@@ -52,13 +50,13 @@ export default function SubTopic({
             const result = url.split('/');
             return result[result.length - 1];
         },
-        [materials]
+        [data.materials]
     );
 
     return (
         <div className="flex flex-col gap-5 p-3">
             <div className="flex items-center justify-between gap-3">
-                <p className="font-semibold">{details.name}</p>
+                <p className="font-semibold">{data.name}</p>
                 <div className="w-40">
                     <Select
                         value={filterState}
