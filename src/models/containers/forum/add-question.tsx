@@ -1,13 +1,11 @@
-import { useDateInput } from '@nextui-org/react'
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import questionServices from '@/redux/services/forum.services'
-import { use } from 'framer-motion/client';
 import useErrorHandler from '@/hooks/error-handler';
-import { notifyActions } from '@/redux/reducers/notify.reducer';
 import { modelActions } from '@/redux/reducers/model.reducer';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
+import forumServices from '@/redux/services/forum.services';
 import { FormikValues } from 'formik';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+
 
 const initialValues = {
     topic: '',
@@ -36,7 +34,7 @@ export default function Addquestion() {
         createQuestion,
         { isLoading: isCreating, isError: isQuestionCreateError, error: questionCreateError }
 
-    ] = questionServices.useCreateMutation();
+    ] = forumServices.useCreateMutation();
     useErrorHandler(isQuestionCreateError, questionCreateError);
 
     const onSubmit = async (values: FormikValues) => {

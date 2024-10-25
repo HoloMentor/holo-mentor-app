@@ -1,12 +1,11 @@
 import Button from '@/components/button';
-import Form from '@/components/form';
-import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import Content from '@/components/content';
+import Form from '@/components/form';
 import FormAutoComplete from '@/components/form/autocomplete';
 import FormEditor from '@/components/form/editor';
+import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FieldArray, FormikValues } from 'formik';
 import * as Yup from 'yup';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 
 interface ModelContainerProps {
     onClose: () => void;
@@ -32,17 +31,17 @@ const validationSchema = Yup.object().shape({
     lastName: Yup.string().required('Last Name is required')
 });
 
-export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
+export default function AddForumMcq({ onClose }: ModelContainerProps) {
     const onSubmit = (v: FormikValues) => {
         console.log(v);
     };
 
     return (
-        <div className="max-w-3xl justify-center">
-            <ModalHeader className="flex  flex-col gap-1 text-xl text-dark-green w-6xl">
+        <div className="justify-center max-w-3xl">
+            <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green w-6xl">
                 Add New MCQ
             </ModalHeader>
-            <ModalBody className="max-h-96 overflow-y-auto">
+            <ModalBody className="overflow-y-auto max-h-96">
                 <Content>
                     <Form
                         validationSchema={validationSchema}
@@ -66,7 +65,7 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
 
                         <div className="grid grid-cols-1 gap-4 max-lg:grid-cols-1">
                             <FormEditor
-                                className="min-h-52 w-full"
+                                className="w-full min-h-52"
                                 classNames={{
                                     mainWrapper: 'col-span-2'
                                 }}
@@ -90,7 +89,7 @@ export default function ProfileUserInfo({ onClose }: ModelContainerProps) {
                                                 classNames={{ mainWrapper: 'w-full' }}
                                             /> */}
                                             <FormEditor
-                                                className="min-h-20 w-full"
+                                                className="w-full min-h-20"
                                                 classNames={{
                                                     mainWrapper: 'w-full'
                                                 }}

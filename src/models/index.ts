@@ -4,7 +4,8 @@ import ProfileUserInfo from './containers/profile/user-info';
 import ProfilePersonalInfo from './containers/profile/personal-info';
 import AddStaff from './containers/profile/add-academic-staff';
 import RemoveStaff from './containers/profile/remove-academic-staff';
-import AddMCQ from './containers/add-mcq';
+import AddMCQ from './containers/forum/add-mcq.tsx';
+import AddQuestion from './containers/forum/add-question.tsx';
 import AddMarks from './containers/upload-marks';
 import AddInstitute from './containers/institutes/add';
 import AddClass from './containers/classes/add.tsx';
@@ -16,7 +17,7 @@ import EditSubject from './containers/subject/edit.tsx';
 import DeleteSubject from './containers/subject/delete.tsx';
 import DeleteInstitute from './containers/institutes/delete';
 import EditInstitute from './containers/institutes/edit';
-import EditMCQ from './containers/edit-mcq';
+import EditMCQ from './containers/forum/edit-mcq.tsx';
 import AddMaterials from './containers/teacher/add-material';
 import AddNewTopic from './containers/teacher/add-new-topic';
 import AddNewSubTopic from './containers/teacher/add-new-stopic';
@@ -56,6 +57,10 @@ export const modelContainers: ModelContainers = {
     },
     ADD_MCQ: {
         model: AddMCQ,
+        props: { size: '3xl' }
+    },
+    ADD_QUESTION: {
+        model: AddQuestion,
         props: { size: '3xl' }
     },
     EDIT_MCQ: {
@@ -140,6 +145,7 @@ export const modelNames = {
     REMOVE_ACADEMIC_STAFF: 'REMOVE_ACADEMIC_STAFF',
     ADD_MCQ: 'ADD_MCQ',
     EDIT_MCQ: 'EDIT_MCQ',
+    ADD_QUESTION: 'ADD_QUESTION',
     ADD_STUDY_PLAN: 'ADD_STUDY_PLAN',
     ADD_CLASS: 'ADD_CLASS',
     ADD_STUDENT: 'ADD_STUDENT',
