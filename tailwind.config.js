@@ -30,22 +30,8 @@ export default {
                 sans: ['Poppins', 'sans-serif']
             },
             colors: {
-                primary: {
-                    50: '#E6F2F2',
-                    100: '#CCE5E5',
-                    200: '#99CCCC',
-                    300: '#66B2B2',
-                    400: '#339999',
-                    500: '#197F7F',
-                    600: '#176C6C',
-                    700: '#145959',
-                    800: '#104545',
-                    900: '#0D3333'
-                },
                 'second-white': '#F1F3F4',
                 'light-border': '#0000001A',
-                dark: '#101010',
-                light: '#ffffff',
                 orange: '#FF0E00',
                 'light-gray': '#F1F3F4',
                 'dark-gray': '#7D7D7D',
@@ -59,5 +45,20 @@ export default {
             }
         }
     },
-    plugins: [require('@tailwindcss/forms'), nextui()]
+    plugins: [
+        nextui({
+            themes: {
+                light: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#194545',
+                            foreground: '#fff'
+                        },
+                        focus: '#194545'
+                    }
+                }
+            }
+        }),
+        require('@tailwindcss/forms')
+    ]
 };

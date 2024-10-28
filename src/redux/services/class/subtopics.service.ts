@@ -29,6 +29,14 @@ const classSubTopicServices = createApi({
             }),
             invalidatesTags: ['SubClassTopic', 'SubClassTopics']
         }),
+        updateDoneState: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/subtopics/update/state/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['SubClassTopic', 'SubClassTopics']
+        }),
         get: builder.query({
             query: ({ id }) => ({
                 method: 'GET',

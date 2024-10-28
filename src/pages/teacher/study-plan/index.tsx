@@ -6,6 +6,7 @@ import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function StudyPlan() {
     const dispatch = useDispatch();
@@ -90,7 +91,7 @@ export default function StudyPlan() {
 
             <section className="my-5 mr-2">
                 <div className="flex flex-col w-full">
-                    <Tabs aria-label="Dynamic tabs" items={tiers}>
+                    <Tabs color="primary" variant="solid" items={tiers}>
                         {(item) => (
                             <Tab
                                 key={item.id}
@@ -101,16 +102,9 @@ export default function StudyPlan() {
                                         <p className="text-xl text-dark-green">
                                             Current Study Plan
                                         </p>
-                                        <Button
-                                            onClick={() =>
-                                                dispatch(
-                                                    modelActions.show({
-                                                        name: modelNames.ADD_STUDY_PLAN
-                                                    })
-                                                )
-                                            }>
-                                            Add New Plan
-                                        </Button>
+                                        <Link to="create">
+                                            <Button>Add New Plan</Button>
+                                        </Link>
                                     </div>
                                     <div className="flex flex-col">
                                         <CardBody className="grid grid-cols-3 gap-4 max-2xl:grid-cols-2 max-lg:grid-cols-1">
