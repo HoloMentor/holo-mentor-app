@@ -5,7 +5,11 @@ import Button from '@/components/button';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
 import { useDispatch, useSelector } from 'react-redux';
-import { renderMoreActions } from '@/pages/institute/classes/columns.tsx';
+import {
+    renderClass,
+    renderTeacher,
+    renderMoreActions
+} from '@/pages/institute/classes/columns.tsx';
 import { IRootState } from '@/redux';
 import { useLocation } from 'react-router-dom';
 import classServices from '@/redux/services/class/class.service';
@@ -38,20 +42,12 @@ export default function Classes() {
     useErrorHandler(isClassesError, classesError);
 
     const tableColumns: TableColumn[] = [
-        { name: 'Teacher', value: 'teacher' },
-        { name: 'Subject', value: 'subject' },
-        { name: 'Class', value: 'class' },
-        { name: 'Students', value: 'students' },
+        { name: 'Class', value: { render: renderClass } },
+        { name: 'Teacher', value: { render: renderTeacher } },
+        { name: 'Subject', value: 'subjectName' },
+        { name: 'Students', value: 'studentCount' },
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
-
-    const tableData = instituteClasses?.data?.data.map((classItem: any) => ({
-        teacher: `${classItem.firstName} ${classItem.lastName}`,
-        subject: classItem.subjectName,
-        class: classItem.className,
-        students: classItem.studentCount,
-        id: classItem.id
-    }));
 
     return (
         <div className="flex flex-col gap-3">
@@ -72,7 +68,7 @@ export default function Classes() {
                         <Input className="max-w-96 w-full" placeholder="Search" />
                     </div>
                     <Table
-                        data={tableData}
+                        data={instituteClasses?.data?.data}
                         columns={tableColumns}
                         loading={classesLoading}
                         pagination={{ enable: true, pages: instituteClasses?.data?.pages }}
