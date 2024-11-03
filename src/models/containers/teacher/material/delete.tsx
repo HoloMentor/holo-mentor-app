@@ -2,21 +2,23 @@ import Button from '@/components/button';
 import useErrorHandler from '@/hooks/error-handler';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
+import classMaterialServices from '@/redux/services/class/materials.service';
+import classTopicServices from '@/redux/services/class/topics.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
-import classServices from '@/redux/services/class/class.service';
 
-export default function DeleteClass({ id }: ModelContainerProps) {
+export default function DeleteMaterial({ id }: ModelContainerProps) {
     const dispatch = useDispatch();
 
     const [deleteRecord, { isLoading: isDeleting, isError: isDeleteError, error: deleteError }] =
-        classServices.useDeleteMutation();
+        classMaterialServices.useDeleteMutation();
     useErrorHandler(isDeleteError, deleteError);
 
     const onSubmit = async () => {
         const result = await deleteRecord({ id });
 
         if (result?.data?.status === 200) {
+            dispatch(classTopicServices.util.invalidateTags(['ClassTopics']));
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -30,7 +32,7 @@ export default function DeleteClass({ id }: ModelContainerProps) {
 
     return (
         <div>
-            <ModalHeader className="flex flex-col gap-1">Delete Class</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Delete Material</ModalHeader>
             <ModalBody>
                 <p>This action cannot be reversed, are you sure you want to proceed?</p>
             </ModalBody>

@@ -1,36 +1,37 @@
 import Form from '@/components/form';
 import SubmitButton from '@/components/form/button.tsx';
 import FormInput from '@/components/form/input.tsx';
+import useErrorHandler from '@/hooks/error-handler.tsx';
+import { IRootState } from '@/redux';
+import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
+import classTopicServices from '@/redux/services/class/topics.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
-import * as Yup from 'yup';
-import subjectServices from '@/redux/services/subject.service.ts';
-import useErrorHandler from '@/hooks/error-handler.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '@/redux';
-import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
-import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import * as Yup from 'yup';
 
 const initialValues = {
     name: ''
 };
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Subject name is required')
+    name: Yup.string().required('Topic is required')
 });
 
-export default function AddSubject({}: ModelContainerProps) {
+export default function AddNewTopic({ classId }: ModelContainerProps) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 
     const [
-        createSubject,
-        { isLoading: isSubjectCreating, isError: isSubjectCreateError, error: subjectCreateError }
-    ] = subjectServices.useCreateMutation();
-    useErrorHandler(isSubjectCreateError, subjectCreateError);
+        createTopic,
+        { isLoading: isCreating, isError: isCreateTopicError, error: createTopicError }
+    ] = classTopicServices.useCreateMutation();
+    useErrorHandler(isCreateTopicError, createTopicError);
 
     const onSubmit = async (values: FormikValues) => {
-        const result = await createSubject({
+        const result = await createTopic({
+            classId: classId,
             instituteId: user.instituteId,
             name: values.name
         });
@@ -54,13 +55,18 @@ export default function AddSubject({}: ModelContainerProps) {
             onSubmit={onSubmit}
             className="flex flex-col gap-4">
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
-                Add a Subject
+                Add New Topic
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
-                <FormInput label="Subject name" placeholder="Subject name" name="name" isRequired />
+                <FormInput
+                    label="Topic"
+                    placeholder="Eg: Quantum mechanics"
+                    name="name"
+                    isRequired
+                />
             </ModalBody>
             <ModalFooter>
-                <SubmitButton isLoading={isSubjectCreating} type="submit">
+                <SubmitButton isLoading={isCreating} type="submit">
                     Add
                 </SubmitButton>
             </ModalFooter>

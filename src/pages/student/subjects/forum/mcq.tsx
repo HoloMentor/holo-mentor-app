@@ -6,9 +6,13 @@ import FormEditor from '@/components/form/editor';
 import FormInput from '@/components/form/input';
 import Heading from '@/components/headings/main';
 import SubHeading from '@/components/headings/sub';
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
 import forumServices from '@/redux/services/forum.services';
 import { FieldArray, FormikValues } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 
@@ -40,11 +44,25 @@ const validationSchema = Yup.object().shape({
 
 export default function ForumMcq() {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.user);
+
     
     const [createMcq, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] = forumServices.useCreateMcqMutation();
+    useErrorHandler(isMcqCreateError, mcqCreateError);
 
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+    const onSubmit = async (values: FormikValues) => {
+        const result = await createMcq({userId:user.userId, email:user.email, ...values});
+
+        if (result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            dispatch(modelActions.hide());
+        }
     };
     return (
         <div className="flex flex-col gap-3">
@@ -62,13 +80,13 @@ export default function ForumMcq() {
                             name="topic"
                             label="Topic"
                             placeholder="Select Topic"
-                            defaultItems={[]}
+                            defaultItems={[{ value: 1, label: 'Maths' }, { value: 2, label: 'Science' }]}
                         />
                         <FormAutoComplete
                             name="subTopic"
                             label="Sub Topic"
                             placeholder="Select Sub Topic"
-                            defaultItems={[]}
+                            defaultItems={[{ value: 1, label: 'Algebra' }, { value: 2, label: 'Trigonometry' }]}
                         />
                     </div>
 
@@ -103,7 +121,7 @@ export default function ForumMcq() {
                         </div>
                     </div>
 
-                    <SubmitButton className="mt-5">Submit Question</SubmitButton>
+                    <SubmitButton className="mt-5" isLoading={isCreating}>Submit Question</SubmitButton>
                 </Form>
             </Content>
         </div>

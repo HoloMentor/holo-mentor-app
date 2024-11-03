@@ -1,31 +1,35 @@
-import ProfileUser from './containers/profile/user';
-import ProfileInformation from './containers/profile/information';
-import ProfileUserInfo from './containers/profile/user-info';
-import ProfilePersonalInfo from './containers/profile/personal-info';
-import AddStaff from './containers/profile/add-academic-staff';
-import RemoveStaff from './containers/profile/remove-academic-staff';
-import AddMCQ from './containers/forum/add-mcq.tsx';
-import AddQuestion from './containers/forum/add-question.tsx';
-import AddMarks from './containers/upload-marks';
-import AddInstitute from './containers/institutes/add';
-import AddClass from './containers/classes/add.tsx';
-import AddStudent from './containers/students/add-student';
-import AddStudents from './containers/students/add-students';
-import AddTeacher from './containers/teacher/add-teacher.tsx';
-import AddSubject from './containers/subject/add.tsx';
-import EditSubject from './containers/subject/edit.tsx';
-import DeleteSubject from './containers/subject/delete.tsx';
-import DeleteInstitute from './containers/institutes/delete';
-import EditInstitute from './containers/institutes/edit';
-import EditMCQ from './containers/forum/edit-mcq.tsx';
-import AddMaterials from './containers/teacher/add-material';
-import AddNewTopic from './containers/teacher/add-new-topic';
-import AddNewSubTopic from './containers/teacher/add-new-stopic';
-import AddStudyPlan from './containers/teacher/add-study-plan';
-import EditTeacher from './containers/teacher/edit-teacher.tsx';
-import DeleteTeacher from './containers/teacher/delete-teacher.tsx';
-import EditClass from './containers/classes/edit.tsx';
-import DeleteClass from './containers/classes/delete.tsx';
+import loadable from '@loadable/component';
+
+const ProfileUser = loadable(() => import('./containers/profile/user'));
+const ProfileInformation = loadable(() => import('./containers/profile/information'));
+const ProfileUserInfo = loadable(() => import('./containers/profile/user-info'));
+const ProfilePersonalInfo = loadable(() => import('./containers/profile/personal-info'));
+const AddStaff = loadable(() => import('./containers/profile/add-academic-staff'));
+const RemoveStaff = loadable(() => import('./containers/profile/remove-academic-staff'));
+const AddMarks = loadable(() => import('./containers/upload-marks'));
+const AddInstitute = loadable(() => import('./containers/institutes/add'));
+const AddClass = loadable(() => import('./containers/classes/add.tsx'));
+const AddStudent = loadable(() => import('./containers/students/add-student'));
+const AddStudents = loadable(() => import('./containers/students/add-students'));
+const AddTeacher = loadable(() => import('./containers/teacher/add-teacher.tsx'));
+const AddSubject = loadable(() => import('./containers/subject/add.tsx'));
+const EditSubject = loadable(() => import('./containers/subject/edit.tsx'));
+const DeleteSubject = loadable(() => import('./containers/subject/delete.tsx'));
+const DeleteInstitute = loadable(() => import('./containers/institutes/delete'));
+const EditInstitute = loadable(() => import('./containers/institutes/edit'));
+const AddStudyPlan = loadable(() => import('./containers/teacher/add-study-plan'));
+const EditTeacher = loadable(() => import('./containers/teacher/edit-teacher.tsx'));
+const DeleteTeacher = loadable(() => import('./containers/teacher/delete-teacher.tsx'));
+const EditClass = loadable(() => import('./containers/classes/edit.tsx'));
+const DeleteClass = loadable(() => import('./containers/classes/delete.tsx'));
+const AddMaterials = loadable(() => import('./containers/teacher/material/add.tsx'));
+const DeleteMaterial = loadable(() => import('./containers/teacher/material/delete.tsx'));
+const AddTopic = loadable(() => import('./containers/teacher/topic/add.tsx'));
+const EditTopic = loadable(() => import('./containers/teacher/topic/edit.tsx'));
+const DeleteTopic = loadable(() => import('./containers/teacher/topic/delete.tsx'));
+const AddSubTopic = loadable(() => import('./containers/teacher/sub-topic/add.tsx'));
+const EditSubTopic = loadable(() => import('./containers/teacher/sub-topic/edit.tsx'));
+const DeleteSubTopic = loadable(() => import('./containers/teacher/sub-topic/delete.tsx'));
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -54,18 +58,6 @@ export const modelContainers: ModelContainers = {
     },
     REMOVE_ACADEMIC_STAFF: {
         model: RemoveStaff
-    },
-    ADD_MCQ: {
-        model: AddMCQ,
-        props: { size: '3xl' }
-    },
-    ADD_QUESTION: {
-        model: AddQuestion,
-        props: { size: '3xl' }
-    },
-    EDIT_MCQ: {
-        model: EditMCQ,
-        props: { size: '3xl' }
     },
     ADD_STUDY_PLAN: {
         model: AddStudyPlan,
@@ -101,18 +93,6 @@ export const modelContainers: ModelContainers = {
     DELETE_INSTITUTE: {
         model: DeleteInstitute
     },
-    ADD_MATERIALS: {
-        model: AddMaterials,
-        props: { size: '2xl' }
-    },
-    ADD_NEW_TOPIC: {
-        model: AddNewTopic,
-        props: { size: '2xl' }
-    },
-    ADD_NEW_SUB_TOPIC: {
-        model: AddNewSubTopic,
-        props: { size: '2xl' }
-    },
     ADD_MARKS: {
         model: AddMarks,
         props: { size: '2xl' }
@@ -132,6 +112,35 @@ export const modelContainers: ModelContainers = {
     DELETE_CLASS: {
         model: DeleteClass,
         props: { size: 'xl' }
+    },
+    ADD_MATERIALS: {
+        model: AddMaterials,
+        props: { size: '2xl' }
+    },
+    DELETE_MATERIAL: {
+        model: DeleteMaterial
+    },
+    ADD_TOPIC: {
+        model: AddTopic,
+        props: { size: 'xl' }
+    },
+    EDIT_TOPIC: {
+        model: EditTopic,
+        props: { size: 'xl' }
+    },
+    DELETE_TOPIC: {
+        model: DeleteTopic
+    },
+    ADD_SUBTOPIC: {
+        model: AddSubTopic,
+        props: { size: 'xl' }
+    },
+    EDIT_SUBTOPIC: {
+        model: EditSubTopic,
+        props: { size: 'xl' }
+    },
+    DELETE_SUBTOPIC: {
+        model: DeleteSubTopic
     }
 };
 
@@ -156,12 +165,17 @@ export const modelNames = {
     DELETE_SUBJECT: 'DELETE_SUBJECT',
     DELETE_INSTITUTE: 'DELETE_INSTITUTE',
     EDIT_INSTITUTE: 'EDIT_INSTITUTE',
-    ADD_MATERIALS: 'ADD_MATERIALS',
-    ADD_NEW_TOPIC: 'ADD_NEW_TOPIC',
-    ADD_NEW_SUB_TOPIC: 'ADD_NEW_SUB_TOPIC',
     ADD_MARKS: 'ADD_MARKS',
     EDIT_TEACHER: 'EDIT_TEACHER',
     EDIT_CLASS: 'EDIT_CLASS',
     DELETE_CLASS: 'DELETE_CLASS',
-    DELETE_TEACHER: 'DELETE_TEACHER'
+    DELETE_TEACHER: 'DELETE_TEACHER',
+    ADD_MATERIALS: 'ADD_MATERIALS',
+    DELETE_MATERIAL: 'DELETE_MATERIAL',
+    ADD_TOPIC: 'ADD_TOPIC',
+    DELETE_TOPIC: 'DELETE_TOPIC',
+    EDIT_TOPIC: 'EDIT_TOPIC',
+    ADD_SUBTOPIC: 'ADD_SUBTOPIC',
+    DELETE_SUBTOPIC: 'DELETE_SUBTOPIC',
+    EDIT_SUBTOPIC: 'EDIT_SUBTOPIC'
 };

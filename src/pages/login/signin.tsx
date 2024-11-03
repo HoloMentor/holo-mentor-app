@@ -14,9 +14,10 @@ const validationSchema = Yup.object().shape({
 
 interface Props {
     onSubmit: (values: FormValues) => void;
+    isLoading: boolean;
 }
 
-export default function LoginForm({ onSubmit }: Props) {
+export default function LoginForm({ onSubmit, isLoading }: Props) {
     return (
         <div className="flex flex-col gap-9 items-center w-full max-w-[400px]">
             <Form
@@ -26,7 +27,10 @@ export default function LoginForm({ onSubmit }: Props) {
                 className="flex flex-col w-full gap-6">
                 <FormInput name="email" placeholder="example@example.com" label="Email" required />
 
-                <SubmitButton type="submit" className="py-4 w-full !max-w-full flex justify-center">
+                <SubmitButton
+                    isLoading={isLoading}
+                    type="submit"
+                    className="py-4 w-full !max-w-full flex justify-center">
                     Next
                 </SubmitButton>
             </Form>
