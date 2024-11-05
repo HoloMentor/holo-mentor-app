@@ -1,6 +1,10 @@
+import Checkbox from '@/components/checkbox';
 import Select, { SelectValue } from '@/components/select';
+import useErrorHandler from '@/hooks/error-handler';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
+import classSubTopicServices from '@/redux/services/class/subtopics.service';
+import classTopicServices from '@/redux/services/class/topics.service';
 import { Tooltip } from '@nextui-org/react';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,6 +12,7 @@ import { useDispatch } from 'react-redux';
 export interface SubTopicProps {
     id: string;
     name: string;
+    isDone: boolean;
     materials: TopicMaterials[];
 }
 
@@ -50,6 +55,11 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
         [filterState, data.materials]
     );
 
+    // update sub topic done state
+    const [updateDoneState, { isLoading: isUpdating, isError: isUpdateError, error: updateError }] =
+        classSubTopicServices.useUpdateDoneStateMutation();
+    useErrorHandler(isUpdateError, updateError);
+
     const extractFileName = useCallback(
         (url: string) => {
             if (!url) return '-';
@@ -60,11 +70,33 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
         [data.materials]
     );
 
+    const setIsDone = async (value: Boolean) => {
+        const result = await updateDoneState({
+            id: data.id,
+            isDone: value
+        });
+
+        if (result.data.status === 200) {
+            dispatch(classTopicServices.util.invalidateTags(['ClassTopics']));
+        }
+    };
+    console.log(data);
     return (
         <div className="flex flex-col gap-5 p-3">
             <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                    <p className="font-semibold">{data.name}</p>
+                    <Checkbox
+                        isDisabled={isUpdating}
+                        isSelected={data.isDone}
+                        onValueChange={setIsDone}>
+                        <Tooltip
+                            color="primary"
+                            placement="top-start"
+                            showArrow
+                            content="Mark as done">
+                            <span className="font-semibold">{data.name}</span>
+                        </Tooltip>
+                    </Checkbox>
                     <Tooltip
                         style={{
                             zIndex: '1'
