@@ -15,7 +15,7 @@ const Submissions = loadable(() => import('@/pages/teacher/submissions'));
 const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'));
 const SubjectForums = loadable(() => import('@/pages/teacher/classes/forum/index'));
 const SubjectForumMCQ = loadable(() => import('@/models/containers/forum/add-mcq'));
-const SubjectForumEssay = loadable(() => import('@/pages/teacher/classes/forum/essay'));
+const SubjectForumEssay = loadable(() => import('@/models/containers/forum/add-question'));
 const SubjectForum = loadable(() => import('@/pages/teacher/classes/forum/question'));
 const Quizes = loadable(() => import('@/pages/teacher/classes/quiz'));
 const QuizInfo = loadable(() => import('@/pages/teacher/classes/quiz/questions'));
