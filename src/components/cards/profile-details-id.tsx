@@ -30,7 +30,7 @@ export default function ProfileDetailsCardId({ user }: ProfileInfoDetailsProps) 
                         </svg>
                     </div>
                     <span>
-                        <a href="mailto:saliya@gmail.com" className="text-black">
+                        <a href="mailto:test@gmail.com" className="text-black">
                             {user.email || '-'}
                         </a>
                     </span>

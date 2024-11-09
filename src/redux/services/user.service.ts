@@ -4,7 +4,7 @@ import { baseQuery } from '@/redux/services/base';
 const userServices = createApi({
     reducerPath: 'user-service',
     baseQuery: baseQuery,
-    tagTypes: ['User'],
+    tagTypes: ['User', 'Users'],
     endpoints: (builder) => ({
         authenticate: builder.mutation({
             query: (props) => ({
@@ -21,13 +21,21 @@ const userServices = createApi({
             }),
             providesTags: ['User']
         }),
+        all: builder.query({
+            query: ({ ...props }) => ({
+                method: 'GET',
+                url: `/users/all`,
+                params: props
+            }),
+            providesTags: ['Users']
+        }),
         updateUser: builder.mutation({
             query: ({ id, ...props }) => ({
                 method: 'PATCH',
                 url: `/users/update/user/${id}`,
                 body: props
             }),
-            invalidatesTags: ['User']
+            invalidatesTags: ['User', 'Users']
         }),
         updateInfo: builder.mutation({
             query: ({ id, ...props }) => ({
@@ -35,7 +43,22 @@ const userServices = createApi({
                 url: `/users/update/info/${id}`,
                 body: props
             }),
-            invalidatesTags: ['User']
+            invalidatesTags: ['User', 'Users']
+        }),
+        suspend: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/users/suspend/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['User', 'Users']
+        }),
+        delete: builder.mutation({
+            query: ({ id }) => ({
+                method: 'DELETE',
+                url: `/users/delete/${id}`
+            }),
+            invalidatesTags: ['Users']
         })
     })
 });

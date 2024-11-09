@@ -51,7 +51,7 @@ export default function Profile() {
     ];
 
     const items = [
-        { key: '1', name: 'Saliya Bandara' },
+        { key: '1', name: 'John Stark' },
         { key: '2', name: 'Tony Reichert' },
         { key: '3', name: 'Zoey Lang' },
         { key: '4', name: 'Jane Fisher' }

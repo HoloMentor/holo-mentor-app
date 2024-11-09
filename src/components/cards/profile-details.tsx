@@ -72,7 +72,7 @@ export default function ProfileDetailsCard() {
                     </div>
                     <Skeleton className="rounded-lg" isLoaded={!isUserLoading}>
                         <span>
-                            <a href="mailto:saliya@gmail.com" className="text-black">
+                            <a href="mailto:test@gmail.com" className="text-black">
                                 {userData?.data?.email || '-'}
                             </a>
                         </span>
