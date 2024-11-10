@@ -1,9 +1,49 @@
 import Content from '@/components/content';
 import Heading from '@/components/headings/main';
 import { Accordion, AccordionItem } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+// import teacherServices from '@/redux/services/teacher.service';
+import studentServices from '@/redux/services/student.service';
+import { Card, CardBody, CardHeader } from '@nextui-org/react';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+
+interface InstituteClass {
+    id: number;
+    name: string;
+    subject: string;
+    institute: {
+        logo: string;
+    };
+}
 
 export default function Subjects() {
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const location = useLocation();
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const {
+        data: studentClasses,
+        isError: isStudentClassesError,
+        error: studentClassesError,
+        isLoading: isStudentClassesLoading
+    } = studentServices.useGetStudentClassesQuery(
+        {
+            id: user.userId,
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
+        },
+        {
+            skip: !user.userId
+        }
+    );
+    useErrorHandler(isStudentClassesError, studentClassesError);
+    console.log(studentClasses);
+
     return (
         <div className="flex flex-col gap-3">
             <Heading>Subjects</Heading>
