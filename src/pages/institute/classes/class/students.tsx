@@ -5,8 +5,7 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-o
 import Button from '@/components/button';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '@/redux';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import useErrorHandler from '@/hooks/error-handler';
 import studentServices from '@/redux/services/student.service';
@@ -14,7 +13,6 @@ import studentServices from '@/redux/services/student.service';
 function classStudent() {
     const dispatch = useDispatch();
 
-    const { user } = useSelector((state: IRootState) => state.user);
 
     const location = useLocation();
     const params = location.search;
