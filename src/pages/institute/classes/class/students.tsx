@@ -6,67 +6,50 @@ import Button from '@/components/button';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { modelNames } from '@/models';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import useErrorHandler from '@/hooks/error-handler';
+import studentServices from '@/redux/services/student.service';
 
 function classStudent() {
     const dispatch = useDispatch();
 
-    const renderTeacher = ({ data }: CustomTableCellData) => {
-        return (
-            <div className="flex flex-raw">
-                <img
-                    src={data.teacher.pnglink}
-                    alt="avatar"
-                    className="relative inline-block h-8 w-8 !rounded-full  object-cover object-center border-2 border-dark-green"
-                />
-                <span className="text-left ml-5 mt-2">{data.teacher.name}</span>
-            </div>
-        );
-    };
 
-    const tableData = [
+    const location = useLocation();
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const url = window.location.pathname;
+    const classId = url.split('/')[2];
+
+    const {
+        data: instituteStudents,
+        isLoading: studentLoading,
+        isError: isStudentError,
+        error: studentError
+    } = studentServices.useGetClassesStudentQuery(
         {
-            classes: '10',
-            subject: 'Chemistry',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Marco Panting'
-            },
-            type: 'A/L'
+            id: classId,
+            search: searchParams.get('search') || '',
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
         },
         {
-            classes: '10',
-            subject: 'Physics',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Jaquenette Trout'
-            },
-            type: 'A/L'
-        },
-        {
-            classes: '10',
-            subject: 'Maths',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Catriona Blissett'
-            },
-            type: 'O/L'
-        },
-        {
-            classes: '10',
-            subject: 'Science',
-            teacher: {
-                pnglink: 'https://picsum.photos/400',
-                name: 'Sandy Emeny'
-            },
-            type: 'O/L'
+            skip: !classId
         }
-    ];
+    );
+    useErrorHandler(isStudentError, studentError);
 
-    const tableColumns: TableColumn[] = [
-        { name: 'Name', value: { render: renderTeacher } },
-        { name: 'Subject', value: 'subject' },
-        { name: 'No of Classes', value: 'classes' },
-        { name: 'Type', value: 'type' }
+    console.log(instituteStudents);
+
+    const tableData = instituteStudents?.data?.data?.map((student: { id: string; firstName: string; lastName: string; email: string }) => ({
+        id: student.id,
+        name: `${student.firstName || ''} ${student.lastName || ''}`,
+        email: student.email || 'N/A',
+    })) || [];
+
+    const tableColumns = [
+        { name: 'ID', value: 'id' },
+        { name: 'Name', value: 'name' },
+        { name: 'Email', value: 'email' },
     ];
 
     return (
@@ -126,10 +109,15 @@ function classStudent() {
                             </DropdownMenu>
                         </Dropdown>
                     </div>
-                    <Table data={tableData} columns={tableColumns} />
+                    {studentLoading ? (
+                        <div>Loading...</div>
+                    ) : (
+                        <Table data={tableData} columns={tableColumns} />
+                    )}
                 </div>
             </section>
         </div>
     );
 }
+
 export default classStudent;

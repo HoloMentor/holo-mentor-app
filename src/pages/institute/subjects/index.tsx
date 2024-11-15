@@ -35,7 +35,6 @@ export default function Index() {
         }
     );
     useErrorHandler(isSubjectsError, subjectsError);
-    console.log(instituteSubjects);
 
     const tableColumns: TableColumn[] = [
         { name: 'Subject', value: 'name' },
