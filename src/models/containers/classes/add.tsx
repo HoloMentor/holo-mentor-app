@@ -1,21 +1,20 @@
 import Form from '@/components/form';
+import FormAutoComplete from '@/components/form/autocomplete';
 import SubmitButton from '@/components/form/button';
 import FormInput from '@/components/form/input';
-import FormDropdown from '@/components/form/dropdown';
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
+import classServices from '@/redux/services/class/class.service';
+import subjectServices from '@/redux/services/subject.service';
+import teacherServices from '@/redux/services/teacher.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
 import moment from 'moment';
-import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-import { notifyActions } from '@/redux/reducers/notify.reducer.ts';
-import { modelActions } from '@/redux/reducers/model.reducer.ts';
-import { IRootState } from '@/redux';
-import classServices from '@/redux/services/class.service';
-import useErrorHandler from '@/hooks/error-handler';
-import teacherServices from '@/redux/services/teacher.service';
-import subjectServices from '@/redux/services/subject.service';
-import FormAutoComplete from '@/components/form/autocomplete';
 import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 
 const initialValues = {
     subjectId: '',
@@ -45,7 +44,7 @@ const validationSchema = Yup.object().shape({
         })
 });
 
-export default function AddClass() {
+export default function AddClass({}: ModelContainerProps) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 

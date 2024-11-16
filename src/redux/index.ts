@@ -8,7 +8,7 @@ import notifyReducer from './reducers/notify.reducer';
 import instituteServices from './services/institute.service';
 import fileServices from './services/file.service';
 import subjectServices from '@/redux/services/subject.service.ts';
-import classServices from '@/redux/services/class.service.ts';
+import classServices from '@/redux/services/class/class.service';
 import teacherServices from './services/teacher.service';
 import staffServices from './services/staff.service';
 

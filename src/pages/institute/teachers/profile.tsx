@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import useErrorHandler from '@/hooks/error-handler';
 import { useLocation } from 'react-router-dom';
 import userServices from '@/redux/services/user.service';
-import classServices from '@/redux/services/class.service';
+import classServices from '@/redux/services/class/class.service';
 import { IRootState } from '@/redux';
 import { useSelector } from 'react-redux';
 

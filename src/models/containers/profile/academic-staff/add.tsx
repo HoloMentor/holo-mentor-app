@@ -5,6 +5,8 @@ import FormInput from '@/components/form/input';
 import SubmitButton from '@/components/form/button';
 import { useCreateStaffMutation } from '@/redux/services/staff.service';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
 
 const initialValues = {
     email: '',
@@ -22,15 +24,16 @@ const validationSchema = Yup.object().shape({
 export default function AddAcademicStaff() {
     const [createStaff, { isLoading, isSuccess, isError, error }] = useCreateStaffMutation();
     const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
+    const { user } = useSelector((state: IRootState) => state.user);
 
     const onSubmit = async (values: FormikValues) => {
         const payload = {
             ...values,
-            instituteId: 1,
-            teacherId: 1,
-            teacherInstituteId: 1
+            instituteId: user.instituteId,
+            teacherId: user.userId,
+            teacherInstituteId: user.instituteId
         };
-
+        console.log('Payload:', payload);
         try {
             await createStaff(payload).unwrap();
             setSubmissionStatus('*Staff member added successfully!');

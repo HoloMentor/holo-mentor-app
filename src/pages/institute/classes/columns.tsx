@@ -9,6 +9,19 @@ import {
     DropdownTrigger
 } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+export const renderClass = ({ data }: CustomTableCellData) => {
+    return (
+        <Link to={`/classes/${data.id}`}>
+            <span className="text-left">{data.className}</span>
+        </Link>
+    );
+};
+
+export const renderTeacher = ({ data }: CustomTableCellData) => {
+    return `${data.firstName} ${data.lastName}`;
+};
 
 export function renderMoreActions({ data }: CustomTableCellData) {
     const dispatch = useDispatch();

@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
     name: Yup.string().required('Subject name is required')
 });
 
-export default function AddSubject() {
+export default function AddSubject({}: ModelContainerProps) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 

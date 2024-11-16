@@ -56,7 +56,7 @@ export const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryE
                 api,
                 extraOptions
             );
-
+            console.log(refreshResult);
             if (refreshResult?.data?.data?.access_token) {
                 // store the new token
                 setCookie('token', refreshResult.data.data.access_token);

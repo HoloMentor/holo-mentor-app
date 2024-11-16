@@ -12,6 +12,7 @@ interface FormEditorProps extends EditorProps {
     label?: string;
     name: string;
     classNames?: ClassNamesProps;
+    isRequired?: boolean;
 }
 
 export default function FormEditor({
@@ -19,6 +20,7 @@ export default function FormEditor({
     label,
     onChange,
     classNames,
+    isRequired,
     ...props
 }: FormEditorProps) {
     const [field] = useField(name);
@@ -58,7 +60,12 @@ export default function FormEditor({
                     classNames?.innerWrapper ? classNames.innerWrapper : ''
                 }`}>
                 {label && (
-                    <span className="pointer-events-none text-foreground text-sm">{label}</span>
+                    <span
+                        className={`pointer-events-none text-foreground text-sm ${
+                            isRequired ? "after:content-['*'] after:ml-0.5 after:text-danger" : ''
+                        }`}>
+                        {label}
+                    </span>
                 )}
                 <Editor editor={editor} onChange={handleChange} {...props} />
             </div>

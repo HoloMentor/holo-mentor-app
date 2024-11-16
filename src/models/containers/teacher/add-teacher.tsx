@@ -25,7 +25,7 @@ const validationSchema = Yup.object().shape({
     registrationNumber: Yup.string().required('Registration number is required')
 });
 
-export default function AddTeacher() {
+export default function AddTeacher({}: ModelContainerProps) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
 
