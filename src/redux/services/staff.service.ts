@@ -30,6 +30,13 @@ const staffServices = createApi({
                 url: `/staff/${id}`
             }),
             providesTags: ['Staff']
+        }),
+        deleteStaff: builder.mutation({
+            query: (id) => ({
+                method: 'DELETE',
+                url: `/staff/${id}`
+            }),
+            invalidatesTags: ['Staff', 'InstituteTeacherStaff']
         })
     })
 });
@@ -39,5 +46,6 @@ export default staffServices;
 export const {
     useCreateStaffMutation,
     useGetInstituteTeacherStaffQuery,
-    useGetStaffQuery
+    useGetStaffQuery,
+    useDeleteStaffMutation
 } = staffServices;

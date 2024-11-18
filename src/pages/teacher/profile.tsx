@@ -51,13 +51,6 @@ export default function Profile() {
         { name: 'Students', value: 'students' }
     ];
 
-    const items = [
-        { key: '1', name: 'John Stark' },
-        { key: '2', name: 'Tony Reichert' },
-        { key: '3', name: 'Zoey Lang' },
-        { key: '4', name: 'Jane Fisher' }
-    ];
-
     return (
         <div className="flex flex-col gap-3">
             <Heading>Profile</Heading>
