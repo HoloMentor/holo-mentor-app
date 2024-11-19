@@ -38,8 +38,6 @@ function classStudent() {
     );
     useErrorHandler(isStudentError, studentError);
 
-    console.log(instituteStudents);
-
     const tableData = instituteStudents?.data?.data?.map((student: { id: string; firstName: string; lastName: string; email: string }) => ({
         id: student.id,
         name: `${student.firstName || ''} ${student.lastName || ''}`,
