@@ -34,8 +34,8 @@ export default function SupportingStaffCard() {
 
     useErrorHandler(isStaffError, staffError);
 
-    console.log('teacherId:', user?.userId);
-    console.log('instituteId:', user?.instituteId);
+    // console.log('teacherId:', user?.userId);
+    // console.log('instituteId:', user?.instituteId);
     console.log('staffData:', staffData);
 
     const staffList = staffData?.data?.data || [];
@@ -155,7 +155,7 @@ export default function SupportingStaffCard() {
                 <button
                     onClick={handlePrevPage}
                     disabled={page === 1}
-                    className="px-2 py-2 rounded-full">
+                    className="px-2 py-2 rounded-full cursor-pointer">
                     <svg
                         width="14"
                         height="14"
@@ -182,7 +182,7 @@ export default function SupportingStaffCard() {
                 <button
                     onClick={handleNextPage}
                     disabled={staffList.length < limit}
-                    className="px-2 py-2 rounded-full">
+                    className="px-2 py-2 rounded-full cursor-pointer">
                     <svg
                         width="14"
                         height="14"

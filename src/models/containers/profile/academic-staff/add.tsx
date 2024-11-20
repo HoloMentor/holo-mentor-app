@@ -5,8 +5,10 @@ import FormInput from '@/components/form/input';
 import SubmitButton from '@/components/form/button';
 import { useCreateStaffMutation } from '@/redux/services/staff.service';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IRootState } from '@/redux';
+import { modelActions } from '@/redux/reducers/model.reducer';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
 
 const initialValues = {
     email: '',
@@ -21,11 +23,17 @@ const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required')
 });
 
-export default function AddAcademicStaff() {
-    const [createStaff, { isLoading, isSuccess, isError, error }] = useCreateStaffMutation();
+interface AddAcademicStaffProps {
+    onClose: () => void; // Function to close the modal
+}
+
+export default function AddAcademicStaff({ onClose }: AddAcademicStaffProps) {
+    const [createStaff, { isLoading, isError, error }] = useCreateStaffMutation();
     const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
     const { user } = useSelector((state: IRootState) => state.user);
+    const dispatch = useDispatch();
 
+    // Corrected onSubmit function
     const onSubmit = async (values: FormikValues) => {
         const payload = {
             ...values,
@@ -33,10 +41,22 @@ export default function AddAcademicStaff() {
             teacherId: user.userId,
             teacherInstituteId: user.instituteId
         };
-        console.log('Payload:', payload);
+
         try {
-            await createStaff(payload).unwrap();
-            setSubmissionStatus('*Staff member added successfully!');
+            // Call the mutation function
+            const result = await createStaff(payload).unwrap();
+
+            if (result?.status === 200) {
+                dispatch(
+                    notifyActions.open({
+                        type: 'success',
+                        message: result.message
+                    })
+                );
+
+                dispatch(modelActions.hide());
+                onClose(); // Close the modal on success
+            }
         } catch (err) {
             console.error(err);
             setSubmissionStatus('*Failed to add staff member. Please try again.');

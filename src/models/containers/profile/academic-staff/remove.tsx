@@ -1,9 +1,29 @@
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
+import { useDeleteStaffMutation } from '@/redux/services/staff.service';
+import { useState } from 'react';
 
-export default function AddAcademicStaff({}: ModelContainerProps) {
+interface AddAcademicStaffProps {
+    id: string;
+    onClose: () => void;
+}
+
+export default function AddAcademicStaff({ id, onClose }: AddAcademicStaffProps) {
+    const [deleteStaff, { isLoading, isSuccess, isError, error }] = useDeleteStaffMutation();
+    const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
+
+    const handleDelete = async () => {
+        try {
+            await deleteStaff(id).unwrap();
+            setSubmissionStatus('Staff member removed successfully!');
+            onClose();
+        } catch (err) {
+            console.error(err);
+            setSubmissionStatus('Failed to remove staff member. Please try again.');
+        }
+    };
+    console.log('staffId:', id);
     return (
         <div>
-            <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl"></ModalHeader>
             <ModalBody>
                 <div className="flex items-center justify-center">
                     <svg
@@ -19,16 +39,20 @@ export default function AddAcademicStaff({}: ModelContainerProps) {
                     </svg>
                 </div>
                 <div className="flex flex-col gap-1">
-                    <div className="flex justify-center font-semibold text-2xl">Are you sure ?</div>
+                    <div className="flex justify-center font-semibold text-2xl">Are you sure?</div>
                     <div className="flex justify-center font-md text-md">
                         This will remove the user from the academic staff
                     </div>
                 </div>
             </ModalBody>
             <ModalFooter>
-                <button className="bg-orange outline-none cursor-pointer select-none hover:bg-red-500 inline-flex items-center gap-2 border-0 text-white py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm">
-                    Delete
+                <button
+                    onClick={handleDelete}
+                    disabled={isLoading}
+                    className="bg-orange outline-none cursor-pointer select-none hover:bg-red-500 inline-flex items-center gap-2 border-0 text-white py-2 px-7 transition-all duration-200 rounded max-w-max font-semibold text-sm">
+                    {isLoading ? 'Deleting...' : 'Delete'}
                 </button>
+                {submissionStatus && <p>{submissionStatus}</p>}
             </ModalFooter>
         </div>
     );
