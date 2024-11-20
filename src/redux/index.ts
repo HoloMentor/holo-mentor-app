@@ -13,6 +13,7 @@ import teacherServices from './services/teacher.service';
 import classTopicServices from './services/class/topics.service';
 import classSubTopicServices from './services/class/subtopics.service';
 import classMaterialServices from './services/class/materials.service';
+import studyPlanServices from './services/study-plan.service';
 
 const store = configureStore({
     reducer: combineReducers({
@@ -27,6 +28,7 @@ const store = configureStore({
         [classServices.reducerPath]: classServices.reducer,
         [teacherServices.reducerPath]: teacherServices.reducer,
         [classTopicServices.reducerPath]: classTopicServices.reducer,
+        [studyPlanServices.reducerPath]: studyPlanServices.reducer,
         [classSubTopicServices.reducerPath]: classSubTopicServices.reducer,
         [classMaterialServices.reducerPath]: classMaterialServices.reducer
     }),
@@ -42,6 +44,7 @@ const store = configureStore({
             .concat(classTopicServices.middleware)
             .concat(classSubTopicServices.middleware)
             .concat(classMaterialServices.middleware)
+            .concat(studyPlanServices.middleware)
 });
 
 export default store;

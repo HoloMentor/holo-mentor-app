@@ -5,12 +5,13 @@ export interface UploadProps {
     label?: string;
     name?: string;
     value?: string;
-    onChange?: (x: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (file: File) => void;
     size?: 'sm' | 'md' | 'lg' | 'xl' | string;
     className?: string;
     labelClassName?: string;
     accept?: string;
     text?: string;
+    preview?: 'image' | 'name';
 }
 
 export default function Upload({
@@ -18,6 +19,7 @@ export default function Upload({
     onChange,
     value,
     name,
+    preview = 'image',
     text = 'PNG, JPG Only',
     size = 'sm',
     accept,
@@ -66,24 +68,26 @@ export default function Upload({
         if (dropZoneContainerRef?.current) {
             dropZoneContainerRef.current?.addEventListener('dragover', (e) => {
                 e.preventDefault();
-                dropZoneContainerRef.current?.classList.add('border-pink');
+                dropZoneContainerRef.current?.classList.add('border-success');
             });
 
             dropZoneContainerRef.current?.addEventListener('dragleave', (e) => {
                 e.preventDefault();
-                dropZoneContainerRef.current?.classList.remove('border-pink');
+                dropZoneContainerRef.current?.classList.remove('border-success');
             });
 
             dropZoneContainerRef.current?.addEventListener('drop', (e: DragEvent) => {
                 e.preventDefault();
 
-                dropZoneContainerRef.current?.classList.remove('border-pink');
+                dropZoneContainerRef.current?.classList.remove('border-success');
                 var file = e?.dataTransfer?.files[0];
 
                 displayPreview(file);
+
+                if (onChange) onChange(file);
             });
         }
-    }, [dropZoneContainerRef, dropZoneRef, previewRef]);
+    }, [dropZoneContainerRef, dropZoneRef, previewRef, onChange]);
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         var file = e?.target?.files?.[0];
@@ -91,7 +95,7 @@ export default function Upload({
         if (file) {
             displayPreview(file);
         }
-        if (onChange) onChange(e);
+        if (onChange) onChange(file);
     };
 
     const displayPreview = (file: any) => {
@@ -151,12 +155,16 @@ export default function Upload({
                     <p className="text-xs text-gray-500">{text}</p>
                 </div>
 
-                <img
-                    src={value}
-                    style={{ display: value ? 'block' : 'none' }}
-                    className="mx-auto max-h-64 hidden"
-                    ref={previewRef}
-                />
+                {preview === 'image' ? (
+                    <img
+                        src={value}
+                        style={{ display: value ? 'block' : 'none' }}
+                        className="mx-auto max-h-64 hidden"
+                        ref={previewRef}
+                    />
+                ) : (
+                    <p>{'value'}</p>
+                )}
             </div>
         </label>
     );
