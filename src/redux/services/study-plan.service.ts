@@ -13,6 +13,12 @@ const studyPlanServices = createApi({
                 body: props
             }),
             invalidatesTags: ['ClassTiers']
+        }),
+        getCSV: builder.mutation({
+            query: ({ classId }) => ({
+                method: 'GET',
+                url: `/study-plan/csv/${classId}`
+            })
         })
     })
 });

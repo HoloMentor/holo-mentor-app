@@ -8,7 +8,7 @@ export interface FormUploadProps extends UploadProps {
 export default function FormUpload({ name, onChange, ...props }: FormUploadProps) {
     const [field] = useField(name);
     const { setFieldValue } = useFormikContext();
-    console.log(field);
+
     const handleChange = (file: File) => {
         setFieldValue(name, file);
         if (onChange) onChange(file);
