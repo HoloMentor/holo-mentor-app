@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 //success
 //error
 //warning
-//info
 
 export function NotifyIcon({ type }: { type: string }) {
     switch (type) {
