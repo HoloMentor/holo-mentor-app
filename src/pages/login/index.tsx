@@ -52,7 +52,7 @@ export default function Login() {
                 <img src="/images/logo.svg" alt="Logo" className="w-full max-w-80" />
 
                 {tab === 0 ? (
-                    <LoginForm onSubmit={onLogin} />
+                    <LoginForm onSubmit={onLogin} isLoading={isUserInstitutesLoading} />
                 ) : (
                     <InstituteForm
                         data={loginData}

@@ -4,7 +4,7 @@ import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
-import classServices from '@/redux/services/class.service';
+import classServices from '@/redux/services/class/class.service';
 
 export default function DeleteClass({ id }: ModelContainerProps) {
     const dispatch = useDispatch();

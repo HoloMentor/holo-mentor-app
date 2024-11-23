@@ -81,8 +81,8 @@ export default function studentProfileDetails() {
                                         </svg>
                                     </div>
                                     <span>
-                                        <a href="mailto:saliya@gmail.com" className="text-black">
-                                            saliya@gmail.com
+                                        <a href="mailto:test@gmail.com" className="text-black">
+                                            test@gmail.com
                                         </a>
                                     </span>
                                 </li>

@@ -133,9 +133,9 @@ const instituteSideBar: RoleSideBarProps = {
             render: LogoutComponent
         }
     ],
-    class: [
+    classes: [
         {
-            to: '/class/:classId/progress',
+            to: '/classes/:classId',
             end: true,
             name: 'Class',
             icon: () => (
@@ -153,7 +153,7 @@ const instituteSideBar: RoleSideBarProps = {
             )
         },
         {
-            to: '/class/:classId/students',
+            to: '/classes/:classId/students',
             end: true,
             name: 'Students',
             icon: () => (

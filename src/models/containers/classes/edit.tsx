@@ -9,12 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { IRootState } from '@/redux';
-import classServices from '@/redux/services/class.service';
+import classServices from '@/redux/services/class/class.service';
 import useErrorHandler from '@/hooks/error-handler';
 import teacherServices from '@/redux/services/teacher.service';
 import subjectServices from '@/redux/services/subject.service';
 import moment from 'moment';
 import { FormikValues } from 'formik';
+import FormAutoComplete from '@/components/form/autocomplete';
 
 const validationSchema = Yup.object().shape({
     subjectId: Yup.string(),
@@ -35,19 +36,9 @@ const validationSchema = Yup.object().shape({
         })
 });
 
-export default function EditClass({ data }: { data: { id: number } }) {
+export default function EditClass({ data }: ModelContainerProps) {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
-
-    const { data: instituteTeachers } = teacherServices.useGetInstituteTeachersQuery(
-        { instituteId: user.instituteId, search: '', page: 1 },
-        { skip: !user.instituteId }
-    );
-
-    const { data: instituteSubjects } = subjectServices.useGetInstituteSubjectsQuery(
-        { instituteId: user.instituteId, search: '', page: 1 },
-        { skip: !user.instituteId }
-    );
 
     const [
         updateClass,
@@ -67,6 +58,38 @@ export default function EditClass({ data }: { data: { id: number } }) {
             skip: !data.id
         }
     );
+
+    const { data: teachersData } = teacherServices.useGetInstituteTeachersQuery(
+        {
+            instituteId: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+    
+    const transformedTeachersData = teachersData?.data?.data
+        ? teachersData.data.data.map((teacher: { id: string; firstName: string; lastName: string }) => ({
+            value: teacher.id,
+            label: `${teacher.firstName} ${teacher.lastName}`
+        }))
+        : [];
+
+    const { data: subjectsData } = subjectServices.useGetInstituteSubjectsQuery(
+        {
+            instituteId: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
+    const transformedSubjectsData = subjectsData?.data?.data
+    ? subjectsData.data.data.map((subject: { id: string; name: string }) => ({
+        value: subject.id,
+        label: subject.name
+    }))
+    : [];
 
     useErrorHandler(isClassLoadingError, classLoadingError);
 
@@ -129,35 +152,29 @@ export default function EditClass({ data }: { data: { id: number } }) {
                 Edit Class
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
-                <FormDropdown
+                
+                <FormInput label="Class name" placeholder="Class name" name="className" />
+                
+                <FormAutoComplete
                     label="Subject"
                     name="subjectId"
-                    options={
-                        instituteSubjects?.data?.data?.length > 0
-                            ? instituteSubjects.data.data.map((subject: any) => ({
-                                  value: subject.id,
-                                  label: subject.name
-                              }))
-                            : []
-                    }
+                    defaultItems={transformedSubjectsData}
+                    isLoading={transformedSubjectsData.length === '0'}
+                    isRequired
                 />
-                <FormDropdown
+
+                <FormAutoComplete
                     label="Teacher"
                     name="teacherId"
-                    options={
-                        instituteTeachers?.data?.data?.length > 0
-                            ? instituteTeachers.data.data.map((teacher: any) => ({
-                                  value: teacher.id,
-                                  label: `${teacher.firstName} ${teacher.lastName}`
-                              }))
-                            : []
-                    }
+                    defaultItems={transformedTeachersData}
+                    isLoading={transformedTeachersData.length === '0'}
+                    isRequired
                 />
-                <FormInput label="Class name" placeholder="Class name" name="className" />
-                <FormDropdown
+
+                <FormAutoComplete
                     label="Day of the week"
                     name="dayOfWeek"
-                    options={[
+                    defaultItems={[
                         { value: 'MON', label: 'Monday' },
                         { value: 'TUE', label: 'Tuesday' },
                         { value: 'WED', label: 'Wednesday' },
