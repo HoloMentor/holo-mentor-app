@@ -49,7 +49,7 @@ const InstitutionCard = () => {
                             {instituteData?.data?.name || 'Unknown Institute'}
                         </div>
                         <div className="text-xs">
-                            {instituteData?.data?.address || 'Unknown Location'}
+                            {instituteData?.data?.address || 'Location not provided'}
                         </div>
                     </div>
                 </div>

@@ -58,6 +58,13 @@ const classServices = createApi({
                 url: `/classes/teacher/${teacherId}/institute/${instituteId}`
             }),
             providesTags: ['Class']
+        }),
+        getClassByTeacherAndInstituteGroupBySubject: builder.query({
+            query: ({ teacherId, instituteId }) => ({
+                method: 'GET',
+                url: `/institutes/classes/teacher/${teacherId}/institute/${instituteId}/grouped-by-subject`
+            }),
+            providesTags: ['Class']
         })
     })
 });
