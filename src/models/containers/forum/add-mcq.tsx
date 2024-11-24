@@ -52,6 +52,8 @@ export default function ForumMcq() {
     const { user } = useSelector((state: IRootState) => state.user);
     const { classId } = useParams();
 
+
+
     const {
         data: classTopics,
         isLoading: isClassTopicsLoading,
@@ -67,6 +69,10 @@ export default function ForumMcq() {
         }
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
+
+
+    console.log('classTopics');
+    console.log(classTopics);
 
     const classTopicsData = useMemo(() => {
         return classTopics?.data?.map((topic: { id: number | string; name: string }) => ({
@@ -116,6 +122,7 @@ export default function ForumMcq() {
             <Heading>Forum</Heading>
             <Content>
                 <SubHeading>Add MCQ Question</SubHeading>
+                
 
                 <Form
                     validationSchema={validationSchema}

@@ -115,7 +115,6 @@ export default function Forum() {
 
             <section className="flex flex-col gap-5 pr-5">
                 {Array.from({ length: 5 }).map((_, i) => {
-                    // TODO: this should be the id of the forum content
                     const id = i;
 
                     return (

@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from './base';
 
+
 const forumServices = createApi({
     reducerPath:'forum-service',
     baseQuery:baseQuery,
@@ -35,7 +36,14 @@ const forumServices = createApi({
                 url: `/forum/essay/delete/${id}`
             }),
             invalidatesTags: ['Forums']
-        })
+        }),
+        getQuestions: builder.query({
+            query: () => ({
+                method: 'GET',
+                url: `/forum/all`,
+            }),
+            providesTags: ['Forums']
+        }),
     })
 });
 export default forumServices;

@@ -9,7 +9,6 @@ import {
     InlineContentSchema,
     StyleSchema
 } from '@blocknote/core';
-
 export type BlockNoteBlockProps = Block<BlockSchema, InlineContentSchema, StyleSchema>;
 
 export type BlockNoteEditorProps = BlockNoteEditor<BlockSchema, InlineContentSchema, StyleSchema>;
