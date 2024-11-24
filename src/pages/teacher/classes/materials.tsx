@@ -81,10 +81,10 @@ export default function Materials() {
                             aria-label={`Accordion skeleton`}
                             title={
                                 <div className="flex items-center gap-4">
-                                    <Skeleton className="max-w-60 w-full h-6 rounded-md"></Skeleton>
-                                    <h4 className="text-2xl font-semibold w-full max-w-max"></h4>
+                                    <Skeleton className="w-full h-6 rounded-md max-w-60"></Skeleton>
+                                    <h4 className="w-full text-2xl font-semibold max-w-max"></h4>
                                     <div className="relative">
-                                        <Skeleton className="rounded-full w-6 h-6"></Skeleton>
+                                        <Skeleton className="w-6 h-6 rounded-full"></Skeleton>
                                     </div>
                                 </div>
                             }
@@ -108,7 +108,7 @@ export default function Materials() {
                                         aria-label={`Accordion ${classTopic.id}`}
                                         title={
                                             <div className="flex items-center gap-4">
-                                                <h4 className="text-2xl font-semibold w-full max-w-max">
+                                                <h4 className="w-full text-2xl font-semibold max-w-max">
                                                     {classTopic.name}
                                                 </h4>
                                                 <Tooltip
@@ -131,7 +131,7 @@ export default function Materials() {
                                                                         })
                                                                     );
                                                                 }}
-                                                                className="flex gap-2 py-1 px-2 cursor-pointer">
+                                                                className="flex gap-2 px-2 py-1 cursor-pointer">
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
@@ -158,7 +158,7 @@ export default function Materials() {
                                                                         })
                                                                     );
                                                                 }}
-                                                                className="flex gap-2 py-1 px-2 cursor-pointer">
+                                                                className="flex gap-2 px-2 py-1 cursor-pointer">
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     viewBox="0 0 24 24"
@@ -210,7 +210,7 @@ export default function Materials() {
 
                                         <Button
                                             variant="bordered"
-                                            className="border-2 border-gray-200 p-6 border-dashed max-w-full"
+                                            className="max-w-full p-6 border-2 border-gray-200 border-dashed"
                                             onClick={() =>
                                                 dispatch(
                                                     modelActions.show({
@@ -249,7 +249,7 @@ export default function Materials() {
                 <Button
                     isDisabled={isClassTopicsLoading}
                     variant="bordered"
-                    className="border-2 border-gray-200 p-6 border-dashed max-w-full"
+                    className="max-w-full p-6 border-2 border-gray-200 border-dashed"
                     onClick={() =>
                         dispatch(
                             modelActions.show({

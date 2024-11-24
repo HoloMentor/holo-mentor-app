@@ -3,9 +3,12 @@ import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import ForumQuestionVote from '@/components/forum/vote';
+import forumServices from '@/redux/services/forum.services';
+import useErrorHandler from '@/hooks/error-handler';
+import Reader from '@/components/editor/reader';
 
 const filterOptions = [
     {
@@ -17,12 +20,31 @@ const filterOptions = [
 export default function Forum() {
     const location = useLocation();
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
+    const { classId } = useParams();
+
+    const {
+        data: forumQuestions,
+        isLoading: isForumQuestionsLoading,
+        error: forumQuestionsError,
+        isError: isForumQuestionsError
+    } = forumServices.useGetQuestionsQuery(
+        {
+            classId: classId,
+            materials: false
+        },
+        {
+            skip: !classId
+        }
+    );
+    useErrorHandler(isForumQuestionsError, forumQuestionsError);
+
+    console.log(forumQuestions);
 
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
 
-            <section className="flex justify-between items-center gap-5 pr-5">
+            <section className="flex items-center justify-between gap-5 pr-5">
                 <div className="w-full max-w-36">
                     <Select options={filterOptions} value={filterValue} onChange={setFilterValue} />
                 </div>
@@ -70,23 +92,15 @@ export default function Forum() {
             </section>
 
             <section className="flex flex-col gap-5 pr-5">
-                {Array.from({ length: 5 }).map((_, i) => {
-                    // TODO: this should be the id of the forum content
-                    const id = i;
-
+                {forumQuestions?.data?.map((_: { id: number; question: any }, i: number) => {
                     return (
-                        <div key={i} className="flex gap-3 bg-white rounded-md p-6">
-                            <ForumQuestionVote id={id} />
+                        <div key={_.id} className="flex gap-3 p-6 bg-white rounded-md">
+                            <ForumQuestionVote id={_.id} />
                             <Link
-                                to={`${location.pathname}/${id}`}
-                                className="flex flex-col gap-6 text-black hover:text-black">
-                                <h3 className="font-semibold text-lg">Subject title</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Deserunt illum qui ad vitae ducimus, molestiae quia temporibus
-                                    ullam molestias. Modi, dolor fugit. Facere tempora praesentium
-                                    dignissimos veritatis, suscipit repudiandae numquam?
-                                </p>
+                                to={`${location.pathname}/${_.id}`}
+                                className="flex flex-col gap-6 text-black hover:text-black w-full">
+                                <h3 className="text-lg font-semibold">Subject title</h3>
+                                <Reader value={_.question} />
                             </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">
@@ -105,8 +119,8 @@ export default function Forum() {
                                     </div>
 
                                     <Link
-                                        to={`${location.pathname}/${id}`}
-                                        className="flex gap-2 justify-end items-center text-dark-gray">
+                                        to={`${location.pathname}/${_.id}`}
+                                        className="flex items-center justify-end gap-2 text-dark-gray">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"

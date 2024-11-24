@@ -6,7 +6,6 @@ const ProfileUserInfo = loadable(() => import('./containers/profile/user-info'))
 const ProfilePersonalInfo = loadable(() => import('./containers/profile/personal-info'));
 const AddStaff = loadable(() => import('./containers/profile/academic-staff/add.tsx'));
 const RemoveStaff = loadable(() => import('./containers/profile/academic-staff/remove.tsx'));
-const AddMCQ = loadable(() => import('./containers/add-mcq'));
 const AddMarks = loadable(() => import('./containers/upload-marks'));
 const AddInstitute = loadable(() => import('./containers/institutes/add'));
 const AddClass = loadable(() => import('./containers/classes/add.tsx'));
@@ -18,7 +17,6 @@ const EditSubject = loadable(() => import('./containers/subject/edit.tsx'));
 const DeleteSubject = loadable(() => import('./containers/subject/delete.tsx'));
 const DeleteInstitute = loadable(() => import('./containers/institutes/delete'));
 const EditInstitute = loadable(() => import('./containers/institutes/edit'));
-const EditMCQ = loadable(() => import('./containers/edit-mcq'));
 const AddStudyPlan = loadable(() => import('./containers/teacher/add-study-plan'));
 const EditTeacher = loadable(() => import('./containers/teacher/edit-teacher.tsx'));
 const DeleteTeacher = loadable(() => import('./containers/teacher/delete-teacher.tsx'));
@@ -62,14 +60,6 @@ export const modelContainers: ModelContainers = {
     },
     REMOVE_ACADEMIC_STAFF: {
         model: RemoveStaff
-    },
-    ADD_MCQ: {
-        model: AddMCQ,
-        props: { size: '3xl' }
-    },
-    EDIT_MCQ: {
-        model: EditMCQ,
-        props: { size: '3xl' }
     },
     ADD_STUDY_PLAN: {
         model: AddStudyPlan,
@@ -172,6 +162,7 @@ export const modelNames = {
     REMOVE_ACADEMIC_STAFF: 'REMOVE_ACADEMIC_STAFF',
     ADD_MCQ: 'ADD_MCQ',
     EDIT_MCQ: 'EDIT_MCQ',
+    ADD_QUESTION: 'ADD_QUESTION',
     ADD_STUDY_PLAN: 'ADD_STUDY_PLAN',
     ADD_CLASS: 'ADD_CLASS',
     ADD_STUDENT: 'ADD_STUDENT',

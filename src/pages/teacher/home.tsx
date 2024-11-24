@@ -5,6 +5,7 @@ import { IRootState } from '@/redux';
 import teacherServices from '@/redux/services/teacher.service';
 import { useSelector } from 'react-redux';
 
+
 function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
 
@@ -72,7 +73,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard isLoading={isTeacherStatsLoading} number={50} label="Staff">
+                <InfoCard isLoading={isTeacherStatsLoading} number={0} label="Staff">
                     <svg
                         width="51"
                         height="50"

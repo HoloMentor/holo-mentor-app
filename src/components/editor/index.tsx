@@ -9,7 +9,6 @@ import {
     InlineContentSchema,
     StyleSchema
 } from '@blocknote/core';
-
 export type BlockNoteBlockProps = Block<BlockSchema, InlineContentSchema, StyleSchema>;
 
 export type BlockNoteEditorProps = BlockNoteEditor<BlockSchema, InlineContentSchema, StyleSchema>;
@@ -20,14 +19,20 @@ interface EditorOnChangeProps extends Omit<BlockNoteViewEditorProps, 'onChange'>
     onChange?: (e: BlockNoteBlockProps[]) => void;
 }
 
+interface ClassNamesProps {
+    mainWrapper?: string;
+}
+
 export interface EditorProps extends Omit<EditorOnChangeProps, 'editor'> {
     editor?: BlockNoteEditorProps;
+    classNames?: ClassNamesProps;
 }
 
 export default function Editor({
     editor = useCreateBlockNote(),
     onChange,
     className,
+    classNames,
     ...props
 }: EditorProps) {
     const handleOnChange = () => {
@@ -35,7 +40,10 @@ export default function Editor({
     };
 
     return (
-        <div className="border border-[#0000001A] rounded-md h-full">
+        <div
+            className={`border border-[#0000001A] rounded-md h-full ${
+                classNames?.mainWrapper ? classNames?.mainWrapper : ''
+            }`}>
             <BlockNoteView
                 data-color-scheme="light"
                 editor={editor}
