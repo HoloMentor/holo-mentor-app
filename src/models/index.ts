@@ -39,6 +39,8 @@ const DeleteStudyPlanTask = loadable(
 const DeleteStudyPlan = loadable(() => import('./containers/teacher/study-plan/delete.tsx'));
 const EditStudyPlanTask = loadable(() => import('./containers/teacher/study-plan/task/edit.tsx'));
 const EditStudyPlan = loadable(() => import('./containers/teacher/study-plan/edit.tsx'));
+const AddQuiz = loadable(() => import('./containers/teacher/quiz/add.tsx'));
+const EditQuiz = loadable(() => import('./containers/teacher/quiz/edit.tsx'));
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -172,7 +174,15 @@ export const modelContainers: ModelContainers = {
     },
     EDIT_STUDY_PLAN: {
         model: EditStudyPlan
-    }
+    },
+    ADD_QUIZ: {
+        model: AddQuiz,
+        props: { size: '2xl' }
+    },
+    EDIT_QUIZ: {
+        model: EditQuiz,
+        props: { size: '2xl' }
+    },
 };
 
 export const modelNames = {
@@ -215,5 +225,8 @@ export const modelNames = {
     DELETE_STUDY_PLAN_TASK: 'DELETE_STUDY_PLAN_TASK',
     DELETE_STUDY_PLAN: 'DELETE_STUDY_PLAN',
     EDIT_STUDY_PLAN_TASK: 'EDIT_STUDY_PLAN_TASK',
-    EDIT_STUDY_PLAN: 'EDIT_STUDY_PLAN'
+    EDIT_STUDY_PLAN: 'EDIT_STUDY_PLAN',
+    ADD_QUIZ: 'ADD_QUIZ',
+    EDIT_QUIZ: 'EDIT_QUIZ'
+
 };
