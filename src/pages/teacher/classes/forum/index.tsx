@@ -3,12 +3,14 @@ import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
-import { useMemo, useState } from 'react';
+import {  useMemo, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ForumQuestionVote from '@/components/forum/vote';
 import forumServices from '@/redux/services/forum.services';
 import useErrorHandler from '@/hooks/error-handler';
 import Reader from '@/components/editor/reader';
+import classTopicServices from '@/redux/services/class/topics.service';
+
 
 const filterOptions = [
     {
@@ -22,9 +24,34 @@ export default function Forum() {
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const { classId } = useParams();
 
+
+    const {
+        data: classTopics,
+        error: classTopicsError,
+        isError: isClassTopicsError
+    } = classTopicServices.useGetClassTopicsQuery(
+        {
+            classId: classId,
+            materials: false
+        },
+        {
+            skip: !classId
+        }
+    );
+    useErrorHandler(isClassTopicsError, classTopicsError);
+
+    const classTopicsData = useMemo(() => {
+        return (
+            classTopics?.data?.map((topic: { id: number | string; name: string }) => ({
+                value: topic.id,
+                label: topic.name
+            })) || []
+        );
+    }, [classTopics]);
+    console.log(classTopicsData);
+
     const {
         data: forumQuestions,
-        isLoading: isForumQuestionsLoading,
         error: forumQuestionsError,
         isError: isForumQuestionsError
     } = forumServices.useGetQuestionsQuery(
@@ -92,14 +119,20 @@ export default function Forum() {
             </section>
 
             <section className="flex flex-col gap-5 pr-5">
-                {forumQuestions?.data?.map((_: { id: number; question: any }, i: number) => {
+                {forumQuestions?.data?.map((_: { id: number; question: any; subTopic:number; voteCount:number}, i: number) => {
+
+                    const topicNumber = Number(_.subTopic);
+                    const topic = classTopicsData.find((topic: { value: number; }) => topic.value === topicNumber);
+                    console.log(typeof _.subTopic);
+                    console.log(topic);
+                   
                     return (
                         <div key={_.id} className="flex gap-3 p-6 bg-white rounded-md">
-                            <ForumQuestionVote id={_.id} />
+                            <ForumQuestionVote id={_.id} voteCount={_.voteCount} />
                             <Link
                                 to={`${location.pathname}/${_.id}`}
-                                className="flex flex-col gap-6 text-black hover:text-black w-full">
-                                <h3 className="text-lg font-semibold">Subject title</h3>
+                                className="flex flex-col w-full gap-6 text-black hover:text-black">
+                                <h3 className="text-lg font-semibold">{topic ? topic.label : 'Unknown Topic'}</h3>
                                 <Reader value={_.question} />
                             </Link>
                             <div className="flex flex-col gap-4">

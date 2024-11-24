@@ -19,13 +19,11 @@ const SubjectForumEssay = loadable(() => import('@/models/containers/forum/add-q
 const SubjectForum = loadable(() => import('@/pages/teacher/classes/forum/question'));
 const Quizes = loadable(() => import('@/pages/teacher/classes/quiz'));
 const QuizInfo = loadable(() => import('@/pages/teacher/classes/quiz/questions'));
-const TestComponent = loadable(() => import('@/components/test/test'));
 
 export default function TeacherRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route path="test" element={<TestComponent />} />
                 <Route path="" element={<Home />} />
                 <Route path="classes" element={<Outlet />}>
                     <Route path="" element={<Classes />}></Route>

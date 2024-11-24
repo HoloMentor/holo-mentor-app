@@ -1,13 +1,14 @@
 interface Props {
     id: string | number;
+    voteCount?:number
 }
 
-export default function ForumQuestionVote({ id }: Props) {
+export default function ForumQuestionVote({ id, voteCount = 0 }: Props) {
     return (
-        <div className="flex gap-2 items-center min-h-36">
-            <span className="font-semibold text-dark-gray">20</span>
+        <div className="flex items-center gap-2 min-h-36">
+            <span className="font-semibold text-dark-gray">{voteCount}</span>
             <div className="flex flex-col gap-4">
-                <button className="rounded-full p-1 transition-all duration-300 hover:bg-slate-100 active:bg-slate-200">
+                <button className="p-1 transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200">
                     <svg
                         width="29"
                         height="30"
@@ -28,7 +29,7 @@ export default function ForumQuestionVote({ id }: Props) {
                         </g>
                     </svg>
                 </button>
-                <button className="rounded-full p-1 transition-all duration-300 hover:bg-slate-100 active:bg-slate-200">
+                <button className="p-1 transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200">
                     <svg
                         width="29"
                         height="30"
