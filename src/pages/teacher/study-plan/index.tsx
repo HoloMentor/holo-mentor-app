@@ -1,63 +1,40 @@
 import Button from '@/components/button';
-import StudyPlanCard from '@/components/cards/study-plan-card';
 import Content from '@/components/content';
 import Heading from '@/components/headings/main';
 import config from '@/config';
-import useErrorHandler from '@/hooks/error-handler';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
-import studyPlanServices from '@/redux/services/study-plan.service';
-import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
+import { Tab, Tabs } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import TierStudyPlan from './plan';
+
+const tiers = [
+    {
+        id: 1,
+        label: 'Tier 1'
+    },
+    {
+        id: 2,
+        label: 'Tier 2'
+    },
+    {
+        id: 3,
+        label: 'Tier 3'
+    },
+    {
+        id: 4,
+        label: 'Tier 4'
+    },
+    {
+        id: 5,
+        label: 'Tier 5'
+    }
+];
 
 export default function StudyPlan() {
     const dispatch = useDispatch();
     const { classId } = useParams();
-
-    const [getCSV, { isError: isFetchingCSVError, error: fetchCSVError, isLoading: isCSVLoading }] =
-        studyPlanServices.useGetCSVMutation();
-    useErrorHandler(isFetchingCSVError, fetchCSVError);
-
-    const tiers = [
-        {
-            id: 1,
-            label: 'Tier 1',
-            content: [
-                <StudyPlanCard planName="Plan for Tier 1" authorName="Amith Pussella" />,
-                <StudyPlanCard planName="Plan for Tier 1B" authorName="Amith Pussella" />
-            ],
-            tierDescription: 'Tier 01: Marks 80 - 100'
-        },
-        {
-            id: 2,
-            label: 'Tier 2',
-            content: [
-                <StudyPlanCard planName="Plan for Tier 2" authorName="Author 1" />,
-                <StudyPlanCard planName="Plan for Tier 2" authorName="Author 1" />,
-                <StudyPlanCard planName="Plan for Tier 2" authorName="Author 1" />
-            ],
-            tierDescription: 'Tier 02: Marks 60 - 80'
-        },
-        {
-            id: 3,
-            label: 'Tier 3',
-            content: [<StudyPlanCard planName="Plan for Tier 3" authorName="Author 1" />],
-            tierDescription: 'Tier 03: Marks 40 - 60'
-        },
-        {
-            id: 4,
-            label: 'Tier 4',
-            content: [<StudyPlanCard planName="Plan for Tier 4" authorName="Author 1" />],
-            tierDescription: 'Tier 04: Marks 20 - 40'
-        },
-        {
-            id: 5,
-            label: 'Tier 5',
-            content: [<StudyPlanCard planName="Plan for Tier 5" authorName="Author 1" />],
-            tierDescription: 'Tier 05: Marks 0 - 20'
-        }
-    ];
 
     return (
         <section className="flex flex-col gap-3">
@@ -74,7 +51,6 @@ export default function StudyPlan() {
                 <div className="flex gap-3 items-center">
                     <a href={`${config.api_url}study-plan/csv/${classId}`} download>
                         <Button
-                            isLoading={isCSVLoading}
                             variant="bordered"
                             className="border-2 text-dark-green border-dark-green">
                             Download Sample CSV
@@ -103,25 +79,7 @@ export default function StudyPlan() {
                                 key={item.id}
                                 title={item.label}
                                 className="py-5 font-semibold text-medium">
-                                <Card className="rounded-md p-4 flex flex-col gap-3">
-                                    <div className="flex justify-between items-center gap-3 max-md:flex-col">
-                                        <p className="text-xl text-dark-green">
-                                            Current Study Plan
-                                        </p>
-                                        <Link to="create">
-                                            <Button>Add New Plan</Button>
-                                        </Link>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <CardBody className="grid grid-cols-3 gap-4 max-2xl:grid-cols-2 max-lg:grid-cols-1">
-                                            {item.content.map((card, index) => (
-                                                <div key={index} className="w-full">
-                                                    {card}
-                                                </div>
-                                            ))}
-                                        </CardBody>
-                                    </div>
-                                </Card>
+                                <TierStudyPlan tier={item.id} />
                             </Tab>
                         )}
                     </Tabs>

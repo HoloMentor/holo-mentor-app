@@ -14,14 +14,14 @@ interface AddStudentFormValues {
     firstName: string;
     lastName: string;
     email: string;
-    registrationNo: string; // Updated field name
+    registrationNo: string;
 }
 
 const initialValues: AddStudentFormValues = {
     firstName: '',
     lastName: '',
     email: '',
-    registrationNo: '' // Updated field name
+    registrationNo: ''
 };
 
 const validationSchema = Yup.object().shape({
@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
     registrationNo: Yup.string().required('Registration number is required')
 });
 
-export default function AddStudent() {
+export default function AddStudent({}: ModelContainerProps) {
     const dispatch = useDispatch();
 
     const user = useSelector((state: IRootState) => state.user.user);

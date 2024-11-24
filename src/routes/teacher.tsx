@@ -37,8 +37,8 @@ export default function TeacherRoutes() {
                         <Route path="quiz/:quizId" element={<QuizInfo />} />
                         <Route path="studyplan" element={<Outlet />}>
                             <Route path="" element={<StudyPlan />}></Route>
-                            <Route path="create" element={<CreatePlan />}></Route>
-                            <Route path="view" element={<StudyPlanView />}></Route>
+                            <Route path="create/:tierNo" element={<CreatePlan />}></Route>
+                            <Route path="view/:studyPlanId" element={<StudyPlanView />}></Route>
                         </Route>
                         <Route path="student" element={<Outlet />}>
                             <Route path="" element={<StudentList />}></Route>

@@ -8,6 +8,12 @@ import * as Yup from 'yup';
 import TaskEditor from './task';
 import Button from '@/components/button';
 import SubmitButton from '@/components/form/button';
+import studyPlanServices from '@/redux/services/study-plan/study-plan.service';
+import useErrorHandler from '@/hooks/error-handler';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
 
 const initialValues = {
     name: '',
@@ -16,7 +22,7 @@ const initialValues = {
 };
 
 const taskSchema = Yup.object().shape({
-    name: Yup.string().required('Task name is required'),
+    title: Yup.string().required('Task title is required'),
     description: Yup.mixed().required('Task description is required')
 });
 
@@ -27,8 +33,38 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function studyPlanCreate() {
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+    const { classId, tierNo } = useParams();
+    const { user } = useSelector((state: IRootState) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // mutations
+    const [
+        createStudyPlan,
+        { isLoading: isLoading, isError: isStudyPlanCreateError, error: studyPlanCreateError }
+    ] = studyPlanServices.useCreatePlanMutation();
+    useErrorHandler(isStudyPlanCreateError, studyPlanCreateError);
+
+    const onSubmit = async (v: FormikValues) => {
+        const result = await createStudyPlan({
+            classId,
+            tier: tierNo,
+            instituteId: user.userInstituteId,
+            name: v.name,
+            description: v.description,
+            tasks: v.tasks
+        });
+
+        if (result?.data?.status === 200) {
+            dispatch(
+                notifyActions.open({
+                    type: 'success',
+                    message: result.data.message
+                })
+            );
+
+            navigate(`/classes/${classId}/studyplan`);
+        }
     };
     return (
         <div className="flex flex-col gap-3">
@@ -57,11 +93,16 @@ export default function studyPlanCreate() {
                     <p className="text-medium">Tasks</p>
                     <FieldArray
                         name="tasks"
-                        render={({ form: { values }, push }) => {
+                        render={({ form: { values }, push, remove }) => {
                             return (
                                 <div className="flex flex-col gap-3">
                                     {values?.tasks?.map((_: any, i: number) => (
-                                        <TaskEditor key={i} index={i} id={_.id || i} />
+                                        <TaskEditor
+                                            key={i}
+                                            index={i}
+                                            id={_.id || i}
+                                            onRemove={() => remove(i)}
+                                        />
                                     ))}
 
                                     <Button
@@ -97,7 +138,7 @@ export default function studyPlanCreate() {
                     />
 
                     <div className="flex justify-end items-center">
-                        <SubmitButton>Create</SubmitButton>
+                        <SubmitButton isLoading={isLoading}>Create</SubmitButton>
                     </div>
                 </Form>
             </Content>

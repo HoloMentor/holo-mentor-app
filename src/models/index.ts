@@ -34,6 +34,11 @@ const EditSubTopic = loadable(() => import('./containers/teacher/sub-topic/edit.
 const DeleteSubTopic = loadable(() => import('./containers/teacher/sub-topic/delete.tsx'));
 const DeleteUser = loadable(() => import('./containers/user/delete.tsx'));
 const SuspendUser = loadable(() => import('./containers/user/suspend.tsx'));
+const AddStudyPlanTask = loadable(() => import('./containers/teacher/study-plan/task/add.tsx'));
+const DeleteStudyPlanTask = loadable(
+    () => import('./containers/teacher/study-plan/task/delete.tsx')
+);
+const DeleteStudyPlan = loadable(() => import('./containers/teacher/study-plan/delete.tsx'));
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -159,6 +164,16 @@ export const modelContainers: ModelContainers = {
     },
     DELETE_USER: {
         model: DeleteUser
+    },
+    ADD_STUDY_PLAN_TASK: {
+        model: AddStudyPlanTask,
+        props: { size: 'xl' }
+    },
+    DELETE_STUDY_PLAN_TASK: {
+        model: DeleteStudyPlanTask
+    },
+    DELETE_STUDY_PLAN: {
+        model: DeleteStudyPlan
     }
 };
 
@@ -196,5 +211,9 @@ export const modelNames = {
     DELETE_SUBTOPIC: 'DELETE_SUBTOPIC',
     EDIT_SUBTOPIC: 'EDIT_SUBTOPIC',
     SUSPEND_USER: 'SUSPEND_USER',
-    DELETE_USER: 'DELETE_USER'
+    DELETE_USER: 'DELETE_USER',
+    ADD_STUDY_PLAN_TASK: 'ADD_STUDY_PLAN_TASK',
+    DELETE_STUDY_PLAN_TASK: 'DELETE_STUDY_PLAN_TASK',
+    DELETE_STUDY_PLAN: 'DELETE_STUDY_PLAN',
+    EDIT_STUDY_PLAN_TASK: 'EDIT_STUDY_PLAN_TASK'
 };

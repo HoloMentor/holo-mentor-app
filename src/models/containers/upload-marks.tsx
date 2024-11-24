@@ -6,7 +6,7 @@ import FormUpload from '@/components/form/upload';
 import useErrorHandler from '@/hooks/error-handler';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
-import studyPlanServices from '@/redux/services/study-plan.service';
+import studyPlanServices from '@/redux/services/study-plan/study-plan.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -32,7 +32,7 @@ export default function UploadMarks({ classId, onClose }: ModelContainerProps) {
 
     const onSubmit = async (v: FormikValues) => {
         const form = new FormData();
-        console.log(v.file);
+
         form.append('class_id', classId);
         form.append('marks_out_of', v.marksOutOf);
         form.append('file', v.file);
