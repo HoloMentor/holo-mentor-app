@@ -1,6 +1,5 @@
 import Form from '@/components/form';
 import SubmitButton from '@/components/form/button';
-import FormInput from '@/components/form/input';
 import FormUpload from '@/components/form/upload';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { FormikValues } from 'formik';
