@@ -2,14 +2,23 @@ import Button from '@/components/button';
 import StudyPlanCard from '@/components/cards/study-plan-card';
 import Content from '@/components/content';
 import Heading from '@/components/headings/main';
+import config from '@/config';
+import useErrorHandler from '@/hooks/error-handler';
 import { modelNames } from '@/models';
 import { modelActions } from '@/redux/reducers/model.reducer';
+import studyPlanServices from '@/redux/services/study-plan.service';
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function StudyPlan() {
     const dispatch = useDispatch();
+    const { classId } = useParams();
+
+    const [getCSV, { isError: isFetchingCSVError, error: fetchCSVError, isLoading: isCSVLoading }] =
+        studyPlanServices.useGetCSVMutation();
+    useErrorHandler(isFetchingCSVError, fetchCSVError);
+
     const tiers = [
         {
             id: 1,
@@ -63,24 +72,21 @@ export default function StudyPlan() {
                     Tier 2 for B-grade students, and so on.
                 </p>
                 <div className="flex gap-3 items-center">
-                    <Button
-                        variant="bordered"
-                        className="border-2 text-dark-green border-dark-green"
-                        onClick={() =>
-                            dispatch(
-                                modelActions.show({
-                                    name: modelNames.ADD_MARKS
-                                })
-                            )
-                        }>
-                        Download Sample CSV
-                    </Button>
+                    <a href={`${config.api_url}study-plan/csv/${classId}`} download>
+                        <Button
+                            isLoading={isCSVLoading}
+                            variant="bordered"
+                            className="border-2 text-dark-green border-dark-green">
+                            Download Sample CSV
+                        </Button>
+                    </a>
 
                     <Button
                         onClick={() =>
                             dispatch(
                                 modelActions.show({
-                                    name: modelNames.ADD_MARKS
+                                    name: modelNames.ADD_MARKS,
+                                    props: { classId }
                                 })
                             )
                         }>

@@ -18,7 +18,7 @@ function Home() {
         {
             name: 'Physics',
             teacher: {
-                name: 'Saliya Bandara'
+                name: 'John Stark'
             },
             institute: { name: 'Roodel - Colombo' },
             students: '210'

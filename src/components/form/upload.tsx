@@ -9,9 +9,9 @@ export default function FormUpload({ name, onChange, ...props }: FormUploadProps
     const [field] = useField(name);
     const { setFieldValue } = useFormikContext();
 
-    const handleChange = (e: any) => {
-        setFieldValue(name, e.target.files[0]);
-        if (onChange) onChange(e);
+    const handleChange = (file: File) => {
+        setFieldValue(name, file);
+        if (onChange) onChange(file);
     };
 
     return (

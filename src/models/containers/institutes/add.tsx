@@ -44,11 +44,11 @@ export default function AddInstitute({}: ModelContainerProps) {
     const onSubmit = async (values: FormikValues) => {
         const result = await createInstitute(values);
 
-        if (result?.data?.status === 200) {
+        if (result?.data?.status === 201 || result?.data?.status === 200) {
             dispatch(
                 notifyActions.open({
                     type: 'success',
-                    message: result.data.message
+                    message: 'Mail Send Success'
                 })
             );
 

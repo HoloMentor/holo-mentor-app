@@ -30,6 +30,8 @@ const DeleteTopic = loadable(() => import('./containers/teacher/topic/delete.tsx
 const AddSubTopic = loadable(() => import('./containers/teacher/sub-topic/add.tsx'));
 const EditSubTopic = loadable(() => import('./containers/teacher/sub-topic/edit.tsx'));
 const DeleteSubTopic = loadable(() => import('./containers/teacher/sub-topic/delete.tsx'));
+const DeleteUser = loadable(() => import('./containers/user/delete.tsx'));
+const SuspendUser = loadable(() => import('./containers/user/suspend.tsx'));
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -141,6 +143,12 @@ export const modelContainers: ModelContainers = {
     },
     DELETE_SUBTOPIC: {
         model: DeleteSubTopic
+    },
+    SUSPEND_USER: {
+        model: SuspendUser
+    },
+    DELETE_USER: {
+        model: DeleteUser
     }
 };
 
@@ -177,5 +185,7 @@ export const modelNames = {
     EDIT_TOPIC: 'EDIT_TOPIC',
     ADD_SUBTOPIC: 'ADD_SUBTOPIC',
     DELETE_SUBTOPIC: 'DELETE_SUBTOPIC',
-    EDIT_SUBTOPIC: 'EDIT_SUBTOPIC'
+    EDIT_SUBTOPIC: 'EDIT_SUBTOPIC',
+    SUSPEND_USER: 'SUSPEND_USER',
+    DELETE_USER: 'DELETE_USER'
 };

@@ -13,6 +13,9 @@ import teacherServices from './services/teacher.service';
 import classTopicServices from './services/class/topics.service';
 import classSubTopicServices from './services/class/subtopics.service';
 import classMaterialServices from './services/class/materials.service';
+import studyPlanServices from './services/study-plan.service';
+import staffServices from './services/staff.service';
+import studentServices from './services/student.service';
 import forumServices from './services/forum.services';
 
 const store = configureStore({
@@ -29,8 +32,11 @@ const store = configureStore({
         [teacherServices.reducerPath]: teacherServices.reducer,
         [forumServices.reducerPath]: forumServices.reducer,
         [classTopicServices.reducerPath]: classTopicServices.reducer,
+        [studyPlanServices.reducerPath]: studyPlanServices.reducer,
         [classSubTopicServices.reducerPath]: classSubTopicServices.reducer,
-        [classMaterialServices.reducerPath]: classMaterialServices.reducer
+        [classMaterialServices.reducerPath]: classMaterialServices.reducer,
+        [staffServices.reducerPath]: staffServices.reducer,
+        [studentServices.reducerPath]: studentServices.reducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -44,6 +50,9 @@ const store = configureStore({
             .concat(classTopicServices.middleware)
             .concat(classSubTopicServices.middleware)
             .concat(classMaterialServices.middleware)
+            .concat(studyPlanServices.middleware)
+            .concat(staffServices.middleware)
+            .concat(studentServices.middleware)
             .concat(forumServices.middleware)
 });
 
