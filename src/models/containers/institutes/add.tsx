@@ -62,7 +62,7 @@ export default function AddInstitute({}: ModelContainerProps) {
             initialValues={initialValues}
             onSubmit={onSubmit}
             className="flex flex-col gap-4">
-            <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
+            <ModalHeader className="flex flex-col gap-1 text-xl text-dark-green">
                 Add New Institute
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">

@@ -80,7 +80,7 @@ export default function ForumMcq() {
                                 name="answers"
                                 render={({ form: { values } }) => {
                                     return values?.answers?.map((_: any, i: number) => (
-                                        <div key={i} className="flex gap-2 items-center">
+                                        <div key={i} className="flex items-center gap-2">
                                             <span className="text-xs font-medium text-gray-600">
                                                 0{i + 1}
                                             </span>

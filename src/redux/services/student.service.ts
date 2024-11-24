@@ -4,7 +4,7 @@ import { baseQuery } from '@/redux/services/base';
 const studentServices = createApi({
     reducerPath: 'student-service',
     baseQuery: baseQuery,
-    tagTypes: ['Students', 'Student','StudentsClasses','StudentClasses'],
+    tagTypes: ['Students', 'Student', 'StudentsClasses', 'StudentClasses'],
     endpoints: (builder) => ({
         create: builder.mutation({
             query: (props) => ({

@@ -58,7 +58,6 @@ export default function studyPlanCreate() {
                 </div>
             </section>
             <div className="flex items-center justify-center gap-4 p-4 mb-4 ml-6 mr-4 transition-all duration-300 border-2 cursor-pointer rounded-3xl hover:shadow-md hover:bg-gray-100 active:bg-gray-200 active:shadow-inner">
-                {' '}
                 <svg
                     width="40"
                     height="40"
