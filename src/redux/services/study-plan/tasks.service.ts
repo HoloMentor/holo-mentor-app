@@ -4,7 +4,7 @@ import { baseQuery } from '@/redux/services/base';
 const studyPlanTaskServices = createApi({
     reducerPath: 'study-plan-tasks-service',
     baseQuery: baseQuery,
-    tagTypes: ['StudyPlanTasks'],
+    tagTypes: ['StudyPlanTasks', 'StudyPlanTask'],
     endpoints: (builder) => ({
         create: builder.mutation({
             query: (props) => ({
@@ -20,6 +20,14 @@ const studyPlanTaskServices = createApi({
                 url: `/study-plan/task/delete/${id}`
             }),
             invalidatesTags: ['StudyPlanTasks']
+        }),
+        update: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/study-plan/task/update/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['StudyPlanTasks', 'StudyPlanTask']
         }),
         getTierStudyPlanTasks: builder.query({
             query: ({ classId, studyPlanId, ...props }) => ({

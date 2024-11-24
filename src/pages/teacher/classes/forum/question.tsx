@@ -23,12 +23,12 @@ export default function ForumPage() {
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
-            <div className="flex gap-5 bg-white rounded-md p-6">
+            <div className="flex gap-5 p-6 bg-white rounded-md">
                 <div>
                     <ForumQuestionVote id={params.forumId} />
                 </div>
 
-                <div className="flex flex-col gap-5 w-full">
+                <div className="flex flex-col w-full gap-5">
                     <div className="flex justify-between w-full">
                         <User
                             name="Jane Doe"
@@ -136,7 +136,7 @@ export default function ForumPage() {
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-3 border border-light-gray rounded-md">
+                    <div className="flex flex-col gap-3 border rounded-md border-light-gray">
                         <ForumQuestionReply
                             onReply={(id: number | string) => setOnReplyQuestion(id)}
                         />

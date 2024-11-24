@@ -1,3 +1,4 @@
+import Reader from '@/components/editor/reader';
 import Heading from '@/components/headings/main';
 import useErrorHandler from '@/hooks/error-handler';
 import { modelNames } from '@/models';
@@ -29,7 +30,7 @@ export default function StudyPlanIndividual() {
 
     return (
         <div className="flex flex-col gap-3">
-            <Heading>Forum</Heading>
+            <Heading>Study Plan Tasks</Heading>
 
             <div className="py-6 mb-4 bg-white rounded-md">
                 <Accordion variant="splitted" selectionMode="multiple">
@@ -69,9 +70,7 @@ export default function StudyPlanIndividual() {
                                           classNames={{
                                               content: 'flex flex-col gap-4'
                                           }}>
-                                          <Skeleton className="max-w-[60%] w-full h-4 rounded-md"></Skeleton>
-                                          <Skeleton className="max-w-[52%] w-full h-4 rounded-md"></Skeleton>
-                                          <Skeleton className="max-w-[70%] w-full h-4 rounded-md"></Skeleton>
+                                          <Reader value={_.description} />
 
                                           <div className="flex items-center gap-3 justify-end">
                                               <Tooltip content="Delete Task" placement="bottom">
@@ -109,7 +108,7 @@ export default function StudyPlanIndividual() {
                                                           dispatch(
                                                               modelActions.show({
                                                                   name: modelNames.EDIT_STUDY_PLAN_TASK,
-                                                                  props: { id: _.id }
+                                                                  props: _
                                                               })
                                                           )
                                                       }>

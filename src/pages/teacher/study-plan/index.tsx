@@ -7,7 +7,7 @@ import { modelActions } from '@/redux/reducers/model.reducer';
 import { Tab, Tabs } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import TierStudyPlan from './plan';
+import TierStudyPlan from './components/plan';
 
 const tiers = [
     {

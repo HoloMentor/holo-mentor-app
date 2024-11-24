@@ -36,6 +36,14 @@ const studyPlanServices = createApi({
             }),
             providesTags: ['StudyPlans']
         }),
+        update: builder.mutation({
+            query: ({ id, ...props }) => ({
+                method: 'PATCH',
+                url: `/study-plan/update/${id}`,
+                body: props
+            }),
+            invalidatesTags: ['StudyPlans', 'StudyPlan']
+        }),
         delete: builder.mutation({
             query: ({ id }) => ({
                 method: 'DELETE',

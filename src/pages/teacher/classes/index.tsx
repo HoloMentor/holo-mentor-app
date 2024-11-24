@@ -53,10 +53,10 @@ export default function Classes() {
                         </Skeleton>
                         <div className="space-y-1">
                             <Skeleton className="w-3/5 rounded-lg">
-                                <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                                <div className="w-3/5 h-3 rounded-lg bg-default-200"></div>
                             </Skeleton>
                             <Skeleton className="w-4/5 rounded-lg">
-                                <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                                <div className="w-4/5 h-3 rounded-lg bg-default-200"></div>
                             </Skeleton>
                         </div>
                     </Card>
@@ -64,7 +64,7 @@ export default function Classes() {
             })}
         </div>
     ) : teacherClasses?.data?.data.length === 0 ? (
-        <div className="flex flex-col gap-5 justify-center items-center h-full">
+        <div className="flex flex-col items-center justify-center h-full gap-5">
             <img className="max-w-64" src="/images/empty.svg" alt="Void" />
             <h3>No classes are found yet.</h3>
         </div>
@@ -77,10 +77,10 @@ export default function Classes() {
                             key={`class-skeleton-${i}`}
                             className="w-full max-w-[200px] space-y-5 p-4 max-sm:max-w-full hover:scale-[.99] !transition-all shadow-sm"
                             radius="lg">
-                            <div className="h-32 max-sm:h-60 rounded-lg flex justify-center w-full">
+                            <div className="flex justify-center w-full h-32 rounded-lg max-sm:h-60">
                                 <img
                                     alt="Card background"
-                                    className="object-cover rounded-xl overflow-visible"
+                                    className="object-cover overflow-visible rounded-xl"
                                     src="/images/institute.png"
                                     width={100}
                                 />
