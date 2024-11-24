@@ -32,7 +32,7 @@ export default function UploadMarks({ classId, onClose }: ModelContainerProps) {
 
     const onSubmit = async (v: FormikValues) => {
         const form = new FormData();
-
+        console.log(v.file);
         form.append('class_id', classId);
         form.append('marks_out_of', v.marksOutOf);
         form.append('file', v.file);
