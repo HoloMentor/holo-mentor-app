@@ -8,7 +8,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import ForumQuestionVote from '@/components/forum/vote';
 import forumServices from '@/redux/services/forum.services';
 import useErrorHandler from '@/hooks/error-handler';
-import FormEditorRead from '@/models/containers/forum/read-text-editor';
+import Reader from '@/components/editor/reader';
 
 const filterOptions = [
     {
@@ -17,19 +17,15 @@ const filterOptions = [
     }
 ];
 
-
-
 export default function Forum() {
     const location = useLocation();
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const { classId } = useParams();
 
-  
-
-    const{
-        data: ForumQuestions,
+    const {
+        data: forumQuestions,
         isLoading: isForumQuestionsLoading,
-        error: ForumQuestionsError,
+        error: forumQuestionsError,
         isError: isForumQuestionsError
     } = forumServices.useGetQuestionsQuery(
         {
@@ -40,27 +36,9 @@ export default function Forum() {
             skip: !classId
         }
     );
+    useErrorHandler(isForumQuestionsError, forumQuestionsError);
 
-    useErrorHandler(isForumQuestionsError, ForumQuestionsError);
-
-    console.log({
-        data: ForumQuestions,
-        isLoading: isForumQuestionsLoading,
-        isError: isForumQuestionsError,
-        error: ForumQuestionsError,
-    });
-
-    const ForumQuestionData = useMemo(() => {
-        return ForumQuestions?.data?.map((question: {id:number | JSON; question:JSON}) => (
-            {
-                value: question.id,
-                label: question.question
-            }
-        )) || []
-        
-    },[ForumQuestions])
-
-    console.log(ForumQuestionData[1]);
+    console.log(forumQuestions);
 
     return (
         <div className="flex flex-col gap-3">
@@ -114,23 +92,15 @@ export default function Forum() {
             </section>
 
             <section className="flex flex-col gap-5 pr-5">
-                {Array.from({ length: 5 }).map((_, i) => {
-                    // TODO: this should be the id of the forum content
-                    const id = i;
-
+                {forumQuestions?.data?.map((_: { id: number; question: any }, i: number) => {
                     return (
-                        <div key={i} className="flex gap-3 p-6 bg-white rounded-md">
-                            <ForumQuestionVote id={id} />
+                        <div key={_.id} className="flex gap-3 p-6 bg-white rounded-md">
+                            <ForumQuestionVote id={_.id} />
                             <Link
-                                to={`${location.pathname}/${id}`}
-                                className="flex flex-col gap-6 text-black hover:text-black">
+                                to={`${location.pathname}/${_.id}`}
+                                className="flex flex-col gap-6 text-black hover:text-black w-full">
                                 <h3 className="text-lg font-semibold">Subject title</h3>
-                                <FormEditorRead
-                                    value={ForumQuestionData}
-                                    label="Question"
-                                    classNames={{
-                                        mainWrapper: 'col-span-2'
-                                    }}/>
+                                <Reader value={_.question} />
                             </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">
@@ -149,7 +119,7 @@ export default function Forum() {
                                     </div>
 
                                     <Link
-                                        to={`${location.pathname}/${id}`}
+                                        to={`${location.pathname}/${_.id}`}
                                         className="flex items-center justify-end gap-2 text-dark-gray">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

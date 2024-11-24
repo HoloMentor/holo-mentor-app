@@ -8,7 +8,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import ForumQuestionVote from '@/components/forum/vote';
 import forumServices from '@/redux/services/forum.services';
 import useErrorHandler from '@/hooks/error-handler';
-import FormEditorRead from '@/models/containers/forum/read-text-editor';
+import FormEditorRead from '@/components/editor/read-text-editor';
 
 const filterOptions = [
     {
@@ -17,16 +17,12 @@ const filterOptions = [
     }
 ];
 
-
-
 export default function Forum() {
     const location = useLocation();
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const { classId } = useParams();
 
-  
-
-    const{
+    const {
         data: ForumQuestions,
         isLoading: isForumQuestionsLoading,
         error: ForumQuestionsError,
@@ -47,18 +43,17 @@ export default function Forum() {
         data: ForumQuestions,
         isLoading: isForumQuestionsLoading,
         isError: isForumQuestionsError,
-        error: ForumQuestionsError,
+        error: ForumQuestionsError
     });
 
     const ForumQuestionData = useMemo(() => {
-        return ForumQuestions?.data?.map((question: {id:number | JSON; question:JSON}) => (
-            {
+        return (
+            ForumQuestions?.data?.map((question: { id: number | JSON; question: JSON }) => ({
                 value: question.id,
                 label: question.question
-            }
-        )) || []
-        
-    },[ForumQuestions])
+            })) || []
+        );
+    }, [ForumQuestions]);
 
     console.log(ForumQuestionData[1]);
 
@@ -129,7 +124,8 @@ export default function Forum() {
                                     label="Question"
                                     classNames={{
                                         mainWrapper: 'col-span-2'
-                                    }}/>
+                                    }}
+                                />
                             </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">

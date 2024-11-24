@@ -79,7 +79,7 @@ export default function Forum() {
                             <ForumQuestionVote id={id} />
                             <Link
                                 to={`${location.pathname}/${id}`}
-                                className="flex flex-col gap-6 text-black hover:text-black">
+                                className="flex flex-col gap-6 text-black hover:text-black w-full">
                                 <h3 className="font-semibold text-lg">Subject title</h3>
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
