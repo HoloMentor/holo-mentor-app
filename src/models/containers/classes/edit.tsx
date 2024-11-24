@@ -67,12 +67,14 @@ export default function EditClass({ data }: ModelContainerProps) {
             skip: !user.instituteId
         }
     );
-    
+
     const transformedTeachersData = teachersData?.data?.data
-        ? teachersData.data.data.map((teacher: { id: string; firstName: string; lastName: string }) => ({
-            value: teacher.id,
-            label: `${teacher.firstName} ${teacher.lastName}`
-        }))
+        ? teachersData.data.data.map(
+              (teacher: { id: string; firstName: string; lastName: string }) => ({
+                  value: teacher.id,
+                  label: `${teacher.firstName} ${teacher.lastName}`
+              })
+          )
         : [];
 
     const { data: subjectsData } = subjectServices.useGetInstituteSubjectsQuery(
@@ -85,11 +87,11 @@ export default function EditClass({ data }: ModelContainerProps) {
     );
 
     const transformedSubjectsData = subjectsData?.data?.data
-    ? subjectsData.data.data.map((subject: { id: string; name: string }) => ({
-        value: subject.id,
-        label: subject.name
-    }))
-    : [];
+        ? subjectsData.data.data.map((subject: { id: string; name: string }) => ({
+              value: subject.id,
+              label: subject.name
+          }))
+        : [];
 
     useErrorHandler(isClassLoadingError, classLoadingError);
 
@@ -152,9 +154,8 @@ export default function EditClass({ data }: ModelContainerProps) {
                 Edit Class
             </ModalHeader>
             <ModalBody className="flex flex-col gap-4">
-                
                 <FormInput label="Class name" placeholder="Class name" name="className" />
-                
+
                 <FormAutoComplete
                     label="Subject"
                     name="subjectId"

@@ -1,11 +1,14 @@
 import Button from '@/components/button';
-import ForumQuestionVote from '@/components/forum/vote';
 import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import ForumQuestionVote from '@/components/forum/vote';
+import forumServices from '@/redux/services/forum.services';
+import useErrorHandler from '@/hooks/error-handler';
+import FormEditorRead from '@/components/editor/read-text-editor';
 
 const filterOptions = [
     {
@@ -17,6 +20,42 @@ const filterOptions = [
 export default function Forum() {
     const location = useLocation();
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
+    const { classId } = useParams();
+
+    const {
+        data: ForumQuestions,
+        isLoading: isForumQuestionsLoading,
+        error: ForumQuestionsError,
+        isError: isForumQuestionsError
+    } = forumServices.useGetQuestionsQuery(
+        {
+            classId: classId,
+            materials: false
+        },
+        {
+            skip: !classId
+        }
+    );
+
+    useErrorHandler(isForumQuestionsError, ForumQuestionsError);
+
+    console.log({
+        data: ForumQuestions,
+        isLoading: isForumQuestionsLoading,
+        isError: isForumQuestionsError,
+        error: ForumQuestionsError
+    });
+
+    const ForumQuestionData = useMemo(() => {
+        return (
+            ForumQuestions?.data?.map((question: { id: number | JSON; question: JSON }) => ({
+                value: question.id,
+                label: question.question
+            })) || []
+        );
+    }, [ForumQuestions]);
+
+    console.log(ForumQuestionData[1]);
 
     return (
         <div className="flex flex-col gap-3">
@@ -27,7 +66,7 @@ export default function Forum() {
                     <Select options={filterOptions} value={filterValue} onChange={setFilterValue} />
                 </div>
                 <div className="flex items-center gap-2">
-                    <Input placeholder="Search" />
+                    <Input className="bg-white border-none rounded-md " placeholder="Search" />
 
                     <Dropdown>
                         <DropdownTrigger>
@@ -62,7 +101,7 @@ export default function Forum() {
                                 className="text-center text-black"
                                 key="copy"
                                 href={`${location.pathname}/essay`}>
-                                Essay
+                                Normal Question
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
@@ -71,22 +110,22 @@ export default function Forum() {
 
             <section className="flex flex-col gap-5 pr-5">
                 {Array.from({ length: 5 }).map((_, i) => {
-                    // TODO: this should be the id of the forum content
                     const id = i;
 
                     return (
-                        <div key={i} className="flex gap-3 bg-white rounded-md p-6">
+                        <div key={i} className="flex gap-3 p-6 bg-white rounded-md">
                             <ForumQuestionVote id={id} />
                             <Link
                                 to={`${location.pathname}/${id}`}
-                                className="flex flex-col gap-6 text-black hover:text-black w-full">
-                                <h3 className="font-semibold text-lg">Subject title</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Deserunt illum qui ad vitae ducimus, molestiae quia temporibus
-                                    ullam molestias. Modi, dolor fugit. Facere tempora praesentium
-                                    dignissimos veritatis, suscipit repudiandae numquam?
-                                </p>
+                                className="flex flex-col gap-6 text-black hover:text-black">
+                                <h3 className="text-lg font-semibold">Subject title</h3>
+                                <FormEditorRead
+                                    value={ForumQuestionData}
+                                    label="Question"
+                                    classNames={{
+                                        mainWrapper: 'col-span-2'
+                                    }}
+                                />
                             </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">
@@ -106,7 +145,7 @@ export default function Forum() {
 
                                     <Link
                                         to={`${location.pathname}/${id}`}
-                                        className="flex gap-2 justify-end items-center text-dark-gray">
+                                        className="flex items-center justify-end gap-2 text-dark-gray">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"

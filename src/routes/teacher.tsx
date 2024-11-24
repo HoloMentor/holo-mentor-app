@@ -14,16 +14,18 @@ const StudentList = loadable(() => import('@/pages/teacher/student-list'));
 const Submissions = loadable(() => import('@/pages/teacher/submissions'));
 const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'));
 const SubjectForums = loadable(() => import('@/pages/teacher/classes/forum/index'));
-const SubjectForumMCQ = loadable(() => import('@/pages/teacher/classes/forum/mcq'));
-const SubjectForumEssay = loadable(() => import('@/pages/teacher/classes/forum/essay'));
+const SubjectForumMCQ = loadable(() => import('@/models/containers/forum/add-mcq'));
+const SubjectForumEssay = loadable(() => import('@/models/containers/forum/add-question'));
 const SubjectForum = loadable(() => import('@/pages/teacher/classes/forum/question'));
 const Quizes = loadable(() => import('@/pages/teacher/classes/quiz'));
 const QuizInfo = loadable(() => import('@/pages/teacher/classes/quiz/questions'));
+const TestComponent = loadable(() => import('@/components/test/test'));
 
 export default function TeacherRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
+                <Route path="test" element={<TestComponent />} />
                 <Route path="" element={<Home />} />
                 <Route path="classes" element={<Outlet />}>
                     <Route path="" element={<Classes />}></Route>
@@ -37,8 +39,8 @@ export default function TeacherRoutes() {
                         <Route path="quiz/:quizId" element={<QuizInfo />} />
                         <Route path="studyplan" element={<Outlet />}>
                             <Route path="" element={<StudyPlan />}></Route>
-                            <Route path="create" element={<CreatePlan />}></Route>
-                            <Route path="view" element={<StudyPlanView />}></Route>
+                            <Route path="create/:tierNo" element={<CreatePlan />}></Route>
+                            <Route path="view/:studyPlanId" element={<StudyPlanView />}></Route>
                         </Route>
                         <Route path="student" element={<Outlet />}>
                             <Route path="" element={<StudentList />}></Route>

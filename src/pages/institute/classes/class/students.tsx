@@ -13,7 +13,6 @@ import studentServices from '@/redux/services/student.service';
 function classStudent() {
     const dispatch = useDispatch();
 
-
     const location = useLocation();
     const params = location.search;
     const searchParams = new URLSearchParams(params.toString());
@@ -38,16 +37,19 @@ function classStudent() {
     );
     useErrorHandler(isStudentError, studentError);
 
-    const tableData = instituteStudents?.data?.data?.map((student: { id: string; firstName: string; lastName: string; email: string }) => ({
-        id: student.id,
-        name: `${student.firstName || ''} ${student.lastName || ''}`,
-        email: student.email || 'N/A',
-    })) || [];
+    const tableData =
+        instituteStudents?.data?.data?.map(
+            (student: { id: string; firstName: string; lastName: string; email: string }) => ({
+                id: student.id,
+                name: `${student.firstName || ''} ${student.lastName || ''}`,
+                email: student.email || 'N/A'
+            })
+        ) || [];
 
     const tableColumns = [
         { name: 'ID', value: 'id' },
         { name: 'Name', value: 'name' },
-        { name: 'Email', value: 'email' },
+        { name: 'Email', value: 'email' }
     ];
 
     return (
