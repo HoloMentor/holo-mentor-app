@@ -21,14 +21,14 @@ const initialValues: AddStudentFormValues = {
     firstName: '',
     lastName: '',
     email: '',
-    registrationNo: '', // Updated field name
+    registrationNo: '' // Updated field name
 };
 
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
-    registrationNo: Yup.string().required('Registration number is required'), 
+    registrationNo: Yup.string().required('Registration number is required')
 });
 
 export default function AddStudent() {
@@ -42,7 +42,6 @@ export default function AddStudent() {
     useErrorHandler(Boolean(studentCreateError), studentCreateError);
 
     const onSubmit = async (values: AddStudentFormValues) => {
-        
         const url = window.location.pathname;
         const classId = url.split('/')[2];
 
@@ -53,14 +52,14 @@ export default function AddStudent() {
                 firstName: values.firstName,
                 lastName: values.lastName,
                 email: values.email,
-                registrationNo: values.registrationNo, 
+                registrationNo: values.registrationNo
             });
 
             if (result?.data?.status === 201 || result?.data?.status === 200) {
                 dispatch(
                     notifyActions.open({
                         type: 'success',
-                        message: result.data.message,
+                        message: result.data.message
                     })
                 );
 
@@ -76,8 +75,7 @@ export default function AddStudent() {
             validationSchema={validationSchema}
             initialValues={initialValues}
             onSubmit={onSubmit}
-            className="flex flex-col gap-4"
-        >
+            className="flex flex-col gap-4">
             <ModalHeader className="flex flex-col gap-1 text-dark-green text-xl">
                 Add a Student
             </ModalHeader>

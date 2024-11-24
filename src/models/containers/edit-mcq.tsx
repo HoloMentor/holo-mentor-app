@@ -7,10 +7,6 @@ import FormEditor from '@/components/form/editor';
 import { FieldArray, FormikValues } from 'formik';
 import * as Yup from 'yup';
 
-interface ModelContainerProps {
-    onClose: () => void;
-}
-
 const initialValues = {
     firstName: '',
     lastName: '',
