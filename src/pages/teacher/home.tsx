@@ -192,10 +192,10 @@ function Home() {
                 <section className="w-full h-full col-span-2 p-2 bg-white rounded-s-lg max-xl:col-span-3">
                     <section className="w-full p-2 bg-white rounded-s-lg h-fit">
                         <div className="flex flex-col gap-8 mt-5">
-                            <h1 className="text-2xl font-bold leading-7 text-dark-green">
+                            {/* <h1 className="text-2xl font-bold leading-7 text-dark-green">
                                 Top Performance
-                            </h1>
-                            <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
+                            </h1> */}
+                            {/* <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
                                 <h1 className="justify-center mb-2 ml-2 text-xl font-semibold text-dark-green">
                                     Best Contributor
                                 </h1>
@@ -221,7 +221,7 @@ function Home() {
                                         );
                                     })}
                                 </div>
-                            </div>
+                            </div> */}
                             <h1 className="text-2xl font-bold leading-7 text-dark-green ">
                                 Students
                             </h1>
