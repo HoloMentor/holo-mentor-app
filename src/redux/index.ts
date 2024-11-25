@@ -18,6 +18,7 @@ import staffServices from './services/staff.service';
 import studentServices from './services/student.service';
 import studyPlanTaskServices from './services/study-plan/tasks.service';
 import forumServices from './services/forum.services';
+import quizServices from './services/quiz.service';
 
 const store = configureStore({
     reducer: combineReducers({
@@ -39,6 +40,7 @@ const store = configureStore({
         [staffServices.reducerPath]: staffServices.reducer,
         [studentServices.reducerPath]: studentServices.reducer,
         [studyPlanTaskServices.reducerPath]: studyPlanTaskServices.reducer,
+        [quizServices.reducerPath]: quizServices.reducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -57,6 +59,7 @@ const store = configureStore({
             .concat(studentServices.middleware)
             .concat(studyPlanTaskServices.middleware)
             .concat(forumServices.middleware)
+            .concat(quizServices.middleware)
 });
 
 export default store;
