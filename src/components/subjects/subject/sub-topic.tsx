@@ -184,64 +184,66 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
             </div>
 
             <div className="grid grid-cols-5 gap-4 gap-y-10 max-2xl:grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
-                {materialData.length === 0 ? (
+                {!materialData || materialData.length === 0 || materialData.every(m => !m.id && !m.url && !m.type) ? (
                     <p>No materials found.</p>
                 ) : (
-                    materialData.map((_, j) => {
-                        return (
-                            <div className="flex flex-col items-center">
-                                <span
-                                    onClick={() =>
-                                        dispatch(
-                                            modelActions.show({
-                                                name: modelNames.DELETE_MATERIAL,
-                                                props: { id: _.id }
-                                            })
-                                        )
-                                    }
-                                    className="flex justify-end cursor-pointer max-w-24 w-full">
-                                    <svg
-                                        width="15"
-                                        height="15"
-                                        viewBox="0 0 15 15"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_131_12585)">
-                                            <rect width="15" height="15" rx="7.5" fill="#FF0E00" />
-                                            <path
-                                                d="M10.5524 6.76V8.53H4.19244V6.76H10.5524Z"
-                                                fill="black"
-                                            />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_131_12585">
-                                                <rect
-                                                    width="15"
-                                                    height="15"
-                                                    rx="7.5"
-                                                    fill="white"
+                    materialData
+                        .filter(material => material.id !== null && material.url !== null && material.type !== null)
+                        .map((material, j) => {
+                            return (
+                                <div key={`material-${j}`} className="flex flex-col items-center">
+                                    <span
+                                        onClick={() =>
+                                            material.id && dispatch(
+                                                modelActions.show({
+                                                    name: modelNames.DELETE_MATERIAL,
+                                                    props: { id: material.id }
+                                                })
+                                            )
+                                        }
+                                        className="flex justify-end cursor-pointer max-w-24 w-full">
+                                        <svg
+                                            width="15"
+                                            height="15"
+                                            viewBox="0 0 15 15"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g clipPath="url(#clip0_131_12585)">
+                                                <rect width="15" height="15" rx="7.5" fill="#FF0E00" />
+                                                <path
+                                                    d="M10.5524 6.76V8.53H4.19244V6.76H10.5524Z"
+                                                    fill="black"
                                                 />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-                                </span>
-                                <a
-                                    title={'Subject Name'}
-                                    key={`material-${_.id}`}
-                                    href={_.url}
-                                    className="flex flex-col items-center gap-2 text-dark-gray">
-                                    <img
-                                        src={`/images/subjects/${_.type.toLowerCase()}.svg`}
-                                        alt="PDF Material"
-                                        className="size-20"
-                                    />
-                                    <span className="block">
-                                        {_.name || extractFileName(_.url)}
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_131_12585">
+                                                    <rect
+                                                        width="15"
+                                                        height="15"
+                                                        rx="7.5"
+                                                        fill="white"
+                                                    />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
                                     </span>
-                                </a>
-                            </div>
-                        );
-                    })
+                                    <a
+                                        title={'Subject Name'}
+                                        key={`material-${material.id}`}
+                                        href={material.url}
+                                        className="flex flex-col items-center gap-2 text-dark-gray">
+                                        <img
+                                            src={`/images/subjects/${material.type.toLowerCase()}.svg`}
+                                            alt="PDF Material"
+                                            className="size-20"
+                                        />
+                                        <span className="block">
+                                            {material.name || extractFileName(material.url)}
+                                        </span>
+                                    </a>
+                                </div>
+                            );
+                        })
                 )}
             </div>
         </div>

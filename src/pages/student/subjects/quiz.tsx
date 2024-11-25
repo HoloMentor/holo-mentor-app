@@ -5,6 +5,14 @@ import Select, { SelectValue } from '@/components/select';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import { IRootState } from '@/redux';
+import quizServices from '@/redux/services/quiz.service';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useErrorHandler from '@/hooks/error-handler';
+import { Skeleton } from '@nextui-org/react';
+import Content from '@/components/content';
+
 const filterOptions = [
     {
         value: 'top',
@@ -12,8 +20,53 @@ const filterOptions = [
     }
 ];
 
+interface Quiz {
+    id: number;
+    quizName: string;
+    classId: number;
+    userId: number;
+    mcqQuestionIds: number[];
+    status: number;
+    createdAt: string;
+}
+
 export default function SubjectQuiz() {
+    const { user } = useSelector((state: IRootState) => state.user);
+
     const location = useLocation();
+    // const params = location.search;
+    // const searchParams = new URLSearchParams(params.toString());
+
+    const { subjectId } = useParams<{ subjectId: string }>();
+
+    const {
+        data: quizzes,
+        isError: isQuizzesError,
+        error: quizzesError,
+        isLoading: isQuizzesLoading
+    } = quizServices.useGetQuizzesQuery(
+        {
+            userId: user.userId,
+            classId: parseInt(subjectId)
+        },
+        {
+            skip: !user.userId
+        }
+    );
+    useErrorHandler(isQuizzesError, quizzesError);
+    console.log(user.userId);
+    console.log(quizzes);
+
+    // separate the quizzes based on status
+    // status 0 => Active
+    // status 1 => Completed
+
+    const activeQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 0);
+    const completedQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 1);
+
+    // console.log(activeQuizzes);
+    // console.log(completedQuizzes);
+
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const [fillColors, setFillColors] = useState(Array(5).fill('#B1B1B1')); // Initial color green
 
@@ -24,7 +77,40 @@ export default function SubjectQuiz() {
             )
         );
     };
-    return (
+
+    return isQuizzesLoading ? (
+        <div className="flex flex-col gap-3">
+            <Heading>Quiz</Heading>
+
+            <Content>
+                <div className="grid justify-between grid-cols-1 gap-6 pr-4">
+                    {Array.from({ length: 3 }).map((_, index) => {
+                        return (
+                            <div
+                                key={`skeleton-${index}`}
+                                className="w-full flex items-center gap-3 py-6">
+                                <div className="w-full flex flex-col gap-2">
+                                    <Skeleton className="h-3 w-3/5 rounded-lg" />
+                                    <Skeleton className="h-3 w-4/5 rounded-lg" />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </Content>
+        </div>
+    ) : quizzes?.data?.length === 0 ? (
+        <div className="flex flex-col gap-3">
+            <Heading>Quiz</Heading>
+
+            <Content>
+                <div className="flex flex-col gap-5 justify-center items-center h-full">
+                    <img className="max-w-64" src="/images/empty.svg" alt="Void" />
+                    <h3>No quizzes are found yet.</h3>
+                </div>
+            </Content>
+        </div>
+    ) : (
         <div className="flex flex-col gap-3">
             <Heading>Quiz</Heading>
 
@@ -38,17 +124,15 @@ export default function SubjectQuiz() {
             </section>
 
             <section className="flex flex-col gap-5 pr-5 mb-8">
-                {Array.from({ length: 1 }).map((_, i) => {
-                    const id = i;
-
+                {activeQuizzes?.map((quiz: Quiz, i: number) => {
                     return (
                         <div
                             key={i}
                             className="flex justify-between gap-3 bg-white rounded-md p-6 shadow-lg max-md:flex-col">
                             <Link
-                                to={`${location.pathname}/attempt/${id}`}
+                                to={`${location.pathname}/attempt/${quiz.id}`}
                                 className="flex flex-col gap-1 text-black hover:text-black max-md:text-sm">
-                                <h3 className="font-semibold text-lg">Quiz Name</h3>
+                                <h3 className="font-semibold text-lg">{quiz.quizName}</h3>
                                 <div>
                                     Status:{' '}
                                     <span
@@ -57,7 +141,7 @@ export default function SubjectQuiz() {
                                         Active
                                     </span>
                                 </div>
-                                <div>Publish Date : 21 December 2023</div>
+                                <div>Publish Date : {new Date(quiz.createdAt).toDateString()}</div>
                             </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex justify-center items-center h-full max-md:justify-start">
@@ -75,7 +159,7 @@ export default function SubjectQuiz() {
                                         />
                                     </svg>
 
-                                    <Link to={`${location.pathname}/attempt/${id}`}>
+                                    <Link to={`${location.pathname}/attempt/${quiz.id}`}>
                                         <Button className="flex items-center gap-2 rounded-lg border-1 hover:bg-white hover:text-dark-green hover:border-dark-green">
                                             Answer Questions
                                         </Button>
@@ -87,17 +171,15 @@ export default function SubjectQuiz() {
                 })}
             </section>
             <section className="flex flex-col gap-5 pr-5">
-                {Array.from({ length: 5 }).map((_, i) => {
-                    const id = i;
-
+                {completedQuizzes?.map((quiz: Quiz, i: number) => {
                     return (
                         <div
                             key={i}
                             className="flex justify-between gap-3 bg-white rounded-md p-6 shadow-lg max-md:flex-col">
                             <Link
-                                to={`${location.pathname}/${id}`}
+                                to={`${location.pathname}/${quiz.id}`}
                                 className="flex flex-col gap-1 text-black hover:text-black max-md:text-sm">
-                                <h3 className="font-semibold text-lg">Quiz Name</h3>
+                                <h3 className="font-semibold text-lg">{quiz.quizName}</h3>
                                 <div>
                                     Status:{' '}
                                     <span
@@ -106,7 +188,7 @@ export default function SubjectQuiz() {
                                         Completed
                                     </span>
                                 </div>
-                                <div>Publish Date : 21 December 2023</div>
+                                <div>Publish Date : {new Date(quiz.createdAt).toDateString()}</div>
                             </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex justify-center items-center h-full max-md:justify-start">
@@ -124,7 +206,7 @@ export default function SubjectQuiz() {
                                         />
                                     </svg>
 
-                                    <Link to={`${location.pathname}/${id}`}>
+                                    <Link to={`${location.pathname}/${quiz.id}`}>
                                         <Button className="flex items-center gap-2 rounded-lg bg-white text-dark-green border-dark-green border-1 hover:bg-dark-green hover:text-white hover:border-dark-green">
                                             View Answers
                                         </Button>
