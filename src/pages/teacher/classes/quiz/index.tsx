@@ -23,7 +23,7 @@ export default function SubjectQuiz() {
                         onClick={() =>
                             dispatch(
                                 modelActions.show({
-                                    name: modelNames.ADD_MCQ
+                                    name: modelNames.ADD_QUIZ
                                 })
                             )
                         }

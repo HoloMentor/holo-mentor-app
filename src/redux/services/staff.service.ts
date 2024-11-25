@@ -19,7 +19,7 @@ const staffServices = createApi({
         getInstituteTeacherStaff: builder.query({
             query: ({ instituteId, teacherId, search = '', page = 1, limit = 5 }) => ({
                 method: 'GET',
-                url: `/staff/staff/${instituteId}/${teacherId}`,
+                url: `/staff/${instituteId}/${teacherId}`,
                 params: { search, page, limit }
             }),
             providesTags: ['InstituteTeacherStaff']
