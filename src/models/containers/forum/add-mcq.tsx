@@ -17,6 +17,7 @@ import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
     topic: '',
@@ -48,6 +49,9 @@ export default function ForumMcq() {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
     const { classId } = useParams();
+    const navigate = useNavigate();
+
+    console.log('I am the USer', user);
 
     const {
         data: classTopics,
@@ -65,8 +69,6 @@ export default function ForumMcq() {
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
 
-    console.log('classTopics');
-    console.log(classTopics);
 
     const classTopicsData = useMemo(() => {
         return (
@@ -109,15 +111,18 @@ export default function ForumMcq() {
             ...values
         });
 
-        if (result?.data?.status === 200) {
+        if (result?.data?.status === 200 || result?.data?.status === 201) {
+            console.log("Navigation Path:", `/classes/${classId}/forum`);
             dispatch(
                 notifyActions.open({
                     type: 'success',
                     message: result.data.message
                 })
             );
-
             dispatch(modelActions.hide());
+            navigate(`/classes/${classId}/forum`);
+        } else {
+            console.error("Error creating MCQ:", result);
         }
     };
 

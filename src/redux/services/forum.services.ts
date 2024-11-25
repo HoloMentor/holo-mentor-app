@@ -42,6 +42,12 @@ const forumServices = createApi({
                 url: `/forum/all`
             }),
             providesTags: ['Forums']
+        }),
+        getSingleQuestion:builder.mutation({
+            query: (id) => ({
+                method: 'GET',
+                url: `/forum/${id}`
+            })
         })
     })
 });
