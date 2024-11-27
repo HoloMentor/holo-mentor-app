@@ -16,9 +16,11 @@ import {
     User
 } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Reader from '@/components/editor/reader';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { modelNames } from '@/models';
+import { modelActions } from '@/redux/reducers/model.reducer';
 
 
 export default function ForumPage() {
@@ -26,6 +28,9 @@ export default function ForumPage() {
     const [onReplyQuestion, setOnReplyQuestion] = useState(null);
     const params = useParams();
     const { user } = useSelector((state: IRootState) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     console.log('Here are the parameters\n',params);
     const forumId = params.forumId;
@@ -55,6 +60,8 @@ export default function ForumPage() {
     const mcqAnswers = data?.data?.mcqAnswer;
     const userID = data?.data?.userId
     const currentUserId = user?.userId
+    const questionID = Number(forumId)
+    console.log('Question ID:', questionID);    
 
     
 
@@ -96,6 +103,11 @@ export default function ForumPage() {
                                 <DropdownSection showDivider>
                         
                                     <DropdownItem
+                                    
+                                    onClick={() => mcqAnswers
+                                            ?navigate(`${location.pathname}/update/mcq`)
+                                            :navigate(`${location.pathname}/update/normal`)    
+                                            }
                                         endContent={
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -118,6 +130,14 @@ export default function ForumPage() {
                                 </DropdownSection>
                                 <DropdownSection>
                                     <DropdownItem
+                                        onClick={() =>
+                                            dispatch(
+                                                modelActions.show({
+                                                    name: modelNames.DELETE_QUESTION,
+                                                    props: { id : questionID }
+                                                })
+                                            )
+                                        }
                                         endContent={
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"

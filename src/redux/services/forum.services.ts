@@ -22,17 +22,10 @@ const forumServices = createApi({
             }),
             invalidatesTags: ['Forums']
         }),
-        deleteMcq: builder.mutation({
+        deleteQuestion: builder.mutation({
             query: ({ id }) => ({
                 method: 'DELETE',
-                url: `/forum/mcq/delete/${id}`
-            }),
-            invalidatesTags: ['Forums']
-        }),
-        deleteEssay: builder.mutation({
-            query: ({ id }) => ({
-                method: 'DELETE',
-                url: `/forum/essay/delete/${id}`
+                url: `/forum/delete/${id}`
             }),
             invalidatesTags: ['Forums']
         }),
@@ -48,7 +41,14 @@ const forumServices = createApi({
                 method: 'GET',
                 url: `/forum/${id}`
             })
-        })
+        }),
+        updateQuestion:builder.mutation({
+            query:({id,type,...props}) => ({
+                method:'PATCH',
+                url:`/forum/${id}/update/${type}`,
+                body:props
+            })
+        }),
     })
 });
 export default forumServices;

@@ -109,7 +109,7 @@ export default function ForumEssay() {
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
             <Content>
-                <SubHeading>Add Essay Question</SubHeading>
+                <SubHeading>Edit Essay Question</SubHeading>
 
                 <Form
                     validationSchema={validationSchema}
@@ -149,7 +149,7 @@ export default function ForumEssay() {
                                 />
 
                                 <SubmitButton className="mt-5" isLoading={isCreating}>
-                                    Submit Question
+                                    Update Question
                                 </SubmitButton>
                             </>
                         );

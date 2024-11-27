@@ -41,6 +41,7 @@ const EditStudyPlanTask = loadable(() => import('./containers/teacher/study-plan
 const EditStudyPlan = loadable(() => import('./containers/teacher/study-plan/edit.tsx'));
 const AddQuiz = loadable(() => import('./containers/teacher/quiz/add.tsx'));
 const EditQuiz = loadable(() => import('./containers/teacher/quiz/edit.tsx'));
+const DeleteQuestion = loadable(() => import('./containers/forum/delete-question.tsx'));
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -183,6 +184,9 @@ export const modelContainers: ModelContainers = {
         model: EditQuiz,
         props: { size: '2xl' }
     },
+    DELETE_QUESTION: {
+        model: DeleteQuestion
+    }
 };
 
 export const modelNames = {
@@ -227,6 +231,7 @@ export const modelNames = {
     EDIT_STUDY_PLAN_TASK: 'EDIT_STUDY_PLAN_TASK',
     EDIT_STUDY_PLAN: 'EDIT_STUDY_PLAN',
     ADD_QUIZ: 'ADD_QUIZ',
-    EDIT_QUIZ: 'EDIT_QUIZ'
+    EDIT_QUIZ: 'EDIT_QUIZ',
+    DELETE_QUESTION: 'DELETE_QUESTION'
 
 };

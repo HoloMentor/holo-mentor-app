@@ -20,8 +20,8 @@ export default function QuizInfo() {
             <Heading>Quiz</Heading>
 
             <Content className="py-20 my-4 shadow-lg max-md:px-6">
-                <div className="w-4/5 max-w-5xl mx-auto flex flex-col gap-8 max-md:w-full max-md:text-sm">
-                    <h3 className="text-center text-dark-green font-bold text-3xl">Measurement</h3>
+                <div className="flex flex-col w-4/5 max-w-5xl gap-8 mx-auto max-md:w-full max-md:text-sm">
+                    <h3 className="text-3xl font-bold text-center text-dark-green">Measurement</h3>
                     <p>
                         Torem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis
                         molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla
@@ -32,10 +32,10 @@ export default function QuizInfo() {
                             {Array.from({ length: 10 }).map((_, qIndex) => (
                                 <div
                                     key={qIndex}
-                                    className="flex flex-col gap-6 border border-light-border rounded-lg p-10">
+                                    className="flex flex-col gap-6 p-10 border rounded-lg border-light-border">
                                     <div>
-                                        <div className="flex flex-row justify-between items-center">
-                                            <span className="font-semibold items-center">
+                                        <div className="flex flex-row items-center justify-between">
+                                            <span className="items-center font-semibold">
                                                 Q No : {qIndex + 1}
                                             </span>
                                             <div className="flex">
@@ -123,7 +123,7 @@ export default function QuizInfo() {
                                         nec fringilla accumsan, Torem ipsum dolor sit amet,
                                         consectetur adipiscing elit.
                                     </p>
-                                    <div className="flex flex-col pl-8 gap-2">
+                                    <div className="flex flex-col gap-2 pl-8">
                                         <div className="flex items-center gap-2">
                                             <input
                                                 className="text-lime-600"

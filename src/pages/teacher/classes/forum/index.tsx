@@ -10,6 +10,8 @@ import forumServices from '@/redux/services/forum.services';
 import useErrorHandler from '@/hooks/error-handler';
 import Reader from '@/components/editor/reader';
 import classTopicServices from '@/redux/services/class/topics.service';
+import {useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
 
 
 const filterOptions = [
@@ -23,6 +25,10 @@ export default function Forum() {
     const location = useLocation();
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const { classId } = useParams();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const userName = user?.firstName + ' ' + user?.lastName;
+
 
 
     const {
@@ -144,11 +150,9 @@ export default function Forum() {
                                                 src="/images/student/avatar.png"
                                                 alt="Avatar"
                                             />
-                                            <span className="truncate">Albert Flores</span>
+                                            <span className="text-xs truncate">{userName}</span>
                                         </div>
-                                        <span className="block w-full font-medium text-right text-dark-gray">
-                                            2 days ago
-                                        </span>
+                                        
                                     </div>
 
                                     <Link
