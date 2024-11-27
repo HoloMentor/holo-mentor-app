@@ -11,7 +11,7 @@ import { useCallback, useMemo } from 'react';
 import useErrorHandler from '@/hooks/error-handler';
 import classTopicServices from '@/redux/services/class/topics.service';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
@@ -33,6 +33,7 @@ export default function ForumEssay() {
     const dispatch = useDispatch();
     const { classId } = useParams();
     const { user } = useSelector((state: IRootState) => state.user);
+    const navigate = useNavigate();
 
     const {
         data: classTopics,
@@ -91,7 +92,7 @@ export default function ForumEssay() {
             ...values
         });
 
-        if (result?.data?.status === 200) {
+        if (result?.data?.status === 200 || result?.data?.status === 201) {
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -100,6 +101,7 @@ export default function ForumEssay() {
             );
 
             dispatch(modelActions.hide());
+            navigate(-1)
         }
     };
 

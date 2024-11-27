@@ -11,18 +11,19 @@ import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import classTopicServices from '@/redux/services/class/topics.service';
-import forumServices from '@/redux/services/forum.services';
 import { FieldArray, FormikValues } from 'formik';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import questionServices from '@/redux/services/question.services';
 
 const initialValues = {
     topic: '',
     subTopic: '',
     question: '',
+    correctAnswer: 0,
     answers: [
         { index: 0, value: '' },
         { index: 1, value: '' },
@@ -42,7 +43,19 @@ const validationSchema = Yup.object().shape({
                 value: Yup.string().required('Answer is required')
             })
         )
-        .required('Answers are required')
+        .required('Answers are required'),
+    correctAnswer: Yup.number()
+        .integer('Correct Answer must be an integer')
+        .min(0, 'Correct Answer cannot be less than 0')
+        .test(
+            'maxIndex',
+            'Correct Answer must be within the range of available answers',
+            function (value) {
+                const { answers } = this.parent;
+                return value < answers.length;
+            }
+        )
+        .required('Correct Answer is required')
 });
 
 export default function ForumMcq() {
@@ -50,8 +63,6 @@ export default function ForumMcq() {
     const { user } = useSelector((state: IRootState) => state.user);
     const { classId } = useParams();
     const navigate = useNavigate();
-
-    console.log('I am the USer', user);
 
     const {
         data: classTopics,
@@ -68,7 +79,6 @@ export default function ForumMcq() {
         }
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
-
 
     const classTopicsData = useMemo(() => {
         return (
@@ -99,12 +109,14 @@ export default function ForumMcq() {
         [classTopics]
     );
 
-    const [createMcq, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
-        forumServices.useCreateMcqMutation();
+    const [createQuestion, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
+        questionServices.useCreateQuestionMutation();
     useErrorHandler(isMcqCreateError, mcqCreateError);
 
     const onSubmit = async (values: FormikValues) => {
-        const result = await createMcq({
+        console.log('Submitting Data:', values);
+        
+        const result = await createQuestion({
             userId: user.userId,
             email: user.email,
             classId: classId,
@@ -112,7 +124,7 @@ export default function ForumMcq() {
         });
 
         if (result?.data?.status === 200 || result?.data?.status === 201) {
-            console.log("Navigation Path:", `/classes/${classId}/forum`);
+            console.log('Navigation Path:', `/classes/${classId}/forum`);
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -120,9 +132,9 @@ export default function ForumMcq() {
                 })
             );
             dispatch(modelActions.hide());
-            navigate(`/classes/${classId}/forum`);
+            navigate(-1);
         } else {
-            console.error("Error creating MCQ:", result);
+            console.error('Error creating MCQ:', result);
         }
     };
 
@@ -130,7 +142,7 @@ export default function ForumMcq() {
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
             <Content>
-                <SubHeading>Add MCQ Question</SubHeading>
+                <SubHeading>Add MCQ to the QuizBank</SubHeading>
 
                 <Form
                     validationSchema={validationSchema}
@@ -189,6 +201,12 @@ export default function ForumMcq() {
                                                     </div>
                                                 ));
                                             }}
+                                        />
+                                        <FormInput
+                                            type="number"
+                                            label="Correct Answer"
+                                            name="correctAnswer"
+                                            placeholder="Enter the correct answer index"
                                         />
                                     </div>
                                 </div>

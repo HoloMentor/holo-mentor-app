@@ -1,14 +1,14 @@
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
 import Input from '@/components/input';
-import { modelNames } from '@/models';
-import { modelActions } from '@/redux/reducers/model.reducer';
-import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function SubjectQuiz() {
-    const dispatch = useDispatch();
+   
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleNavigate = () =>  navigate(`${location.pathname}/add`)
 
     return (
         <div className="flex flex-col gap-3">
@@ -20,13 +20,7 @@ export default function SubjectQuiz() {
                         <Input placeholder="Search" className="bg-white" />
                     </div>
                     <Button
-                        onClick={() =>
-                            dispatch(
-                                modelActions.show({
-                                    name: modelNames.ADD_QUIZ
-                                })
-                            )
-                        }
+                        onClick={handleNavigate}
                         className="flex items-center gap-2"
                         endContent={
                             <span>

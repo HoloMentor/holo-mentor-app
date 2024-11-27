@@ -2,10 +2,6 @@ import Editor, { BlockNoteEditorProps, EditorProps } from '@/components/editor';
 import { BlockNoteEditor } from '@blocknote/core';
 import React from 'react';
 
-interface ClassNamesProps {
-    mainWrapper?: string;
-    innerWrapper?: string;
-}
 
 interface ReaderProps extends EditorProps {
     value?: any;

@@ -15,17 +15,18 @@ const Submissions = loadable(() => import('@/pages/teacher/submissions'));
 const StudentProfile = loadable(() => import('@/pages/teacher/student-profile-details'));
 const SubjectForums = loadable(() => import('@/pages/teacher/classes/forum/index'));
 const SubjectForumMCQ = loadable(() => import('@/models/containers/forum/add-mcq'));
+const UpdateForumMCQ = loadable(() => import('@/models/containers/forum/update-mcq'));
 const SubjectForumEssay = loadable(() => import('@/models/containers/forum/add-question'));
+const UpdateForumEssay = loadable(() => import('@/models/containers/forum/update-question'));
 const SubjectForum = loadable(() => import('@/pages/teacher/classes/forum/question'));
 const Quizes = loadable(() => import('@/pages/teacher/classes/quiz'));
 const QuizInfo = loadable(() => import('@/pages/teacher/classes/quiz/questions'));
-const TestComponent = loadable(() => import('@/components/test/test'));
+const AddQuizQuestion = loadable(() => import('@/pages/teacher/classes/quiz/add-question'));
 
 export default function TeacherRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route path="test" element={<TestComponent />} />
                 <Route path="" element={<Home />} />
                 <Route path="classes" element={<Outlet />}>
                     <Route path="" element={<Classes />}></Route>
@@ -33,10 +34,14 @@ export default function TeacherRoutes() {
                         <Route path="" element={<ClassMaterials />} />
                         <Route path="forum" element={<SubjectForums />} />
                         <Route path="forum/mcq" element={<SubjectForumMCQ />} />
+                        <Route path="forum/:forumId/update/mcq" element={<UpdateForumMCQ/>} />
+                        <Route path="forum/essay" element={<SubjectForumEssay />} />
+                        <Route path="forum/:forumId/update/normal" element={<UpdateForumEssay />} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
                         <Route path="forum/:forumId" element={<SubjectForum />} />
                         <Route path="quiz/" element={<Quizes />} />
                         <Route path="quiz/:quizId" element={<QuizInfo />} />
+                        <Route path="quiz/add" element={<AddQuizQuestion />} />
                         <Route path="studyplan" element={<Outlet />}>
                             <Route path="" element={<StudyPlan />}></Route>
                             <Route path="create/:tierNo" element={<CreatePlan />}></Route>

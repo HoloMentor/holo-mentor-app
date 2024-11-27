@@ -34,7 +34,7 @@ export function renderInstituteName({ data }: CustomTableCellData) {
                 isBordered
                 className="relative size-8 !rounded-full object-cover object-center"
             />
-            <span className="text-left ml-5 mt-2">{data?.name}</span>
+            <span className="mt-2 ml-5 text-left">{data?.name}</span>
         </div>
     );
 }
