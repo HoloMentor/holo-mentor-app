@@ -14,6 +14,13 @@ const questionServices = createApi({
             }),
             invalidatesTags: ['Questions']
         }),
+        getAllQuestions: builder.query({
+            query: () => ({
+                method: 'GET',
+                url: `/question/view`
+            }),
+            providesTags: ['Questions']
+        })
     })
 });
 export default questionServices;
