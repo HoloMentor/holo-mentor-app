@@ -71,7 +71,7 @@ export default function Forum() {
     );
     useErrorHandler(isForumQuestionsError, forumQuestionsError);
 
-    console.log(forumQuestions);
+    console.log('forum questions',forumQuestions);
 
     return (
         <div className="flex flex-col gap-3">
