@@ -25,7 +25,26 @@ const quizServices = createApi({
                 method: 'GET'
             }),
             providesTags: ['GetQuestion']
-        })
+        }),
+        submitAnswer: builder.mutation<any, { quiz_id: string; questionId: string; userId: string; answer: string }>({
+            query: ({ quiz_id, questionId, userId, answer }) => ({
+                url: `/quiz/question/${quiz_id}/${questionId}/${userId}/submit`,
+                method: 'POST',
+                body: { answer }
+            })
+        }),
+        getQuizAnswers: builder.query({
+            query: ({ quizId, userId }) => ({
+                url: `/quiz/${quizId}/${userId}/answers`,
+                method: 'GET'
+            })
+        }),
+        reAttemptQuiz: builder.mutation({
+            query: ({ quizId, userId }) => ({
+                url: `/quiz/${quizId}/${userId}/reattempt`,
+                method: 'GET'
+            })
+        }),
     })
 });
 

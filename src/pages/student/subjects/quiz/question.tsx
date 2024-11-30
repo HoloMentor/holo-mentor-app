@@ -1,12 +1,14 @@
 import Heading from '@/components/headings/main';
 
 import Content from '@/components/content';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { JSXElementConstructor, Key, ReactElement, ReactNode, SetStateAction, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Key, useEffect, useState } from 'react';
 import quizServices from '@/redux/services/quiz.service';
 import useErrorHandler from '@/hooks/error-handler';
-import { Accordion, AccordionItem, Skeleton } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
 
 type Props = {
     textColor: string;
@@ -36,62 +38,52 @@ type QuestionResponse = {
 };
 
 export default function QuizQuestion() {
-    // http://localhost:3000/subjects/0/quiz/attempt/0
-    // let location = useLocation().pathname;
-    // let quizId = Number(location.match(/\d+$/)[0]);
-    // let next_url = location.replace(/\d+$/, (quizId + 1).toString());
-    // let prev_url = location.replace(/\d+$/, (quizId - 1).toString());
-    // if (quizId === 0) prev_url = location;
-
-    // let next_url, prev_url = "";
+    const quizTime = 30 * 60 * 1000;
 
     const location = useLocation();
     const navigate = useNavigate();
-    const { mcqQuestionIds, quizId, question_index, quizName } = location.state || {};
+    const { mcqQuestionIds, quizId, question_index, quizName, attemptStartedAt } =
+        location.state || {};
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(question_index || 0);
     const [selectedAnswer, setSelectedAnswer] = useState('');
-
     const [answersMap, setAnswersMap] = useState<Record<string, string>>({});
-    const currentQuestionId = mcqQuestionIds?.[currentQuestionIndex];
-    const [submitAnswer, { isLoading: isSubmitting }] = quizServices.useSubmitAnswerMutation();
+    const [timeRemaining, setTimeRemaining] = useState<number>(0);
 
-    const handleAnswerSelect = async (value: string) => {
-        // Update selected answer state
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    // Add API mutation hook
+    const [submitAnswer] = quizServices.useSubmitAnswerMutation();
+
+    // Handle answer selection and submission
+    const handleAnswerSelect = async (answer: string, value: string) => {
         setSelectedAnswer(value);
-        
-        // Store in answers map
-        setAnswersMap(prev => ({
+        setAnswersMap((prev) => ({
             ...prev,
-            [currentQuestionId]: value
+            [mcqQuestionIds[currentQuestionIndex]]: value
         }));
 
-        // Submit to API
         try {
-            await submitAnswer({
-                questionId: currentQuestionId,
-                answerId: value,
-                quizId: quizId
-            });
-        } catch (err) {
-            console.error('Failed to submit answer:', err);
+            const response = await submitAnswer({
+                quiz_id: quizId,
+                questionId: mcqQuestionIds[currentQuestionIndex],
+                userId: user.userId,
+                answer: answer
+            }).unwrap();
+            if (response) {
+                // setSelectedAnswer(value);
+            }
+        } catch (error) {
+            console.error('Failed to submit answer:', error);
+            setSelectedAnswer('');
         }
     };
 
-
-    console.log(mcqQuestionIds, quizId, question_index, quizName);
-    // return null;
+    // console.log(mcqQuestionIds, quizId, question_index, quizName);
     // if these values are not present or undefined, redirect to the quiz page
-
-    // http://localhost:3000/subjects/1/quiz/attempt/1
-    // let subjectId = 0;
     const { subjectId } = useParams<{ subjectId: string }>();
-    // console.log(subjectId, "subjectId");
-
     if (!mcqQuestionIds || !quizId || !quizName) {
         navigate(`/subjects/${subjectId}/quiz/${quizId}`);
     }
-
-
 
     // Get current question details
     const {
@@ -109,22 +101,23 @@ export default function QuizQuestion() {
     );
 
     useErrorHandler(isError, error);
-    console.log(question_index, currentQuestionIndex, mcqQuestionIds);
+    // console.log(question_index, currentQuestionIndex, mcqQuestionIds);
 
     const handleNext = () => {
         if (currentQuestionIndex < mcqQuestionIds.length - 1) {
             const nextIndex = currentQuestionIndex + 1;
             const nextQuestionId = mcqQuestionIds[nextIndex];
-            
+
             navigate(`${location.pathname}`, {
                 state: {
                     mcqQuestionIds,
-                    quizId, 
+                    quizId,
                     question_index: nextIndex,
-                    quizName
+                    quizName,
+                    attemptStartedAt
                 }
             });
-            
+
             setCurrentQuestionIndex(nextIndex);
             setSelectedAnswer(answersMap[nextQuestionId] || '');
         }
@@ -137,69 +130,35 @@ export default function QuizQuestion() {
                     mcqQuestionIds,
                     quizId,
                     question_index: currentQuestionIndex - 1,
-                    quizName
+                    quizName,
+                    attemptStartedAt
                 }
             });
             setCurrentQuestionIndex((prev: number) => prev - 1);
-            setSelectedAnswer('');
+            setSelectedAnswer(answersMap[mcqQuestionIds[currentQuestionIndex - 1]] || '');
         }
     };
 
-    console.log(question);
+    // count down timer
+    useEffect(() => {
+        const startTime = new Date(attemptStartedAt).getTime();
+        const endTime = startTime + quizTime;
+        const remaining = endTime - Date.now();
 
-    // {
-    //     "data": {
-    //         "id": 13,
-    //         "classId": 1,
-    //         "userId": 2,
-    //         "topic": "6",
-    //         "subTopic": "6",
-    //         "question": [
-    //             {
-    //                 "id": "cea7c819-02ab-4074-9e2d-354832f38ed4",
-    //                 "type": "paragraph",
-    //                 "props": {
-    //                     "textColor": "default",
-    //                     "textAlignment": "left",
-    //                     "backgroundColor": "default"
-    //                 },
-    //                 "content": [
-    //                     {
-    //                         "text": "Hi Hello Yaluwane Oyalata kohomada ithin bath kawada???",
-    //                         "type": "text",
-    //                         "styles": {}
-    //                     }
-    //                 ],
-    //                 "children": []
-    //             }
-    //         ],
-    //         "answer": 2,
-    //         "mcqAnswer": [
-    //             {
-    //                 "index": 0,
-    //                 "value": "3"
-    //             },
-    //             {
-    //                 "index": 1,
-    //                 "value": "34"
-    //             },
-    //             {
-    //                 "index": 2,
-    //                 "value": "45"
-    //             },
-    //             {
-    //                 "index": 3,
-    //                 "value": "hghg"
-    //             },
-    //             {
-    //                 "index": 4,
-    //                 "value": "12"
-    //             }
-    //         ]
-    //     },
-    //     "message": "Question found",
-    //     "status": 200
-    // }
+        setTimeRemaining(Math.max(0, remaining));
+        const timer = setInterval(() => {
+            const newRemaining = endTime - Date.now();
+            if (newRemaining <= 0) {
+                clearInterval(timer);
+                navigate(`/subjects/${subjectId}/quiz`);
+            } else setTimeRemaining(newRemaining);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [attemptStartedAt, navigate, subjectId]);
+
+    const minutes = Math.floor(timeRemaining / 1000 / 60);
+    const seconds = Math.floor((timeRemaining / 1000) % 60);
 
     const renderQuestionContent = (question: QuestionResponse | undefined): JSX.Element | null => {
         if (!question?.data?.question) return null;
@@ -254,7 +213,6 @@ export default function QuizQuestion() {
                     </div>
                 </div>
 
-                {/* pagination btns */}
                 <div className="flex justify-center mt-4t">
                     <button
                         className={`px-4 py-2 rounded-xl mr-2 text-3xl font-extralight bg-gray-200 text-dark-green 
@@ -274,8 +232,26 @@ export default function QuizQuestion() {
         <div className="flex flex-col gap-3">
             <Heading>Attempt Quiz</Heading>
 
-            <Content className="py-20 my-4 shadow-lg">
+            <Content className="pb-20 pt-14 my-4 shadow-lg">
                 <div className="w-4/5 max-w-5xl mx-auto flex flex-col gap-2 max-md:w-full max-md:text-sm">
+                    <div className="mx-auto mb-6">
+                        <h3 className="text-lg font-bold mb-2">Time Remaining</h3>
+                        <div className="flex items-center gap-2 justify-center">
+                            <div className="flex flex-col items-center rounded-lg bg-gray-200 p-3">
+                                <span className="text-3xl font-bold">
+                                    {minutes.toString().padStart(2, '0')}
+                                </span>
+                                <span className="text-xs">Minutes</span>
+                            </div>
+                            <div className="flex flex-col items-center rounded-lg bg-gray-200 p-3">
+                                <span className="text-3xl font-bold">
+                                    {seconds.toString().padStart(2, '0')}
+                                </span>
+                                <span className="text-xs">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <h3 className="text-center text-dark-green font-bold text-3xl">
                         {quizName} - Quiz
                     </h3>
@@ -283,20 +259,39 @@ export default function QuizQuestion() {
                     <div>{renderQuestionContent(question)}</div>
 
                     <div className="flex flex-col pl-4 gap-2">
-                        {question?.data?.mcqAnswer?.map((mcq: { value: String; }, i: Key) => {
-                            return (
-                                <div key={i} className="flex items-center gap-2">
-                                    <input
-                                        type="radio"
-                                        name="q1"
-                                        id={`q1b-${i}`}
-                                        checked={selectedAnswer === mcq.value}
-                                        onChange={() => setSelectedAnswer(mcq.value as string)}
-                                    />
-                                    <label htmlFor={`q1b-${i}`}>{mcq.value}</label>
-                                </div>
-                            );
-                        })}
+                        {question?.data?.mcqAnswer?.map(
+                            (
+                                mcq: {
+                                    index: String;
+                                    value: String;
+                                },
+                                i: Key
+                            ) => {
+                                return (
+                                    <div key={i} className="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="q1"
+                                            id={`q1b-${i}`}
+                                            checked={selectedAnswer === mcq.value}
+                                            className="cursor-pointer"
+                                            // onChange={() => setSelectedAnswer(mcq.value as string)
+                                            onChange={() =>
+                                                handleAnswerSelect(
+                                                    mcq.index as string,
+                                                    mcq.value as string
+                                                )
+                                            }
+                                        />
+                                        <label
+                                            className="w-full cursor-pointer"
+                                            htmlFor={`q1b-${i}`}>
+                                            {mcq.value}
+                                        </label>
+                                    </div>
+                                );
+                            }
+                        )}
                     </div>
                 </div>
 
@@ -311,7 +306,11 @@ export default function QuizQuestion() {
                     </button>
                     <button
                         className={`px-4 py-2 rounded-xl text-3xl font-extralight bg-dark-green text-white hover:text-white
-                            ${currentQuestionIndex === mcqQuestionIds.length - 1 ? 'cursor-not-allowed' : ''}`}
+                            ${
+                                currentQuestionIndex === mcqQuestionIds.length - 1
+                                    ? 'cursor-not-allowed'
+                                    : ''
+                            }`}
                         onClick={handleNext}>
                         &gt;
                     </button>
