@@ -3,7 +3,7 @@ import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { IRootState } from '@/redux';
 import quizServices from '@/redux/services/quiz.service';
@@ -21,6 +21,7 @@ const filterOptions = [
 ];
 
 interface Quiz {
+    attemptStartedAt: string | number | Date;
     id: number;
     quizName: string;
     classId: number;
@@ -32,6 +33,9 @@ interface Quiz {
 
 export default function SubjectQuiz() {
     const { user } = useSelector((state: IRootState) => state.user);
+
+    const navigate = useNavigate();
+    const [startAttempt] = quizServices.useStartQuizAttemptMutation();
 
     const location = useLocation();
     // const params = location.search;
@@ -57,15 +61,59 @@ export default function SubjectQuiz() {
     console.log(user.userId);
     console.log(quizzes);
 
+    const handleStartAttempt = async (quiz: Quiz) => {
+        try {
+            console.log('Starting attempt for quiz:', quiz);
+            // return;
+            const response = await startAttempt({
+                quizId: quiz.id,
+                userId: user.userId
+            }).unwrap();
+
+            console.log('Attempt started:', response);
+            // return;
+            // forward the mcqQuestionIds to the quiz attempt page
+            if (response) {
+                navigate(`${location.pathname}/attempt/${quiz.id}`, {
+                    state: {
+                        mcqQuestionIds: quiz.mcqQuestionIds,
+                        quizId: quiz.id,
+                        question_index: 0,
+                        quizName: quiz.quizName
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Failed to start quiz attempt:', error);
+        }
+    };
+
     // separate the quizzes based on status
     // status 0 => Active
     // status 1 => Completed
 
-    const activeQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 0);
-    const completedQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 1);
+    // const activeQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 0);
+    // const completedQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 1);
 
-    // console.log(activeQuizzes);
-    // console.log(completedQuizzes);
+    // if quiz.attemptStartedAt is within 30 minutes, then quiz is active
+    // else quiz is completed
+
+    const activeQuizzes = quizzes?.filter((quiz: Quiz) => {
+        // if null, then quiz is active
+        if (!quiz.attemptStartedAt) return true;
+        console.log(quiz.attemptStartedAt);
+        const currentTime = new Date().getTime();
+        const quizTime = new Date(quiz.attemptStartedAt).getTime();
+        const difference = currentTime - quizTime;
+        return difference <= 1800000;
+    });
+
+    const completedQuizzes = quizzes?.filter(
+        (quiz: Quiz) => !activeQuizzes?.find((activeQuiz: { id: number; }) => activeQuiz.id === quiz.id)
+    );
+
+    console.log(activeQuizzes);
+    console.log(completedQuizzes);
 
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const [fillColors, setFillColors] = useState(Array(5).fill('#B1B1B1')); // Initial color green
@@ -159,11 +207,13 @@ export default function SubjectQuiz() {
                                         />
                                     </svg>
 
-                                    <Link to={`${location.pathname}/attempt/${quiz.id}`}>
-                                        <Button className="flex items-center gap-2 rounded-lg border-1 hover:bg-white hover:text-dark-green hover:border-dark-green">
-                                            Answer Questions
-                                        </Button>
-                                    </Link>
+                                    {/* <Link to={`${location.pathname}/attempt/${quiz.id}`}> */}
+                                    <Button
+                                        onClick={() => handleStartAttempt(quiz)}
+                                        className="flex items-center gap-2 rounded-lg border-1 hover:bg-white hover:text-dark-green hover:border-dark-green">
+                                        Answer Questions
+                                    </Button>
+                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>
