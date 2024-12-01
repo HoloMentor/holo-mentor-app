@@ -1,8 +1,13 @@
+import Button from '@/components/button';
 import ForumQuestionReply from '@/components/forum/reply';
+import ForumQuestionReplyForm from '@/components/forum/reply-form';
 import ForumQuestionVote from '@/components/forum/vote';
 import Heading from '@/components/headings/main';
+import useErrorHandler from '@/hooks/error-handler';
+import forumServices from '@/redux/services/forum.services';
+import { IRootState } from '@/redux';
 import {
-    Button,
+    Button as NextUIButton,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -10,32 +15,77 @@ import {
     DropdownTrigger,
     User
 } from '@nextui-org/react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import Reader from '@/components/editor/reader';
+import { useSelector, useDispatch } from 'react-redux';
+import { modelNames } from '@/models';
+import { modelActions } from '@/redux/reducers/model.reducer';
+
 
 export default function ForumPage() {
+    const [onReplyAll, setOnReplyAll] = useState(null);
+    const [onReplyQuestion, setOnReplyQuestion] = useState(null);
     const params = useParams();
+    const { user } = useSelector((state: IRootState) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    console.log('Here are the parameters\n',params);
+    const forumId = params.forumId;
+
+    const [getSingleQuestion, { data, error, isError }] =
+        forumServices.useGetSingleQuestionMutation();
+
+    useEffect(() => {
+        const fetchQuestion = async () => {
+            if (!forumId) return;
+
+            try {
+                const result = await getSingleQuestion(forumId).unwrap();
+                console.log('Question data:', result);
+            } catch (err) {
+                console.error('Error fetching question:', err);
+            }
+        };
+
+        fetchQuestion();
+    }, [forumId, getSingleQuestion]);
+
+    useErrorHandler(isError, error);
+
+    console.log(data);
+    const question = data?.data?.question;
+    const mcqAnswers = data?.data?.mcqAnswer;
+    const userID = data?.data?.userId
+    const currentUserId = user?.userId
+    const questionID = Number(forumId)
+    console.log('Question ID:', questionID);    
+
+    
 
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
-            <div className="flex gap-5 bg-white rounded-md p-6">
+            <div className="flex gap-5 p-6 bg-white rounded-md">
                 <div>
                     <ForumQuestionVote id={params.forumId} />
                 </div>
 
-                <div className="flex flex-col gap-5 w-full">
+                <div className="flex flex-col w-full gap-5">
                     <div className="flex justify-between w-full">
                         <User
-                            name="Jane Doe"
-                            description="Aug 19, 2024"
+                            name={user?.firstName + ' ' + user?.lastName}   
                             avatarProps={{
                                 src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
                             }}
                         />
 
-                        <Dropdown>
+                            {userID == currentUserId && <>
+                                <Dropdown>
                             <DropdownTrigger>
-                                <Button isIconOnly className="rounded-full !size-7 !min-w-7">
+                                <NextUIButton isIconOnly className="rounded-full !size-7 !min-w-7">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
@@ -47,11 +97,17 @@ export default function ForumPage() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </Button>
+                                </NextUIButton>
                             </DropdownTrigger>
                             <DropdownMenu>
                                 <DropdownSection showDivider>
+                        
                                     <DropdownItem
+                                    
+                                    onClick={() => mcqAnswers
+                                            ?navigate(`${location.pathname}/update/mcq`)
+                                            :navigate(`${location.pathname}/update/normal`)    
+                                            }
                                         endContent={
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -71,29 +127,17 @@ export default function ForumPage() {
                                         key="edit">
                                         Edit
                                     </DropdownItem>
-                                    <DropdownItem
-                                        endContent={
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth={1.5}
-                                                stroke="currentColor"
-                                                className="size-4">
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
-                                                />
-                                            </svg>
-                                        }
-                                        className="text-black"
-                                        key="share">
-                                        Share
-                                    </DropdownItem>
                                 </DropdownSection>
                                 <DropdownSection>
                                     <DropdownItem
+                                        onClick={() =>
+                                            dispatch(
+                                                modelActions.show({
+                                                    name: modelNames.DELETE_QUESTION,
+                                                    props: { id : questionID }
+                                                })
+                                            )
+                                        }
                                         endContent={
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -115,25 +159,39 @@ export default function ForumPage() {
                                     </DropdownItem>
                                 </DropdownSection>
                             </DropdownMenu>
-                        </Dropdown>
+                        </Dropdown></>}
+                        
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        <h1 className="text-2xl font-medium">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        </h1>
-
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim
-                            laboriosam vero error necessitatibus, ea fuga ducimus impedit. Nobis
-                            recusandae esse repudiandae ex ipsa perspiciatis nisi. Perspiciatis quas
-                            quam quisquam saepe!
-                        </p>
+                        <Reader value={question} />
+                        <ul className='space-y-2'>
+                            {mcqAnswers?.map((answer:{index:number; value:string},i:number) => (
+                                 <li key={i} className='p-2 pl-5 rounded-lg border-medium border-spacing-5'>{answer.value}</li>
+                            ))}
+                        </ul>
+                        
                     </div>
 
-                    <div className="flex flex-col gap-3 border border-light-gray rounded-md">
-                        <ForumQuestionReply />
+                    <div className="flex flex-col gap-3 border rounded-md border-light-gray">
+                        <ForumQuestionReply
+                            onReply={(id: number | string) => setOnReplyQuestion(id)}
+                        />
                         <ForumQuestionReply reply />
+                        {onReplyQuestion && (
+                            <ForumQuestionReplyForm
+                                reply
+                                onCancel={() => setOnReplyQuestion(null)}
+                            />
+                        )}
+
+                        {onReplyAll && (
+                            <ForumQuestionReplyForm onCancel={() => setOnReplyAll(null)} />
+                        )}
+                    </div>
+
+                    <div className="flex justify-end">
+                        <Button onClick={() => setOnReplyAll(1)}>Leave an Answer</Button>
                     </div>
                 </div>
             </div>

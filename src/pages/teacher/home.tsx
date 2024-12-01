@@ -4,9 +4,14 @@ import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
 import teacherServices from '@/redux/services/teacher.service';
 import { useSelector } from 'react-redux';
+import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
+import { useGetTeacherStaffCountQuery } from '@/redux/services/staff.service';
 
 function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
+
+    const userId = user?.userId;
+    const instituteId = user.instituteId;
 
     const {
         data: teacherStats,
@@ -23,24 +28,24 @@ function Home() {
     );
     useErrorHandler(isTeacherStatsError, teacherStatsError);
 
-    /* sample */
-    const bestContributors = [
-        {
-            name: 'Jill Volage',
-            avatar: '/images/student/avatar.png',
-            medal: '/images/student/gmedal.png'
-        },
-        {
-            name: 'Jhon Volage',
-            avatar: '/images/student/avatar.png',
-            medal: '/images/student/smedal.png'
-        },
-        {
-            name: 'Jane Break',
-            avatar: '/images/student/avatar.png',
-            medal: '/images/student/bmedal.png'
-        }
-    ];
+    const {
+        data: QuizStats,
+        isError: isQuizStatsError,
+        error: QuizStatsError,
+        isLoading: isQuizStatsLoading
+    } = useGetQuizCountQuery({ userId, instituteId });
+
+    useErrorHandler(isQuizStatsError, QuizStatsError);
+
+    //get staff count
+    const {
+        data: StaffStats,
+        isError: isStaffStatsError,
+        error: StaffStatsError,
+        isLoading: isStaffStatsLoading
+    } = useGetTeacherStaffCountQuery({ userId, instituteId });
+
+    useErrorHandler(isStaffStatsError, StaffStatsError);
 
     return (
         <div className="flex flex-col w-full bg-gray-100">
@@ -72,7 +77,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard isLoading={isTeacherStatsLoading} number={0} label="Staff">
+                <InfoCard isLoading={isStaffStatsLoading} number={StaffStats?.data} label="Staff">
                     <svg
                         width="51"
                         height="50"
@@ -92,7 +97,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard isLoading={isTeacherStatsLoading} number={500} label="MCQ">
+                <InfoCard isLoading={isQuizStatsLoading} number={QuizStats?.data} label="MCQ">
                     <svg
                         width="51"
                         height="51"

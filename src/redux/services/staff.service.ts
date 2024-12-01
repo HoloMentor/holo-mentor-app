@@ -31,6 +31,22 @@ const staffServices = createApi({
             }),
             providesTags: ['Staff']
         }),
+        getTeacherStaff: builder.query({
+            query: ({ userId,instituteId }) => ({
+                method: 'GET',
+                url: `/staff/teacher/${userId}/${instituteId}`,
+               
+            }),
+            providesTags: ['Staff', 'InstituteTeacherStaff']
+        }),
+        getTeacherStaffCount: builder.query({
+            query: ({ userId,instituteId }) => ({
+                method: 'GET',
+                url: `/staff/teacher/count/${userId}/${instituteId}`,
+               
+            }),
+            providesTags: ['Staff', 'InstituteTeacherStaff']
+        }),
         deleteStaff: builder.mutation({
             query: (id) => ({
                 method: 'DELETE',
@@ -47,5 +63,8 @@ export const {
     useCreateStaffMutation,
     useGetInstituteTeacherStaffQuery,
     useGetStaffQuery,
+    useGetTeacherStaffQuery,
+    useGetTeacherStaffCountQuery,
     useDeleteStaffMutation
+
 } = staffServices;

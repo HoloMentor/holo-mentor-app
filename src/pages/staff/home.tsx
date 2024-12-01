@@ -1,25 +1,59 @@
 import InfoCard from '@/components/cards/info';
-import DoughNutChart from '@/components/charts/doughnut';
+import DoughnuChart from '@/components/charts/doughnut';
+import useErrorHandler from '@/hooks/error-handler';
+import { IRootState } from '@/redux';
+import teacherServices from '@/redux/services/teacher.service';
+import { useSelector } from 'react-redux';
+import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
+import { useGetTeacherStaffCountQuery } from '@/redux/services/staff.service';
+import { useGetTeacherStaffQuery } from '@/redux/services/staff.service';
 
 function Home() {
-    /* sample */
-    const bestContributors = [
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const instituteId = user.instituteId;
+    const staffId = user?.userId?.toString();
+
+    const { data: staffData } = useGetTeacherStaffQuery({ userId: staffId, instituteId });
+    const userId = staffData?.data?.staffTeacher?.[0]?.userId.toString();
+
+    console.log('user- ', user);
+
+    console.log('Teacher Data - ', staffData);
+
+    const {
+        data: teacherStats,
+        isError: isTeacherStatsError,
+        error: teacherStatsError,
+        isLoading: isTeacherStatsLoading
+    } = teacherServices.useGetTeacherStatsQuery(
         {
-            name: 'Jill Volage',
-            avatar: '/images/student/avatar.png',
-            medal: '/images/student/gmedal.png'
+            id: user.userInstituteId
         },
         {
-            name: 'Jhon Volage',
-            avatar: '/images/student/avatar.png',
-            medal: '/images/student/smedal.png'
-        },
-        {
-            name: 'Jane Break',
-            avatar: '/images/student/avatar.png',
-            medal: '/images/student/bmedal.png'
+            skip: !user.userInstituteId
         }
-    ];
+    );
+    useErrorHandler(isTeacherStatsError, teacherStatsError);
+
+    const {
+        data: QuizStats,
+        isError: isQuizStatsError,
+        error: QuizStatsError,
+        isLoading: isQuizStatsLoading
+    } = useGetQuizCountQuery({ userId, instituteId });
+
+    useErrorHandler(isQuizStatsError, QuizStatsError);
+
+    //get staff count
+    const {
+        data: StaffStats,
+        isError: isStaffStatsError,
+        error: StaffStatsError,
+        isLoading: isStaffStatsLoading
+    } = useGetTeacherStaffCountQuery({ userId, instituteId });
+
+    useErrorHandler(isStaffStatsError, StaffStatsError);
 
     return (
         <div className="flex flex-col w-full bg-gray-100">
@@ -30,8 +64,11 @@ function Home() {
                     className="flex flex-auto w-full h-full"
                 />
             </div>
-            <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-4 h-full w-full">
-                <InfoCard number={560} label="Students">
+            <div className="grid w-full h-full grid-cols-4 gap-5 px-5 py-4 max-xl:grid-cols-2 max-sm:grid-cols-1">
+                <InfoCard
+                    isLoading={isTeacherStatsLoading}
+                    number={teacherStats?.data?.studentCount}
+                    label="Students">
                     <svg
                         width="51"
                         height="51"
@@ -48,7 +85,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard number={50} label="Staff">
+                <InfoCard isLoading={isStaffStatsLoading} number={StaffStats?.data} label="Staff">
                     <svg
                         width="51"
                         height="50"
@@ -68,7 +105,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard number={500} label="MCQ">
+                <InfoCard isLoading={isQuizStatsLoading} number={QuizStats?.data} label="MCQ">
                     <svg
                         width="51"
                         height="51"
@@ -93,7 +130,10 @@ function Home() {
                         </defs>
                     </svg>
                 </InfoCard>
-                <InfoCard number={5} label="Classes">
+                <InfoCard
+                    isLoading={isTeacherStatsLoading}
+                    number={teacherStats?.data?.classCount}
+                    label="Classes">
                     <svg
                         width="51"
                         height="51"
@@ -123,8 +163,8 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
-                <section className="w-full bg-white rounded-lg p-4 h-fit col-span-3">
-                    <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
+                <section className="w-full col-span-3 p-4 bg-white rounded-lg h-fit">
+                    <h1 className="pl-4 text-2xl font-semibold text-dark-green mb-7">
                         Notification
                     </h1>
 
@@ -148,7 +188,7 @@ function Home() {
                                                 Issued By
                                             </p>
                                         </div>
-                                        <p className="">
+                                        <p className="text-medium">
                                             Lorem ipsum dolor, sit amet consectetur adipisicing
                                             elit. Praesentium aliquam dolore velit! Quae laborum a
                                             numquam? Dolor esse sint deleniti quisquam culpa
@@ -162,14 +202,14 @@ function Home() {
                     </div>
                 </section>
 
-                <section className="w-full bg-white rounded-s-lg p-2 h-full col-span-2 max-xl:col-span-3">
-                    <section className="w-full bg-white rounded-s-lg p-2 h-fit">
-                        <div className="mt-5 flex flex-col gap-8">
-                            <h1 className="text-3xl font-bold leading-7 text-dark-green">
+                <section className="w-full h-full col-span-2 p-2 bg-white rounded-s-lg max-xl:col-span-3">
+                    <section className="w-full p-2 bg-white rounded-s-lg h-fit">
+                        <div className="flex flex-col gap-8 mt-5">
+                            {/* <h1 className="text-2xl font-bold leading-7 text-dark-green">
                                 Top Performance
-                            </h1>
-                            <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
-                                <h1 className="justify-center mb-2 ml-2 text-2xl font-semibold text-dark-green">
+                            </h1> */}
+                            {/* <div className="flex flex-col gap-4 p-4 border rounded-md border-light-border">
+                                <h1 className="justify-center mb-2 ml-2 text-xl font-semibold text-dark-green">
                                     Best Contributor
                                 </h1>
                                 <div className="flex flex-col gap-5">
@@ -185,7 +225,7 @@ function Home() {
                                                         src={_.avatar}
                                                         alt="Avatar"
                                                     />
-                                                    <p className="text-xl font-semibold text-black">
+                                                    <p className="font-semibold text-black text-medium">
                                                         {_.name}
                                                     </p>
                                                 </div>
@@ -194,12 +234,12 @@ function Home() {
                                         );
                                     })}
                                 </div>
-                            </div>
-                            <h1 className="text-3xl font-bold leading-7 text-dark-green ">
+                            </div> */}
+                            <h1 className="text-2xl font-bold leading-7 text-dark-green ">
                                 Students
                             </h1>
-                            <div className="felx w-full items-center justify-center">
-                                <DoughNutChart />
+                            <div className="items-center justify-center w-full felx">
+                                <DoughnuChart />
                             </div>
                         </div>
                     </section>
