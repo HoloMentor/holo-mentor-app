@@ -19,6 +19,7 @@ import studentServices from './services/student.service';
 import studyPlanTaskServices from './services/study-plan/tasks.service';
 import forumServices from './services/forum.services';
 import quizServices from './services/quiz.service';
+import announcementServices from './services/announcement.service';
 import questionServices from './services/question.services';
 import voteServices from './services/vote.services';
 
@@ -43,6 +44,7 @@ const store = configureStore({
         [studentServices.reducerPath]: studentServices.reducer,
         [studyPlanTaskServices.reducerPath]: studyPlanTaskServices.reducer,
         [quizServices.reducerPath]: quizServices.reducer,
+        [announcementServices.reducerPath]: announcementServices.reducer
         [questionServices.reducerPath]: questionServices.reducer,
         [voteServices.reducerPath]: voteServices.reducer
     }),
@@ -64,6 +66,7 @@ const store = configureStore({
             .concat(studyPlanTaskServices.middleware)
             .concat(forumServices.middleware)
             .concat(quizServices.middleware)
+            .concat(announcementServices.middleware)
             .concat(questionServices.middleware)
             .concat(voteServices.middleware)
 });

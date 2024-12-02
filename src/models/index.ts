@@ -33,15 +33,15 @@ const DeleteSubTopic = loadable(() => import('./containers/teacher/sub-topic/del
 const DeleteUser = loadable(() => import('./containers/user/delete.tsx'));
 const SuspendUser = loadable(() => import('./containers/user/suspend.tsx'));
 const AddStudyPlanTask = loadable(() => import('./containers/teacher/study-plan/task/add.tsx'));
-const DeleteStudyPlanTask = loadable(
-    () => import('./containers/teacher/study-plan/task/delete.tsx')
-);
+const DeleteStudyPlanTask = loadable(() => import('./containers/teacher/study-plan/task/delete.tsx'));
 const DeleteStudyPlan = loadable(() => import('./containers/teacher/study-plan/delete.tsx'));
 const EditStudyPlanTask = loadable(() => import('./containers/teacher/study-plan/task/edit.tsx'));
 const EditStudyPlan = loadable(() => import('./containers/teacher/study-plan/edit.tsx'));
 const AddQuiz = loadable(() => import('./containers/teacher/quiz/add.tsx'));
 const EditQuiz = loadable(() => import('./containers/teacher/quiz/edit.tsx'));
 const DeleteQuestion = loadable(() => import('./containers/forum/delete-question.tsx'));
+const AddAnnouncement = loadable(() => import('./containers/announcement/add.tsx'));
+
 
 export const modelContainers: ModelContainers = {
     PROFILE_USER: {
@@ -186,6 +186,9 @@ export const modelContainers: ModelContainers = {
     },
     DELETE_QUESTION: {
         model: DeleteQuestion
+    },
+    ADD_ANNOUNCEMENT: {
+        model: AddAnnouncement
     }
 };
 
@@ -232,6 +235,7 @@ export const modelNames = {
     EDIT_STUDY_PLAN: 'EDIT_STUDY_PLAN',
     ADD_QUIZ: 'ADD_QUIZ',
     EDIT_QUIZ: 'EDIT_QUIZ',
-    DELETE_QUESTION: 'DELETE_QUESTION'
+    DELETE_QUESTION: 'DELETE_QUESTION',
+    ADD_ANNOUNCEMENT: 'ADD_ANNOUNCEMENT'
 
 };
