@@ -16,6 +16,7 @@ const SubjectForums = loadable(() => import('@/pages/student/subjects/forum'));
 const SubjectForum = loadable(() => import('@/pages/student/subjects/forum/question'));
 const SubjectForumMCQ = loadable(() => import('@/pages/student/subjects/forum/mcq'));
 const SubjectForumEssay = loadable(() => import('@/pages/student/subjects/forum/essay'));
+const StudyPlanView = loadable(() => import('@/pages/student/study-plan/view'));
 
 export default function StudentRoutes() {
     return (
@@ -27,6 +28,7 @@ export default function StudentRoutes() {
                     <Route path=":subjectId" element={<Outlet />}>
                         <Route path="" element={<Subject />} />
                         <Route path="mentor" element={<SubjectMentor />} />
+                        <Route path="mentor/view/:studyPlanId" element={<StudyPlanView />}></Route>
                         <Route path="forum" element={<SubjectForums />} />
                         <Route path="forum/mcq" element={<SubjectForumMCQ />} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
