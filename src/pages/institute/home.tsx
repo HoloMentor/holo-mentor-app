@@ -1,6 +1,17 @@
 import InfoCard from '@/components/cards/info';
 import { Chart, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import Button from '@/components/button.tsx';
+import { modelNames } from '@/models';
+import { modelActions } from '@/redux/reducers/model.reducer.ts';
+import { useDispatch } from 'react-redux';
+import announcementServices from '@/redux/services/announcement.service';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
+import teacherServices from '@/redux/services/teacher.service';
+import classServices from '@/redux/services/class/class.service';
+import useErrorHandler from '@/hooks/error-handler.tsx';
+
 
 Chart.register(ArcElement, Tooltip, Legend, Title);
 Chart.defaults.plugins.tooltip.backgroundColor = 'rgb(120, 120, 120)';
@@ -20,6 +31,57 @@ const data = {
 };
 
 function Home() {
+    const dispatch = useDispatch();
+    const {user} = useSelector((state: IRootState) => state.user);
+
+
+    const announcements = announcementServices.useGetQuery(
+        {
+            id: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const {
+        data: instituteTeachers,
+        isError: isTeacherError,
+        error: teacherError
+    } = teacherServices.useGetInstituteTeachersQuery(
+        {
+            instituteId: user.instituteId,
+            search: searchParams.get('search') || '',
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+    useErrorHandler(isTeacherError, teacherError);
+
+    const teacherCount = instituteTeachers?.data?.data?.length || 0;
+
+    const {
+        data: instituteClasses,
+        isError: isClassesError,
+        error: classesError
+    } = classServices.useGetInstituteClassesQuery(
+        {
+            instituteId: user.instituteId,
+            search: searchParams.get('search') || '',
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+    useErrorHandler(isClassesError, classesError);
+    const classCount = instituteClasses?.data?.data?.length || 0;
+
     return (
         <div className="flex flex-col w-full bg-gray-100">
             <div className="flex flex-col items-center w-full">
@@ -29,7 +91,7 @@ function Home() {
                     className="flex flex-auto w-full h-full"
                 />
                 <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-4 h-full w-full">
-                    <InfoCard number={10} label="Teachers">
+                    <InfoCard number={teacherCount} label="Teachers">
                         <svg
                             width="43"
                             height="49"
@@ -55,7 +117,7 @@ function Home() {
                         </svg>
                     </InfoCard>
 
-                    <InfoCard number={50} label="Classes">
+                    <InfoCard number={classCount} label="Classes">
                         <svg
                             width="63"
                             height="51"
@@ -123,46 +185,60 @@ function Home() {
             </div>
             <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
                 <section className="w-full bg-white rounded-lg p-4 h-fit col-span-3">
-                    <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
-                        Notification
+                    <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7 flex flex-row justify-between">
+                        <span>
+                            Announcement
+                        </span>
+                        <Button
+                            onClick={() =>
+                                dispatch(
+                                    modelActions.show({
+                                        name: modelNames.ADD_ANNOUNCEMENT
+                                    })
+                                )
+                            }
+                            endContent={
+                                <span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="size-6">
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </span>
+                            }>
+                            Add New
+                        </Button>
                     </h1>
 
                     <div className="flex flex-col gap-3">
-                        {Array.from({ length: 5 }).map((_, i) => {
-                            return (
-                                <div
-                                    key={`announcement-${i}`}
-                                    className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg">
-                                    <img
-                                        src="/images/User.svg"
-                                        alt="User"
-                                        className="rounded-full size-11"
-                                    />
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex flex-col justify-start">
-                                            <h1 className="text-lg font-semibold text-black">
-                                                Main Topic
-                                            </h1>
-                                            <p className="text-base font-medium text-neutral-500 ">
-                                                Issued By
-                                            </p>
-                                        </div>
-                                        <p className="">
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                                            elit. Praesentium aliquam dolore velit! Quae laborum a
-                                            numquam? Dolor esse sint deleniti quisquam culpa
-                                            voluptatem? Obcaecati ea iste quia blanditiis porro
-                                            velit?
-                                        </p>
+                        {announcements.data?.data.map((announcement: { title: string; announcement: string }) => (
+                            <div
+                                className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg"
+                            >
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col justify-start">
+                                        <h1 className="text-lg font-semibold text-black">
+                                            {announcement.title}
+                                        </h1>
                                     </div>
+                                    <p className="text-base text-neutral-500">
+                                        {announcement.announcement}
+                                    </p>
                                 </div>
-                            );
-                        })}
+                            </div>
+                        ))}
                     </div>
+
                 </section>
 
                 <section className="w-full bg-white rounded-s-lg p-2 col-span-2 max-xl:col-span-3 h-fit">
-                    <h1 className="ml-5 text-lg font-semibold text-black">Students For Teacher </h1>
+                    <h1 className="ml-5 text-lg font-semibold text-black">Students For Teacher</h1>
                     <div className="w-full flex justify-center">
                         <Doughnut data={data} />
                     </div>
