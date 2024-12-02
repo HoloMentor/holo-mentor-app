@@ -45,8 +45,14 @@ const studyPlanTaskServices = createApi({
                 body: materials
             }),
             invalidatesTags: ['StudyPlanTasks']
-        }), 
-        
+        }),
+        getSubmittedMaterials: builder.query({
+            query: ({ userId, classId, studyPlanId, taskId }: { userId: string; classId: string; studyPlanId: string; taskId: string }) => ({
+                method: 'GET',
+                url: `students/study-plans/task/materials/${userId}/${classId}/${studyPlanId}/${taskId}`
+            })
+        }),
+
     })
 });
 
