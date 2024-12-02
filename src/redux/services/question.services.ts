@@ -14,6 +14,27 @@ const questionServices = createApi({
             }),
             invalidatesTags: ['Questions']
         }),
+        getAllQuestions: builder.query({
+            query: () => ({
+                method: 'GET',
+                url: `/question/view`
+            }),
+            providesTags: ['Questions']
+        }),
+        deActivateeQuestion: builder.mutation({
+            query: ({ id }) => ({
+                method: 'PATCH',
+                url: `/question/deactivate/${id}`
+            }),
+            invalidatesTags: ['Questions']
+        }),
+        activateeQuestion: builder.mutation({
+            query: ({ id }) => ({
+                method: 'PATCH',
+                url: `/question/activate/${id}`
+            }),
+            invalidatesTags: ['Questions']
+        }),
     })
 });
 export default questionServices;

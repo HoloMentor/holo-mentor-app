@@ -3,7 +3,7 @@ import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { IRootState } from '@/redux';
 import quizServices from '@/redux/services/quiz.service';
@@ -21,6 +21,7 @@ const filterOptions = [
 ];
 
 interface Quiz {
+    attemptStartedAt: string | number | Date;
     id: number;
     quizName: string;
     classId: number;
@@ -32,6 +33,9 @@ interface Quiz {
 
 export default function SubjectQuiz() {
     const { user } = useSelector((state: IRootState) => state.user);
+
+    const navigate = useNavigate();
+    const [startAttempt] = quizServices.useStartQuizAttemptMutation();
 
     const location = useLocation();
     // const params = location.search;
@@ -54,18 +58,57 @@ export default function SubjectQuiz() {
         }
     );
     useErrorHandler(isQuizzesError, quizzesError);
-    console.log(user.userId);
-    console.log(quizzes);
+    // console.log(user.userId);
+    // console.log(quizzes);
+
+    const handleStartAttempt = async (quiz: Quiz) => {
+        try {
+            const response = await startAttempt({
+                quizId: quiz.id,
+                userId: user.userId
+            }).unwrap();
+
+            if (response) {
+                const quizTime = 30 * 60 * 1000; // 30 minutes
+                let navigateTo = `${location.pathname}/attempt/${quiz.id}`;
+                // if attemptstated time is later than 30 minutes, then navigate to quiz review
+                if (new Date().getTime() - new Date(response.data).getTime() > quizTime)
+                    navigateTo = `${location.pathname}/${quiz.id}`;
+
+                navigate(navigateTo, {
+                    state: {
+                        mcqQuestionIds: quiz.mcqQuestionIds,
+                        quizId: quiz.id,
+                        question_index: 0,
+                        quizName: quiz.quizName,
+                        attemptStartedAt: new Date(response.data)
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Failed to start quiz attempt:', error);
+        }
+    };
 
     // separate the quizzes based on status
     // status 0 => Active
     // status 1 => Completed
+    // if quiz.attemptStartedAt is within 30 minutes, then quiz is active
+    // else quiz is completed
 
-    const activeQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 0);
-    const completedQuizzes = quizzes?.filter((quiz: Quiz) => quiz.status === 1);
+    const activeQuizzes = quizzes?.filter((quiz: Quiz) => {
+        // if null, then quiz is active
+        if (!quiz.attemptStartedAt) return true;
+        const currentTime = new Date().getTime();
+        const quizTime = new Date(quiz.attemptStartedAt).getTime();
+        const difference = currentTime - quizTime;
+        return difference <= 1800000;
+    });
 
-    // console.log(activeQuizzes);
-    // console.log(completedQuizzes);
+    const completedQuizzes = quizzes?.filter(
+        (quiz: Quiz) =>
+            !activeQuizzes?.find((activeQuiz: { id: number }) => activeQuiz.id === quiz.id)
+    );
 
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const [fillColors, setFillColors] = useState(Array(5).fill('#B1B1B1')); // Initial color green
@@ -159,11 +202,13 @@ export default function SubjectQuiz() {
                                         />
                                     </svg>
 
-                                    <Link to={`${location.pathname}/attempt/${quiz.id}`}>
-                                        <Button className="flex items-center gap-2 rounded-lg border-1 hover:bg-white hover:text-dark-green hover:border-dark-green">
-                                            Answer Questions
-                                        </Button>
-                                    </Link>
+                                    {/* <Link to={`${location.pathname}/attempt/${quiz.id}`}> */}
+                                    <Button
+                                        onClick={() => handleStartAttempt(quiz)}
+                                        className="flex items-center gap-2 rounded-lg border-1 hover:bg-white hover:text-dark-green hover:border-dark-green">
+                                        Answer Questions
+                                    </Button>
+                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -206,11 +251,13 @@ export default function SubjectQuiz() {
                                         />
                                     </svg>
 
-                                    <Link to={`${location.pathname}/${quiz.id}`}>
-                                        <Button className="flex items-center gap-2 rounded-lg bg-white text-dark-green border-dark-green border-1 hover:bg-dark-green hover:text-white hover:border-dark-green">
-                                            View Answers
-                                        </Button>
-                                    </Link>
+                                    {/* <Link to={`${location.pathname}/${quiz.id}`}> */}
+                                    <Button
+                                        onClick={() => handleStartAttempt(quiz)}
+                                        className="flex items-center gap-2 rounded-lg bg-white text-dark-green border-dark-green border-1 hover:bg-dark-green hover:text-white hover:border-dark-green">
+                                        View Answers
+                                    </Button>
+                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>

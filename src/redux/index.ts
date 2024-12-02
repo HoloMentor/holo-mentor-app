@@ -20,6 +20,7 @@ import studyPlanTaskServices from './services/study-plan/tasks.service';
 import forumServices from './services/forum.services';
 import quizServices from './services/quiz.service';
 import announcementServices from './services/announcement.service';
+import questionServices from './services/question.services';
 
 const store = configureStore({
     reducer: combineReducers({
@@ -43,6 +44,7 @@ const store = configureStore({
         [studyPlanTaskServices.reducerPath]: studyPlanTaskServices.reducer,
         [quizServices.reducerPath]: quizServices.reducer,
         [announcementServices.reducerPath]: announcementServices.reducer
+        [questionServices.reducerPath]: questionServices.reducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -63,6 +65,7 @@ const store = configureStore({
             .concat(forumServices.middleware)
             .concat(quizServices.middleware)
             .concat(announcementServices.middleware)
+            .concat(questionServices.middleware)
 });
 
 export default store;

@@ -1,14 +1,13 @@
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
-import Input from '@/components/input';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function SubjectQuiz() {
-   
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleNavigate = () =>  navigate(`${location.pathname}/add`)
+    const handleNavigate = () => navigate(`${location.pathname}/add`);
+    const handleQuizView = () => navigate(`${location.pathname}/view`);
 
     return (
         <div className="flex flex-col gap-3">
@@ -17,7 +16,9 @@ export default function SubjectQuiz() {
             <section className="flex items-center justify-end gap-5 pr-5">
                 <div className="flex flex-row justify-end gap-2">
                     <div className="flex gap-2">
-                        <Input placeholder="Search" className="bg-white" />
+                        <Button className="flex items-center gap-2" onClick={handleQuizView}>
+                            Quiz Bank
+                        </Button>
                     </div>
                     <Button
                         onClick={handleNavigate}
