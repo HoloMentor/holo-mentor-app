@@ -16,7 +16,7 @@ const quizServices = createApi({
         getQuizCount: builder.query({
             query: ({ userId,instituteId }) => ({
                 method: 'GET',
-                url: `quiz/count/${userId}/${instituteId}`,
+                url: `/quiz/count/${userId}/${instituteId}`,
                
             }),
             providesTags: ['Quizzes']

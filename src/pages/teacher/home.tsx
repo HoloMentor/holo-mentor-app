@@ -231,7 +231,7 @@ function Home() {
                                 Students
                             </h1>
                             <div className="items-center justify-center w-full felx">
-                                <DoughnuChart />
+                                <DoughnuChart id={userId} />
                             </div>
                         </div>
                     </section>

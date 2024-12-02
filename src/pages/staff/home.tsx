@@ -12,14 +12,12 @@ function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
 
     const instituteId = user.instituteId;
+    const teacherId = user.userId;
+
     const staffId = user?.userId?.toString();
 
     const { data: staffData } = useGetTeacherStaffQuery({ userId: staffId, instituteId });
-    const userId = staffData?.data?.staffTeacher?.[0]?.userId.toString();
-
-    console.log('user- ', user);
-
-    console.log('Teacher Data - ', staffData);
+    const userId = staffData?.data?.staffTeacher?.[0]?.userId;
 
     const {
         data: teacherStats,
@@ -239,7 +237,7 @@ function Home() {
                                 Students
                             </h1>
                             <div className="items-center justify-center w-full felx">
-                                <DoughnuChart />
+                                <DoughnuChart id={userId} />
                             </div>
                         </div>
                     </section>
