@@ -51,7 +51,7 @@ export default function ForumMcq() {
     const { classId } = useParams();
     const navigate = useNavigate();
 
-    console.log('I am the USer', user);
+    console.log('I am the USer', user?.userId);
 
     const {
         data: classTopics,

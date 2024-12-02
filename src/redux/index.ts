@@ -21,6 +21,7 @@ import forumServices from './services/forum.services';
 import quizServices from './services/quiz.service';
 import announcementServices from './services/announcement.service';
 import questionServices from './services/question.services';
+import voteServices from './services/vote.services';
 
 const store = configureStore({
     reducer: combineReducers({
@@ -44,7 +45,8 @@ const store = configureStore({
         [studyPlanTaskServices.reducerPath]: studyPlanTaskServices.reducer,
         [quizServices.reducerPath]: quizServices.reducer,
         [announcementServices.reducerPath]: announcementServices.reducer
-        [questionServices.reducerPath]: questionServices.reducer
+        [questionServices.reducerPath]: questionServices.reducer,
+        [voteServices.reducerPath]: voteServices.reducer
     }),
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -66,6 +68,7 @@ const store = configureStore({
             .concat(quizServices.middleware)
             .concat(announcementServices.middleware)
             .concat(questionServices.middleware)
+            .concat(voteServices.middleware)
 });
 
 export default store;
