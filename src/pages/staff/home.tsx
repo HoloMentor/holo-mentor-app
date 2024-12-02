@@ -12,7 +12,6 @@ function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
 
     const instituteId = user.instituteId;
-    const teacherId = user.userId;
 
     const staffId = user?.userId?.toString();
 
