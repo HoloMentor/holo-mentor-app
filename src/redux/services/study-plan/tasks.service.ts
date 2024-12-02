@@ -41,7 +41,7 @@ const studyPlanTaskServices = createApi({
         submitTask: builder.mutation({
             query: ({ userId, classId, studyPlanId, taskId, materials }) => ({
                 method: 'POST',
-                url: `students/study-plan/task/submit/${userId}/${classId}/${studyPlanId}/${taskId}`,
+                url: `students/study-plans/task/submit/${userId}/${classId}/${studyPlanId}/${taskId}`,
                 body: materials
             }),
             invalidatesTags: ['StudyPlanTasks']

@@ -8,7 +8,7 @@ import { notifyActions } from '@/redux/reducers/notify.reducer';
 import fileServices from '@/redux/services/file.service';
 import studyPlanTaskServices from '@/redux/services/study-plan/tasks.service';
 import { Accordion, AccordionItem, Button, Skeleton, Tooltip } from '@nextui-org/react';
-import { u } from 'framer-motion/client';
+// import { u } from 'framer-motion/client';
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
