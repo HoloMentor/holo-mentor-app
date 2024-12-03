@@ -5,10 +5,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Key, useEffect, useState } from 'react';
 import quizServices from '@/redux/services/quiz.service';
 import useErrorHandler from '@/hooks/error-handler';
-import { Skeleton } from '@nextui-org/react';
+import { Button, Skeleton } from '@nextui-org/react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/redux';
+import { notifyActions } from '@/redux/reducers/notify.reducer';
 
 type Props = {
     textColor: string;
@@ -38,6 +39,8 @@ type QuestionResponse = {
 };
 
 export default function QuizQuestion() {
+    const dispatch = useDispatch();
+    
     const quizTime = 30 * 60 * 1000;
 
     const location = useLocation();
@@ -70,6 +73,12 @@ export default function QuizQuestion() {
                 answer: answer
             }).unwrap();
             if (response) {
+                dispatch(
+                    notifyActions.open({
+                        type: 'success',
+                        message: 'Answer submitted successfully'
+                    })
+                );
                 // setSelectedAnswer(value);
             }
         } catch (error) {
@@ -159,6 +168,36 @@ export default function QuizQuestion() {
 
     const minutes = Math.floor(timeRemaining / 1000 / 60);
     const seconds = Math.floor((timeRemaining / 1000) % 60);
+
+    // handle end quiz attempt on click end quiz button
+    const [endQuizAttempt] = quizServices.useEndQuizAttemptMutation();
+    const handleEndQuizAttempt = async () => {
+        try {
+            const response = await endQuizAttempt({
+                quizId,
+                userId: user.userId
+            }).unwrap();
+            if (response) {
+                dispatch(
+                    notifyActions.open({
+                        type: 'success',
+                        message: 'Quiz attempt ended successfully'
+                    })
+                );
+                // navigate(`/subjects/${subjectId}/quiz`);
+                // dont navigate redirect to quiz page with refresh
+                window.location.href = `/subjects/${subjectId}/quiz`;
+            }
+        } catch (error) {
+            console.error('Failed to end quiz attempt:', error);
+            dispatch(
+                notifyActions.open({
+                    type: 'error',
+                    message: 'Failed to end quiz attempt'
+                })
+            );
+        }
+    };
 
     const renderQuestionContent = (question: QuestionResponse | undefined): JSX.Element | null => {
         if (!question?.data?.question) return null;
@@ -314,6 +353,14 @@ export default function QuizQuestion() {
                         onClick={handleNext}>
                         &gt;
                     </button>
+                </div>
+                
+                <div className="flex justify-center mt-4t">
+                    <Button
+                        className="px-4 py-2 rounded-xl bg-red-700 text-white hover:text-white"
+                        onClick={handleEndQuizAttempt}>
+                        End Quiz
+                    </Button>
                 </div>
             </Content>
         </div>

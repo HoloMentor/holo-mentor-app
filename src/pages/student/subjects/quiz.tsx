@@ -36,6 +36,7 @@ export default function SubjectQuiz() {
 
     const navigate = useNavigate();
     const [startAttempt] = quizServices.useStartQuizAttemptMutation();
+    const [reviewAttempt] = quizServices.useReviewQuizAttemptMutation();
 
     const location = useLocation();
     // const params = location.search;
@@ -64,9 +65,9 @@ export default function SubjectQuiz() {
     // use generateQuiz mutation to generate quiz for the subject
     const {
         data: generatedQuiz,
-        isError: isGeneratedQuizError,
-        error: generatedQuizError,
-        isLoading: isGeneratedQuizLoading
+        // isError: isGeneratedQuizError,
+        // error: generatedQuizError,
+        // isLoading: isGeneratedQuizLoading
     } = quizServices.useGenerateQuizQuery(
         {
             userId: user.userId,
@@ -76,8 +77,8 @@ export default function SubjectQuiz() {
             skip: !user.userId
         }
     );
-    useErrorHandler(isGeneratedQuizError, generatedQuizError);
-    console.log(generatedQuiz, 'generated Quiz');
+    // useErrorHandler(isGeneratedQuizError, generatedQuizError);
+    // console.log(generatedQuiz, 'generated Quiz');
 
     const handleStartAttempt = async (quiz: Quiz) => {
         try {
@@ -105,6 +106,30 @@ export default function SubjectQuiz() {
             }
         } catch (error) {
             console.error('Failed to start quiz attempt:', error);
+        }
+    };
+
+    // handle review attempt
+    const handleReviewAttempt = async (quiz: Quiz) => {
+        try {
+            const response = await reviewAttempt({
+                quizId: quiz.id,
+                userId: user.userId
+            }).unwrap();
+
+            if (response) {
+                navigate(`${location.pathname}/${quiz.id}`, {
+                    state: {
+                        mcqQuestionIds: quiz.mcqQuestionIds,
+                        quizId: quiz.id,
+                        question_index: 0,
+                        quizName: quiz.quizName,
+                        attemptStartedAt: new Date(response.data)
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Failed to review quiz attempt:', error);
         }
     };
 
@@ -271,7 +296,8 @@ export default function SubjectQuiz() {
 
                                     {/* <Link to={`${location.pathname}/${quiz.id}`}> */}
                                     <Button
-                                        onClick={() => handleStartAttempt(quiz)}
+                                        // onClick={() => handleStartAttempt(quiz)}
+                                        onClick={() => handleReviewAttempt(quiz)}
                                         className="flex items-center gap-2 rounded-lg bg-white text-dark-green border-dark-green border-1 hover:bg-dark-green hover:text-white hover:border-dark-green">
                                         View Answers
                                     </Button>

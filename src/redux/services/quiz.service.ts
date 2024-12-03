@@ -19,6 +19,12 @@ const quizServices = createApi({
                 method: 'POST'
             })
         }),
+        reviewQuizAttempt: builder.mutation({
+            query: ({ quizId, userId }) => ({
+                url: `/quiz/${quizId}/${userId}/review`,
+                method: 'POST'
+            })
+        }),
         getQuestion: builder.query({
             query: ({ questionId }) => ({
                 url: `/quiz/question/${questionId}`,
@@ -48,6 +54,12 @@ const quizServices = createApi({
         generateQuiz: builder.query({
             query: ({ classId, userId }) => ({
                 url: `/quiz/generate-quiz/${classId}/${userId}`,
+                method: 'GET'
+            })
+        }),
+        endQuizAttempt: builder.mutation({
+            query: ({ quizId, userId }) => ({
+                url: `/quiz/${quizId}/${userId}/end-attempt`,
                 method: 'GET'
             })
         }),
