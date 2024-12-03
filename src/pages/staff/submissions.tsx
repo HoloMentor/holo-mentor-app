@@ -5,11 +5,67 @@ import SubHeading from '@/components/headings/sub';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Button as CustomButton } from '@nextui-org/react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
+import { useParams } from 'react-router-dom';
+import studentServices from '@/redux/services/student.service';
+import useErrorHandler from '@/hooks/error-handler';
+import studyPlanServices from '@/redux/services/study-plan/study-plan.service';
+import { Spinner } from '@nextui-org/react';
 
-export default function submissions() {
+export default function Submissions() {
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
+
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const url = window.location.pathname;
+    const urlParts = url.split('/');
+
+    const classId = parseInt(urlParts[2]);
+    const studentId = parseInt(urlParts[4]);
+
+    const { user } = useSelector((state: IRootState) => state.user);
+    const { subjectId } = useParams<{ subjectId: string }>();
+
+    const {
+        data: studyPlans,
+        isError: isStudyPlansError,
+        error: studyPlansError,
+        isLoading: isStudyPlansLoading
+    } = studentServices.useGetStudyPlansQuery({
+        studentId: studentId,
+        classId: classId
+    });
+
+    useErrorHandler(isStudyPlansError, studyPlansError);
+
+    const studyPlanId = studyPlans?.data?.[0]?.id;
+
+    const {
+        data: submissions,
+        isError: isSubmissionsError,
+        error: submissionsError,
+        isLoading: isSubmissionsLoading
+    } = studyPlanServices.useGetSubmittedTasksQuery({
+        studentId: studentId,
+        studyPlaneId: studyPlanId
+    });
+
+    useErrorHandler(isSubmissionsError, submissionsError);
+
+    const noOfTasks = submissions?.data?.totalTasks;
+    const submissionsInfo = submissions?.data?.submissions;
+
+    if (isStudyPlansLoading || isSubmissionsLoading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -29,16 +85,22 @@ export default function submissions() {
                 <SubHeading>Study Plans</SubHeading>
 
                 <Accordion variant="splitted" selectionMode="multiple">
-                    {Array.from({ length: 3 }).map((_, i) => {
+                    {Array.from({ length: noOfTasks }).map((_, i) => {
+                        const noOfSubmissions = submissionsInfo[i]?.submissionData.length;
+                        const taskDescription = submissionsInfo[i]?.taskDescription;
+                        const taskDescriptionData = taskDescription[0]?.content[0]?.text;
+                        const taskTitle = submissionsInfo[i]?.taskTitle;
+                        const selectedTaskData = submissionsInfo[i]?.submissionData;
+
                         return (
                             <AccordionItem
-                                key={`teacher-${i}`}
+                                key={submissionsInfo[i]?.submissionId}
                                 aria-label={`Accordion ${i}`}
                                 title={
                                     <div className="flex justify-between">
-                                        <span className="text-2xl font-semibold">Task {i + 1}</span>
+                                        <span className="text-xl font-semibold">{taskTitle}</span>
                                         <span className="text-sm text-slate-600w">
-                                            2 PDFs submitted
+                                            {noOfSubmissions} PDFs submitted
                                         </span>
                                     </div>
                                 }
@@ -48,21 +110,25 @@ export default function submissions() {
                                 }}>
                                 <div className="flex flex-col items-center justify-center gap-5 min-h-52">
                                     <p className="flex flex-col items-center gap-1">
-                                        <span className="text-medium">
-                                            Complete 2021 , 2022 , 2023 AL Physics Past Paper Part
-                                            II Question 03 and upload.{' '}
-                                        </span>
+                                        <span className="text-medium">{taskDescriptionData}. </span>
                                     </p>
                                     <div className="flex items-center justify-center w-full gap-2 p-4 border-2 border-dashed">
-                                        {Array.from({ length: 2 }).map((_, j) => {
+                                        {Array.from({ length: noOfSubmissions }).map((_, j) => {
+                                            const docName = selectedTaskData[j]?.name;
+                                            const docUrl = selectedTaskData[j]?.url;
+
                                             return (
-                                                <a className="flex flex-col items-center gap-4 m-4 text-dark-gray">
+                                                <a
+                                                    key={j}
+                                                    href={docUrl}
+                                                    download={docName || 'document.pdf'}
+                                                    className="flex flex-col items-center gap-4 m-4 text-dark-gray">
                                                     <img
-                                                        src="/images/subjects/doc.svg"
+                                                        src={`/images/subjects/pdf.svg`}
                                                         alt="PDF Material"
                                                         className="size-20"
                                                     />
-                                                    <span className="block">Answer.pdf</span>
+                                                    <span className="block text-sm">{docName}</span>
                                                     <CustomButton
                                                         color="default"
                                                         variant="bordered">
@@ -72,13 +138,13 @@ export default function submissions() {
                                             );
                                         })}
                                     </div>
-                                    <textarea
+                                    {/* <textarea
                                         className="w-full mt-2 text-black rounded-md resize-none h-28 bg-slate-200 placeholder-top-left"
-                                        placeholder="Give a feedback"
+                                        placeholder="Give feedback"
                                     />
                                     <div className="flex justify-end w-full mt-2">
                                         <Button>Add feedback</Button>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </AccordionItem>
                         );

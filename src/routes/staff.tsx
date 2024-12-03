@@ -42,9 +42,11 @@ export default function TeacherRoutes() {
                         </Route>
                         <Route path="student" element={<Outlet />}>
                             <Route path="" element={<StudentList />}></Route>
-                            <Route path="details"></Route>
-                            <Route path="submissions" element={<Submissions />}></Route>
-                            <Route path="profile" element={<StudentProfile />}></Route>
+                            <Route path=":studentId" element={<Outlet />}>
+                                <Route path="details"></Route>
+                                <Route path="submissions" element={<Submissions />}></Route>
+                                <Route path="profile" element={<StudentProfile />}></Route>
+                            </Route>
                         </Route>
                     </Route>
                 </Route>
