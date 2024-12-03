@@ -1,14 +1,34 @@
+import useErrorHandler from '@/hooks/error-handler';
+import voteServices from '@/redux/services/vote.services';
+
 interface Props {
     id: string | number;
-    voteCount?:number
+    voteCount?: number;
+    userId: string | number;
 }
 
-export default function ForumQuestionVote({ id, voteCount = 0 }: Props) {
+export default function ForumQuestionVote({ id, voteCount = 0, userId }: Props) {
+    const [castVote, { isLoading, error }] = voteServices.useCastVoteMutation();
+    useErrorHandler(isLoading, error);
+    const handleVote = async (voteType: 'VOTE_UP' | 'VOTE_DOWN') => {
+        try {
+            await castVote({
+                id,
+                userId,
+                voteType
+            }).unwrap();
+            console.log(`Vote cast successfully: ${voteType}`);
+        } catch (err) {
+            console.error('Error casting vote:', err);
+        }
+    };
     return (
         <div className="flex items-center gap-2 min-h-36">
             <span className="font-semibold text-dark-gray">{voteCount}</span>
             <div className="flex flex-col gap-4">
-                <button className="p-1 transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200">
+                <button
+                    className="p-1 transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"
+                    onClick={() => handleVote('VOTE_UP')}>
                     <svg
                         width="29"
                         height="30"
@@ -29,7 +49,9 @@ export default function ForumQuestionVote({ id, voteCount = 0 }: Props) {
                         </g>
                     </svg>
                 </button>
-                <button className="p-1 transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200">
+                <button
+                    className="p-1 transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"
+                    onClick={() => handleVote('VOTE_DOWN')}>
                     <svg
                         width="29"
                         height="30"

@@ -36,7 +36,23 @@ const studyPlanTaskServices = createApi({
                 params: props
             }),
             providesTags: ['StudyPlanTasks']
-        })
+        }),
+        // useSubmitTaskMutation userId, classId, studyPlanId, taskId, materials
+        submitTask: builder.mutation({
+            query: ({ userId, classId, studyPlanId, taskId, materials }) => ({
+                method: 'POST',
+                url: `students/study-plans/task/submit/${userId}/${classId}/${studyPlanId}/${taskId}`,
+                body: materials
+            }),
+            invalidatesTags: ['StudyPlanTasks']
+        }),
+        getSubmittedMaterials: builder.query({
+            query: ({ userId, classId, studyPlanId, taskId }: { userId: string; classId: string; studyPlanId: string; taskId: string }) => ({
+                method: 'GET',
+                url: `students/study-plans/task/materials/${userId}/${classId}/${studyPlanId}/${taskId}`
+            })
+        }),
+
     })
 });
 
