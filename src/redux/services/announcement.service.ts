@@ -22,6 +22,14 @@ const announcementServices = createApi({
             }),
             providesTags: ['Announcement']
         }),
+
+        delete: builder.mutation({
+            query: ({ id }) => ({
+                method: 'DELETE',
+                url: `/announcement/delete/${id}`
+            }),
+            invalidatesTags: ['Announcement']
+        }),
     })
 });
 
