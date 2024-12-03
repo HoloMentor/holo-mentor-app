@@ -1,6 +1,10 @@
 import LineChart from '@/components/charts/line';
+import { IRootState } from '@/redux';
+import announcementServices from '@/redux/services/announcement.service';
+import { useSelector } from 'react-redux';
 
 function Home() {
+    const {user} = useSelector((state: IRootState) => state.user);
     /* sample */
     const bestContributors = [
         {
@@ -20,6 +24,15 @@ function Home() {
         }
     ];
 
+    const announcements = announcementServices.useGetQuery(
+        {
+            id: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
     return (
         <div className="flex flex-col w-full bg-gray-100">
             <div className="flex flex-col items-center w-full">
@@ -37,6 +50,25 @@ function Home() {
                     </h1>
 
                     <div className="flex flex-col gap-3">
+                        {announcements.data?.data.map((announcement: { title: string; announcement: string }) => (
+                            <div
+                                className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg"
+                            >
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col justify-start">
+                                        <h1 className="text-lg font-semibold text-black">
+                                            {announcement.title}
+                                        </h1>
+                                    </div>
+                                    <p className="text-base text-neutral-500">
+                                        {announcement.announcement}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex flex-col gap-3 hidden">
                         {Array.from({ length: 5 }).map((_, i) => {
                             return (
                                 <div
