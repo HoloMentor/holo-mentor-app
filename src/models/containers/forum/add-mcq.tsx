@@ -104,6 +104,7 @@ export default function ForumMcq() {
     useErrorHandler(isMcqCreateError, mcqCreateError);
 
     const onSubmit = async (values: FormikValues) => {
+        console.log('Submitting MCQ:', values);
         const result = await createMcq({
             userId: user.userId,
             email: user.email,
