@@ -14,6 +14,7 @@ export interface SubTopicProps {
     name: string;
     isDone: boolean;
     materials: TopicMaterials[];
+    hideOptions?: boolean;
 }
 
 export interface TopicMaterials {
@@ -44,7 +45,7 @@ const filterOptions = [
     }
 ];
 
-export default function SubTopic({ data }: { data: SubTopicProps }) {
+export default function SubTopic({ data, hideOptions = false }: { data: SubTopicProps, hideOptions?: boolean }) {
     const dispatch = useDispatch();
     const [filterState, setFilterState] = React.useState<SelectValue>('all');
     const materialData = useMemo(
@@ -81,22 +82,25 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
         }
     };
     console.log(data);
+    console.log(hideOptions);
     return (
         <div className="flex flex-col gap-5 p-3">
             <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                    <Checkbox
-                        isDisabled={isUpdating}
-                        isSelected={data.isDone}
-                        onValueChange={setIsDone}>
-                        <Tooltip
-                            color="primary"
-                            placement="top-start"
-                            showArrow
-                            content="Mark as done">
-                            <span className="font-semibold">{data.name}</span>
-                        </Tooltip>
-                    </Checkbox>
+                <div className={`flex items-center gap-2`}>
+                    <div className={hideOptions ? 'hidden' : ''}>
+                        <Checkbox
+                            className={hideOptions ? 'hidden' : ''}
+                            isDisabled={isUpdating}
+                            isSelected={data.isDone}
+                            onValueChange={setIsDone}>
+                            <Tooltip
+                                color="primary"
+                                placement="top-start"
+                                showArrow
+                                content="Mark as done">
+                                <span className="font-semibold">{data.name}</span>
+                            </Tooltip>
+                        </Checkbox>
                     <Tooltip
                         style={{
                             zIndex: '1'
@@ -172,6 +176,7 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
                             />
                         </svg>
                     </Tooltip>
+                    </div>
                 </div>
                 <div className="w-40">
                     <Select
@@ -184,24 +189,32 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
             </div>
 
             <div className="grid grid-cols-5 gap-4 gap-y-10 max-2xl:grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
-                {!materialData || materialData.length === 0 || materialData.every(m => !m.id && !m.url && !m.type) ? (
+                {!materialData ||
+                materialData.length === 0 ||
+                materialData.every((m) => !m.id && !m.url && !m.type) ? (
                     <p>No materials found.</p>
                 ) : (
                     materialData
-                        .filter(material => material.id !== null && material.url !== null && material.type !== null)
+                        .filter(
+                            (material) =>
+                                material.id !== null &&
+                                material.url !== null &&
+                                material.type !== null
+                        )
                         .map((material, j) => {
                             return (
                                 <div key={`material-${j}`} className="flex flex-col items-center">
                                     <span
                                         onClick={() =>
-                                            material.id && dispatch(
+                                            material.id &&
+                                            dispatch(
                                                 modelActions.show({
                                                     name: modelNames.DELETE_MATERIAL,
                                                     props: { id: material.id }
                                                 })
                                             )
                                         }
-                                        className="flex justify-end cursor-pointer max-w-24 w-full">
+                                        className={`flex justify-end cursor-pointer max-w-24 w-full ${hideOptions ? 'hidden' : ''}`}>
                                         <svg
                                             width="15"
                                             height="15"
@@ -209,7 +222,12 @@ export default function SubTopic({ data }: { data: SubTopicProps }) {
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_131_12585)">
-                                                <rect width="15" height="15" rx="7.5" fill="#FF0E00" />
+                                                <rect
+                                                    width="15"
+                                                    height="15"
+                                                    rx="7.5"
+                                                    fill="#FF0E00"
+                                                />
                                                 <path
                                                     d="M10.5524 6.76V8.53H4.19244V6.76H10.5524Z"
                                                     fill="black"
