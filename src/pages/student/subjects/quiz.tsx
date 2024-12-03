@@ -61,6 +61,24 @@ export default function SubjectQuiz() {
     // console.log(user.userId);
     // console.log(quizzes);
 
+    // use generateQuiz mutation to generate quiz for the subject
+    const {
+        data: generatedQuiz,
+        isError: isGeneratedQuizError,
+        error: generatedQuizError,
+        isLoading: isGeneratedQuizLoading
+    } = quizServices.useGenerateQuizQuery(
+        {
+            userId: user.userId,
+            classId: parseInt(subjectId)
+        },
+        {
+            skip: !user.userId
+        }
+    );
+    useErrorHandler(isGeneratedQuizError, generatedQuizError);
+    console.log(generatedQuiz, 'generated Quiz');
+
     const handleStartAttempt = async (quiz: Quiz) => {
         try {
             const response = await startAttempt({
