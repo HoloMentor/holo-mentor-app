@@ -65,7 +65,15 @@ const classServices = createApi({
                 url: `/institutes/classes/teacher/${teacherId}/institute/${instituteId}/grouped-by-subject`
             }),
             providesTags: ['Class']
-        })
+        }),
+
+        getClassStudentStats: builder.query({
+            query: ({ instituteId,teacherId }) => ({
+                method: 'GET',
+                url: `/classes/student/stats/${instituteId}/${teacherId}`
+            }),
+            providesTags: ['Class']
+        }),
     })
 });
 
