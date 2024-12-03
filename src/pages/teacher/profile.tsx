@@ -21,17 +21,6 @@ export default function Profile() {
     const params = location.search;
     const searchParams = new URLSearchParams(params.toString());
 
-    const Biology = [
-        { id: 1, type: 'Theory', year: 2021 },
-        { id: 2, type: 'Theory', year: 2022 },
-        { id: 3, type: 'Theory', year: 2023 },
-        { id: 5, type: 'Revision', year: 2024 }
-    ];
-    const Chemistry = [
-        { id: 1, type: 'Theory', year: 2023 },
-        { id: 2, type: 'Revision', year: 2024 }
-    ];
-
     const renderClass = ({ data }: CustomTableCellData) => {
         return (
             <div className="flex flex-col gap-1">

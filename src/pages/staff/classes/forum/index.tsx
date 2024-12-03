@@ -3,8 +3,16 @@ import Heading from '@/components/headings/main';
 import Input from '@/components/input';
 import Select, { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import {  useMemo, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import ForumQuestionVote from '@/components/forum/vote';
+import forumServices from '@/redux/services/forum.services';
+import useErrorHandler from '@/hooks/error-handler';
+import Reader from '@/components/editor/reader';
+import classTopicServices from '@/redux/services/class/topics.service';
+import {useSelector } from 'react-redux';
+import { IRootState } from '@/redux';
+
 
 const filterOptions = [
     {
@@ -16,12 +24,60 @@ const filterOptions = [
 export default function Forum() {
     const location = useLocation();
     const [filterValue, setFilterValue] = useState<SelectValue>('top');
+    const { classId } = useParams();
+    const { user } = useSelector((state: IRootState) => state.user);
+
+    const userName = user?.firstName + ' ' + user?.lastName;
+
+
+
+    const {
+        data: classTopics,
+        error: classTopicsError,
+        isError: isClassTopicsError
+    } = classTopicServices.useGetClassTopicsQuery(
+        {
+            classId: classId,
+            materials: false
+        },
+        {
+            skip: !classId
+        }
+    );
+    useErrorHandler(isClassTopicsError, classTopicsError);
+
+    const classTopicsData = useMemo(() => {
+        return (
+            classTopics?.data?.map((topic: { id: number | string; name: string }) => ({
+                value: topic.id,
+                label: topic.name
+            })) || []
+        );
+    }, [classTopics]);
+    console.log(classTopicsData);
+
+    const {
+        data: forumQuestions,
+        error: forumQuestionsError,
+        isError: isForumQuestionsError
+    } = forumServices.useGetQuestionsQuery(
+        {
+            classId: classId,
+            materials: false
+        },
+        {
+            skip: !classId
+        }
+    );
+    useErrorHandler(isForumQuestionsError, forumQuestionsError);
+
+    console.log('forum questions',forumQuestions);
 
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
 
-            <section className="flex justify-between items-center gap-5 pr-5">
+            <section className="flex items-center justify-between gap-5 pr-5">
                 <div className="w-full max-w-36">
                     <Select options={filterOptions} value={filterValue} onChange={setFilterValue} />
                 </div>
@@ -69,82 +125,39 @@ export default function Forum() {
             </section>
 
             <section className="flex flex-col gap-5 pr-5">
-                {Array.from({ length: 5 }).map((_, i) => {
+                {forumQuestions?.data?.map((_: { id: number; question: any; subTopic:number; voteCount:number}, i: number) => {
+
+                    const topicNumber = Number(_.subTopic);
+                    const topic = classTopicsData.find((topic: { value: number; }) => topic.value === topicNumber);
+                    console.log(typeof _.subTopic);
+                    console.log(topic);
+                   
                     return (
-                        <div key={i} className="flex gap-3 bg-white rounded-md p-6">
-                            <div className="flex gap-2 items-center min-h-36">
-                                <span className="font-semibold text-dark-gray">20</span>
-                                <div className="flex flex-col gap-4">
-                                    <button className="rounded-full p-1 transition-all duration-300 hover:bg-slate-100 active:bg-slate-200">
-                                        <svg
-                                            width="29"
-                                            height="30"
-                                            viewBox="0 0 29 30"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g id="Iconly/Light/Arrow - Left 2">
-                                                <g id="Arrow - Left 2">
-                                                    <path
-                                                        id="Stroke 1"
-                                                        d="M6.04427 19.1178L14.5026 10.6595L22.9609 19.1178"
-                                                        stroke="#6A6A6A"
-                                                        strokeWidth="3"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </button>
-                                    <button className="rounded-full p-1 transition-all duration-300 hover:bg-slate-100 active:bg-slate-200">
-                                        <svg
-                                            width="29"
-                                            height="30"
-                                            viewBox="0 0 29 30"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g id="Iconly/Light/Arrow - Left 3">
-                                                <g id="Arrow - Left 2">
-                                                    <path
-                                                        id="Stroke 1"
-                                                        d="M22.9557 10.6595L14.4974 19.1179L6.03906 10.6595"
-                                                        stroke="#6A6A6A"
-                                                        strokeWidth="3"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-6">
-                                <h3 className="font-semibold text-lg">Subject title</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Deserunt illum qui ad vitae ducimus, molestiae quia temporibus
-                                    ullam molestias. Modi, dolor fugit. Facere tempora praesentium
-                                    dignissimos veritatis, suscipit repudiandae numquam?
-                                </p>
-                            </div>
+                        <div key={_.id} className="flex gap-3 p-6 bg-white rounded-md">
+                            <ForumQuestionVote id={_.id} voteCount={_.voteCount} />
+                            <Link
+                                to={`${location.pathname}/${_.id}`}
+                                className="flex flex-col w-full gap-6 text-black hover:text-black">
+                                <h3 className="text-lg font-semibold">{topic ? topic.label : 'Unknown Topic'}</h3>
+                                <Reader value={_.question} />
+                            </Link>
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col justify-between h-full">
                                     <div>
-                                        <div className="flex justify-end items-center gap-2 w-36">
+                                        <div className="flex items-center justify-end gap-2 w-36">
                                             <img
-                                                className="size-7 rounded-full"
+                                                className="rounded-full size-7"
                                                 src="/images/student/avatar.png"
                                                 alt="Avatar"
                                             />
-                                            <span className="truncate">Albert Flores</span>
+                                            <span className="text-xs truncate">{userName}</span>
                                         </div>
-                                        <span className="block font-regular text-sm text-dark-gray text-right w-full">
-                                            2 days ago
-                                        </span>
+                                        
                                     </div>
 
-                                    <div className="flex gap-2 justify-end items-center text-dark-gray">
+                                    <Link
+                                        to={`${location.pathname}/${_.id}`}
+                                        className="flex items-center justify-end gap-2 text-dark-gray">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
@@ -157,7 +170,7 @@ export default function Forum() {
                                             />
                                         </svg>
                                         <span className="font-medium">2</span>
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

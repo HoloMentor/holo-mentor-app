@@ -30,6 +30,22 @@ const studentServices = createApi({
             }),
             providesTags: ['StudentClasses']
         }),
+        // get study plans for student
+        // /students/study-plans/{classId}/{studentId}
+        getStudyPlans: builder.query({
+            query: ({ classId, studentId }) => ({
+                method: 'GET',
+                url: `/students/study-plans/${classId}/${studentId}`
+            })
+        }),
+        getAllClassesStudent: builder.query({
+            query: ({ id, ...params }) => ({
+                method: 'GET',
+                url: `/students/all/class/${id}`,
+                params
+            }),
+            providesTags: ['StudentsClasses']
+        }),
 
     })
 });
