@@ -42,8 +42,6 @@ function Teachers() {
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
-    console.log(instituteTeachers);
-
     return (
         <div className="flex flex-col gap-3">
             <Heading>Teachers</Heading>
