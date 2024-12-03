@@ -7,26 +7,55 @@ import { IRootState } from '@/redux';
 import moment from 'moment';
 import FormEditor from '../form/editor';
 import SubmitButton from '../form/button';
+import commentServices from '@/redux/services/forum.comment.service';
+import useErrorHandler from '@/hooks/error-handler';
 
 interface Props {
     onCancel: () => void;
     reply?: boolean;
+    questionId: number; 
 }
 
 const initialValues = {
-    email: ''
+    reply: '',
+    questionId: '',
+    userId: ''
 };
 
+
+
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required')
+    reply: Yup.mixed().required('Reply is required')
 });
 
-export default function ForumQuestionReplyForm({ reply = false, onCancel }: Props) {
+export default function ForumQuestionReplyForm({ reply = false, onCancel, questionId }: Props) {
     const { user } = useSelector((state: IRootState) => state.user);
+    console.log('User:', user);
+    console.log('Question ID:', questionId);
+    console.log('Reply:', reply);
+    console.log('userID',user.userId);
+    const [createComment,{ isLoading:isCommentLoading, error:commentCreateError }] = commentServices.useCreateCommentMutation();
+    console.log(isCommentLoading, commentCreateError,'there is an error here if no then nice');
+    useErrorHandler(isCommentLoading, commentCreateError);
 
-    const onSubmit = (v: FormikValues) => {
-        console.log(v);
+
+    const onSubmit = async (values: FormikValues) => {
+        console.log(values);
+        console.log('Submitting comment: Need this first');
+        console.log('Submitting comment:', values.reply);
+        try {
+            await createComment({
+                reply: values.reply,
+                userId: user.userId,
+                questionId: questionId
+            }).unwrap();
+            console.log('Comment submitted successfully');
+            onCancel();
+        } catch (error) {
+            console.error('Error submitting comment:', error);
+        }
     };
+
 
     return (
         <div className={`flex gap-4 p-3 ${reply ? 'pl-20' : ''}`}>
@@ -36,21 +65,21 @@ export default function ForumQuestionReplyForm({ reply = false, onCancel }: Prop
                 validationSchema={validationSchema}
                 initialValues={initialValues}
                 onSubmit={onSubmit}
-                className="flex flex-col gap-5 bg-second-white w-full rounded-lg p-4">
-                <div className="flex gap-2 justify-between">
+                className="flex flex-col w-full gap-5 p-4 rounded-lg bg-second-white">
+                <div className="flex justify-between gap-2">
                     <h3 className="font-semibold">
                         {user.firstName} {user.lastName}
                     </h3>
-                    <span className="text-dark-gray text-sm">{moment().format('MMM D, YYYY')}</span>
+                    <span className="text-sm text-dark-gray">{moment().format('MMM D, YYYY')}</span>
                 </div>
 
-                <FormEditor className="max-h-32 overflow-auto" name="reply" />
+                <FormEditor className="overflow-auto max-h-32" name="reply" />
 
-                <div className="flex justify-end items-center gap-3">
+                <div className="flex items-center justify-end gap-3">
                     <Button size="sm" onClick={onCancel}>
                         Cancel
                     </Button>
-                    <SubmitButton size="sm">Submit</SubmitButton>
+                    <SubmitButton size="sm"  type="submit" isLoading={isCommentLoading}>Submit</SubmitButton>
                 </div>
             </Form>
         </div>
