@@ -35,7 +35,7 @@ export default function TeacherRoutes() {
                         <Route path="" element={<ClassMaterials />} />
                         <Route path="forum" element={<SubjectForums />} />
                         <Route path="forum/mcq" element={<SubjectForumMCQ />} />
-                        <Route path="forum/:forumId/update/mcq" element={<UpdateForumMCQ/>} />
+                        <Route path="forum/:forumId/update/mcq" element={<UpdateForumMCQ />} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
                         <Route path="forum/:forumId/update/normal" element={<UpdateForumEssay />} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
@@ -51,9 +51,11 @@ export default function TeacherRoutes() {
                         </Route>
                         <Route path="student" element={<Outlet />}>
                             <Route path="" element={<StudentList />}></Route>
-                            <Route path="details"></Route>
-                            <Route path="submissions" element={<Submissions />}></Route>
-                            <Route path="profile" element={<StudentProfile />}></Route>
+                            <Route path=":studentId" element={<Outlet />}>
+                                <Route path="details"></Route>
+                                <Route path="submissions" element={<Submissions />}></Route>
+                                <Route path="profile" element={<StudentProfile />}></Route>
+                            </Route>
                         </Route>
                     </Route>
                 </Route>

@@ -44,7 +44,7 @@ const store = configureStore({
         [studentServices.reducerPath]: studentServices.reducer,
         [studyPlanTaskServices.reducerPath]: studyPlanTaskServices.reducer,
         [quizServices.reducerPath]: quizServices.reducer,
-        [announcementServices.reducerPath]: announcementServices.reducer
+        [announcementServices.reducerPath]: announcementServices.reducer,
         [questionServices.reducerPath]: questionServices.reducer,
         [voteServices.reducerPath]: voteServices.reducer
     }),

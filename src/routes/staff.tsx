@@ -6,10 +6,10 @@ const Home = loadable(() => import('@/pages/staff/home'));
 const Classes = loadable(() => import('@/pages/staff/classes/index'));
 const Profile = loadable(() => import('@/pages/staff/profile'));
 const Notifications = loadable(() => import('@/pages/staff/notifications'));
-const StudyPlan = loadable(() => import('@/pages/staff/study-plan'));
-const CreatePlan = loadable(() => import('@/pages/staff/study-plan-create'));
-const StudyPlanView = loadable(() => import('@/pages/staff/study-plan-individual'));
-const ClassMaterials = loadable(() => import('@/pages/staff/classes/material'));
+const StudyPlan = loadable(() => import('@/pages/staff/study-plan/index'));
+const CreatePlan = loadable(() => import('@/pages/staff/study-plan/create'));
+const StudyPlanView = loadable(() => import('@/pages/staff/study-plan/view'));
+const ClassMaterials = loadable(() => import('@/pages/teacher/classes/materials'));
 const StudentList = loadable(() => import('@/pages/staff/student-list'));
 const Submissions = loadable(() => import('@/pages/staff/submissions'));
 const StudentProfile = loadable(() => import('@/pages/staff/student-profile-details'));
@@ -37,14 +37,16 @@ export default function TeacherRoutes() {
                         <Route path="quiz/:quizId" element={<QuizInfo />} />
                         <Route path="studyplan" element={<Outlet />}>
                             <Route path="" element={<StudyPlan />}></Route>
-                            <Route path="create" element={<CreatePlan />}></Route>
-                            <Route path="view" element={<StudyPlanView />}></Route>
+                            <Route path="create/:tierNo" element={<CreatePlan />}></Route>
+                            <Route path="view/:studyPlanId" element={<StudyPlanView />}></Route>
                         </Route>
                         <Route path="student" element={<Outlet />}>
                             <Route path="" element={<StudentList />}></Route>
-                            <Route path="details"></Route>
-                            <Route path="submissions" element={<Submissions />}></Route>
-                            <Route path="profile" element={<StudentProfile />}></Route>
+                            <Route path=":studentId" element={<Outlet />}>
+                                <Route path="details"></Route>
+                                <Route path="submissions" element={<Submissions />}></Route>
+                                <Route path="profile" element={<StudentProfile />}></Route>
+                            </Route>
                         </Route>
                     </Route>
                 </Route>

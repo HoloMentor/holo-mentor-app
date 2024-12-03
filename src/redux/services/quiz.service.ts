@@ -45,6 +45,14 @@ const quizServices = createApi({
                 method: 'GET'
             })
         }),
+        getQuizCount: builder.query({
+            query: ({ userId,instituteId }) => ({
+                method: 'GET',
+                url: `/quiz/count/${userId}/${instituteId}`,
+               
+            }),
+            providesTags: ['Quizzes']
+        }),
         generateQuiz: builder.query({
             query: ({ classId, userId }) => ({
                 url: `/quiz/generate-quiz/${classId}/${userId}`,
@@ -55,3 +63,9 @@ const quizServices = createApi({
 });
 
 export default quizServices;
+
+export const {
+    useGetQuizzesQuery, 
+    useGetQuizCountQuery, 
+
+} = quizServices;

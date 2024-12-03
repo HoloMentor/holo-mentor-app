@@ -1,158 +1,77 @@
 import Heading from '@/components/headings/main';
 import Table from '@/components/table';
-import { Chip } from '@nextui-org/react';
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { Chip, Pagination } from '@nextui-org/react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '@/components/input';
+import studentServices from '@/redux/services/student.service';
+import useErrorHandler from '@/hooks/error-handler';
 
-const renderClass = ({ data }: CustomTableCellData) => {
-    return (
-        <div className="p-1">
-            <span>{data.class.image}</span>
-            <span className="ml-4">{data.class.name}</span>
-        </div>
-    );
-};
+const renderName = ({ data }: any) => (
+    <div className="flex items-center p-1">
+        <img
+            src={data.image || 'https://picsum.photos/200'}
+            alt="avatar"
+            className="h-10 w-10 rounded-full object-cover object-center border-4 border-dark-green"
+        />
+        <span className="ml-4">
+            {data.firstName} {data.lastName}
+        </span>
+    </div>
+);
 
-const renderStatus = ({ data }: CustomTableCellData) => {
-    return data.status === 'Reviewed' ? (
-        <Chip color="success" variant="bordered" className="w-24 max-w-xs text-center bg-success-5">
-            Reviewed
-        </Chip>
-    ) : (
-        <Chip
-            color="warning"
-            variant="bordered"
-            className="w-24 max-w-xs text-center bg-warning-50">
-            Pending
-        </Chip>
-    );
-};
+const renderTier = ({ data }: any) => <span>{data.tier ? `Tier ${data.tier}` : 'N/A'}</span>;
 
-export default function Quizes() {
+const Quizes = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const tableData = [
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/400"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Giselle Biaggi'
-            },
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
 
-            tier: 'Tier 1',
-            gender: 'male',
-            status: 'Reviewed'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/400"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full  object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Lenee Mapham'
-            },
+    const url = window.location.pathname;
+    const classId = url.split('/')[2];
 
-            tier: 'Tier 1',
-            gender: 'male',
-            status: 'Pending'
+    const currentPage = parseInt(searchParams.get('page') || '1', 10);
+
+    const {
+        data: instituteStudents,
+        isLoading: studentLoading,
+        isError: isStudentError,
+        error: studentError
+    } = studentServices.useGetAllClassesStudentQuery(
+        {
+            id: classId,
+            search: searchParams.get('search') || '',
+            page: currentPage
         },
         {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/401"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Tull Dullard'
-            },
-            tier: 'Tier 1',
-            gender: 'male',
-            status: 'Pending'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/402"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Amara Wijesekera'
-            },
-            tier: 'Tier 2',
-            gender: 'female',
-            status: 'Reviewed'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/403"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Kamal Perera'
-            },
-            tier: 'Tier 3',
-            gender: 'male',
-            status: 'Pending'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/404"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Nimasha Fernando'
-            },
-            tier: 'Tier 1',
-            gender: 'female',
-            status: 'Reviewed'
-        },
-        {
-            class: {
-                image: (
-                    <img
-                        src="https://picsum.photos/405"
-                        alt="avatar"
-                        className="relative inline-block h-10 w-10 !rounded-full object-cover object-center border-4 border-dark-green"
-                    />
-                ),
-                name: 'Ruwan Hettiarachchi'
-            },
-            tier: 'Tier 4',
-            gender: 'male',
-            status: 'Reviewed'
+            skip: !classId
         }
-    ];
+    );
 
-    const tableColumns: TableColumn[] = [
-        { name: 'Name', value: { render: renderClass } },
-        { name: 'Tier', value: 'tier' },
-        { name: 'Gender', value: 'gender' },
-        { name: 'Status', value: { render: renderStatus } }
-    ];
+    useErrorHandler(isStudentError, studentError);
+
+    console.log(instituteStudents);
 
     const handleRowClick = (rowData: any) => {
-        const currentpath = location.pathname;
-        navigate(`${currentpath}/profile`);
+        const currentPath = location.pathname;
+        navigate(`${currentPath}/${rowData.id}/submissions/`);
     };
+
+    const handlePageChange = (page: number) => {
+        searchParams.set('page', page.toString());
+        navigate(`${location.pathname}?${searchParams.toString()}`);
+    };
+
+    const tableColumns = [
+        { name: 'Name', value: { render: renderName } },
+        { name: 'Tier', value: { render: renderTier } },
+        { name: 'Email', value: 'email' }
+    ];
+
+    const tableData = instituteStudents?.data?.data || [];
+    const totalPages = instituteStudents?.data?.pages || 1;
+
     return (
         <>
             <Heading>Students</Heading>
@@ -160,9 +79,26 @@ export default function Quizes() {
             <div className="flex justify-end mr-4 ">
                 <Input placeholder="Search" className="max-w-72 bg-white" />
             </div>
+
             <section className="mt-2">
-                <Table data={tableData} columns={tableColumns} onRowClick={handleRowClick} />
+                <Table
+                    data={tableData}
+                    columns={tableColumns}
+                    onRowClick={handleRowClick}
+                    loading={studentLoading}
+                />
+                {totalPages > 1 && (
+                    <div className="flex justify-center mt-4">
+                        <Pagination
+                            total={totalPages}
+                            initialPage={currentPage}
+                            onChange={handlePageChange}
+                        />
+                    </div>
+                )}
             </section>
         </>
     );
-}
+};
+
+export default Quizes;

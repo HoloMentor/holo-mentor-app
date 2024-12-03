@@ -50,7 +50,14 @@ const studyPlanServices = createApi({
                 url: `/study-plan/delete/${id}`
             }),
             invalidatesTags: ['StudyPlans']
-        })
+        }),
+        getSubmittedTasks: builder.query({
+            query: ({ studentId, studyPlaneId }) => ({
+                method: 'GET',
+                url: `/study-plan/submissions/${studentId}/${studyPlaneId}`
+            }),
+            providesTags: ['StudyPlans']
+        }),
     })
 });
 

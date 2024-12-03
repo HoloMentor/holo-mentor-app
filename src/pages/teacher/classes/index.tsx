@@ -19,7 +19,6 @@ interface InstituteClass {
 
 export default function Classes() {
     const { user } = useSelector((state: IRootState) => state.user);
-
     const location = useLocation();
     const params = location.search;
     const searchParams = new URLSearchParams(params.toString());
