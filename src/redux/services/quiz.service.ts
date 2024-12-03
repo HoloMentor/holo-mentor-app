@@ -45,6 +45,12 @@ const quizServices = createApi({
                 method: 'GET'
             })
         }),
+        generateQuiz: builder.query({
+            query: ({ classId, userId }) => ({
+                url: `/quiz/generate-quiz/${classId}/${userId}`,
+                method: 'GET'
+            })
+        }),
     })
 });
 
