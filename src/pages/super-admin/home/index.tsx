@@ -1,43 +1,57 @@
 import InfoCard from '@/components/cards/info';
 import Table from '@/components/table';
-import { renderInstituteName } from './columns';
+import { renderInstituteName, renderMoreActions, renderTeacherName } from './columns';
+import userServices from '@/redux/services/user.service';
+import useErrorHandler from '@/hooks/error-handler';
+import instituteServices from '@/redux/services/institute.service';
+import { useLocation } from 'react-router-dom';
+import classServices from '@/redux/services/class/class.service';
 
 function Home() {
-    /* this is a sample data */
-    const eduTableData = [
-        {
-            name: 'Roodel',
-            image: 'https://picsum.photos/400',
-            city: 'Colombo',
-            classes: 400,
-            teachers: 400,
-            students: '2100'
-        }
-    ];
-    const clsTableData = [
-        {
-            name: 'Physics',
-            teacher: {
-                name: 'John Stark'
-            },
-            institute: { name: 'Roodel - Colombo' },
-            students: '210'
-        }
-    ];
+    const {
+        data: stats,
+        isError: isStatsError,
+        error: statsError
+    } = userServices.useStatsQuery({});
+    useErrorHandler(isStatsError, statsError);
 
-    const eduTableColumns: TableColumn[] = [
+    const location = useLocation();
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const {
+        data: allInstitutes,
+        isError: isAllInstitutesError,
+        error: allInstitutesError,
+        isLoading: allInstitutesLoading
+    } = instituteServices.useAllQuery({
+        search: searchParams.get('search') || '',
+        page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
+    });
+    useErrorHandler(isAllInstitutesError, allInstitutesError);
+
+    const {
+        data: topClasses,
+        isError: isTopClassesError,
+        error: topClassesError,
+        isLoading: isTopClassesLoading
+    } = classServices.useGetTopClassesQuery({});
+    useErrorHandler(isTopClassesError, topClassesError);
+
+    const tableColumns: TableColumn[] = [
         { name: 'Name', value: { render: renderInstituteName } },
         { name: 'City', value: 'city' },
-        { name: 'Classes', value: 'classes' },
-        { name: 'Teachers', value: 'teachers' },
-        { name: 'Students', value: 'students' }
+        { name: 'Classes', value: 'id' },
+        { name: 'No. of Students', value: 'id' },
+        { name: 'No. of Teachers', value: 'id' },
+        { name: 'Actions', value: { render: renderMoreActions } }
     ];
 
-    const clsTableColumns: TableColumn[] = [
-        { name: 'Name', value: 'name' },
-        { name: 'Teacher', value: 'teacher.name' },
-        { name: 'Institute', value: 'institute.name' },
-        { name: 'students', value: 'students' }
+    const topClassesColumns: TableColumn[] = [
+        { name: 'Name', value: 'className' },
+        { name: 'Teacher', value: { render: renderTeacherName } },
+        { name: 'Institute', value: 'instituteName' },
+        { name: 'students', value: 'studentCount' }
     ];
 
     return (
@@ -50,7 +64,7 @@ function Home() {
                 />
             </div>
             <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5 px-5 py-4 h-full w-full">
-                <InfoCard number={560} label="Institutes">
+                <InfoCard number={stats?.data?.instituteCount || 0} label="Institutes">
                     <svg
                         width="63"
                         height="51"
@@ -75,7 +89,7 @@ function Home() {
                         </defs>
                     </svg>
                 </InfoCard>
-                <InfoCard number={50} label="Students">
+                <InfoCard number={stats?.data?.studentCount || 0} label="Students">
                     <svg
                         width="51"
                         height="51"
@@ -92,7 +106,7 @@ function Home() {
                         />
                     </svg>
                 </InfoCard>
-                <InfoCard number={500} label="Teachers">
+                <InfoCard number={stats?.data?.teacherCount || 0} label="Teachers">
                     <svg
                         width="43"
                         height="49"
@@ -145,7 +159,12 @@ function Home() {
                         Educational Institutes
                     </h1>
 
-                    <Table data={eduTableData} columns={eduTableColumns} />
+                    <Table
+                        data={allInstitutes?.data?.data}
+                        columns={tableColumns}
+                        loading={allInstitutesLoading}
+                        pagination={{ enable: true, pages: allInstitutes?.data?.pages }}
+                    />
                 </section>
 
                 <section className="w-full bg-white rounded-s-lg p-2 h-full col-span-2 max-xl:col-span-3">
@@ -153,7 +172,11 @@ function Home() {
                         Top Classes
                     </h1>
 
-                    <Table data={clsTableData} columns={clsTableColumns} />
+                    <Table
+                        data={topClasses?.data}
+                        columns={topClassesColumns}
+                        loading={isTopClassesLoading}
+                    />
                 </section>
             </div>
         </div>

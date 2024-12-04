@@ -1,5 +1,5 @@
 import useErrorHandler from '@/hooks/error-handler';
-import voteServices from '@/redux/services/vote.services';
+import voteServices from '@/redux/services/vote.service';
 
 interface Props {
     id: string | number;

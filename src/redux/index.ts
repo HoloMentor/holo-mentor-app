@@ -17,11 +17,11 @@ import studyPlanServices from './services/study-plan/study-plan.service';
 import staffServices from './services/staff.service';
 import studentServices from './services/student.service';
 import studyPlanTaskServices from './services/study-plan/tasks.service';
-import forumServices from './services/forum.services';
+import forumServices from './services/forum.service';
 import quizServices from './services/quiz.service';
 import announcementServices from './services/announcement.service';
-import questionServices from './services/question.services';
-import voteServices from './services/vote.services';
+import questionServices from './services/question.service';
+import voteServices from './services/vote.service';
 import commentServices from './services/forum.comment.service';
 
 const store = configureStore({

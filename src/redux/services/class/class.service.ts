@@ -4,7 +4,7 @@ import { baseQuery } from '@/redux/services/base';
 const classServices = createApi({
     reducerPath: 'class-service',
     baseQuery: baseQuery,
-    tagTypes: ['Class', 'Classes', 'InstituteClasses'],
+    tagTypes: ['Class', 'Classes', 'InstituteClasses', 'TopClasses'],
     endpoints: (builder) => ({
         create: builder.mutation({
             query: (props) => ({
@@ -35,6 +35,13 @@ const classServices = createApi({
                 url: `/classes/${id}`
             }),
             providesTags: ['Class']
+        }),
+        getTopClasses: builder.query({
+            query: () => ({
+                method: 'GET',
+                url: `/classes/top-classes`
+            }),
+            providesTags: ['TopClasses']
         }),
         getInstituteClasses: builder.query({
             query: ({ instituteId, ...params }) => ({
@@ -68,12 +75,12 @@ const classServices = createApi({
         }),
 
         getClassStudentStats: builder.query({
-            query: ({ instituteId,teacherId }) => ({
+            query: ({ instituteId, teacherId }) => ({
                 method: 'GET',
                 url: `/classes/student/stats/${instituteId}/${teacherId}`
             }),
             providesTags: ['Class']
-        }),
+        })
     })
 });
 

@@ -10,7 +10,7 @@ import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 import { FieldArray, FormikValues } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';

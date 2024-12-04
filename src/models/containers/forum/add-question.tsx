@@ -15,7 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 
 const initialValues = {
     topic: '',
@@ -101,7 +101,7 @@ export default function ForumEssay() {
             );
 
             dispatch(modelActions.hide());
-            navigate(-1)
+            navigate(-1);
         }
     };
 

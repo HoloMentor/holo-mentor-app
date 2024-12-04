@@ -2,7 +2,7 @@ import Button from '@/components/button';
 import useErrorHandler from '@/hooks/error-handler';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 import { ModalBody, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export default function DeleteQuestion({ id }: ModelContainerProps) {
     const onSubmit = async () => {
         const result = await deleteRecord({ id });
 
-        if (result?.data?.status === 200 || result?.data?.status === 201 ) {
+        if (result?.data?.status === 200 || result?.data?.status === 201) {
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -27,7 +27,7 @@ export default function DeleteQuestion({ id }: ModelContainerProps) {
             );
 
             dispatch(modelActions.hide());
-            navigate(-1)
+            navigate(-1);
         }
     };
 

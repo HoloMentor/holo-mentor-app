@@ -11,7 +11,7 @@ import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import classTopicServices from '@/redux/services/class/topics.service';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 import { FieldArray, FormikValues } from 'formik';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,11 +57,7 @@ export default function ForumMcq() {
 
     const forumId = params.forumId;
 
-    
-
-
- 
-    const  questionID = Number(forumId)
+    const questionID = Number(forumId);
     console.log('Question ID:', questionID);
 
     console.log('I am the USer', user);
@@ -81,7 +77,6 @@ export default function ForumMcq() {
         }
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
-
 
     const classTopicsData = useMemo(() => {
         return (
@@ -112,14 +107,12 @@ export default function ForumMcq() {
         [classTopics]
     );
 
-    
-
     const [updateMcq, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
         forumServices.useUpdateQuestionMutation();
     useErrorHandler(isMcqCreateError, mcqCreateError);
 
     const onSubmit = async (values: FormikValues) => {
-         console.log('Values:', values);
+        console.log('Values:', values);
         const result = await updateMcq({
             id: questionID,
             userId: user.userId,
@@ -130,7 +123,7 @@ export default function ForumMcq() {
         });
 
         if (result?.data?.status === 200 || result?.data?.status === 201) {
-            console.log("Navigation Path:", `/classes/${classId}/forum`);
+            console.log('Navigation Path:', `/classes/${classId}/forum`);
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -140,11 +133,10 @@ export default function ForumMcq() {
             dispatch(modelActions.hide());
             navigate(`/classes/${classId}/forum`);
         } else {
-            console.error("Error creating MCQ:", result);
+            console.error('Error creating MCQ:', result);
         }
     };
-    
-    
+
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
@@ -170,7 +162,7 @@ export default function ForumMcq() {
                                         isLoading={isClassTopicsLoading}
                                         onSelectionChange={() => setFieldValue('subTopic', '')}
                                     />
-                                    
+
                                     <FormAutoComplete
                                         isDisabled={!values.topic}
                                         label="Select a subtopic"

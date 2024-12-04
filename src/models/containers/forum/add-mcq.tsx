@@ -11,7 +11,7 @@ import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
 import classTopicServices from '@/redux/services/class/topics.service';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 import { FieldArray, FormikValues } from 'formik';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -69,7 +69,6 @@ export default function ForumMcq() {
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
 
-
     const classTopicsData = useMemo(() => {
         return (
             classTopics?.data?.map((topic: { id: number | string; name: string }) => ({
@@ -113,7 +112,7 @@ export default function ForumMcq() {
         });
 
         if (result?.data?.status === 200 || result?.data?.status === 201) {
-            console.log("Navigation Path:", `/classes/${classId}/forum`);
+            console.log('Navigation Path:', `/classes/${classId}/forum`);
             dispatch(
                 notifyActions.open({
                     type: 'success',
@@ -123,7 +122,7 @@ export default function ForumMcq() {
             dispatch(modelActions.hide());
             navigate(`/classes/${classId}/forum`);
         } else {
-            console.error("Error creating MCQ:", result);
+            console.error('Error creating MCQ:', result);
         }
     };
 

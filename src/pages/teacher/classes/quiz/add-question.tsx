@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import questionServices from '@/redux/services/question.services';
+import questionServices from '@/redux/services/question.service';
 
 const initialValues = {
     topic: '',
@@ -109,13 +109,15 @@ export default function ForumMcq() {
         [classTopics]
     );
 
-    const [createQuestion, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
-        questionServices.useCreateQuestionMutation();
+    const [
+        createQuestion,
+        { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }
+    ] = questionServices.useCreateQuestionMutation();
     useErrorHandler(isMcqCreateError, mcqCreateError);
 
     const onSubmit = async (values: FormikValues) => {
         console.log('Submitting Data:', values);
-        
+
         const result = await createQuestion({
             userId: user.userId,
             email: user.email,

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import useErrorHandler from '@/hooks/error-handler';
 import Reader from '@/components/editor/reader';
 import classTopicServices from '@/redux/services/class/topics.service';
-import questionServices from '@/redux/services/question.services';
+import questionServices from '@/redux/services/question.service';
 import {
     Button as NextUIButton,
     Dropdown,

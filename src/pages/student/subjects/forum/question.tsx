@@ -2,7 +2,7 @@ import Button from '@/components/button';
 import ForumQuestionReplyForm from '@/components/forum/reply-form';
 import Heading from '@/components/headings/main';
 import useErrorHandler from '@/hooks/error-handler';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 import { IRootState } from '@/redux';
 import {
     Button as NextUIButton,
@@ -206,13 +206,10 @@ export default function ForumPage() {
                                 const formattedDate = new Date(
                                     commentData.createdAt
                                 ).toLocaleString('en-US', {
-                                   
                                     year: 'numeric',
                                     month: 'long',
-                                    day: 'numeric',
-                                   
+                                    day: 'numeric'
                                 });
-
 
                                 return (
                                     <div key={index} className="rounded-md bg-slate-100">

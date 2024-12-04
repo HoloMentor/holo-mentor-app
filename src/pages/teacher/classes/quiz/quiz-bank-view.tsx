@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useErrorHandler from '@/hooks/error-handler';
 import Reader from '@/components/editor/reader';
 import classTopicServices from '@/redux/services/class/topics.service';
-import questionServices from '@/redux/services/question.services';
+import questionServices from '@/redux/services/question.service';
 import {
     Button as NextUIButton,
     Dropdown,
@@ -86,7 +86,7 @@ export default function Forum() {
     return (
         <div className="flex flex-col gap-3">
             <Heading>Quiz Bank</Heading>
-            
+
             <section className="flex items-center justify-end gap-5 pr-5">
                 <div className="flex flex-row justify-end gap-2">
                     <Button
@@ -210,7 +210,6 @@ export default function Forum() {
                                                     </DropdownItem>
                                                 )}
                                             </DropdownSection>
-                                            
                                         </DropdownMenu>
                                     </Dropdown>
                                 </>

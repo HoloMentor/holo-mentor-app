@@ -1,5 +1,6 @@
 import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
+import classServices from '@/redux/services/class/class.service';
 import teacherServices from '@/redux/services/teacher.service';
 import { Card, Skeleton } from '@nextui-org/react';
 import { useSelector } from 'react-redux';

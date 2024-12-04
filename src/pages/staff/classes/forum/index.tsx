@@ -6,13 +6,13 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-o
 import { useMemo, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ForumQuestionVote from '@/components/forum/vote';
-import forumServices from '@/redux/services/forum.services';
+import forumServices from '@/redux/services/forum.service';
 import useErrorHandler from '@/hooks/error-handler';
 import Reader from '@/components/editor/reader';
 import classTopicServices from '@/redux/services/class/topics.service';
 import { useSelector } from 'react-redux';
 import { IRootState } from '@/redux';
-import voteServices from '@/redux/services/vote.services';
+import voteServices from '@/redux/services/vote.service';
 
 const filterOptions = [
     {

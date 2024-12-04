@@ -12,7 +12,6 @@ import teacherServices from '@/redux/services/teacher.service';
 import classServices from '@/redux/services/class/class.service';
 import useErrorHandler from '@/hooks/error-handler.tsx';
 
-
 Chart.register(ArcElement, Tooltip, Legend, Title);
 Chart.defaults.plugins.tooltip.backgroundColor = 'rgb(120, 120, 120)';
 Chart.defaults.plugins.legend.position = 'bottom';
@@ -32,8 +31,7 @@ const data = {
 
 function Home() {
     const dispatch = useDispatch();
-    const {user} = useSelector((state: IRootState) => state.user);
-
+    const { user } = useSelector((state: IRootState) => state.user);
 
     const announcements = announcementServices.useGetQuery(
         {
@@ -186,9 +184,7 @@ function Home() {
             <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
                 <section className="w-full bg-white rounded-lg p-4 h-fit col-span-3">
                     <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7 flex flex-row justify-between">
-                        <span>
-                            Announcement
-                        </span>
+                        <span>Announcement</span>
                         <Button
                             onClick={() =>
                                 dispatch(
@@ -217,24 +213,23 @@ function Home() {
                     </h1>
 
                     <div className="flex flex-col gap-3">
-                        {announcements.data?.data.map((announcement: { title: string; announcement: string }) => (
-                            <div
-                                className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg"
-                            >
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex flex-col justify-start">
-                                        <h1 className="text-lg font-semibold text-black">
-                                            {announcement.title}
-                                        </h1>
+                        {announcements.data?.data.map(
+                            (announcement: { title: string; announcement: string }) => (
+                                <div className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg">
+                                    <div className="flex flex-col gap-4">
+                                        <div className="flex flex-col justify-start">
+                                            <h1 className="text-lg font-semibold text-black">
+                                                {announcement.title}
+                                            </h1>
+                                        </div>
+                                        <p className="text-base text-neutral-500">
+                                            {announcement.announcement}
+                                        </p>
                                     </div>
-                                    <p className="text-base text-neutral-500">
-                                        {announcement.announcement}
-                                    </p>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        )}
                     </div>
-
                 </section>
 
                 <section className="w-full bg-white rounded-s-lg p-2 col-span-2 max-xl:col-span-3 h-fit">

@@ -4,7 +4,7 @@ import { baseQuery } from '@/redux/services/base';
 const userServices = createApi({
     reducerPath: 'user-service',
     baseQuery: baseQuery,
-    tagTypes: ['User', 'Users'],
+    tagTypes: ['User', 'Users', 'SystemStats'],
     endpoints: (builder) => ({
         authenticate: builder.mutation({
             query: (props) => ({
@@ -20,6 +20,13 @@ const userServices = createApi({
                 url: `/users/${id}`
             }),
             providesTags: ['User']
+        }),
+        stats: builder.query({
+            query: () => ({
+                method: 'GET',
+                url: `/users/stats`
+            }),
+            providesTags: ['SystemStats']
         }),
         all: builder.query({
             query: ({ ...props }) => ({
