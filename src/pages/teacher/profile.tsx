@@ -129,11 +129,11 @@ export default function Profile() {
 
                         <InstitutionCard />
                     </div>
-                    <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
+                    {/* <div className="relative px-6 py-4 mb-4 bg-white rounded-lg">
                         <h1 className="mb-4 text-xl font-semibold text-dark-green">Students</h1>
 
                         <Table data={tableData} columns={tableColumns} />
-                    </div>
+                    </div> */}
                 </section>
             </div>
         </div>

@@ -18,27 +18,33 @@ export default function Submissions() {
     const location = useLocation();
     const currentPath = location.pathname;
 
-    const params = location.search;
-    const searchParams = new URLSearchParams(params.toString());
-
     const url = window.location.pathname;
     const urlParts = url.split('/');
 
-    const classId = parseInt(urlParts[2]);
-    const studentId = parseInt(urlParts[4]);
+    // Ensure URL structure is valid before parsing
+    const classId = urlParts[2] ? parseInt(urlParts[2]) : undefined;
+    const studentId = urlParts[4] ? parseInt(urlParts[4]) : undefined;
 
     const { user } = useSelector((state: IRootState) => state.user);
     const { subjectId } = useParams<{ subjectId: string }>();
+
+    // Skip queries if `classId` or `studentId` is undefined
+    const shouldSkipStudyPlans = !classId || !studentId;
 
     const {
         data: studyPlans,
         isError: isStudyPlansError,
         error: studyPlansError,
         isLoading: isStudyPlansLoading
-    } = studentServices.useGetStudyPlansQuery({
-        studentId: studentId,
-        classId: classId
-    });
+    } = studentServices.useGetStudyPlansQuery(
+        {
+            classId: classId!,
+            studentId: studentId!
+        },
+        {
+            skip: shouldSkipStudyPlans
+        }
+    );
 
     useErrorHandler(isStudyPlansError, studyPlansError);
 
@@ -49,10 +55,15 @@ export default function Submissions() {
         isError: isSubmissionsError,
         error: submissionsError,
         isLoading: isSubmissionsLoading
-    } = studyPlanServices.useGetSubmittedTasksQuery({
-        studentId: studentId,
-        studyPlaneId: studyPlanId
-    });
+    } = studyPlanServices.useGetSubmittedTasksQuery(
+        {
+            studentId: studentId!,
+            studyPlaneId: studyPlanId
+        },
+        {
+            skip: shouldSkipStudyPlans || !studyPlanId
+        }
+    );
 
     useErrorHandler(isSubmissionsError, submissionsError);
 

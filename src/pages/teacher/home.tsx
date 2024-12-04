@@ -20,10 +20,10 @@ function Home() {
         isLoading: isTeacherStatsLoading
     } = teacherServices.useGetTeacherStatsQuery(
         {
-            id: user.userInstituteId
+            id: userId
         },
         {
-            skip: !user.userInstituteId
+            skip: !userId
         }
     );
     useErrorHandler(isTeacherStatsError, teacherStatsError);

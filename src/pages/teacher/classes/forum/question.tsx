@@ -77,7 +77,7 @@ export default function ForumPage() {
                         <User
                             name={user?.firstName + ' ' + user?.lastName}
                             avatarProps={{
-                                src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
+                                src: '/images/User.svg'
                             }}
                         />
 
@@ -206,13 +206,10 @@ export default function ForumPage() {
                                 const formattedDate = new Date(
                                     commentData.createdAt
                                 ).toLocaleString('en-US', {
-                                   
                                     year: 'numeric',
                                     month: 'long',
-                                    day: 'numeric',
-                                   
+                                    day: 'numeric'
                                 });
-
 
                                 return (
                                     <div key={index} className="rounded-md bg-slate-100">

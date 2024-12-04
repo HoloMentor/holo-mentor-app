@@ -7,16 +7,52 @@ import { useSelector } from 'react-redux';
 import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
 import { useGetTeacherStaffCountQuery } from '@/redux/services/staff.service';
 import { useGetTeacherStaffQuery } from '@/redux/services/staff.service';
+import announcementServices from '@/redux/services/announcement.service';
+import React, { useState, useEffect } from 'react';
 
 function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
 
     const instituteId = user.instituteId;
-
     const staffId = user?.userId?.toString();
 
+    // Fetch staff data to derive userId
     const { data: staffData } = useGetTeacherStaffQuery({ userId: staffId, instituteId });
     const userId = staffData?.data?.staffTeacher?.[0]?.userId;
+
+    console.log('User Id:', userId);
+
+    // Skip dependent queries until userId is available
+    const shouldSkipUserDependentQueries = !userId;
+
+    const announcements = announcementServices.useGetQuery(
+        {
+            id: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
+    const params = location.search;
+    const searchParams = new URLSearchParams(params.toString());
+
+    const {
+        data: instituteTeachers,
+        isError: isTeacherError,
+        error: teacherError
+    } = teacherServices.useGetInstituteTeachersQuery(
+        {
+            instituteId: user.instituteId,
+            search: searchParams.get('search') || '',
+            page: searchParams.get('search') ? 1 : searchParams.get('page') || 1
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
+    useErrorHandler(isTeacherError, teacherError);
 
     const {
         data: teacherStats,
@@ -25,12 +61,13 @@ function Home() {
         isLoading: isTeacherStatsLoading
     } = teacherServices.useGetTeacherStatsQuery(
         {
-            id: user.userInstituteId
+            id: userId
         },
         {
-            skip: !user.userInstituteId
+            skip: shouldSkipUserDependentQueries
         }
     );
+
     useErrorHandler(isTeacherStatsError, teacherStatsError);
 
     const {
@@ -38,17 +75,26 @@ function Home() {
         isError: isQuizStatsError,
         error: QuizStatsError,
         isLoading: isQuizStatsLoading
-    } = useGetQuizCountQuery({ userId, instituteId });
+    } = useGetQuizCountQuery(
+        { userId, instituteId },
+        {
+            skip: shouldSkipUserDependentQueries
+        }
+    );
 
     useErrorHandler(isQuizStatsError, QuizStatsError);
 
-    //get staff count
     const {
         data: StaffStats,
         isError: isStaffStatsError,
         error: StaffStatsError,
         isLoading: isStaffStatsLoading
-    } = useGetTeacherStaffCountQuery({ userId, instituteId });
+    } = useGetTeacherStaffCountQuery(
+        { userId, instituteId },
+        {
+            skip: shouldSkipUserDependentQueries
+        }
+    );
 
     useErrorHandler(isStaffStatsError, StaffStatsError);
 
@@ -166,36 +212,22 @@ function Home() {
                     </h1>
 
                     <div className="flex flex-col gap-3">
-                        {Array.from({ length: 5 }).map((_, i) => {
-                            return (
-                                <div
-                                    key={`announcement-${i}`}
-                                    className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg">
-                                    <img
-                                        src="/images/User.svg"
-                                        alt="User"
-                                        className="rounded-full size-11"
-                                    />
+                        {announcements.data?.data.map(
+                            (announcement: { title: string; announcement: string }) => (
+                                <div className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg">
                                     <div className="flex flex-col gap-4">
                                         <div className="flex flex-col justify-start">
                                             <h1 className="text-lg font-semibold text-black">
-                                                Main Topic
+                                                {announcement.title}
                                             </h1>
-                                            <p className="text-base font-medium text-neutral-500 ">
-                                                Issued By
-                                            </p>
                                         </div>
-                                        <p className="text-medium">
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                                            elit. Praesentium aliquam dolore velit! Quae laborum a
-                                            numquam? Dolor esse sint deleniti quisquam culpa
-                                            voluptatem? Obcaecati ea iste quia blanditiis porro
-                                            velit?
+                                        <p className="text-base text-neutral-500">
+                                            {announcement.announcement}
                                         </p>
                                     </div>
                                 </div>
-                            );
-                        })}
+                            )
+                        )}
                     </div>
                 </section>
 

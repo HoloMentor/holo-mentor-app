@@ -9,9 +9,9 @@ import useErrorHandler from '@/hooks/error-handler';
 const renderName = ({ data }: any) => (
     <div className="flex items-center p-1">
         <img
-            src={data.image || 'https://picsum.photos/200'}
+            src={data.image || '/images/User.svg'}
             alt="avatar"
-            className="h-10 w-10 rounded-full object-cover object-center border-4 border-dark-green"
+            className="h-10 w-10 rounded-full object-cover object-center border-4 border-dark-green "
         />
         <span className="ml-4">
             {data.firstName} {data.lastName}
@@ -65,8 +65,7 @@ const Quizes = () => {
 
     const tableColumns = [
         { name: 'Name', value: { render: renderName } },
-        { name: 'Tier', value: { render: renderTier } },
-        { name: 'Email', value: 'email' }
+        { name: 'Tier', value: { render: renderTier } }
     ];
 
     const tableData = instituteStudents?.data?.data || [];
@@ -80,7 +79,7 @@ const Quizes = () => {
                 <Input placeholder="Search" className="max-w-72 bg-white" />
             </div>
 
-            <section className="mt-2">
+            <section className="mt-2 mx-5">
                 <Table
                     data={tableData}
                     columns={tableColumns}

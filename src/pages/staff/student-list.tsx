@@ -9,7 +9,7 @@ import useErrorHandler from '@/hooks/error-handler';
 const renderName = ({ data }: any) => (
     <div className="flex items-center p-1">
         <img
-            src={data.image || 'https://picsum.photos/200'}
+            src={data.image || '/images/User.svg'}
             alt="avatar"
             className="h-10 w-10 rounded-full object-cover object-center border-4 border-dark-green"
         />
