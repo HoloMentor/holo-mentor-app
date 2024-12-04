@@ -8,9 +8,22 @@ import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
 import { useGetTeacherStaffCountQuery } from '@/redux/services/staff.service';
 import { useGetTeacherStaffQuery } from '@/redux/services/staff.service';
 import announcementServices from '@/redux/services/announcement.service';
+import React, { useState, useEffect } from 'react';
 
 function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
+
+    const instituteId = user.instituteId;
+    const staffId = user?.userId?.toString();
+
+    // Fetch staff data to derive userId
+    const { data: staffData } = useGetTeacherStaffQuery({ userId: staffId, instituteId });
+    const userId = staffData?.data?.staffTeacher?.[0]?.userId;
+
+    console.log('User Id:', userId);
+
+    // Skip dependent queries until userId is available
+    const shouldSkipUserDependentQueries = !userId;
 
     const announcements = announcementServices.useGetQuery(
         {
@@ -38,13 +51,8 @@ function Home() {
             skip: !user.instituteId
         }
     );
+
     useErrorHandler(isTeacherError, teacherError);
-    const instituteId = user.instituteId;
-
-    const staffId = user?.userId?.toString();
-
-    const { data: staffData } = useGetTeacherStaffQuery({ userId: staffId, instituteId });
-    const userId = staffData?.data?.staffTeacher?.[0]?.userId;
 
     const {
         data: teacherStats,
@@ -56,9 +64,10 @@ function Home() {
             id: userId
         },
         {
-            skip: !userId
+            skip: shouldSkipUserDependentQueries
         }
     );
+
     useErrorHandler(isTeacherStatsError, teacherStatsError);
 
     const {
@@ -66,17 +75,26 @@ function Home() {
         isError: isQuizStatsError,
         error: QuizStatsError,
         isLoading: isQuizStatsLoading
-    } = useGetQuizCountQuery({ userId, instituteId });
+    } = useGetQuizCountQuery(
+        { userId, instituteId },
+        {
+            skip: shouldSkipUserDependentQueries
+        }
+    );
 
     useErrorHandler(isQuizStatsError, QuizStatsError);
 
-    //get staff count
     const {
         data: StaffStats,
         isError: isStaffStatsError,
         error: StaffStatsError,
         isLoading: isStaffStatsLoading
-    } = useGetTeacherStaffCountQuery({ userId, instituteId });
+    } = useGetTeacherStaffCountQuery(
+        { userId, instituteId },
+        {
+            skip: shouldSkipUserDependentQueries
+        }
+    );
 
     useErrorHandler(isStaffStatsError, StaffStatsError);
 

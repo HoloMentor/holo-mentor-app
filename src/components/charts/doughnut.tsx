@@ -11,31 +11,33 @@ Chart.defaults.plugins.tooltip.backgroundColor = 'rgb(120, 120, 120)';
 Chart.defaults.plugins.legend.position = 'bottom';
 Chart.defaults.plugins.legend.title.display = true;
 
-interface DoughnuChartProps {
-    id: string;
-}
-
-function DoughnuChart({ id }: DoughnuChartProps) {
-    //get class student data
+function DoughnuChart({ id }: { id: string | undefined }) {
     const { user } = useSelector((state: IRootState) => state.user);
 
     const instituteId = user.instituteId;
     const teacherId = id;
+
+    // Skip the query until teacherId is defined
+    const shouldSkipQuery = !teacherId;
 
     const {
         data: StudentClassStats,
         isError: isStudentClassStatsError,
         error: StudentClassStatsError,
         isLoading: isStudentClassStatsLoading
-    } = classServices.useGetClassStudentStatsQuery({
-        instituteId: parseInt(instituteId, 10),
-        teacherId: teacherId
-    });
+    } = classServices.useGetClassStudentStatsQuery(
+        {
+            instituteId: parseInt(instituteId, 10),
+            teacherId: teacherId
+        },
+        {
+            skip: shouldSkipQuery
+        }
+    );
 
     useErrorHandler(isStudentClassStatsError, StudentClassStatsError);
 
-    console.log('Student Class Stats - ', StudentClassStats);
-
+    // Memoize chart data for better performance
     const chartData = React.useMemo(() => {
         if (StudentClassStats?.data) {
             const labels = StudentClassStats.data.map((item: any) => item.className);
@@ -59,17 +61,23 @@ function DoughnuChart({ id }: DoughnuChartProps) {
         return null;
     }, [StudentClassStats]);
 
+    // Prepare chart data safely
     const data = {
-        labels: chartData?.labels,
+        labels: chartData?.labels || [],
         datasets: [
             {
-                data: chartData?.datasets?.[0]?.data,
-                backgroundColor: chartData?.datasets?.[0]?.backgroundColor,
+                data: chartData?.datasets?.[0]?.data || [],
+                backgroundColor: chartData?.datasets?.[0]?.backgroundColor || [],
                 borderWidth: 2,
                 radius: '70%'
             }
         ]
     };
+
+    // Loading or fallback state
+    if (isStudentClassStatsLoading || !chartData) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="!w-full !h-full flex justify-center">

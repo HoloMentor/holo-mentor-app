@@ -27,8 +27,6 @@ export default function Forum() {
     const { classId } = useParams();
     const { user } = useSelector((state: IRootState) => state.user);
 
-    
-
     const passingUserId = user?.userId;
 
     const {
@@ -72,22 +70,21 @@ export default function Forum() {
     useErrorHandler(isForumQuestionsError, forumQuestionsError);
 
     console.log('forum questions', forumQuestions);
-    
 
     function QuestionVoteCount({
         questionId,
-        userId,
+        userId
     }: {
         questionId: number;
         userId: string | number;
     }) {
         const { data: voteData, isLoading, error } = voteServices.useGetVotesQuery(questionId);
-    
+
         console.log('vote data', voteData);
-    
+
         if (isLoading) return <div>Loading...</div>;
         if (error) return <div>Error loading votes</div>;
-    
+
         return (
             <ForumQuestionVote
                 id={questionId}
@@ -96,18 +93,14 @@ export default function Forum() {
             />
         );
     }
-    
 
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>
 
             <section className="flex items-center justify-between gap-5 pr-5">
-                <div className="w-full max-w-36">
-                
-                </div>
+                <div className="w-full max-w-36"></div>
                 <div className="flex items-center gap-2">
-
                     <Dropdown>
                         <DropdownTrigger>
                             <Button
@@ -151,7 +144,15 @@ export default function Forum() {
             <section className="flex flex-col gap-5 pr-5">
                 {forumQuestions?.data?.map(
                     (
-                        _: { id: number; question: any; subTopic: number; voteCount: number; userId:number; firstName:string; lastName:string; },
+                        _: {
+                            id: number;
+                            question: any;
+                            subTopic: number;
+                            voteCount: number;
+                            userId: number;
+                            firstName: string;
+                            lastName: string;
+                        },
                         i: number
                     ) => {
                         const topicNumber = Number(_.subTopic);
@@ -160,11 +161,13 @@ export default function Forum() {
                         );
                         console.log(typeof _.subTopic);
                         console.log(topic);
-                       
 
                         return (
                             <div key={_.id} className="flex gap-3 p-6 bg-white rounded-md">
-                                <QuestionVoteCount questionId={_.id} userId={String(passingUserId)} />
+                                <QuestionVoteCount
+                                    questionId={_.id}
+                                    userId={String(passingUserId)}
+                                />
                                 <Link
                                     to={`${location.pathname}/${_.id}`}
                                     className="flex flex-col w-full gap-6 text-black hover:text-black">
@@ -179,17 +182,18 @@ export default function Forum() {
                                             <div className="flex items-center justify-end gap-2 w-36">
                                                 <img
                                                     className="rounded-full size-7"
-                                                    src="/images/student/avatar.png"
+                                                    src="/images/User.svg"
                                                     alt="Avatar"
                                                 />
-                                                <span className="text-xs truncate">{_.firstName + ' ' + _.lastName}</span>
+                                                <span className="text-xs truncate">
+                                                    {_.firstName + ' ' + _.lastName}
+                                                </span>
                                             </div>
                                         </div>
 
                                         <Link
                                             to={`${location.pathname}/${_.id}`}
-                                            className="flex items-center justify-end gap-2 text-dark-gray">
-                                        </Link>
+                                            className="flex items-center justify-end gap-2 text-dark-gray"></Link>
                                     </div>
                                 </div>
                             </div>
