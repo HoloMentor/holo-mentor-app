@@ -36,13 +36,12 @@ export default function teacherProfile() {
     useErrorHandler(isTeacherLoadingError, teacherLoadingError);
 
     const renderClass = ({ data }: CustomTableCellData) => {
+        console.log(data.id);
         return (
-            <Link to={`/class/${data.id}/progress`}>
                 <div className="flex flex-col gap-1">
-                    <span className="font-semibold text-dark-green">{data.class.name}</span>
+                    <span className=" text-dark-green">{data.class.name}</span>
                     <span className=" text-dark-green">{data.class.subject}</span>
                 </div>
-            </Link>
         );
     };
 
