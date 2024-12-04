@@ -1,7 +1,6 @@
 import Button from '@/components/button';
 import Heading from '@/components/headings/main';
-import Input from '@/components/input';
-import Select, { SelectValue } from '@/components/select';
+import  { SelectValue } from '@/components/select';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useMemo, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -14,16 +13,9 @@ import { useSelector } from 'react-redux';
 import { IRootState } from '@/redux';
 import voteServices from '@/redux/services/vote.services';
 
-const filterOptions = [
-    {
-        value: 'top',
-        label: 'Top'
-    }
-];
 
 export default function Forum() {
     const location = useLocation();
-    const [filterValue, setFilterValue] = useState<SelectValue>('top');
     const { classId } = useParams();
     const { user } = useSelector((state: IRootState) => state.user);
 

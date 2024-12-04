@@ -14,8 +14,10 @@ const QuizInfo = loadable(() => import('@/pages/student/subjects/quiz/results'))
 const QuizQuestion = loadable(() => import('@/pages/student/subjects/quiz/question'));
 const SubjectForums = loadable(() => import('@/pages/student/subjects/forum'));
 const SubjectForum = loadable(() => import('@/pages/student/subjects/forum/question'));
-const SubjectForumMCQ = loadable(() => import('@/pages/student/subjects/forum/mcq'));
-const SubjectForumEssay = loadable(() => import('@/pages/student/subjects/forum/essay'));
+const SubjectForumMCQ = loadable(() => import('@/models/containers/forum/add-mcq'));
+const UpdateForumMCQ = loadable(() => import('@/models/containers/forum/update-mcq'));
+const SubjectForumEssay = loadable(() => import('@/models/containers/forum/add-question'));
+const UpdateForumEssay = loadable(() => import('@/models/containers/forum/update-question'));
 const StudyPlanView = loadable(() => import('@/pages/student/study-plan/view'));
 
 export default function StudentRoutes() {
@@ -27,15 +29,20 @@ export default function StudentRoutes() {
                     <Route path="" element={<Subjects />} />
                     <Route path=":subjectId" element={<Outlet />}>
                         <Route path="" element={<Subject />} />
+                        {/* <Route path="forum" element={<SubjectForums />} /> */}
                         <Route path="mentor" element={<SubjectMentor />} />
-                        <Route path="mentor/view/:studyPlanId" element={<StudyPlanView />}></Route>
-                        <Route path="forum" element={<SubjectForums />} />
-                        <Route path="forum/mcq" element={<SubjectForumMCQ />} />
-                        <Route path="forum/essay" element={<SubjectForumEssay />} />
-                        <Route path="forum/:forumId" element={<SubjectForum />} />
+                        <Route path="mentor/view/:studyPlanId" element={<StudyPlanView />}/>
                         <Route path="quiz" element={<SubjectQuiz />} />
                         <Route path="quiz/:quizId" element={<QuizInfo />} />
                         <Route path="quiz/attempt/:quizId" element={<QuizQuestion />} />
+                    </Route>
+                    <Route path=":classId" element={<Outlet />}>
+                        <Route path="forum" element={<SubjectForums />} />
+                        <Route path="forum/mcq" element={<SubjectForumMCQ />} />
+                        <Route path="forum/:forumId/update/mcq" element={<UpdateForumMCQ/>} />
+                        <Route path="forum/essay" element={<SubjectForumEssay />} />
+                        <Route path="forum/:forumId/update/normal" element={<UpdateForumEssay />} />
+                        <Route path="forum/:forumId" element={<SubjectForum />} />
                     </Route>
                 </Route>
                 <Route path="profile" element={<Profile />} />

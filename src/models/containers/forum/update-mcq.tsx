@@ -16,7 +16,7 @@ import { FieldArray, FormikValues } from 'formik';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
@@ -51,37 +51,17 @@ export default function ForumMcq() {
     const { classId } = useParams();
     const params = useParams();
     const navigate = useNavigate();
+    const url = useLocation().pathname.split('/');
+    const type = url[url.length - 1];
+    console.log('Type:', type);
 
     const forumId = params.forumId;
 
-    const [getSingleQuestion, { data, error, isError }] =
-        forumServices.useGetSingleQuestionMutation();
+    
 
-    useEffect(() => {
-        const fetchQuestion = async () => {
-            if (!forumId) return;
 
-            try {
-                const result = await getSingleQuestion(forumId).unwrap();
-                console.log('Question data:', result);
-            } catch (err) {
-                console.error('Error fetching question:', err);
-            }
-        };
-
-        fetchQuestion();
-    }, [forumId, getSingleQuestion]);
-
-    useErrorHandler(isError, error);
-
-    console.log(data);
-    const question = data?.data?.question;
-    const mcqAnswers = data?.data?.mcqAnswer;
-    const currentTopic = Number(data?.data?.topic);
-    const currentSubTopic = data?.data?.subTopic;
-    const userID = data?.data?.userId
-    const currentUserId = user?.userId
-    const questionID = Number(forumId)
+ 
+    const  questionID = Number(forumId)
     console.log('Question ID:', questionID);
 
     console.log('I am the USer', user);
@@ -134,15 +114,18 @@ export default function ForumMcq() {
 
     
 
-    const [createMcq, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
-        forumServices.useCreateMcqMutation();
+    const [updateMcq, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
+        forumServices.useUpdateQuestionMutation();
     useErrorHandler(isMcqCreateError, mcqCreateError);
 
     const onSubmit = async (values: FormikValues) => {
-        const result = await createMcq({
+         console.log('Values:', values);
+        const result = await updateMcq({
+            id: questionID,
             userId: user.userId,
             email: user.email,
             classId: classId,
+            type: type,
             ...values
         });
 
@@ -162,9 +145,6 @@ export default function ForumMcq() {
     };
     
     
-
-    const currentTopicName = classTopicsData.find((topic:any) => topic.value === currentTopic)?.label
-    console.log('Current Topic:', currentTopicName);
     return (
         <div className="flex flex-col gap-3">
             <Heading>Forum</Heading>

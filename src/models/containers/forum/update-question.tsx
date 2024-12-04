@@ -11,7 +11,7 @@ import { useCallback, useMemo } from 'react';
 import useErrorHandler from '@/hooks/error-handler';
 import classTopicServices from '@/redux/services/class/topics.service';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IRootState } from '@/redux';
 import { modelActions } from '@/redux/reducers/model.reducer';
 import { notifyActions } from '@/redux/reducers/notify.reducer';
@@ -34,6 +34,10 @@ export default function ForumEssay() {
     const { classId } = useParams();
     const { user } = useSelector((state: IRootState) => state.user);
     const navigate = useNavigate();
+    const url = useLocation().pathname.split('/');
+    const type = url[url.length - 1];
+    console.log('Type:', type);
+    const params = useParams();
 
     const {
         data: classTopics,
@@ -50,6 +54,8 @@ export default function ForumEssay() {
         }
     );
     useErrorHandler(isClassTopicsError, classTopicsError);
+    const forumId = params.forumId;
+    const  questionID = Number(forumId)
 
     const classTopicsData = useMemo(() => {
         return (
@@ -81,14 +87,16 @@ export default function ForumEssay() {
     );
 
     const [createMcq, { isLoading: isCreating, isError: isMcqCreateError, error: mcqCreateError }] =
-        forumServices.useCreateMcqMutation();
+        forumServices.useUpdateQuestionMutation();
     useErrorHandler(isMcqCreateError, mcqCreateError);
 
     const onSubmit = async (values: FormikValues) => {
         const result = await createMcq({
+            id: questionID,
             userId: user.userId,
             email: user.email,
             classId: classId,
+            type: type,
             ...values
         });
 

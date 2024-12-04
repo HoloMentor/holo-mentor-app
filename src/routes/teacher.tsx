@@ -35,27 +35,25 @@ export default function TeacherRoutes() {
                         <Route path="" element={<ClassMaterials />} />
                         <Route path="forum" element={<SubjectForums />} />
                         <Route path="forum/mcq" element={<SubjectForumMCQ />} />
-                        <Route path="forum/:forumId/update/mcq" element={<UpdateForumMCQ />} />
+                        <Route path="forum/:forumId/update/mcq" element={<UpdateForumMCQ/>} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
                         <Route path="forum/:forumId/update/normal" element={<UpdateForumEssay />} />
                         <Route path="forum/essay" element={<SubjectForumEssay />} />
                         <Route path="forum/:forumId" element={<SubjectForum />} />
-                        <Route path="quiz/" element={<Quizes />} />
-                        <Route path="quiz/view" element={<QuizBankView />} />
+                        {/* <Route path="quiz/" element={<Quizes />} /> */}
+                        <Route path="quiz" element={<QuizBankView />} />
                         <Route path="quiz/:quizId" element={<QuizInfo />} />
                         <Route path="quiz/add" element={<AddQuizQuestion />} />
                         <Route path="studyplan" element={<Outlet />}>
                             <Route path="" element={<StudyPlan />}></Route>
                             <Route path="create/:tierNo" element={<CreatePlan />}></Route>
-                            <Route path="view/:studyPlanId" element={<StudyPlanView />}></Route>
+                            {/* <Route path="view/:studyPlanId" element={<StudyPlanView />}></Route> */}
                         </Route>
                         <Route path="student" element={<Outlet />}>
                             <Route path="" element={<StudentList />}></Route>
-                            <Route path=":studentId" element={<Outlet />}>
-                                <Route path="details"></Route>
-                                <Route path="submissions" element={<Submissions />}></Route>
-                                <Route path="profile" element={<StudentProfile />}></Route>
-                            </Route>
+                            <Route path="details"></Route>
+                            <Route path="submissions" element={<Submissions />}></Route>
+                            <Route path="profile" element={<StudentProfile />}></Route>
                         </Route>
                     </Route>
                 </Route>
