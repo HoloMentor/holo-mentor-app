@@ -1,6 +1,6 @@
 import Heading from '@/components/headings/main';
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useErrorHandler from '@/hooks/error-handler';
 import Reader from '@/components/editor/reader';
 import classTopicServices from '@/redux/services/class/topics.service';
@@ -13,9 +13,13 @@ import {
     DropdownSection,
     DropdownTrigger
 } from '@nextui-org/react';
+import Button from '@/components/button';
 
 export default function Forum() {
     const { classId } = useParams();
+    const navigate = useNavigate();
+
+    const handleNavigate = () => navigate(`${location.pathname}/add`);
 
     const {
         data: classTopics,
@@ -82,6 +86,31 @@ export default function Forum() {
     return (
         <div className="flex flex-col gap-3">
             <Heading>Quiz Bank</Heading>
+            
+            <section className="flex items-center justify-end gap-5 pr-5">
+                <div className="flex flex-row justify-end gap-2">
+                    <Button
+                        onClick={handleNavigate}
+                        className="flex items-center gap-2"
+                        endContent={
+                            <span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    className="size-6">
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </span>
+                        }>
+                        Add New
+                    </Button>
+                </div>
+            </section>
 
             <section className="flex flex-col gap-5 pr-5">
                 {quizQuestions?.data?.map(
@@ -148,28 +177,6 @@ export default function Forum() {
                                             </NextUIButton>
                                         </DropdownTrigger>
                                         <DropdownMenu>
-                                            <DropdownSection showDivider>
-                                                <DropdownItem
-                                                    endContent={
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth={1.5}
-                                                            stroke="currentColor"
-                                                            className="size-4">
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                                                            />
-                                                        </svg>
-                                                    }
-                                                    className="text-black"
-                                                    key="edit">
-                                                    Edit
-                                                </DropdownItem>
-                                            </DropdownSection>
                                             <DropdownSection>
                                                 {_.activation === 0 && (
                                                     <DropdownItem
