@@ -237,12 +237,6 @@ function Home() {
 
                 </section>
 
-                <section className="w-full bg-white rounded-s-lg p-2 col-span-2 max-xl:col-span-3 h-fit">
-                    <h1 className="ml-5 text-lg font-semibold text-black">Students For Teacher</h1>
-                    <div className="w-full flex justify-center">
-                        <Doughnut data={data} />
-                    </div>
-                </section>
             </div>
         </div>
     );

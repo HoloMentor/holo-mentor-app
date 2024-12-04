@@ -30,8 +30,6 @@ function ClassProgress() {
     );
     useErrorHandler(isTopicError, topicError);
 
-    console.log(classTopics);
-
     return (
         <div className="flex flex-col gap-3">
             <Heading>Class Progress</Heading>
