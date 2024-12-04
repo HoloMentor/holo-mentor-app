@@ -65,8 +65,7 @@ const Quizes = () => {
 
     const tableColumns = [
         { name: 'Name', value: { render: renderName } },
-        { name: 'Tier', value: { render: renderTier } },
-        { name: 'Email', value: 'email' }
+        { name: 'Tier', value: { render: renderTier } }
     ];
 
     const tableData = instituteStudents?.data?.data || [];
@@ -80,7 +79,7 @@ const Quizes = () => {
                 <Input placeholder="Search" className="max-w-72 bg-white" />
             </div>
 
-            <section className="mt-2">
+            <section className="mt-2 mx-5">
                 <Table
                     data={tableData}
                     columns={tableColumns}
