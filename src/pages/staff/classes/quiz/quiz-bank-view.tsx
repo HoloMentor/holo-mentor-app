@@ -203,7 +203,6 @@ export default function Forum() {
                                                     </DropdownItem>
                                                 )}
                                             </DropdownSection>
-                                            
                                         </DropdownMenu>
                                     </Dropdown>
                                 </>
