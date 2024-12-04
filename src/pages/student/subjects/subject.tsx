@@ -115,6 +115,7 @@ export default function Subject() {
                                                     ? subTopic.materials
                                                     : null
                                             }}
+                                            hideOptions={true}
                                         />
                                     ))
                                 )}

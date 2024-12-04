@@ -1,6 +1,10 @@
 import LineChart from '@/components/charts/line';
+import { IRootState } from '@/redux';
+import announcementServices from '@/redux/services/announcement.service';
+import { useSelector } from 'react-redux';
 
 function Home() {
+    const {user} = useSelector((state: IRootState) => state.user);
     /* sample */
     const bestContributors = [
         {
@@ -20,6 +24,15 @@ function Home() {
         }
     ];
 
+    const announcements = announcementServices.useGetQuery(
+        {
+            id: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
+
     return (
         <div className="flex flex-col w-full bg-gray-100">
             <div className="flex flex-col items-center w-full">
@@ -31,12 +44,31 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-3 gap-4 max-xl:grid-cols-1">
-                <section className="w-full col-span-2 p-4 bg-white rounded-lg h-fit">
+                <section className="w-full col-span-3 p-4 bg-white rounded-lg h-fit">
                     <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7">
                         Announcements
                     </h1>
 
                     <div className="flex flex-col gap-3">
+                        {announcements.data?.data.map((announcement: { title: string; announcement: string }) => (
+                            <div
+                                className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg"
+                            >
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col justify-start">
+                                        <h1 className="text-lg font-semibold text-black">
+                                            {announcement.title}
+                                        </h1>
+                                    </div>
+                                    <p className="text-base text-neutral-500">
+                                        {announcement.announcement}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex flex-col gap-3 hidden">
                         {Array.from({ length: 5 }).map((_, i) => {
                             return (
                                 <div
@@ -70,7 +102,7 @@ function Home() {
                     </div>
                 </section>
 
-                <section className="w-full p-2 bg-white rounded-s-lg h-fit">
+                {/* <section className="w-full p-2 bg-white rounded-s-lg h-fit">
                     <div className="flex flex-col gap-8 mt-5">
                         <h1 className="text-3xl font-bold leading-7 text-dark-green">
                             Top Performance
@@ -116,7 +148,7 @@ function Home() {
                             <LineChart />
                         </div>
                     </div>
-                </section>
+                </section> */}
             </div>
         </div>
     );

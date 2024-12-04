@@ -39,8 +39,6 @@ function Teachers() {
     const tableColumns: TableColumn[] = [
         { name: 'Teacher', value: { render: renderTeacher } },
         { name: 'No of Classes', value: 'noOfClasses' },
-        { name: 'Subject', value: 'subject' }, // Adjust this according to your data
-        { name: 'Type', value: 'type' }, // Adjust this according to your data
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
 

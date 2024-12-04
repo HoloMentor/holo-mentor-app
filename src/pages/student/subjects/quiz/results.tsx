@@ -66,6 +66,19 @@ export default function QuizInfo() {
     useErrorHandler(isError, error);
     let questions = quizResults?.data?.questions;
 
+    // get marks of student out of all questions eg 8/10
+    let marks: number =
+        questions?.reduce((acc: number, question: { student_answer: any; correct_answer: any }) => {
+            if (question.student_answer === question.correct_answer) {
+                acc += 1;
+            }
+            return acc;
+        }, 0) ?? 0;
+
+    // total no of questions
+    let totalQuestions: number = questions?.length ?? 0;
+    console.log('Marks total:', marks, '/', totalQuestions);
+
     // console.log(quizResults, 'quizResults');
     // console.log(quizResults?.data);
     // console.log(questions, 'question');
@@ -154,7 +167,7 @@ export default function QuizInfo() {
                                             hour12: true
                                         }).format(attemptStartedAt)}
                                     </div>
-                                    <div className="font-semibold">Marks : 8/10</div>
+                                    <div className="font-semibold">Marks : {marks}/{totalQuestions}</div>
                                 </div>
                             }
                             className="!shadow-none border border-light-border rounded-lg p-0"
