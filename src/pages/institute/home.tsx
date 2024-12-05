@@ -141,7 +141,7 @@ function Home() {
                         </svg>
                     </InfoCard>
 
-                    <InfoCard number={2000} label="Students">
+                    <InfoCard number={3} label="Students">
                         <svg
                             width="51"
                             height="51"
@@ -159,7 +159,7 @@ function Home() {
                         </svg>
                     </InfoCard>
 
-                    <InfoCard number={10} label="Staff">
+                    <InfoCard number={5} label="Staff">
                         <svg
                             width="51"
                             height="50"
@@ -231,7 +231,6 @@ function Home() {
                         )}
                     </div>
                 </section>
-
             </div>
         </div>
     );

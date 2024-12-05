@@ -6,12 +6,22 @@ import teacherServices from '@/redux/services/teacher.service';
 import { useSelector } from 'react-redux';
 import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
 import { useGetTeacherStaffCountQuery } from '@/redux/services/staff.service';
+import announcementServices from '@/redux/services/announcement.service';
 
 function Home() {
     const { user } = useSelector((state: IRootState) => state.user);
 
     const userId = user?.userId;
     const instituteId = user.instituteId;
+
+    const announcements = announcementServices.useGetQuery(
+        {
+            id: user.instituteId
+        },
+        {
+            skip: !user.instituteId
+        }
+    );
 
     const {
         data: teacherStats,
@@ -155,7 +165,31 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-5 gap-4 max-xl:grid-cols-3 ">
-                <section className="w-full col-span-3 p-4 bg-white rounded-lg h-fit">
+                <section className="w-full bg-white rounded-lg p-4 h-fit col-span-3">
+                    <h1 className="pl-4 text-3xl font-semibold text-dark-green mb-7 flex flex-row justify-between">
+                        <span>Announcement</span>
+                    </h1>
+
+                    <div className="flex flex-col gap-3">
+                        {announcements.data?.data.map(
+                            (announcement: { title: string; announcement: string }) => (
+                                <div className="flex gap-3 p-4 border-2 border-gray-100 rounded-lg">
+                                    <div className="flex flex-col gap-4">
+                                        <div className="flex flex-col justify-start">
+                                            <h1 className="text-lg font-semibold text-black">
+                                                {announcement.title}
+                                            </h1>
+                                        </div>
+                                        <p className="text-base text-neutral-500">
+                                            {announcement.announcement}
+                                        </p>
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </div>
+                </section>
+                {/* <section className="w-full col-span-3 p-4 bg-white rounded-lg h-fit">
                     <h1 className="pl-4 text-2xl font-semibold text-dark-green mb-7">
                         Notification
                     </h1>
@@ -192,7 +226,7 @@ function Home() {
                             );
                         })}
                     </div>
-                </section>
+                </section> */}
 
                 <section className="w-full h-full col-span-2 p-2 bg-white rounded-s-lg max-xl:col-span-3">
                     <section className="w-full p-2 bg-white rounded-s-lg h-fit">

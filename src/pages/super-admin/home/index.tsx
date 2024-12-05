@@ -40,10 +40,10 @@ function Home() {
 
     const tableColumns: TableColumn[] = [
         { name: 'Name', value: { render: renderInstituteName } },
-        { name: 'City', value: 'city' },
-        { name: 'Classes', value: 'id' },
-        { name: 'No. of Students', value: 'id' },
-        { name: 'No. of Teachers', value: 'id' },
+        { name: 'City', value: 'instituteCity' },
+        { name: 'Classes', value: 'classCount' },
+        { name: 'No. of Students', value: 'studentCount' },
+        { name: 'No. of Teachers', value: 'teacherCount' },
         { name: 'Actions', value: { render: renderMoreActions } }
     ];
 

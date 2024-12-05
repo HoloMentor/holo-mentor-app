@@ -2,13 +2,14 @@ import InfoCard from '@/components/cards/info';
 import DoughnuChart from '@/components/charts/doughnut';
 import useErrorHandler from '@/hooks/error-handler';
 import { IRootState } from '@/redux';
+import announcementServices from '@/redux/services/announcement.service';
+import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
+import {
+    useGetTeacherStaffCountQuery,
+    useGetTeacherStaffQuery
+} from '@/redux/services/staff.service';
 import teacherServices from '@/redux/services/teacher.service';
 import { useSelector } from 'react-redux';
-import { useGetQuizCountQuery } from '@/redux/services/quiz.service';
-import { useGetTeacherStaffCountQuery } from '@/redux/services/staff.service';
-import { useGetTeacherStaffQuery } from '@/redux/services/staff.service';
-import announcementServices from '@/redux/services/announcement.service';
-import React, { useState, useEffect } from 'react';
 
 function Home() {
     const { user } = useSelector((state: IRootState) => state.user);

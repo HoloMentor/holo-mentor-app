@@ -29,12 +29,12 @@ export function renderInstituteName({ data }: CustomTableCellData) {
                         />
                     </svg>
                 }
-                src={data?.logo}
+                src={data?.instituteImage}
                 alt="avatar"
                 isBordered
                 className="relative size-8 !rounded-full object-cover object-center"
             />
-            <span className="mt-2 ml-5 text-left">{data?.name}</span>
+            <span className="mt-2 ml-5 text-left">{data?.instituteName}</span>
         </div>
     );
 }
